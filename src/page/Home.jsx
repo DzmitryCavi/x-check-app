@@ -7,7 +7,7 @@ import { connect } from 'react-redux'
 import { logout } from '../store/actions'
 
 const Home = (props) => {
-  const { isLoggedIn, dispatch } = props
+  const { isLoggedIn, user, dispatch } = props
 
   if (!isLoggedIn) {
     return <Redirect to="/login" />
@@ -16,6 +16,14 @@ const Home = (props) => {
   return (
     <div className="home-page">
       <h1>Home</h1>
+      <p>
+        <b>Login: </b>
+        {user.login}
+      </p>
+      <p>
+        <b>Role: </b>
+        {user.role}
+      </p>
       <Button
         type="primary"
         icon={<LogoutOutlined />}
@@ -31,12 +39,14 @@ const Home = (props) => {
 
 Home.propTypes = {
   isLoggedIn: PropTypes.bool.isRequired,
+  user: PropTypes.instanceOf(Object).isRequired,
   dispatch: PropTypes.func.isRequired,
 }
 
 const mapStateToProps = (state) => {
   return {
     isLoggedIn: state.auth.isLoggedIn,
+    user: state.auth.user,
   }
 }
 

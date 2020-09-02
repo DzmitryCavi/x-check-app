@@ -22,6 +22,7 @@ const reducer = (state = initialState, action) => {
     case types.REQUESTED_LOGIN_SUCCEEDED: {
       localStorage.setItem('isLoggedIn', JSON.stringify(action.payload.isLoggedIn))
       localStorage.setItem('user', JSON.stringify(action.payload.user))
+      localStorage.removeItem('role')
       return {
         ...state,
         isLoggedIn: action.payload.isLoggedIn,

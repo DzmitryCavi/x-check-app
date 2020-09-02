@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { Redirect } from 'react-router-dom'
 import { connect } from 'react-redux'
 
-import { Card, Button } from 'antd'
+import { Card, Button, Select } from 'antd'
 import { GithubOutlined } from '@ant-design/icons'
 
 import { login } from '../../store/actions'
@@ -11,8 +11,26 @@ import { login } from '../../store/actions'
 import './LoginForm.scss'
 
 class Login extends React.Component {
+  constructor(props) {
+    super(props)
+
+    this.roles = [
+      { slug: 'author', label: 'Author' },
+      { slug: 'student', label: 'Student' },
+      { slug: 'supervisor', label: 'Supervisor' },
+      { slug: 'course_manager', label: 'Course Manager' },
+    ]
+
+    this.state = {
+      role: localStorage.getItem('role') || 'author',
+    }
+  }
+
   async componentDidMount() {
+    const { role } = this.state
     const { dispatch } = this.props
+
+    localStorage.setItem('role', role)
 
     const uri = window.location.href
     const hasCode = uri.includes('?code=')
@@ -20,11 +38,17 @@ class Login extends React.Component {
     if (hasCode) {
       const [url, code] = uri.split('?code=')
       window.history.pushState({}, null, url)
-      dispatch(login(code))
+      dispatch(login(code, role))
     }
   }
 
+  handleChangeRole = (role) => {
+    localStorage.setItem('role', role)
+    this.setState((prev) => ({ ...prev, role }))
+  }
+
   render() {
+    const { role } = this.state
     const { isLoggedIn, clientId, redirectURI, loading } = this.props
 
     if (isLoggedIn) {
@@ -52,6 +76,23 @@ class Login extends React.Component {
             title="Please login via GitHub"
             description="In order to access the RS School App, you need to login with your GitHub account"
           />
+          <div className="select-role">
+            <span className="select-role__label">
+              Role <span className="req">*</span>
+            </span>
+            <Select
+              defaultValue={role}
+              style={{ width: '100%' }}
+              onChange={this.handleChangeRole}
+              disabled={loading}
+            >
+              {this.roles.map(({ slug, label }) => (
+                <Select.Option value={slug} key={slug}>
+                  {label}
+                </Select.Option>
+              ))}
+            </Select>
+          </div>
         </Card>
       </section>
     )

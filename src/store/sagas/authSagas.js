@@ -5,7 +5,7 @@ import * as actions from '../actions/auth'
 
 const getAuth = (state) => state.auth
 
-const asyncLogin = async ({ auth, code }) => {
+const asyncLogin = async ({ auth, code, role }) => {
   const { clientId, clientSecret, redirectURI, proxyURL } = auth
 
   const { data } = await axios.post(proxyURL, {
@@ -13,20 +13,21 @@ const asyncLogin = async ({ auth, code }) => {
     clientSecret,
     redirectURI,
     code,
+    role,
   })
 
   return data
 }
 
 function* login(action) {
-  const code = action.payload
+  const { code, role } = action.payload
 
   const auth = yield select(getAuth)
 
   try {
     yield put(actions.requestedLogin())
-    const data = yield call(asyncLogin, { auth, code })
-    yield put(actions.requestedLoginSuccess(data))
+    const user = yield call(asyncLogin, { auth, code, role })
+    yield put(actions.requestedLoginSuccess(user))
   } catch (error) {
     yield put(actions.requestedLoginError())
   }

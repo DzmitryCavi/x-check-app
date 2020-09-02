@@ -9,3 +9,13 @@
         margin: 30px auto 20px;
     }
 }
+
+.select-role {
+    margin: 20px auto 0;
+    text-align: left;
+    &__label {
+        display: block;
+        font-weight: bold;
+        font-size: 14px;
+    }
+}
