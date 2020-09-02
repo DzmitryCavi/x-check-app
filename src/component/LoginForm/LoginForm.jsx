@@ -2,7 +2,6 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { Redirect } from 'react-router-dom'
 import { connect } from 'react-redux'
-import axios from 'axios'
 
 import { Card, Button } from 'antd'
 import { GithubOutlined } from '@ant-design/icons'
@@ -12,17 +11,8 @@ import { login } from '../../store/actions'
 import './LoginForm.scss'
 
 class Login extends React.Component {
-  constructor(props) {
-    super(props)
-
-    this.state = {
-      isLoading: false,
-      errorMessage: '',
-    }
-  }
-
   async componentDidMount() {
-    const { clientId, clientSecret, redirectURI, proxyURL, dispatch } = this.props
+    const { dispatch } = this.props
 
     const uri = window.location.href
     const hasCode = uri.includes('?code=')
@@ -30,34 +20,12 @@ class Login extends React.Component {
     if (hasCode) {
       const [url, code] = uri.split('?code=')
       window.history.pushState({}, null, url)
-      this.setState((prev) => ({ ...prev, isLoading: true }))
-
-      const requestData = {
-        clientId,
-        redirectURI,
-        clientSecret,
-        code,
-      }
-
-      try {
-        const { data: user } = await axios.post(proxyURL, requestData)
-        dispatch(login(user))
-      } catch (error) {
-        this.setState({
-          isLoading: false,
-          errorMessage: 'Sorry! Login failed',
-        })
-      }
+      dispatch(login(code))
     }
   }
 
-  handleLogin = () => {
-    this.setState((prev) => ({ ...prev, errorMessage: '' }))
-  }
-
   render() {
-    const { isLoggedIn, clientId, redirectURI } = this.props
-    const { isLoading } = this.state
+    const { isLoggedIn, clientId, redirectURI, loading } = this.props
 
     if (isLoggedIn) {
       return <Redirect to="/" />
@@ -73,8 +41,7 @@ class Login extends React.Component {
             <Button
               type="primary"
               icon={<GithubOutlined />}
-              loading={isLoading}
-              onClick={this.handleLogin}
+              loading={loading}
               href={`https://github.com/login/oauth/authorize?scope=user&client_id=${clientId}&redirect_uri=${redirectURI}`}
             >
               Sign up with GitHub
@@ -94,9 +61,9 @@ class Login extends React.Component {
 Login.propTypes = {
   isLoggedIn: PropTypes.bool.isRequired,
   clientId: PropTypes.string.isRequired,
-  clientSecret: PropTypes.string.isRequired,
   redirectURI: PropTypes.string.isRequired,
-  proxyURL: PropTypes.string.isRequired,
+  loading: PropTypes.bool.isRequired,
+  // errors: PropTypes.bool.isRequired,
   dispatch: PropTypes.func.isRequired,
 }
 
@@ -104,9 +71,9 @@ const mapStateToProps = (state) => {
   return {
     isLoggedIn: state.auth.isLoggedIn,
     clientId: state.auth.clientId,
-    clientSecret: state.auth.clientSecret,
     redirectURI: state.auth.redirectURI,
-    proxyURL: state.auth.proxyURL,
+    loading: state.auth.loading,
+    errors: state.auth.errors,
   }
 }
 
