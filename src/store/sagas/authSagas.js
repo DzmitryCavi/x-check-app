@@ -8,7 +8,7 @@ const getAuth = (state) => state.auth
 const asyncLogin = async ({ auth, code }) => {
   const { clientId, clientSecret, redirectURI, proxyURL } = auth
 
-  const data = await axios.post(proxyURL, {
+  const { data } = await axios.post(proxyURL, {
     clientId,
     clientSecret,
     redirectURI,
