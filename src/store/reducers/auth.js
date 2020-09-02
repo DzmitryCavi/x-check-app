@@ -1,3 +1,5 @@
+import * as types from '../types/auth'
+
 const initialState = {
   isLoggedIn: JSON.parse(localStorage.getItem('isLoggedIn')) || false,
   user: JSON.parse(localStorage.getItem('user')) || null,
@@ -9,7 +11,7 @@ const initialState = {
 
 const reducer = (state = initialState, action) => {
   switch (action.type) {
-    case 'LOGIN': {
+    case types.LOGIN: {
       localStorage.setItem('isLoggedIn', JSON.stringify(action.payload.isLoggedIn))
       localStorage.setItem('user', JSON.stringify(action.payload.user))
       // eslint-disable-next-line no-console
@@ -20,7 +22,7 @@ const reducer = (state = initialState, action) => {
         user: action.payload.user,
       }
     }
-    case 'LOGOUT': {
+    case types.LOGOUT: {
       localStorage.clear()
       return {
         ...state,
