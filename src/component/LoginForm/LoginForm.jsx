@@ -4,6 +4,11 @@ import { Redirect } from 'react-router-dom'
 import { connect } from 'react-redux'
 import axios from 'axios'
 
+import { Card, Button } from 'antd'
+import { GithubOutlined } from '@ant-design/icons'
+
+import './LoginForm.scss'
+
 class Login extends React.Component {
   constructor(props) {
     super(props)
@@ -53,32 +58,35 @@ class Login extends React.Component {
 
   render() {
     const { isLoggedIn, clientId, redirectURI } = this.props
-    const { isLoading, errorMessage } = this.state
+    const { isLoading } = this.state
 
     if (isLoggedIn) {
       return <Redirect to="/" />
     }
 
     return (
-      <section className="container">
-        <div>
-          <h1>Login</h1>
-          <span>Super amazing app</span>
-          <span>{errorMessage}</span>
-          <div className="login-container">
-            {isLoading ? (
-              <div>Loading...</div>
-            ) : (
-              <a
-                className="login-link"
-                href={`https://github.com/login/oauth/authorize?scope=user&client_id=${clientId}&redirect_uri=${redirectURI}`}
-                onClick={this.handleLogin}
-              >
-                <span>Login with GitHub</span>
-              </a>
-            )}
-          </div>
-        </div>
+      <section className="login-form">
+        <Card
+          style={{ width: 320 }}
+          title={<h1 className="login-form__name">X Check App</h1>}
+          cover={<img className="login-form__logo" src="./github-logo.png" alt="GitHub" />}
+          actions={[
+            <Button
+              type="primary"
+              icon={<GithubOutlined />}
+              loading={isLoading}
+              onClick={this.handleLogin}
+              href={`https://github.com/login/oauth/authorize?scope=user&client_id=${clientId}&redirect_uri=${redirectURI}`}
+            >
+              Sign up with GitHub
+            </Button>,
+          ]}
+        >
+          <Card.Meta
+            title="Please login via GitHub"
+            description="In order to access the RS School App, you need to login with your GitHub account"
+          />
+        </Card>
       </section>
     )
   }

@@ -1,12 +1,20 @@
 import React from 'react'
-import LoginForm from '../component/Login/Login'
+import styled from 'styled-components'
+import LoginForm from '../component/LoginForm/LoginForm'
 
 const Login = () => {
   return (
-    <div>
+    <LoginPage className="login-page">
       <LoginForm />
-    </div>
+    </LoginPage>
   )
 }
+
+const LoginPage = styled.div`
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`
 
 export default Login

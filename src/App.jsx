@@ -3,6 +3,8 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 import Home from './page/Home'
 import Login from './page/Login'
 
+import './App.scss'
+
 function App() {
   return (
     <div className="App">
