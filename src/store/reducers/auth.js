@@ -14,8 +14,6 @@ const reducer = (state = initialState, action) => {
     case types.LOGIN: {
       localStorage.setItem('isLoggedIn', JSON.stringify(action.payload.isLoggedIn))
       localStorage.setItem('user', JSON.stringify(action.payload.user))
-      // eslint-disable-next-line no-console
-      console.log(action.payload.isLoggedIn)
       return {
         ...state,
         isLoggedIn: action.payload.isLoggedIn,

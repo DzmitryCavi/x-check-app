@@ -7,6 +7,8 @@ import axios from 'axios'
 import { Card, Button } from 'antd'
 import { GithubOutlined } from '@ant-design/icons'
 
+import { login } from '../../store/actions'
+
 import './LoginForm.scss'
 
 class Login extends React.Component {
@@ -38,11 +40,8 @@ class Login extends React.Component {
       }
 
       try {
-        const { data } = await axios.post(proxyURL, requestData)
-        dispatch({
-          type: 'LOGIN',
-          payload: { user: data, isLoggedIn: true },
-        })
+        const { data: user } = await axios.post(proxyURL, requestData)
+        dispatch(login(user))
       } catch (error) {
         this.setState({
           isLoading: false,
