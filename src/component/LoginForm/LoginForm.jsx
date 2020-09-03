@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { Redirect } from 'react-router-dom'
 import { connect } from 'react-redux'
 
-import { Card, Button, Select } from 'antd'
+import { Card, Button, Select, Alert } from 'antd'
 import { GithubOutlined } from '@ant-design/icons'
 
 import { login } from '../../store/actions'
@@ -49,7 +49,7 @@ class Login extends React.Component {
 
   render() {
     const { role } = this.state
-    const { isLoggedIn, clientId, redirectURI, loading } = this.props
+    const { isLoggedIn, clientId, redirectURI, loading, errors } = this.props
 
     if (isLoggedIn) {
       return <Redirect to="/" />
@@ -62,14 +62,25 @@ class Login extends React.Component {
           title={<h1 className="login-form__name">X Check App</h1>}
           cover={<img className="login-form__logo" src="./github-logo.png" alt="GitHub" />}
           actions={[
-            <Button
-              type="primary"
-              icon={<GithubOutlined />}
-              loading={loading}
-              href={`https://github.com/login/oauth/authorize?scope=user&client_id=${clientId}&redirect_uri=${redirectURI}`}
-            >
-              Sign up with GitHub
-            </Button>,
+            <>
+              {errors ? (
+                <Button
+                  type="primary"
+                  icon={<GithubOutlined />}
+                  loading={loading}
+                  href={`https://github.com/login/oauth/authorize?scope=user&client_id=${clientId}&redirect_uri=${redirectURI}`}
+                >
+                  Sign up with GitHub
+                </Button>
+              ) : (
+                <Alert
+                  message="Error"
+                  description="This is an error message about copywriting."
+                  type="error"
+                  showIcon
+                />
+              )}
+            </>,
           ]}
         >
           <Card.Meta
@@ -104,7 +115,7 @@ Login.propTypes = {
   clientId: PropTypes.string.isRequired,
   redirectURI: PropTypes.string.isRequired,
   loading: PropTypes.bool.isRequired,
-  // errors: PropTypes.bool.isRequired,
+  errors: PropTypes.bool.isRequired,
   dispatch: PropTypes.func.isRequired,
 }
 
