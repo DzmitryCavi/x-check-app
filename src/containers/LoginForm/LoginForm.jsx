@@ -10,7 +10,7 @@ import { login } from '../../store/actions'
 
 import './LoginForm.scss'
 
-class Login extends React.Component {
+class LoginForm extends React.Component {
   constructor(props) {
     super(props)
 
@@ -105,7 +105,7 @@ class Login extends React.Component {
   }
 }
 
-Login.propTypes = {
+LoginForm.propTypes = {
   isLoggedIn: PropTypes.bool.isRequired,
   clientId: PropTypes.string.isRequired,
   redirectURI: PropTypes.string.isRequired,
@@ -124,4 +124,4 @@ const mapStateToProps = (state) => {
   }
 }
 
-export default connect(mapStateToProps, null)(Login)
+export default connect(mapStateToProps, null)(LoginForm)
