@@ -63,7 +63,7 @@ class Login extends React.Component {
           cover={<img className="login-form__logo" src="./github-logo.png" alt="GitHub" />}
           actions={[
             <>
-              {errors ? (
+              {!errors ? (
                 <Button
                   type="primary"
                   icon={<GithubOutlined />}
@@ -73,12 +73,7 @@ class Login extends React.Component {
                   Sign up with GitHub
                 </Button>
               ) : (
-                <Alert
-                  message="Error"
-                  description="This is an error message about copywriting."
-                  type="error"
-                  showIcon
-                />
+                <Alert className="login-form__error" message="Auth wrong." type="error" showIcon />
               )}
             </>,
           ]}
