@@ -1,5 +1,17 @@
 @import '~antd/dist/antd.css';
 
 .req {
-    color: red;
+  color: red;
+}
+
+/* Default Layout */
+.default-layout {
+  min-height: 100vh;
+  &__logo {
+    color: #fff;
+    font-size: 18px;
+  }
+  &__content {
+    padding: 30px;
+  }
 }
