@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { Link, Redirect } from 'react-router-dom'
 import { Layout, Menu, Breadcrumb, Button, Avatar, Dropdown } from 'antd'
-import { LogoutOutlined, ProfileOutlined } from '@ant-design/icons'
+import { LogoutOutlined, ProfileOutlined, PoweroffOutlined } from '@ant-design/icons'
 import { connect } from 'react-redux'
 import Can from '../rbac/Can'
 import { logout } from '../store/actions'
@@ -40,28 +40,37 @@ const DefaultLayout = ({ isLoggedIn, user, children, dispatch }) => {
           <Link to="/">X Check App</Link>
         </div>
         <div className="app-header__controls">
-          <Dropdown overlay={ProfileMenu}>
+          <>
+            <Dropdown overlay={ProfileMenu}>
+              <Button
+                type="dashed"
+                size="large"
+                icon={
+                  <Avatar
+                    style={{
+                      width: 24,
+                      height: 24,
+                      lineHeight: '24px',
+                      fontSize: 18,
+                      marginTop: -4,
+                      marginRight: 10,
+                    }}
+                    size="small"
+                    src={user.avatar_url}
+                  />
+                }
+              >
+                My Profile
+              </Button>
+            </Dropdown>
             <Button
-              type="dashed"
+              style={{ marginLeft: 10 }}
+              type="danger"
               size="large"
-              icon={
-                <Avatar
-                  style={{
-                    width: 24,
-                    height: 24,
-                    lineHeight: '24px',
-                    fontSize: 18,
-                    marginTop: -4,
-                    marginRight: 10,
-                  }}
-                  size="small"
-                  src={user.avatar_url}
-                />
-              }
-            >
-              My Profile
-            </Button>
-          </Dropdown>
+              icon={<PoweroffOutlined />}
+              onClick={exit}
+            />
+          </>
         </div>
       </Header>
       <Content style={{ padding: '0 50px' }}>
