@@ -4,6 +4,18 @@
   color: red;
 }
 
+/* Header */
+.app-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #fff;
+  &__logo {
+    font-weight: bold;
+    font-size: 20px;
+  }
+}
+
 /* Default Layout */
 .default-layout {
   min-height: 100vh;
@@ -11,7 +23,11 @@
     color: #fff;
     font-size: 18px;
   }
+  &__breadcrumbs {
+    margin: 16px 0;
+  }
   &__content {
     padding: 30px;
+    background-color: #fff;
   }
 }
