@@ -2,9 +2,14 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { Link, Redirect } from 'react-router-dom'
 import { Layout, Menu, Breadcrumb, Button, Avatar, Dropdown } from 'antd'
-import { UserOutlined, LaptopOutlined, LogoutOutlined, ProfileOutlined } from '@ant-design/icons'
+import { LogoutOutlined, ProfileOutlined } from '@ant-design/icons'
 import { connect } from 'react-redux'
+import Can from '../rbac/Can'
 import { logout } from '../store/actions'
+import MenuStudent from '../component/menus/MenuStudent'
+import MenuAuthor from '../component/menus/MenuAuthor'
+import MenuSupervisor from '../component/menus/MenuSupervisor'
+import MenuCourseManager from '../component/menus/MenuCourseManager'
 
 const { Header, Content, Sider, Footer } = Layout
 
@@ -31,7 +36,9 @@ const DefaultLayout = ({ isLoggedIn, user, children, dispatch }) => {
   return (
     <Layout className="default-layout">
       <Header className="app-header">
-        <div className="app-header__logo">X Check App</div>
+        <div className="app-header__logo">
+          <Link to="/">X Check App</Link>
+        </div>
         <div className="app-header__controls">
           <Dropdown overlay={ProfileMenu}>
             <Button
@@ -63,17 +70,10 @@ const DefaultLayout = ({ isLoggedIn, user, children, dispatch }) => {
         </Breadcrumb>
         <Layout style={{ padding: '24px 0', backgroundColor: '#fff' }}>
           <Sider width={320}>
-            <Menu mode="inline" defaultSelectedKeys={['1']} style={{ height: '100%' }}>
-              <Menu.Item icon={<UserOutlined />} key="1">
-                <Link to="/">Home</Link>
-              </Menu.Item>
-              <Menu.Item icon={<LaptopOutlined />} key="2">
-                <Link to="/private">Private</Link>
-              </Menu.Item>
-              <Menu.Item icon={<LogoutOutlined />} key="3" onClick={exit}>
-                Logout
-              </Menu.Item>
-            </Menu>
+            <Can role={user.role} perform="menu:student" yes={() => <MenuStudent />} />
+            <Can role={user.role} perform="menu:author" yes={() => <MenuAuthor />} />
+            <Can role={user.role} perform="menu:supervisor" yes={() => <MenuSupervisor />} />
+            <Can role={user.role} perform="menu:course_manager" yes={() => <MenuCourseManager />} />
           </Sider>
           <Content className="default-layout__content">{children}</Content>
         </Layout>
