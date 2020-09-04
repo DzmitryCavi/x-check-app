@@ -1,0 +1,250 @@
+{
+  "tasks": [
+    {
+      "id": 1,
+      "slug": "task-1",
+      "title": "Task 1",
+      "authorId": 11542402,
+      "state": "DRAFT",
+      "categoriesOrder": [
+        "Basic Scope",
+        "Extra Scope",
+        "Fines"
+      ],
+      "items": [
+        {
+          "id": "basic_p1",
+          "minScore": 0,
+          "maxScore": 20,
+          "category": "Basic Scope",
+          "title": "Basic things",
+          "description": "You need to make things right, not wrong"
+        },
+        {
+          "id": "extra_p1",
+          "minScore": 0,
+          "maxScore": 30,
+          "category": "Extra Scope",
+          "title": "More awesome things",
+          "description": "Be creative and make up some more awesome things"
+        },
+        {
+          "id": "fines_p1",
+          "minScore": -10,
+          "maxScore": 0,
+          "category": "Fines",
+          "title": "App crashes",
+          "description": "App causes BSoD!"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "slug": "task-2",
+      "title": "Task 2",
+      "authorId": 11542402,
+      "state": "PUBLISHED",
+      "categoriesOrder": [
+        "Basic Scope",
+        "Extra Scope",
+        "Fines"
+      ],
+      "items": [
+        {
+          "id": "basic_p1",
+          "minScore": 0,
+          "maxScore": 20,
+          "category": "Basic Scope",
+          "title": "Basic things",
+          "description": "You need to make things right, not wrong"
+        },
+        {
+          "id": "extra_p1",
+          "minScore": 0,
+          "maxScore": 30,
+          "category": "Extra Scope",
+          "title": "More awesome things",
+          "description": "Be creative and make up some more awesome things"
+        },
+        {
+          "id": "fines_p1",
+          "minScore": -10,
+          "maxScore": 0,
+          "category": "Fines",
+          "title": "App crashes",
+          "description": "App causes BSoD!"
+        }
+      ]
+    }
+  ],
+  "taskScore": [
+    {
+      "task_id": 1,
+      "items": {
+        "basic_p1": {
+          "score": 20,
+          "comment": "Well done!"
+        },
+        "extra_p1": {
+          "score": 15,
+          "comment": "Some things are done, some are not"
+        },
+        "fines_p1": {
+          "score": 0,
+          "comment": "No ticket today"
+        }
+      }
+    },
+    {
+      "task_id": 2,
+      "items": {
+        "basic_p1": {
+          "score": 20,
+          "comment": "Well done!"
+        },
+        "extra_p1": {
+          "score": 15,
+          "comment": "Some things are done, some are not"
+        },
+        "fines_p1": {
+          "score": 0,
+          "comment": "No ticket today"
+        }
+      }
+    }
+  ],
+  "crossCheckSession": [
+    {
+      "id": 1,
+      "slug": "rss2020Q3react-xcheck",
+      "state": "CROSS_CHECK",
+      "taskId": "simple-task-v1",
+      "coefficient": 0.7,
+      "startDate": "2020-07-07",
+      "endDate": "2020-07-14",
+      "discardMinScore": true,
+      "discardMaxScore": false,
+      "minReiewsAmount": 1,
+      "desiredReviewersAmount": 2,
+      "attendees": [
+        {
+          "githubId": "ButterBrot777",
+          "reviewerOf": [
+            "torvalds",
+            "cardamo"
+          ]
+        },
+        {
+          "githubId": "torvalds",
+          "reviewerOf": [
+            "cardamo"
+          ]
+        },
+        {
+          "githubId": "cardamo",
+          "reviewerOf": [
+            "ButterBrot777"
+          ]
+        },
+        {
+          "id": 2,
+          "slug": "rss2020Q3react-schedule",
+          "state": "DRAFT",
+          "taskId": "simple-task-v1",
+          "coefficient": 0.7,
+          "startDate": "2020-07-07",
+          "endDate": "2020-07-14",
+          "discardMinScore": true,
+          "discardMaxScore": false,
+          "minReiewsAmount": 1,
+          "desiredReviewersAmount": 2,
+          "attendees": [
+            {
+              "githubId": "ButterBrot777",
+              "reviewerOf": [
+                "torvalds",
+                "cardamo"
+              ]
+            },
+            {
+              "githubId": "torvalds",
+              "reviewerOf": [
+                "cardamo"
+              ]
+            },
+            {
+              "githubId": "cardamo",
+              "reviewerOf": [
+                "ButterBrot777"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "reviewRequest": [
+    {
+      "id": "rev-req-1",
+      "crossCheckSessionId": "rss2020Q3react-xcheck",
+      "author": "cardamo",
+      "task": "simple-task-v1",
+      "state": "PUBLISHED",
+      "selfGrade": {}
+    },
+    {
+      "id": "rev-req-2",
+      "crossCheckSessionId": "rss2020Q3react-schedule",
+      "author": "multeng",
+      "task": "simple-task-v2",
+      "state": "DRAFT",
+      "selfGrade": {}
+    }
+  ],
+  "review": [
+    {
+      "id": "1",
+      "requestId": "rev-req-1",
+      "author": "ButterBrot777",
+      "state": "DISPUTED",
+      "grade": {}
+    },
+    {
+      "id": "2",
+      "requestId": "rev-req-2",
+      "author": "torvalds",
+      "state": "ACCEPTED",
+      "grade": {}
+    },
+    {
+      "id": "3",
+      "requestId": "rev-req-3",
+      "author": "cardamo",
+      "state": "REJECTED",
+      "grade": {}
+    }
+  ],
+  "dispute": [
+    {
+      "reviewId": 1,
+      "state": "ONGOING",
+      "idem": "extra_p1",
+      "comment": "Check out the 'All things' page to see all things that were implemented",
+      "suggestedScore": 30
+    },
+    {
+      "reviewId": 2,
+      "state": "ACCEPTED",
+      "idem": "extra_p1",
+      "comment": "Check out the 'All things' page to see all things that were implemented",
+      "suggestedScore": 30
+    },
+    {
+      "reviewId": 3,
+      "state": "ACCEPTED",
+      "idem": "basic_p1",
+      "comment": "Check out the 'All things' page to see all things that were implemented",
+      "suggestedScore": 20
+    }
+  ]
+}
