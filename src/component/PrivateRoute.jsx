@@ -21,7 +21,7 @@ const PrivateRoute = ({ component: Component, isLoggedIn, user, allowedRoles, ..
     }, [])
 
     if (!isAuth) return <Redirect to="/login" />
-    if (!isAccess) return <Redirect to={{ pathname: '/', state: { isNotAccess: true } }} />
+    if (!isAccess) return <Redirect to="/" />
     return <Component {...props} />
   }
 
