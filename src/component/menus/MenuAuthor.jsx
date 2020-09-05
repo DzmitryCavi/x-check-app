@@ -10,7 +10,7 @@ const MenuAuthor = () => {
         <Link to="/">Home</Link>
       </Menu.Item>
       <Menu.Item icon={<LaptopOutlined />} key="2">
-        <Link to="/private">Author</Link>
+        <Link to="/tasks">Tasks</Link>
       </Menu.Item>
     </Menu>
   )
