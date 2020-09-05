@@ -4,6 +4,27 @@
   color: red;
 }
 
+.d-flex {
+  display: flex !important;
+}
+
+.justify-content-end {
+  justify-content: flex-end !important;
+}
+
+.align-items-center {
+  align-items: center !important;
+}
+
+/* Margin */
+.mb-1 {
+  margin-bottom: 10px !important;
+}
+
+.mb-2 {
+  margin-bottom: 20px !important;
+}
+
 /* Header */
 .app-header {
   display: flex;
