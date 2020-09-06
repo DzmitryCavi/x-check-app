@@ -1,6 +1,10 @@
-// import axios from '../plugins/axios'
+import axios from 'axios'
+import { API_URL } from '../config'
 
-const getAll = async () => {}
+const getAll = async () => {
+  const { data: tasks, status } = await axios.get(`${API_URL}/tasks`)
+  return status === 200 && tasks ? tasks : []
+}
 
 // const getById = async (id) => {}
 
