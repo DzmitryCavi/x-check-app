@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Table, Space, Button } from 'antd'
+import { Table, Space, Button, notification } from 'antd'
 import { DeleteOutlined, EditOutlined, PlusOutlined } from '@ant-design/icons'
 import ButtonLink from '../../component/ButtonLink'
 
@@ -13,6 +13,17 @@ const TasksList = () => {
   useEffect(() => {
     tasksService.getAll().then(setTasks)
   }, [])
+
+  const destroyTask = async (taskId) => {
+    await tasksService.destroyById(taskId)
+    setTasks((prev) => prev.filter((task) => task.id !== taskId))
+
+    notification.success({
+      className: 'app-notification app-notification--info',
+      message: 'Success',
+      description: 'Task deleted successfully...',
+    })
+  }
 
   return (
     <div className="tasks-list-page">
@@ -35,7 +46,7 @@ const TasksList = () => {
                 Edit
               </ButtonLink>
 
-              <Button type="danger" icon={<DeleteOutlined />} onClick={() => {}}>
+              <Button type="danger" icon={<DeleteOutlined />} onClick={() => destroyTask(row.id)}>
                 Remove
               </Button>
             </Space>
