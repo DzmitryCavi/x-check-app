@@ -15,6 +15,12 @@ const create = async (task, authorId = -1) => {
     authorId,
     slug: slug(task.title),
     state: 'PUBLISHED',
+    categories: task.categories.map((category, i) => ({
+      ...category,
+      id: i + 1,
+      minScore: Number(category.minScore),
+      maxScore: Number(category.maxScore),
+    })),
   })
 }
 
