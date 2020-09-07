@@ -10,7 +10,7 @@ const MenuSupervisor = () => {
         <Link to="/">Home</Link>
       </Menu.Item>
       <Menu.Item icon={<LaptopOutlined />} key="2">
-        <Link to="/private">Supervisor</Link>
+        <Link to="/requests">Requests</Link>
       </Menu.Item>
     </Menu>
   )

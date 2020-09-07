@@ -12,6 +12,9 @@ import TasksList from '../page/tasks/TasksList'
 import TaskCreate from '../page/tasks/TaskCreate'
 import TaskEdit from '../page/tasks/TaskEdit'
 
+import RequestList from '../page/requests/RequestsList'
+import TaskReview from '../page/tasks/TaskReview'
+
 const AppRoutes = () => {
   return (
     <Router>
@@ -31,6 +34,15 @@ const AppRoutes = () => {
               />
               <PrivateRoute path="/tasks/create" component={TaskCreate} allowedRoles={['author']} />
               <PrivateRoute path="/tasks" component={TasksList} allowedRoles={['author']} />
+
+              {/* Supervisor */}
+
+              <PrivateRoute
+                path="/requests"
+                component={RequestList}
+                allowedRoles={['supervisor']}
+              />
+              <PrivateRoute path="/review" component={TaskReview} allowedRoles={['supervisor']} />
 
               <Route path="*" component={NotFound} />
             </Switch>
