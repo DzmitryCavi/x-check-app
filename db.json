@@ -2,40 +2,14 @@
   "tasks": [
     {
       "id": 1,
-      "slug": "task-1",
-      "title": "Task 1",
+      "slug": "task-4",
+      "title": "Task 4",
       "authorId": 11542402,
-      "state": "DRAFT",
+      "state": "PUBLISHED",
       "categoriesOrder": [
         "Basic Scope",
         "Extra Scope",
         "Fines"
-      ],
-      "items": [
-        {
-          "id": "basic_p1",
-          "minScore": 0,
-          "maxScore": 20,
-          "category": "Basic Scope",
-          "title": "Basic things",
-          "description": "You need to make things right, not wrong"
-        },
-        {
-          "id": "extra_p1",
-          "minScore": 0,
-          "maxScore": 30,
-          "category": "Extra Scope",
-          "title": "More awesome things",
-          "description": "Be creative and make up some more awesome things"
-        },
-        {
-          "id": "fines_p1",
-          "minScore": -10,
-          "maxScore": 0,
-          "category": "Fines",
-          "title": "App crashes",
-          "description": "App causes BSoD!"
-        }
       ]
     },
     {
@@ -48,33 +22,62 @@
         "Basic Scope",
         "Extra Scope",
         "Fines"
-      ],
+      ]
+    },
+    {
+      "title": "Task 3",
+      "description": "Task 3 description",
+      "authorId": 11542402,
+      "slug": "task-3",
+      "state": "PUBLISHED",
+      "id": 3
+    }
+  ],
+  "categories": [
+    {
+      "id": 1,
+      "taskId": 1,
+      "title": "Basic scope",
+      "slug": "basic-scope",
+      "description": "You need to make things right, not wrong",
+      "items": []
+    },
+    {
+      "id": 2,
+      "taskId": 2,
+      "title": "Extra scope",
+      "slug": "extra-scope",
+      "description": "Be creative and make up some more awesome things",
+      "items": []
+    },
+    {
+      "id": 3,
+      "taskId": 1,
+      "title": "Fines",
+      "fines": "extra-scope",
+      "description": "App causes BSoD!",
       "items": [
         {
-          "id": "basic_p1",
-          "minScore": 0,
-          "maxScore": 20,
-          "category": "Basic Scope",
-          "title": "Basic things",
-          "description": "You need to make things right, not wrong"
-        },
-        {
-          "id": "extra_p1",
-          "minScore": 0,
-          "maxScore": 30,
-          "category": "Extra Scope",
-          "title": "More awesome things",
-          "description": "Be creative and make up some more awesome things"
-        },
-        {
-          "id": "fines_p1",
-          "minScore": -10,
-          "maxScore": 0,
-          "category": "Fines",
-          "title": "App crashes",
-          "description": "App causes BSoD!"
+          "minScore": "1",
+          "maxScore": "10",
+          "description": "test"
         }
-      ]
+      ],
+      "slug": "fines"
+    },
+    {
+      "title": "Category for task 3",
+      "description": "Category for task 3",
+      "items": [
+        {
+          "minScore": "2",
+          "maxScore": "6",
+          "description": "test"
+        }
+      ],
+      "slug": "category-for-task-3",
+      "taskId": "3",
+      "id": 4
     }
   ],
   "taskScore": [
@@ -113,76 +116,7 @@
       }
     }
   ],
-  "crossCheckSession": [
-    {
-      "id": 1,
-      "slug": "rss2020Q3react-xcheck",
-      "state": "CROSS_CHECK",
-      "taskId": "simple-task-v1",
-      "coefficient": 0.7,
-      "startDate": "2020-07-07",
-      "endDate": "2020-07-14",
-      "discardMinScore": true,
-      "discardMaxScore": false,
-      "minReiewsAmount": 1,
-      "desiredReviewersAmount": 2,
-      "attendees": [
-        {
-          "githubId": "ButterBrot777",
-          "reviewerOf": [
-            "torvalds",
-            "cardamo"
-          ]
-        },
-        {
-          "githubId": "torvalds",
-          "reviewerOf": [
-            "cardamo"
-          ]
-        },
-        {
-          "githubId": "cardamo",
-          "reviewerOf": [
-            "ButterBrot777"
-          ]
-        },
-        {
-          "id": 2,
-          "slug": "rss2020Q3react-schedule",
-          "state": "DRAFT",
-          "taskId": "simple-task-v1",
-          "coefficient": 0.7,
-          "startDate": "2020-07-07",
-          "endDate": "2020-07-14",
-          "discardMinScore": true,
-          "discardMaxScore": false,
-          "minReiewsAmount": 1,
-          "desiredReviewersAmount": 2,
-          "attendees": [
-            {
-              "githubId": "ButterBrot777",
-              "reviewerOf": [
-                "torvalds",
-                "cardamo"
-              ]
-            },
-            {
-              "githubId": "torvalds",
-              "reviewerOf": [
-                "cardamo"
-              ]
-            },
-            {
-              "githubId": "cardamo",
-              "reviewerOf": [
-                "ButterBrot777"
-              ]
-            }
-          ]
-        }
-      ]
-    }
-  ],
+  "crossCheckSession": [],
   "reviewRequest": [
     {
       "id": "rev-req-1",

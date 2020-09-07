@@ -42,7 +42,15 @@ const TasksList = () => {
           width={300}
           render={(row) => (
             <Space size="middle">
-              <ButtonLink icon={<EditOutlined />} linkTo={`/tasks/edit/${row.id}`}>
+              <ButtonLink
+                type="primary"
+                icon={<PlusOutlined />}
+                linkTo={`/tasks/${row.id}/categories/create`}
+              >
+                Category
+              </ButtonLink>
+
+              <ButtonLink icon={<EditOutlined />} linkTo={`/tasks/${row.id}/edit`}>
                 Edit
               </ButtonLink>
 

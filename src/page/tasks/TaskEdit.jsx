@@ -1,14 +1,115 @@
-import React from 'react'
+import React, { useState, useRef, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
+import { Form, Input, Button, Table, Space, notification } from 'antd'
+import { EditOutlined, DeleteOutlined, PlusOutlined } from '@ant-design/icons'
 
-const CreateEdit = () => {
+import tasksService from '../../services/tasks.service'
+import categoriesService from '../../services/categories.service'
+import ButtonLink from '../../component/ButtonLink'
+
+const { TextArea } = Input
+const { Column } = Table
+
+const validateMessages = {
+  required: 'Required',
+}
+
+const TaskEdit = () => {
+  const [items, setCategories] = useState([])
   const { taskId } = useParams()
+  const formRef = useRef(null)
+  const [form] = Form.useForm()
+
+  useEffect(() => {
+    tasksService.getById(taskId).then((data) => form.setFieldsValue(data))
+    categoriesService.getAllByTaskId(taskId).then((data) => setCategories(data))
+  }, [taskId, form])
+
+  const onFinish = async (task) => {
+    await tasksService.edit(task, taskId)
+  }
+
+  const destroyCategory = async (categoryId) => {
+    await categoriesService.destroyById(categoryId)
+    setCategories((prev) => prev.filter((category) => category.id !== categoryId))
+
+    notification.success({
+      className: 'app-notification app-notification--info',
+      message: 'Success',
+      description: 'Category deleted successfully...',
+    })
+  }
 
   return (
-    <div className="home-page">
-      <h1>Edit Task #{taskId}</h1>
+    <div className="task-edit-page">
+      <Form
+        form={form}
+        ref={formRef}
+        layout="vertical"
+        validateMessages={validateMessages}
+        onFinish={onFinish}
+      >
+        <Form.Item
+          name="title"
+          label="Title"
+          rules={[
+            {
+              required: true,
+            },
+          ]}
+        >
+          <Input />
+        </Form.Item>
+
+        <Form.Item name="description" label="Description">
+          <TextArea rows={5} />
+        </Form.Item>
+
+        <Form.Item>
+          <Button type="primary" htmlType="submit">
+            Save
+          </Button>
+        </Form.Item>
+
+        <div className="categories-list">
+          <div className="d-flex justify-content-end align-items-center mb-2">
+            <ButtonLink
+              type="primary"
+              icon={<PlusOutlined />}
+              linkTo={`/tasks/${taskId}/category/create`}
+            >
+              Category
+            </ButtonLink>
+          </div>
+          <Table dataSource={items} rowKey="id">
+            <Column width={60} title="#" dataIndex="id" key="id" />
+            <Column title="Title" dataIndex="title" key="title" />
+            <Column title="Description" dataIndex="description" key="description" />
+            <Column
+              title="Action"
+              key="action"
+              width={200}
+              render={(row) => (
+                <Space size="middle">
+                  <ButtonLink icon={<EditOutlined />} linkTo={`/categories/${row.id}/edit`}>
+                    Veiw
+                  </ButtonLink>
+
+                  <Button
+                    type="danger"
+                    icon={<DeleteOutlined />}
+                    onClick={() => destroyCategory(row.id)}
+                  >
+                    Remove
+                  </Button>
+                </Space>
+              )}
+            />
+          </Table>
+        </div>
+      </Form>
     </div>
   )
 }
 
-export default CreateEdit
+export default TaskEdit

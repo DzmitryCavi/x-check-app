@@ -7,7 +7,10 @@ const getAll = async () => {
   return status === 200 && tasks ? tasks : []
 }
 
-// const getById = async (id) => {}
+const getById = async (id) => {
+  const { data: task, status } = await axios.get(`${API_URL}/tasks/${id}`)
+  return status === 200 && task ? task : null
+}
 
 const create = async (task, authorId = -1) => {
   await axios.post(`${API_URL}/tasks`, {
@@ -15,16 +18,16 @@ const create = async (task, authorId = -1) => {
     authorId,
     slug: slug(task.title),
     state: 'PUBLISHED',
-    categories: task.categories.map((category, i) => ({
-      ...category,
-      id: i + 1,
-      minScore: Number(category.minScore),
-      maxScore: Number(category.maxScore),
-    })),
   })
 }
 
-// const edit = async (task) => {}
+const edit = async (task, taskId) => {
+  await axios.patch(`${API_URL}/tasks/${taskId}`, {
+    ...task,
+    slug: slug(task.title),
+    state: 'PUBLISHED',
+  })
+}
 
 const destroyById = async (id) => {
   const { data, status } = await axios.delete(`${API_URL}/tasks/${id}`)
@@ -33,8 +36,8 @@ const destroyById = async (id) => {
 
 export default {
   getAll,
-  //   getById,
+  getById,
   create,
-  //   edit,
+  edit,
   destroyById,
 }

@@ -11,6 +11,8 @@ import NotFound from '../page/NotFound'
 import TasksList from '../page/tasks/TasksList'
 import TaskCreate from '../page/tasks/TaskCreate'
 import TaskEdit from '../page/tasks/TaskEdit'
+import CategoryCreate from '../page/categories/CategoryCreate'
+import CategoryEdit from '../page/categories/CategoryEdit'
 
 const AppRoutes = () => {
   return (
@@ -25,12 +27,23 @@ const AppRoutes = () => {
 
               {/* Author */}
               <PrivateRoute
-                path="/tasks/edit/:taskId"
+                path="/tasks/:taskId/categories/create"
+                component={CategoryCreate}
+                allowedRoles={['author']}
+              />
+              <PrivateRoute
+                path="/tasks/:taskId/edit"
                 component={TaskEdit}
                 allowedRoles={['author']}
               />
               <PrivateRoute path="/tasks/create" component={TaskCreate} allowedRoles={['author']} />
               <PrivateRoute path="/tasks" component={TasksList} allowedRoles={['author']} />
+
+              <PrivateRoute
+                path="/categories/:categoryId/edit"
+                component={CategoryEdit}
+                allowedRoles={['author']}
+              />
 
               <Route path="*" component={NotFound} />
             </Switch>
