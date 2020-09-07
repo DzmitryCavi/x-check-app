@@ -1,7 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import { Menu } from 'antd'
-import { UserOutlined, LaptopOutlined } from '@ant-design/icons'
+import { UserOutlined, CarryOutOutlined } from '@ant-design/icons'
 
 const MenuCourseManager = () => {
   return (
@@ -9,8 +9,8 @@ const MenuCourseManager = () => {
       <Menu.Item icon={<UserOutlined />} key="1">
         <Link to="/">Home</Link>
       </Menu.Item>
-      <Menu.Item icon={<LaptopOutlined />} key="2">
-        <Link to="/private">Course Manager</Link>
+      <Menu.Item icon={<CarryOutOutlined />} key="2">
+        <Link to="/marks">Marks</Link>
       </Menu.Item>
     </Menu>
   )
