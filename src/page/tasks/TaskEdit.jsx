@@ -92,7 +92,7 @@ const TaskEdit = () => {
             <ButtonLink
               type="primary"
               icon={<PlusOutlined />}
-              linkTo={`/tasks/${taskId}/category/create`}
+              linkTo={`/tasks/${taskId}/categories/create`}
             >
               Category
             </ButtonLink>
