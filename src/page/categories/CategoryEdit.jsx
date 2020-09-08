@@ -33,6 +33,7 @@ const CategoryEdit = () => {
 
   return (
     <div className="category-edit-page">
+      <h1 className="page-title">Category Edit</h1>
       <Form form={form} layout="vertical" validateMessages={validateMessages} onFinish={onFinish}>
         <Form.Item
           name="title"

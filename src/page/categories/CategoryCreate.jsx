@@ -29,6 +29,7 @@ const CategoryCreate = () => {
 
   return (
     <div className="category-create-page">
+      <h1 className="page-title">Category Create</h1>
       <Form ref={formRef} layout="vertical" validateMessages={validateMessages} onFinish={onFinish}>
         <Form.Item
           name="title"

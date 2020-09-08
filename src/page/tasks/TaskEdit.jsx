@@ -48,6 +48,7 @@ const TaskEdit = () => {
 
   return (
     <div className="task-edit-page">
+      <h1 className="page-title">Task Edit</h1>
       <Form
         form={form}
         ref={formRef}

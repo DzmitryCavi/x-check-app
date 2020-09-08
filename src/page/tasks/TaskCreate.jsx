@@ -33,6 +33,7 @@ const TaskCreate = ({ user }) => {
 
   return (
     <div className="task-create-page">
+      <h1 className="page-title">Task Create</h1>
       <Form ref={formRef} layout="vertical" validateMessages={validateMessages} onFinish={onFinish}>
         <Form.Item
           name="title"
