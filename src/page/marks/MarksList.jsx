@@ -1,32 +1,7 @@
 import React from 'react'
 import { Table, Button, Space } from 'antd'
-
-const dataSource = [
-  {
-    key: 1,
-    task: 'Songbird',
-    student: 'multeng',
-    reviewer: 'ButterBrot777',
-    score: 30,
-    max_score: 30,
-  },
-  {
-    key: 2,
-    task: 'X-check',
-    student: 'GurbanovAli',
-    reviewer: 'cardamo',
-    score: 20,
-    max_score: 30,
-  },
-  {
-    key: 3,
-    task: 'Codewars React',
-    student: 'Ftorik',
-    reviewer: 'torvalds',
-    score: 10,
-    max_score: 30,
-  },
-]
+import ButtonLink from '../../component/ButtonLink'
+import fakeData from './fakeData'
 
 class MarksList extends React.Component {
   constructor() {
@@ -90,19 +65,19 @@ class MarksList extends React.Component {
       },
       {
         title: 'Max Score',
-        dataIndex: 'max_score',
+        dataIndex: 'maxScore',
         sorter: {
-          compare: (a, b) => a.max_score - b.max_score,
+          compare: (a, b) => a.maxScore - b.maxScore,
           multiple: 1,
         },
       },
       {
         title: 'Action',
         dataindex: 'action',
-        render: () => (
-          <Button type="primary" size="large">
+        render: (row) => (
+          <ButtonLink type="primary" size="large" linkTo={`/marks/${row.key}`}>
             Info
-          </Button>
+          </ButtonLink>
         ),
       },
     ]
@@ -111,7 +86,7 @@ class MarksList extends React.Component {
         <Space style={{ marginBottom: 16 }}>
           <Button onClick={this.clearFilters}>Clear filters</Button>
         </Space>
-        <Table columns={columns} dataSource={dataSource} onChange={this.handleChange} />
+        <Table columns={columns} dataSource={fakeData} onChange={this.handleChange} />
       </>
     )
   }
