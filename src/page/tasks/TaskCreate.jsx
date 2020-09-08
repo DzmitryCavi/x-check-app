@@ -5,12 +5,11 @@ import { connect } from 'react-redux'
 import { Form, Input, Button, notification } from 'antd'
 import { PlusOutlined } from '@ant-design/icons'
 import ButtonLink from '../../component/ButtonLink'
+import AntdTinymce from '../../component/AntdTinymce'
 
 import tasksService from '../../services/tasks.service'
 
 import './style.scss'
-
-const { TextArea } = Input
 
 const validateMessages = {
   required: 'Required',
@@ -48,7 +47,7 @@ const TaskCreate = ({ user }) => {
         </Form.Item>
 
         <Form.Item name="description" label="Description">
-          <TextArea rows={5} />
+          <AntdTinymce options={{ height: 400 }} />
         </Form.Item>
 
         <Form.Item>
