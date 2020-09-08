@@ -2,12 +2,12 @@ import React, { useState, useRef, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 import { Form, Input, Button, Table, Space, Radio, notification } from 'antd'
 import { EditOutlined, DeleteOutlined, PlusOutlined } from '@ant-design/icons'
+import AntdTinymce from '../../../component/AntdTinymce'
 
 import tasksService from '../../../services/tasks.service'
 import categoriesService from '../../../services/categories.service'
 import ButtonLink from '../../../component/ButtonLink'
 
-const { TextArea } = Input
 const { Column } = Table
 
 const validateMessages = {
@@ -85,7 +85,7 @@ const TaskEdit = () => {
         </Form.Item>
 
         <Form.Item name="description" label="Description">
-          <TextArea rows={5} />
+          <AntdTinymce options={{ height: 400 }} />
         </Form.Item>
 
         <Form.Item>
