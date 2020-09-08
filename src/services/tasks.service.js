@@ -13,12 +13,13 @@ const getById = async (id) => {
 }
 
 const create = async (task, authorId = -1) => {
-  await axios.post(`${API_URL}/tasks`, {
+  const { data, status } = await axios.post(`${API_URL}/tasks`, {
     ...task,
     authorId,
     slug: slug(task.title),
     state: 'PUBLISHED',
   })
+  return status === 201 && data ? data : null
 }
 
 const edit = async (task, taskId) => {

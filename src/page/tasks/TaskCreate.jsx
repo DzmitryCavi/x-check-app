@@ -1,8 +1,10 @@
 /* eslint-disable react/jsx-props-no-spreading */
-import React, { useRef } from 'react'
+import React, { useState, useRef } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { Form, Input, Button } from 'antd'
+import { PlusOutlined } from '@ant-design/icons'
+import ButtonLink from '../../component/ButtonLink'
 
 import tasksService from '../../services/tasks.service'
 
@@ -15,10 +17,12 @@ const validateMessages = {
 }
 
 const TaskCreate = ({ user }) => {
+  const [taskId, setTaskId] = useState(null)
   const formRef = useRef(null)
 
-  const onFinish = async (task) => {
-    await tasksService.create(task, user.id)
+  const onFinish = async (data) => {
+    const task = await tasksService.create(data, user.id)
+    setTaskId(task.id)
     formRef.current.resetFields()
   }
 
@@ -47,6 +51,19 @@ const TaskCreate = ({ user }) => {
           </Button>
         </Form.Item>
       </Form>
+
+      {taskId ? (
+        <ButtonLink
+          type="dashed"
+          icon={<PlusOutlined />}
+          linkTo={`/tasks/${taskId}/categories/create`}
+          block
+        >
+          Category
+        </ButtonLink>
+      ) : (
+        ''
+      )}
     </div>
   )
 }
