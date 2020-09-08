@@ -1,32 +1,24 @@
 {
   "tasks": [
     {
-      "id": 1,
-      "slug": "task-1",
       "title": "Task 1",
+      "description": "Description task 1",
       "authorId": 11542402,
-      "state": "ARCHIVED",
-      "categoriesOrder": [
-        "Basic Scope",
-        "Extra Scope",
-        "Fines"
-      ]
+      "slug": "task-1",
+      "state": "PUBLISHED",
+      "id": 1
     },
     {
-      "id": 2,
-      "slug": "task-2",
       "title": "Task 2",
+      "description": "Description task 2",
       "authorId": 11542402,
+      "slug": "task-2",
       "state": "PUBLISHED",
-      "categoriesOrder": [
-        "Basic Scope",
-        "Extra Scope",
-        "Fines"
-      ]
+      "id": 2
     },
     {
       "title": "Task 3",
-      "description": "Task 3 description",
+      "description": "Description task 3",
       "authorId": 11542402,
       "slug": "task-3",
       "state": "PUBLISHED",
@@ -35,70 +27,67 @@
   ],
   "categories": [
     {
-      "id": 1,
-      "taskId": 1,
-      "title": "Basic scope",
-      "slug": "basic-scope",
-      "description": "You need to make things right, not wrong",
-      "items": []
-    },
-    {
-      "id": 2,
-      "taskId": 2,
-      "title": "Extra scope",
-      "slug": "extra-scope",
-      "description": "Be creative and make up some more awesome things",
-      "items": []
-    },
-    {
-      "id": 3,
-      "taskId": 1,
-      "title": "Fines",
-      "fines": "extra-scope",
-      "description": "App causes BSoD!",
+      "title": "Category task 1",
+      "description": "Description category task 1",
       "items": [
         {
-          "minScore": "1",
-          "maxScore": "10",
-          "description": "test"
-        }
-      ],
-      "slug": "fines"
-    },
-    {
-      "title": "Category for task 3",
-      "description": "Category for task 3",
-      "items": [
-        {
-          "minScore": "2",
-          "maxScore": "6",
-          "description": "test"
-        }
-      ],
-      "slug": "category-for-task-3",
-      "taskId": "3",
-      "id": 4
-    },
-    {
-      "title": "456dfgdfg",
-      "description": "dfgfdg345",
-      "items": [
-        {
-          "minScore": "1",
-          "maxScore": "2",
-          "description": "dssdfsdf",
-          "id": "9e37ab3d-ab86-4f9e-a705-01fb82fdc5cd"
+          "minScore": "0",
+          "maxScore": "20",
+          "description": "Description item 1",
+          "id": "af9947d2-c51a-44cb-9a8a-cfbaee688253"
         },
         {
-          "minScore": "3",
-          "maxScore": "4",
-          "description": "edit 34234234324",
-          "id": "3bb4c89e-4cfd-4c3b-b706-ae48fc59ccbb"
+          "minScore": "0",
+          "maxScore": "30",
+          "description": "Description item 2",
+          "id": "68ee7afa-aa0c-4e62-8bf6-1c3e2d57213c"
         }
       ],
-      "slug": "456dfgdfg",
+      "slug": "category-task-1",
       "taskId": "1",
-      "id": 5
+      "id": 1
+    },
+    {
+      "title": "Category task 1",
+      "description": "Category task 1",
+      "items": [
+        {
+          "minScore": "0",
+          "maxScore": "40",
+          "description": "Description item 1",
+          "id": "3d2c1950-ebe7-4365-a619-53f993bdde95"
+        }
+      ],
+      "slug": "category-task-1",
+      "taskId": "1",
+      "id": 2
+    },
+    {
+      "title": "Category task 2",
+      "description": "Description task 2",
+      "items": [
+        {
+          "minScore": "0",
+          "maxScore": "100",
+          "description": "Description item 1",
+          "id": "4f09ee93-a152-45f3-8578-7b9a842754cb"
+        },
+        {
+          "minScore": "0",
+          "maxScore": "40",
+          "description": "Description item 2",
+          "id": "b74d550d-26e3-410f-846f-e5fb46e36e68"
+        },
+        {
+          "minScore": "0",
+          "maxScore": "60",
+          "description": "Description item 3",
+          "id": "2684b0a7-f2b9-4f4b-91c5-44f2d2d1448b"
+        }
+      ],
+      "slug": "category-task-2",
+      "taskId": "2",
+      "id": 3
     }
   ],
   "taskScore": [
