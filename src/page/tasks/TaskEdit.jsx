@@ -25,8 +25,14 @@ const TaskEdit = () => {
     categoriesService.getAllByTaskId(taskId).then((data) => setCategories(data))
   }, [taskId, form])
 
-  const onFinish = async (task) => {
-    await tasksService.edit(task, taskId)
+  const onFinish = async (data) => {
+    await tasksService.edit(data, taskId)
+
+    notification.success({
+      className: 'app-notification app-notification--success',
+      message: 'Success',
+      description: 'Task updated successfully...',
+    })
   }
 
   const destroyCategory = async (categoryId) => {
@@ -34,7 +40,7 @@ const TaskEdit = () => {
     setCategories((prev) => prev.filter((category) => category.id !== categoryId))
 
     notification.success({
-      className: 'app-notification app-notification--info',
+      className: 'app-notification app-notification--success',
       message: 'Success',
       description: 'Category deleted successfully...',
     })

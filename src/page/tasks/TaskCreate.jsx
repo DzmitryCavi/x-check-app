@@ -2,7 +2,7 @@
 import React, { useState, useRef } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { Form, Input, Button } from 'antd'
+import { Form, Input, Button, notification } from 'antd'
 import { PlusOutlined } from '@ant-design/icons'
 import ButtonLink from '../../component/ButtonLink'
 
@@ -23,7 +23,12 @@ const TaskCreate = ({ user }) => {
   const onFinish = async (data) => {
     const task = await tasksService.create(data, user.id)
     setTaskId(task.id)
-    formRef.current.resetFields()
+
+    notification.success({
+      className: 'app-notification app-notification--success',
+      message: 'Success',
+      description: 'Task created successfully...',
+    })
   }
 
   return (

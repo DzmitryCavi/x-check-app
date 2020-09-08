@@ -1,7 +1,7 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import React, { useEffect } from 'react'
 import { useParams } from 'react-router-dom'
-import { Form, Input, Button } from 'antd'
+import { Form, Input, Button, notification } from 'antd'
 
 import './style.scss'
 import { PlusOutlined, MinusCircleOutlined } from '@ant-design/icons'
@@ -23,6 +23,12 @@ const CategoryEdit = () => {
 
   const onFinish = async (data) => {
     await categoriesService.edit(data, categoryId)
+
+    notification.success({
+      className: 'app-notification app-notification--success',
+      message: 'Success',
+      description: 'Category updated successfully...',
+    })
   }
 
   return (
