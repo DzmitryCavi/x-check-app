@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
+import { Link } from 'react-router-dom'
 import { Table, Space, Button, notification } from 'antd'
-import { DeleteOutlined, EditOutlined, PlusOutlined } from '@ant-design/icons'
+import { DeleteOutlined, EditOutlined, PlusOutlined, EyeOutlined } from '@ant-design/icons'
 import ButtonLink from '../../../component/ButtonLink'
 
 import tasksService from '../../../services/tasks.service'
@@ -35,7 +36,12 @@ const TasksList = () => {
       </div>
       <Table dataSource={tasks} rowKey="id">
         <Column width={60} title="#" dataIndex="id" key="id" />
-        <Column title="Title" dataIndex="title" key="title" />
+        <Column
+          title="Title"
+          dataIndex="title"
+          key="title"
+          render={(row) => <Link to={`/author/tasks/${row.id}/view`}>{row.title}</Link>}
+        />
         <Column title="State" dataIndex="state" key="state" />
         <Column
           title="Action"
@@ -49,6 +55,10 @@ const TasksList = () => {
                 linkTo={`/author/tasks/${row.id}/categories/create`}
               >
                 Category
+              </ButtonLink>
+
+              <ButtonLink icon={<EyeOutlined />} linkTo={`/author/tasks/${row.id}/view`}>
+                View
               </ButtonLink>
 
               <ButtonLink icon={<EditOutlined />} linkTo={`/author/tasks/${row.id}/edit`}>

@@ -11,6 +11,7 @@ import NotFound from '../page/NotFound'
 import TasksList from '../page/author/tasks/TasksList'
 import TaskCreate from '../page/author/tasks/TaskCreate'
 import TaskEdit from '../page/author/tasks/TaskEdit'
+import TaskView from '../page/author/tasks/TaskView'
 import CategoryCreate from '../page/author/categories/CategoryCreate'
 import CategoryEdit from '../page/author/categories/CategoryEdit'
 
@@ -36,8 +37,17 @@ const AppRoutes = () => {
                 component={TaskEdit}
                 allowedRoles={['author']}
               />
-              <PrivateRoute path="/tasks/create" component={TaskCreate} allowedRoles={['author']} />
-              <PrivateRoute path="/tasks" component={TasksList} allowedRoles={['author']} />
+              <PrivateRoute
+                path="/author/tasks/:taskId/view"
+                component={TaskView}
+                allowedRoles={['author']}
+              />
+              <PrivateRoute
+                path="/author/tasks/create"
+                component={TaskCreate}
+                allowedRoles={['author']}
+              />
+              <PrivateRoute path="/author/tasks" component={TasksList} allowedRoles={['author']} />
 
               <PrivateRoute
                 path="/author/categories/:categoryId/edit"
