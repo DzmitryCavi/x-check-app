@@ -78,6 +78,27 @@
       "slug": "category-for-task-3",
       "taskId": "3",
       "id": 4
+    },
+    {
+      "title": "456dfgdfg",
+      "description": "dfgfdg345",
+      "items": [
+        {
+          "minScore": "1",
+          "maxScore": "2",
+          "description": "dssdfsdf",
+          "id": "9e37ab3d-ab86-4f9e-a705-01fb82fdc5cd"
+        },
+        {
+          "minScore": "3",
+          "maxScore": "4",
+          "description": "edit 34234234324",
+          "id": "3bb4c89e-4cfd-4c3b-b706-ae48fc59ccbb"
+        }
+      ],
+      "slug": "456dfgdfg",
+      "taskId": "1",
+      "id": 5
     }
   ],
   "taskScore": [

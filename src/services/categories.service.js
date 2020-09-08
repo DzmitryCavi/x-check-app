@@ -1,5 +1,6 @@
 import axios from 'axios'
 import slug from 'slug'
+import { v4 as uuid } from 'uuid'
 import { API_URL } from '../config'
 
 const getAllByTaskId = async (taskId = -1) => {
@@ -16,6 +17,7 @@ const create = async (category, taskId = -1) => {
   await axios.post(`${API_URL}/tasks/${taskId}/categories`, {
     ...category,
     slug: slug(category.title),
+    items: category.items.map((item) => ({ ...item, id: uuid() })),
   })
 }
 
