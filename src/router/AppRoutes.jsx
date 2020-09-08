@@ -8,11 +8,11 @@ import Home from '../page/Home'
 import Login from '../page/Login'
 import NotFound from '../page/NotFound'
 
-import TasksList from '../page/tasks/TasksList'
-import TaskCreate from '../page/tasks/TaskCreate'
-import TaskEdit from '../page/tasks/TaskEdit'
-import CategoryCreate from '../page/categories/CategoryCreate'
-import CategoryEdit from '../page/categories/CategoryEdit'
+import TasksList from '../page/author/tasks/TasksList'
+import TaskCreate from '../page/author/tasks/TaskCreate'
+import TaskEdit from '../page/author/tasks/TaskEdit'
+import CategoryCreate from '../page/author/categories/CategoryCreate'
+import CategoryEdit from '../page/author/categories/CategoryEdit'
 
 const AppRoutes = () => {
   return (
@@ -27,12 +27,12 @@ const AppRoutes = () => {
 
               {/* Author */}
               <PrivateRoute
-                path="/tasks/:taskId/categories/create"
+                path="/author/tasks/:taskId/categories/create"
                 component={CategoryCreate}
                 allowedRoles={['author']}
               />
               <PrivateRoute
-                path="/tasks/:taskId/edit"
+                path="/author/tasks/:taskId/edit"
                 component={TaskEdit}
                 allowedRoles={['author']}
               />
@@ -40,7 +40,7 @@ const AppRoutes = () => {
               <PrivateRoute path="/tasks" component={TasksList} allowedRoles={['author']} />
 
               <PrivateRoute
-                path="/categories/:categoryId/edit"
+                path="/author/categories/:categoryId/edit"
                 component={CategoryEdit}
                 allowedRoles={['author']}
               />

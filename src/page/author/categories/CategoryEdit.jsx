@@ -1,11 +1,11 @@
 /* eslint-disable react/jsx-props-no-spreading */
-import React, { useRef } from 'react'
+import React, { useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 import { Form, Input, Button, notification } from 'antd'
 
 import './style.scss'
 import { PlusOutlined, MinusCircleOutlined } from '@ant-design/icons'
-import categoriesService from '../../services/categories.service'
+import categoriesService from '../../../services/categories.service'
 
 const { TextArea } = Input
 
@@ -13,24 +13,28 @@ const validateMessages = {
   required: 'Required',
 }
 
-const CategoryCreate = () => {
-  const { taskId } = useParams()
-  const formRef = useRef(null)
+const CategoryEdit = () => {
+  const { categoryId } = useParams()
+  const [form] = Form.useForm()
+
+  useEffect(() => {
+    categoriesService.getById(categoryId).then((data) => form.setFieldsValue(data))
+  }, [categoryId, form])
 
   const onFinish = async (data) => {
-    await categoriesService.create(data, taskId)
+    await categoriesService.edit(data, categoryId)
 
     notification.success({
       className: 'app-notification app-notification--success',
       message: 'Success',
-      description: 'Category created successfully...',
+      description: 'Category updated successfully...',
     })
   }
 
   return (
-    <div className="category-create-page">
-      <h1 className="page-title">Category Create</h1>
-      <Form ref={formRef} layout="vertical" validateMessages={validateMessages} onFinish={onFinish}>
+    <div className="category-edit-page">
+      <h1 className="page-title">Category Edit</h1>
+      <Form form={form} layout="vertical" validateMessages={validateMessages} onFinish={onFinish}>
         <Form.Item
           name="title"
           label="Title"
@@ -134,4 +138,4 @@ const CategoryCreate = () => {
   )
 }
 
-export default CategoryCreate
+export default CategoryEdit

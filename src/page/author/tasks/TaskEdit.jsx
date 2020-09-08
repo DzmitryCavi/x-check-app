@@ -3,9 +3,9 @@ import { useParams } from 'react-router-dom'
 import { Form, Input, Button, Table, Space, Radio, notification } from 'antd'
 import { EditOutlined, DeleteOutlined, PlusOutlined } from '@ant-design/icons'
 
-import tasksService from '../../services/tasks.service'
-import categoriesService from '../../services/categories.service'
-import ButtonLink from '../../component/ButtonLink'
+import tasksService from '../../../services/tasks.service'
+import categoriesService from '../../../services/categories.service'
+import ButtonLink from '../../../component/ButtonLink'
 
 const { TextArea } = Input
 const { Column } = Table
@@ -99,7 +99,7 @@ const TaskEdit = () => {
             <ButtonLink
               type="primary"
               icon={<PlusOutlined />}
-              linkTo={`/tasks/${taskId}/categories/create`}
+              linkTo={`/author/tasks/${taskId}/categories/create`}
             >
               Category
             </ButtonLink>
@@ -114,7 +114,7 @@ const TaskEdit = () => {
               width={200}
               render={(row) => (
                 <Space size="middle">
-                  <ButtonLink icon={<EditOutlined />} linkTo={`/categories/${row.id}/edit`}>
+                  <ButtonLink icon={<EditOutlined />} linkTo={`/author/categories/${row.id}/edit`}>
                     Veiw
                   </ButtonLink>
 

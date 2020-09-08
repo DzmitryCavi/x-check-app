@@ -4,10 +4,10 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { Form, Input, Button, notification } from 'antd'
 import { PlusOutlined } from '@ant-design/icons'
-import ButtonLink from '../../component/ButtonLink'
-import AntdTinymce from '../../component/AntdTinymce'
+import ButtonLink from '../../../component/ButtonLink'
+import AntdTinymce from '../../../component/AntdTinymce'
 
-import tasksService from '../../services/tasks.service'
+import tasksService from '../../../services/tasks.service'
 
 import './style.scss'
 
@@ -61,7 +61,7 @@ const TaskCreate = ({ user }) => {
         <ButtonLink
           type="dashed"
           icon={<PlusOutlined />}
-          linkTo={`/tasks/${taskId}/categories/create`}
+          linkTo={`/author/tasks/${taskId}/categories/create`}
           block
         >
           Category

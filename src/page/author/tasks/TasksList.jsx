@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react'
 import { Table, Space, Button, notification } from 'antd'
 import { DeleteOutlined, EditOutlined, PlusOutlined } from '@ant-design/icons'
-import ButtonLink from '../../component/ButtonLink'
+import ButtonLink from '../../../component/ButtonLink'
 
-import tasksService from '../../services/tasks.service'
+import tasksService from '../../../services/tasks.service'
 
 const { Column } = Table
 
@@ -46,12 +46,12 @@ const TasksList = () => {
               <ButtonLink
                 type="primary"
                 icon={<PlusOutlined />}
-                linkTo={`/tasks/${row.id}/categories/create`}
+                linkTo={`/author/tasks/${row.id}/categories/create`}
               >
                 Category
               </ButtonLink>
 
-              <ButtonLink icon={<EditOutlined />} linkTo={`/tasks/${row.id}/edit`}>
+              <ButtonLink icon={<EditOutlined />} linkTo={`/author/tasks/${row.id}/edit`}>
                 Edit
               </ButtonLink>
 
