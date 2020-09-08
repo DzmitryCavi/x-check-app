@@ -27,7 +27,7 @@ const RequestsList = () => {
       renderItem={(item) => (
         <List.Item
           actions={[
-            <ButtonLink type="primary" icon={<EditOutlined />} linkTo="/review">
+            <ButtonLink type="primary" icon={<EditOutlined />} linkTo={`/request/${item.title}`}>
               Review
             </ButtonLink>,
           ]}

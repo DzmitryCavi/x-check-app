@@ -42,7 +42,11 @@ const AppRoutes = () => {
                 component={RequestList}
                 allowedRoles={['supervisor']}
               />
-              <PrivateRoute path="/review" component={TaskReview} allowedRoles={['supervisor']} />
+              <PrivateRoute
+                path="/request/:requestId"
+                component={TaskReview}
+                allowedRoles={['supervisor']}
+              />
 
               <Route path="*" component={NotFound} />
             </Switch>
