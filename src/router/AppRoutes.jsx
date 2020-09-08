@@ -14,6 +14,9 @@ import TaskEdit from '../page/tasks/TaskEdit'
 import CategoryCreate from '../page/categories/CategoryCreate'
 import CategoryEdit from '../page/categories/CategoryEdit'
 
+import RequestList from '../page/student/requests/RequestsList'
+import Request from '../page/student/requests/RequestCreate'
+
 const AppRoutes = () => {
   return (
     <Router>
@@ -43,6 +46,24 @@ const AppRoutes = () => {
                 path="/categories/:categoryId/edit"
                 component={CategoryEdit}
                 allowedRoles={['author']}
+              />
+
+              {/* Student */}
+
+              <PrivateRoute
+                path="/student/requests/"
+                component={RequestList}
+                allowedRoles={['student']}
+              />
+              <PrivateRoute
+                path="/student/requests/:requestId"
+                component={CategoryCreate}
+                allowedRoles={['student']}
+              />
+              <PrivateRoute
+                path="/student/request"
+                component={Request}
+                allowedRoles={['student']}
               />
 
               <Route path="*" component={NotFound} />
