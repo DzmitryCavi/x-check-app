@@ -29,39 +29,56 @@ const dataSource = [
 ]
 
 class MarksList extends React.Component {
-  //   state = {
-  //     filteredInfo: null,
-  //     sortedInfo: null,
-  //   }
+  constructor() {
+    super()
+    this.state = {
+      filteredInfo: null,
+    }
+  }
 
-  //   handleChange = (pagination, filters, sorter) => {
-  //     console.log('Various parameters', pagination, filters, sorter)
-  //     this.setState({
-  //       filteredInfo: filters,
-  //       sortedInfo: sorter,
-  //     })
-  //   }
+  handleChange = (pagination, filters) => {
+    this.setState({
+      filteredInfo: filters,
+    })
+  }
 
-  //   clearFilters = () => {
-  //     this.setState({ filteredInfo: null })
-  //   }
+  clearFilters = () => {
+    this.setState({ filteredInfo: null })
+  }
 
   render() {
-    // let { sortedInfo, filteredInfo } = this.state
-    // sortedInfo = sortedInfo || {}
-    // filteredInfo = filteredInfo || {}
+    let { filteredInfo } = this.state
+    filteredInfo = filteredInfo || {}
     const columns = [
       {
         title: 'Task',
         dataIndex: 'task',
+        filters: [
+          { text: 'Songbird', value: 'Songbird' },
+          { text: 'X-check', value: 'X-check' },
+        ],
+        filteredValue: filteredInfo.task || null,
+        onFilter: (value, record) => record.task.includes(value),
       },
       {
         title: 'Student',
         dataIndex: 'student',
+        filters: [
+          { text: 'multeng', value: 'multeng' },
+          { text: 'GurbanovAli', value: 'GurbanovAli' },
+        ],
+        filteredValue: filteredInfo.student || null,
+        onFilter: (value, record) => record.student.includes(value),
       },
       {
         title: 'Reviewer',
         dataIndex: 'reviewer',
+        filters: [
+          { text: 'ButterBrot777', value: 'ButterBrot777' },
+          { text: 'cardamo', value: 'cardamo' },
+        ],
+        filteredValue: filteredInfo.reviewer || null,
+        onFilter: (value, record) => record.reviewer.includes(value),
       },
       {
         title: 'Score',
