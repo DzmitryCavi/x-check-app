@@ -25,7 +25,6 @@ const edit = async (task, taskId) => {
   await axios.patch(`${API_URL}/tasks/${taskId}`, {
     ...task,
     slug: slug(task.title),
-    state: 'PUBLISHED',
   })
 }
 

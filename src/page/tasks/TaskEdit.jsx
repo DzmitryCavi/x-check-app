@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
-import { Form, Input, Button, Table, Space, notification } from 'antd'
+import { Form, Input, Button, Table, Space, Radio, notification } from 'antd'
 import { EditOutlined, DeleteOutlined, PlusOutlined } from '@ant-design/icons'
 
 import tasksService from '../../services/tasks.service'
@@ -49,6 +49,22 @@ const TaskEdit = () => {
         validateMessages={validateMessages}
         onFinish={onFinish}
       >
+        <Form.Item
+          label="State"
+          name="state"
+          rules={[
+            {
+              required: true,
+            },
+          ]}
+        >
+          <Radio.Group>
+            <Radio.Button value="DRAFT">DRAFT</Radio.Button>
+            <Radio.Button value="PUBLISHED">PUBLISHED</Radio.Button>
+            <Radio.Button value="ARCHIVED">ARCHIVED</Radio.Button>
+          </Radio.Group>
+        </Form.Item>
+
         <Form.Item
           name="title"
           label="Title"
