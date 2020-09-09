@@ -1,8 +1,10 @@
 import React, { useState, useEffect, useMemo } from 'react'
 import { useParams } from 'react-router-dom'
-import { Tree, Typography } from 'antd'
+import { Tree, Typography, Empty } from 'antd'
 import { CarryOutOutlined } from '@ant-design/icons'
 import parse from 'react-html-parser'
+
+import ButtonLink from '../../../component/ButtonLink'
 
 import tasksService from '../../../services/tasks.service'
 import categoriesService from '../../../services/categories.service'
@@ -40,7 +42,6 @@ const Taskview = () => {
   }, [taskId])
 
   const treeData = useMemo(() => transformCategoriesForTree(categories), [categories])
-  const parentKeys = useMemo(() => treeData.map((item) => item.key), [treeData])
 
   return (
     <div className="task-view-page">
@@ -53,7 +54,15 @@ const Taskview = () => {
             <Title level={4} className="task-categories__title">
               Categories:
             </Title>
-            <Tree expandedKeys={parentKeys} showLine={<CarryOutOutlined />} treeData={treeData} />
+            {treeData.length ? (
+              <Tree showLine={<CarryOutOutlined />} treeData={treeData} />
+            ) : (
+              <Empty description="Category not found :(">
+                <ButtonLink type="primary" linkTo={`/author/tasks/${taskId}/categories/create`}>
+                  Create Now
+                </ButtonLink>
+              </Empty>
+            )}
           </div>
         </div>
       </div>
