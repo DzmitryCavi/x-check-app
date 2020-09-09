@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
-
+import PropTypes from 'prop-types'
 import { Table, Space, Button } from 'antd'
+import { connect } from 'react-redux'
 
 import ButtonLink from '../../../component/ButtonLink'
 
@@ -8,12 +9,11 @@ import requestService from '../../../services/requests.service'
 
 const { Column } = Table
 
-const RequestList = () => {
+const RequestList = ({ user }) => {
   const [requests, setRequsets] = useState([])
-
   useEffect(() => {
-    requestService.getAll().then(setRequsets)
-  }, [])
+    requestService.getByAuthor(user).then(setRequsets)
+  }, [user])
 
   return (
     <div className="tasks-list-page">
@@ -24,8 +24,7 @@ const RequestList = () => {
         </ButtonLink>
       </div>
       <Table dataSource={requests} rowKey="id">
-        <Column width={60} title="#" dataIndex="id" key="id" />
-        <Column title="Title" dataIndex="title" key="title" />
+        <Column title="Task" dataIndex="task" key="title" />
         <Column title="State" dataIndex="state" key="state" />
         <Column
           title="Action"
@@ -34,7 +33,7 @@ const RequestList = () => {
           render={() => (
             <Space size="middle">
               <Button type="danger" onClick={() => {}}>
-                Remove
+                Edit
               </Button>
             </Space>
           )}
@@ -44,4 +43,14 @@ const RequestList = () => {
   )
 }
 
-export default RequestList
+RequestList.propTypes = {
+  user: PropTypes.string.isRequired,
+}
+
+const mapStateToProps = (state) => {
+  return {
+    user: state.auth.user.login,
+  }
+}
+
+export default connect(mapStateToProps, null)(RequestList)

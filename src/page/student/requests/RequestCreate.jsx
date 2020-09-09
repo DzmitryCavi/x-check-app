@@ -5,12 +5,6 @@ import tasksService from '../../../services/tasks.service'
 
 const { Option } = Select
 
-// const getchildren = async () =>
-//   await tasksService
-//     .getAllPublished()
-//     .map((el) => <Option key={`task${el.title}`}>{`task${el.title}`}</Option>)
-// console.log(getchildren())
-
 const Reqest = () => {
   const [tasks, setTasks] = useState([])
 
@@ -18,12 +12,12 @@ const Reqest = () => {
     tasksService.getAll().then(setTasks)
   }, [])
 
-  const children = tasks.map((el) => <Option key={`task${el.title}`}>{`${el.title}`}</Option>)
+  const children = tasks.map((el) => <Option key={el.title}>{el.title}</Option>)
 
   const [task, changeTask] = useState()
 
   const handleChange = (props) => {
-    changeTask(props)
+    changeTask(tasks.find((el) => el.title === props))
   }
   return (
     <div>

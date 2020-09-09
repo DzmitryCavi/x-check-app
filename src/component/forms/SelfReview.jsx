@@ -1,9 +1,16 @@
 /* eslint-disable react/jsx-props-no-spreading */
-import React, { useRef } from 'react'
+import React, { useRef, useEffect, useState } from 'react'
 import PropTypes from 'prop-types'
-import { Form, Input, notification } from 'antd'
+import { Form, notification, Spin } from 'antd'
+import categoriesService from '../../services/categories.service'
 
 const SelfReview = ({ task }) => {
+  const [categories, setCategories] = useState()
+
+  useEffect(() => {
+    categoriesService.getAllByTaskId(task.id).then(setCategories)
+  }, [task.id])
+
   const formRef = useRef(null)
 
   const onFinish = async () => {
@@ -16,26 +23,20 @@ const SelfReview = ({ task }) => {
 
   return (
     <div className="task-create-page">
-      <h1 className="page-title">Create request ({task})</h1>
+      <h1 className="page-title">Create request ({task.title})</h1>
       <Form ref={formRef} layout="vertical" onFinish={onFinish}>
-        <Form.Item
-          name="title"
-          label="Title"
-          rules={[
-            {
-              required: true,
-            },
-          ]}
-        >
-          <Input />
-        </Form.Item>
+        {categories ? (
+          categories.map((category) => <div key={category.id}>{category.title}</div>)
+        ) : (
+          <Spin size="large" />
+        )}
       </Form>
     </div>
   )
 }
 
 SelfReview.propTypes = {
-  task: PropTypes.string.isRequired,
+  task: PropTypes.instanceOf(Object).isRequired,
 }
 
 export default SelfReview
