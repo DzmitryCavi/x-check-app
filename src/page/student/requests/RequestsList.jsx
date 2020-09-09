@@ -1,14 +1,20 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 
 import { Table, Space, Button } from 'antd'
 
 import ButtonLink from '../../../component/ButtonLink'
 
+import requestService from '../../../services/requests.service'
+
 const { Column } = Table
 
-const requests = [1, 2, 3, 4, 5, 6]
-
 const RequestList = () => {
+  const [requests, setRequsets] = useState([])
+
+  useEffect(() => {
+    requestService.getAll().then(setRequsets)
+  }, [])
+
   return (
     <div className="tasks-list-page">
       <h1 className="page-title">Requests</h1>
