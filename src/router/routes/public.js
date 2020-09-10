@@ -2,17 +2,23 @@ import Home from '../../page/Home'
 import Login from '../../page/Login'
 import NotFound from '../../page/NotFound'
 
-export default {
-  home: {
-    path: '/',
+import EmptyLayout from '../../layouts/Empty'
+
+import { publicRoutes as routes } from '.'
+
+export default [
+  {
+    path: routes.home,
     component: Home,
+    breadcrumb: 'Home',
   },
-  login: {
-    path: '/login',
+  {
+    path: routes.login,
     component: Login,
+    layout: EmptyLayout,
   },
-  notFound: {
-    path: '*',
+  {
+    path: routes.notFound,
     component: NotFound,
   },
-}
+]

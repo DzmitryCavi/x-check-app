@@ -1,3 +1,9 @@
+export const publicRoutes = {
+  home: '/',
+  login: '/login',
+  notFound: '*',
+}
+
 export const authorRoutes = {
   tasks: {
     list: '/author/tasks',
@@ -7,7 +13,7 @@ export const authorRoutes = {
   },
   categories: {
     create: '/author/tasks/:taskId/categories/create',
-    edit: '/author/categories/:categoryId/view',
+    edit: '/author/categories/:categoryId/edit',
   },
 }
 

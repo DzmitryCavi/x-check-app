@@ -16,6 +16,7 @@
     "react-dom": "^16.13.1",
     "react-html-parser": "^2.0.2",
     "react-redux": "^7.2.1",
+    "react-router-breadcrumbs-hoc": "^3.3.0",
     "react-router-dom": "^5.2.0",
     "react-router-named-routes": "0.0.23",
     "react-scripts": "3.4.3",

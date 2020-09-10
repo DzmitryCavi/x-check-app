@@ -11,25 +11,31 @@ export default [
   {
     path: routes.categories.create,
     component: CategoryCreate,
+    breadcrumb: 'Create Category',
   },
   {
     path: routes.tasks.view,
     component: TaskView,
+    breadcrumb: 'View Task',
   },
   {
     path: routes.tasks.create,
     component: TaskCreate,
+    breadcrumb: 'Create Task',
   },
   {
     path: routes.tasks.edit,
     component: TaskEdit,
+    breadcrumb: 'Edit Task',
   },
   {
     path: routes.tasks.list,
     component: TasksList,
+    breadcrumb: 'Tasks',
   },
   {
     path: routes.categories.edit,
     component: CategoryEdit,
+    breadcrumb: 'Edit Category',
   },
 ]
