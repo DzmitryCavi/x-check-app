@@ -17,6 +17,7 @@
     "react-html-parser": "^2.0.2",
     "react-redux": "^7.2.1",
     "react-router-dom": "^5.2.0",
+    "react-router-named-routes": "0.0.23",
     "react-scripts": "3.4.3",
     "redux": "^4.0.5",
     "redux-saga": "^1.1.3",
