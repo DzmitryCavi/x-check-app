@@ -1,29 +1,70 @@
-import React from 'react'
-import { useParams } from 'react-router-dom'
+import React, { Component } from 'react'
+import { Button, Modal } from 'antd'
+import PropTypes from 'prop-types'
 import fakeData from './fakeData'
 
-const MarkInfo = () => {
-  const { key } = useParams()
-  const [element] = fakeData.filter((el) => el.key === +key)
-  const { task, maxScore, reviewer, info, student, score } = element
-  const { basicP1, extraP1, finesP1 } = info
-  return (
-    <div>
-      <div>Task: {task}</div>
-      <div>max_score: {maxScore}</div>
-      <div>reviewer: {reviewer}</div>
-      <div>student: {student}</div>
-      <div>score: {score}</div>
-      <div>
-        <div>basic scope: {basicP1.score}</div>
-        <div>comment: {basicP1.comment}</div>
-        <div>extra scope: {extraP1.score}</div>
-        <div>comment: {extraP1.comment}</div>
-        <div>errors: {finesP1.score}</div>
-        <div>comment: {finesP1.comment}</div>
-      </div>
-    </div>
-  )
+export default class MarkInfo extends Component {
+  constructor() {
+    super()
+    this.state = {
+      visible: false,
+    }
+  }
+
+  showModal = () => {
+    this.setState({
+      visible: true,
+    })
+  }
+
+  handleOk = () => {
+    this.setState({
+      visible: false,
+    })
+  }
+
+  handleCancel = () => {
+    this.setState({
+      visible: false,
+    })
+  }
+
+  render() {
+    const { infoKey } = this.props
+    const [element] = fakeData.filter((el) => el.key === infoKey)
+    const { task, maxScore, reviewer, info, student, score } = element
+    const { basicP1, extraP1, finesP1 } = info
+    const { visible } = this.state
+    const styleSheet = {
+      modalText: { fontWeight: '500', fontSize: '15px' },
+    }
+
+    return (
+      <>
+        <Button type="primary" onClick={this.showModal}>
+          info
+        </Button>
+        <Modal
+          title={`Task: ${task}   |    Student: ${student}`}
+          visible={visible}
+          onOk={this.handleOk}
+          onCancel={this.handleCancel}
+        >
+          <h3>reviewer: {reviewer}</h3>
+          <h4>score: {score}</h4>
+          <p style={styleSheet.modalText}>max_score: {maxScore}</p>
+          <p style={styleSheet.modalText}>basic scope: {basicP1.score}</p>
+          <p style={styleSheet.modalText}>extra scope: {extraP1.score}</p>
+          <p style={styleSheet.modalText}>comment: {basicP1.comment}</p>
+          <p style={styleSheet.modalText}>comment: {extraP1.comment}</p>
+          <p style={styleSheet.modalText}>comment: {finesP1.comment}</p>
+          <p style={styleSheet.modalText}>errors: {finesP1.score}</p>
+        </Modal>
+      </>
+    )
+  }
 }
 
-export default MarkInfo
+MarkInfo.propTypes = {
+  infoKey: PropTypes.number.isRequired,
+}

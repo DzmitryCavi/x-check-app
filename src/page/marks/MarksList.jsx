@@ -1,7 +1,7 @@
 import React from 'react'
 import { Table, Button, Space } from 'antd'
-import ButtonLink from '../../component/ButtonLink'
 import fakeData from './fakeData'
+import MarkInfo from './MarkInfo'
 
 class MarksList extends React.Component {
   constructor() {
@@ -74,11 +74,7 @@ class MarksList extends React.Component {
       {
         title: 'Action',
         dataindex: 'action',
-        render: (row) => (
-          <ButtonLink type="primary" size="large" linkTo={`/marks/${row.key}`}>
-            Info
-          </ButtonLink>
-        ),
+        render: (row) => <MarkInfo infoKey={row.key} />,
       },
     ]
     return (
