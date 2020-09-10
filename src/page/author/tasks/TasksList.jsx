@@ -30,7 +30,7 @@ const TasksList = () => {
     <div className="tasks-list-page">
       <h1 className="page-title">Tasks</h1>
       <div className="d-flex justify-content-end align-items-center mb-2">
-        <ButtonLink type="primary" icon={<PlusOutlined />} linkTo="/tasks/create">
+        <ButtonLink type="primary" icon={<PlusOutlined />} linkTo="/author/tasks/create">
           Create
         </ButtonLink>
       </div>
