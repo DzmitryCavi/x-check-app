@@ -17,9 +17,12 @@ const validateMessages = {
 
 const TaskCreate = ({ user }) => {
   const [taskId, setTaskId] = useState(null)
+  const [isBusy, setIsBusy] = useState(false)
   const formRef = useRef(null)
 
   const onFinish = async (data) => {
+    setIsBusy(true)
+
     const task = await tasksService.create(data, user.id)
     setTaskId(task.id)
 
@@ -28,6 +31,8 @@ const TaskCreate = ({ user }) => {
       message: 'Success',
       description: 'Task created successfully...',
     })
+
+    setIsBusy(false)
   }
 
   return (
@@ -51,7 +56,7 @@ const TaskCreate = ({ user }) => {
         </Form.Item>
 
         <Form.Item>
-          <Button type="primary" htmlType="submit">
+          <Button type="primary" htmlType="submit" loading={isBusy}>
             Create
           </Button>
         </Form.Item>

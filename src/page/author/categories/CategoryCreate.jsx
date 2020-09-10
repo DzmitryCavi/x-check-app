@@ -1,5 +1,5 @@
 /* eslint-disable react/jsx-props-no-spreading */
-import React, { useRef } from 'react'
+import React, { useRef, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { Form, Input, Button, notification } from 'antd'
 
@@ -14,10 +14,14 @@ const validateMessages = {
 }
 
 const CategoryCreate = () => {
+  const [isBusy, setIsBusy] = useState(false)
+
   const { taskId } = useParams()
   const formRef = useRef(null)
 
   const onFinish = async (data) => {
+    setIsBusy(true)
+
     await categoriesService.create(data, taskId)
 
     notification.success({
@@ -25,6 +29,8 @@ const CategoryCreate = () => {
       message: 'Success',
       description: 'Category created successfully...',
     })
+
+    setIsBusy(false)
   }
 
   return (
@@ -125,7 +131,7 @@ const CategoryCreate = () => {
         </Form.Item>
 
         <Form.Item>
-          <Button type="primary" htmlType="submit">
+          <Button type="primary" htmlType="submit" loading={isBusy}>
             Save
           </Button>
         </Form.Item>

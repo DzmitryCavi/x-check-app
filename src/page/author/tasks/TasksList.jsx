@@ -10,9 +10,13 @@ const { Column } = Table
 
 const TasksList = () => {
   const [tasks, setTasks] = useState([])
+  const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    tasksService.getAll().then(setTasks)
+    tasksService.getAll().then((data) => {
+      setTasks(data)
+      setLoading(false)
+    })
   }, [])
 
   const destroyTask = async (taskId) => {
@@ -34,11 +38,10 @@ const TasksList = () => {
           Create
         </ButtonLink>
       </div>
-      <Table dataSource={tasks} rowKey="id">
+      <Table dataSource={tasks} rowKey="id" loading={loading}>
         <Column width={60} title="#" dataIndex="id" key="id" />
         <Column
           title="Title"
-          dataIndex="title"
           key="title"
           render={(row) => <Link to={`/author/tasks/${row.id}/view`}>{row.title}</Link>}
         />
