@@ -11,14 +11,17 @@ export default [
     path: routes.home,
     component: Home,
     breadcrumb: 'Home',
+    exact: true,
   },
   {
     path: routes.login,
     component: Login,
     layout: EmptyLayout,
+    exact: true,
   },
   {
     path: routes.notFound,
     component: NotFound,
+    exact: true,
   },
 ]

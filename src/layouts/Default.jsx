@@ -103,9 +103,13 @@ const DefaultLayout = ({ breadcrumbs, isLoggedIn, user, children, dispatch }) =>
   )
 }
 
+DefaultLayout.defaultProps = {
+  user: null,
+}
+
 DefaultLayout.propTypes = {
   isLoggedIn: PropTypes.bool.isRequired,
-  user: PropTypes.instanceOf(Object).isRequired,
+  user: PropTypes.oneOfType([PropTypes.object]),
   children: PropTypes.instanceOf(Object).isRequired,
   dispatch: PropTypes.func.isRequired,
   breadcrumbs: PropTypes.instanceOf(Object).isRequired,
