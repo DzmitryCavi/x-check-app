@@ -17,12 +17,6 @@ export default class MarkInfo extends Component {
     })
   }
 
-  handleOk = () => {
-    this.setState({
-      visible: false,
-    })
-  }
-
   handleCancel = () => {
     this.setState({
       visible: false,
@@ -47,8 +41,8 @@ export default class MarkInfo extends Component {
         <Modal
           title={`Task: ${task}   |    Student: ${student}`}
           visible={visible}
-          onOk={this.handleOk}
           onCancel={this.handleCancel}
+          footer={[]}
         >
           <h3>reviewer: {reviewer}</h3>
           <h4>score: {score}</h4>
