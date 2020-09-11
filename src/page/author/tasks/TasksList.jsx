@@ -21,7 +21,7 @@ const TasksList = ({ user }) => {
       setTasks(data)
       setLoading(false)
     })
-  }, [])
+  }, [user.id])
 
   const destroyTask = async (taskId) => {
     await tasksService.destroyById(taskId)
