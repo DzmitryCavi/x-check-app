@@ -11,6 +11,8 @@ const SelfReview = ({ task }) => {
     categoriesService.getAllByTaskId(task.id).then(setCategories)
   }, [task.id])
 
+  console.log(categories)
+
   const formRef = useRef(null)
 
   const onFinish = async () => {
@@ -23,10 +25,21 @@ const SelfReview = ({ task }) => {
 
   return (
     <div className="task-create-page">
-      <h1 className="page-title">Create request ({task.title})</h1>
       <Form ref={formRef} layout="vertical" onFinish={onFinish}>
         {categories ? (
-          categories.map((category) => <div key={category.id}>{category.title}</div>)
+          categories.map((category) => (
+            <div key={category.id}>
+              <div>{category.title}</div>
+              {category.items.map((item) => (
+                <div key={item.id}>
+                  {`${item.description} (${item.minScore}-${item.maxScore})`}{' '}
+                  <Form.Item name={item.id} label="Slider">
+                    asdasd
+                  </Form.Item>
+                </div>
+              ))}
+            </div>
+          ))
         ) : (
           <Spin size="large" />
         )}
