@@ -2,8 +2,8 @@ import axios from 'axios'
 import slug from 'slug'
 import { API_URL } from '../config'
 
-const getAll = async () => {
-  const { data: tasks, status } = await axios.get(`${API_URL}/tasks`)
+const getAllByAuthorId = async (authorId) => {
+  const { data: tasks, status } = await axios.get(`${API_URL}/tasks?authorId=${authorId}`)
   return status === 200 && tasks ? tasks : []
 }
 
@@ -35,7 +35,7 @@ const destroyById = async (id) => {
 }
 
 export default {
-  getAll,
+  getAllByAuthorId,
   getById,
   create,
   edit,

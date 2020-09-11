@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from 'react'
+import PropTypes from 'prop-types'
+import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { formatRoute } from 'react-router-named-routes'
 import { Table, Space, Button, notification } from 'antd'
@@ -10,12 +12,12 @@ import tasksService from '../../../services/tasks.service'
 
 const { Column } = Table
 
-const TasksList = () => {
+const TasksList = ({ user }) => {
   const [tasks, setTasks] = useState([])
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    tasksService.getAll().then((data) => {
+    tasksService.getAllByAuthorId(user.id).then((data) => {
       setTasks(data)
       setLoading(false)
     })
@@ -89,4 +91,14 @@ const TasksList = () => {
   )
 }
 
-export default TasksList
+TasksList.propTypes = {
+  user: PropTypes.instanceOf(Object).isRequired,
+}
+
+const mapStateToProps = (state) => {
+  return {
+    user: state.auth.user,
+  }
+}
+
+export default connect(mapStateToProps, null)(TasksList)
