@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
+import { formatRoute } from 'react-router-named-routes'
 import { Table, Space, Button, notification } from 'antd'
 import { DeleteOutlined, EditOutlined, PlusOutlined, EyeOutlined } from '@ant-design/icons'
 import ButtonLink from '../../../component/ButtonLink'
+import { authorRoutes } from '../../../router/routes'
 
 import tasksService from '../../../services/tasks.service'
 
@@ -34,7 +36,7 @@ const TasksList = () => {
     <div className="tasks-list-page">
       <h1 className="page-title">Tasks</h1>
       <div className="d-flex justify-content-end align-items-center mb-2">
-        <ButtonLink type="primary" icon={<PlusOutlined />} linkTo="/author/tasks/create">
+        <ButtonLink type="primary" icon={<PlusOutlined />} linkTo={authorRoutes.tasks.create}>
           Create
         </ButtonLink>
       </div>
@@ -43,7 +45,9 @@ const TasksList = () => {
         <Column
           title="Title"
           key="title"
-          render={(row) => <Link to={`/author/tasks/${row.id}/view`}>{row.title}</Link>}
+          render={(row) => (
+            <Link to={formatRoute(authorRoutes.tasks.view, { taskId: row.id })}>{row.title}</Link>
+          )}
         />
         <Column title="State" dataIndex="state" key="state" />
         <Column
@@ -55,16 +59,22 @@ const TasksList = () => {
               <ButtonLink
                 type="primary"
                 icon={<PlusOutlined />}
-                linkTo={`/author/tasks/${row.id}/categories/create`}
+                linkTo={formatRoute(authorRoutes.categories.create, { taskId: row.id })}
               >
                 Category
               </ButtonLink>
 
-              <ButtonLink icon={<EyeOutlined />} linkTo={`/author/tasks/${row.id}/view`}>
+              <ButtonLink
+                icon={<EyeOutlined />}
+                linkTo={formatRoute(authorRoutes.tasks.view, { taskId: row.id })}
+              >
                 View
               </ButtonLink>
 
-              <ButtonLink icon={<EditOutlined />} linkTo={`/author/tasks/${row.id}/edit`}>
+              <ButtonLink
+                icon={<EditOutlined />}
+                linkTo={formatRoute(authorRoutes.tasks.edit, { taskId: row.id })}
+              >
                 Edit
               </ButtonLink>
 
