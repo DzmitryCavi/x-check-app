@@ -1,57 +1,33 @@
+/* eslint-disable react/jsx-props-no-spreading */
 import React from 'react'
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
-import PrivateRoute from './PrivateRoute'
+import { BrowserRouter as Router, Switch } from 'react-router-dom'
+import RouteController from './RouteController'
 
-import DefaultLayout from '../layouts/Default'
+import publicRoutes from './routes/public'
+import authorRoutes from './routes/author'
+import supervisorRoutes from './routes/supervisor'
 
-import Home from '../page/Home'
-import Login from '../page/Login'
-import NotFound from '../page/NotFound'
-
-import TasksList from '../page/tasks/TasksList'
-import TaskCreate from '../page/tasks/TaskCreate'
-import TaskEdit from '../page/tasks/TaskEdit'
-
-import RequestList from '../page/requests/RequestsList'
-import TaskReview from '../page/tasks/TaskReview'
+// import RequestList from '../page/requests/RequestsList'
+// import TaskReview from '../page/tasks/TaskReview'
 
 const AppRoutes = () => {
   return (
     <Router>
       <Switch>
-        <Route path="/login" component={Login} />
+        {/* Author */}
+        {authorRoutes.map((route) => (
+          <RouteController key={route.path} {...route} allowedRoles={['author']} />
+        ))}
 
-        <Route>
-          <DefaultLayout>
-            <Switch>
-              <PrivateRoute path="/" exact component={Home} />
+        {/* Supervisor */}
+        {supervisorRoutes.map((route) => (
+          <RouteController key={route.path} {...route} allowedRoles={['supervisor']} />
+        ))}
 
-              {/* Author */}
-              <PrivateRoute
-                path="/tasks/edit/:taskId"
-                component={TaskEdit}
-                allowedRoles={['author']}
-              />
-              <PrivateRoute path="/tasks/create" component={TaskCreate} allowedRoles={['author']} />
-              <PrivateRoute path="/tasks" component={TasksList} allowedRoles={['author']} />
-
-              {/* Supervisor */}
-
-              <PrivateRoute
-                path="/requests"
-                component={RequestList}
-                allowedRoles={['supervisor']}
-              />
-              <PrivateRoute
-                path="/request/:requestId"
-                component={TaskReview}
-                allowedRoles={['supervisor']}
-              />
-
-              <Route path="*" component={NotFound} />
-            </Switch>
-          </DefaultLayout>
-        </Route>
+        {/* Public */}
+        {publicRoutes.map((route) => (
+          <RouteController key={route.path} {...route} />
+        ))}
       </Switch>
     </Router>
   )

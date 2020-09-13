@@ -1,80 +1,93 @@
 {
   "tasks": [
     {
-      "id": 1,
-      "slug": "task-1",
       "title": "Task 1",
+      "description": "Description task 1",
       "authorId": 11542402,
-      "state": "DRAFT",
-      "categoriesOrder": [
-        "Basic Scope",
-        "Extra Scope",
-        "Fines"
-      ],
-      "items": [
-        {
-          "id": "basic_p1",
-          "minScore": 0,
-          "maxScore": 20,
-          "category": "Basic Scope",
-          "title": "Basic things",
-          "description": "You need to make things right, not wrong"
-        },
-        {
-          "id": "extra_p1",
-          "minScore": 0,
-          "maxScore": 30,
-          "category": "Extra Scope",
-          "title": "More awesome things",
-          "description": "Be creative and make up some more awesome things"
-        },
-        {
-          "id": "fines_p1",
-          "minScore": -10,
-          "maxScore": 0,
-          "category": "Fines",
-          "title": "App crashes",
-          "description": "App causes BSoD!"
-        }
-      ]
+      "slug": "task-1",
+      "state": "PUBLISHED",
+      "id": 1
     },
     {
-      "id": 2,
-      "slug": "task-2",
       "title": "Task 2",
+      "description": "Description task 2",
       "authorId": 11542402,
+      "slug": "task-2",
       "state": "PUBLISHED",
-      "categoriesOrder": [
-        "Basic Scope",
-        "Extra Scope",
-        "Fines"
-      ],
+      "id": 2
+    },
+    {
+      "title": "Task 3",
+      "description": "Description task 3",
+      "authorId": 11542402,
+      "slug": "task-3",
+      "state": "PUBLISHED",
+      "id": 3
+    }
+  ],
+  "categories": [
+    {
+      "title": "Category task 1",
+      "description": "Description category task 1",
       "items": [
         {
-          "id": "basic_p1",
-          "minScore": 0,
-          "maxScore": 20,
-          "category": "Basic Scope",
-          "title": "Basic things",
-          "description": "You need to make things right, not wrong"
+          "minScore": "0",
+          "maxScore": "20",
+          "description": "Description item 1",
+          "id": "af9947d2-c51a-44cb-9a8a-cfbaee688253"
         },
         {
-          "id": "extra_p1",
-          "minScore": 0,
-          "maxScore": 30,
-          "category": "Extra Scope",
-          "title": "More awesome things",
-          "description": "Be creative and make up some more awesome things"
-        },
-        {
-          "id": "fines_p1",
-          "minScore": -10,
-          "maxScore": 0,
-          "category": "Fines",
-          "title": "App crashes",
-          "description": "App causes BSoD!"
+          "minScore": "0",
+          "maxScore": "30",
+          "description": "Description item 2",
+          "id": "68ee7afa-aa0c-4e62-8bf6-1c3e2d57213c"
         }
-      ]
+      ],
+      "slug": "category-task-1",
+      "taskId": "1",
+      "id": 1
+    },
+    {
+      "title": "Category task 1",
+      "description": "Category task 1",
+      "items": [
+        {
+          "minScore": "0",
+          "maxScore": "40",
+          "description": "Description item 1",
+          "id": "3d2c1950-ebe7-4365-a619-53f993bdde95"
+        }
+      ],
+      "slug": "category-task-1",
+      "taskId": "1",
+      "id": 2
+    },
+    {
+      "title": "Category task 2",
+      "description": "Description task 2",
+      "items": [
+        {
+          "minScore": "0",
+          "maxScore": "100",
+          "description": "Description item 1",
+          "id": "4f09ee93-a152-45f3-8578-7b9a842754cb"
+        },
+        {
+          "minScore": "0",
+          "maxScore": "40",
+          "description": "Description item 2",
+          "id": "b74d550d-26e3-410f-846f-e5fb46e36e68"
+        },
+        {
+          "minScore": "0",
+          "maxScore": "60",
+          "description": "Description item 3",
+          "id": "2684b0a7-f2b9-4f4b-91c5-44f2d2d1448b"
+        }
+      ],
+      "slug": "category-task-2",
+      "taskId": "2",
+      "id": 3
     }
   ],
   "taskScore": [
@@ -113,76 +126,7 @@
       }
     }
   ],
-  "crossCheckSession": [
-    {
-      "id": 1,
-      "slug": "rss2020Q3react-xcheck",
-      "state": "CROSS_CHECK",
-      "taskId": "simple-task-v1",
-      "coefficient": 0.7,
-      "startDate": "2020-07-07",
-      "endDate": "2020-07-14",
-      "discardMinScore": true,
-      "discardMaxScore": false,
-      "minReiewsAmount": 1,
-      "desiredReviewersAmount": 2,
-      "attendees": [
-        {
-          "githubId": "ButterBrot777",
-          "reviewerOf": [
-            "torvalds",
-            "cardamo"
-          ]
-        },
-        {
-          "githubId": "torvalds",
-          "reviewerOf": [
-            "cardamo"
-          ]
-        },
-        {
-          "githubId": "cardamo",
-          "reviewerOf": [
-            "ButterBrot777"
-          ]
-        },
-        {
-          "id": 2,
-          "slug": "rss2020Q3react-schedule",
-          "state": "DRAFT",
-          "taskId": "simple-task-v1",
-          "coefficient": 0.7,
-          "startDate": "2020-07-07",
-          "endDate": "2020-07-14",
-          "discardMinScore": true,
-          "discardMaxScore": false,
-          "minReiewsAmount": 1,
-          "desiredReviewersAmount": 2,
-          "attendees": [
-            {
-              "githubId": "ButterBrot777",
-              "reviewerOf": [
-                "torvalds",
-                "cardamo"
-              ]
-            },
-            {
-              "githubId": "torvalds",
-              "reviewerOf": [
-                "cardamo"
-              ]
-            },
-            {
-              "githubId": "cardamo",
-              "reviewerOf": [
-                "ButterBrot777"
-              ]
-            }
-          ]
-        }
-      ]
-    }
-  ],
+  "crossCheckSession": [],
   "reviewRequest": [
     {
       "id": "rev-req-1",
@@ -197,14 +141,6 @@
       "crossCheckSessionId": "rss2020Q3react-schedule",
       "author": "multeng",
       "task": "simple-task-v2",
-      "state": "COMPLETED",
-      "selfGrade": {}
-    },
-    {
-      "id": "rev-req-3",
-      "crossCheckSessionId": "rss2020Q3react-schedule",
-      "author": "lugovczov",
-      "task": "simple-task-v3",
       "state": "DRAFT",
       "selfGrade": {}
     }

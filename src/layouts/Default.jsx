@@ -1,9 +1,15 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Link, Redirect } from 'react-router-dom'
+import withBreadcrumbs from 'react-router-breadcrumbs-hoc'
 import { Layout, Menu, Breadcrumb, Button, Avatar, Dropdown } from 'antd'
 import { LogoutOutlined, ProfileOutlined, PoweroffOutlined } from '@ant-design/icons'
 import { connect } from 'react-redux'
+import { compose } from 'redux'
+
+import publicRoutes from '../router/routes/public'
+import authorRoutes from '../router/routes/author'
+
 import Can from '../rbac/Can'
 import { logout } from '../store/actions'
 import MenuStudent from '../component/menus/MenuStudent'
@@ -13,7 +19,7 @@ import MenuCourseManager from '../component/menus/MenuCourseManager'
 
 const { Header, Content, Sider, Footer } = Layout
 
-const DefaultLayout = ({ isLoggedIn, user, children, dispatch }) => {
+const DefaultLayout = ({ breadcrumbs, isLoggedIn, user, children, dispatch }) => {
   const exit = () => {
     dispatch(logout())
   }
@@ -73,9 +79,14 @@ const DefaultLayout = ({ isLoggedIn, user, children, dispatch }) => {
           </>
         </div>
       </Header>
+
       <Content style={{ padding: '0 50px' }}>
         <Breadcrumb className="default-layout__breadcrumbs">
-          <Breadcrumb.Item>Home</Breadcrumb.Item>
+          {breadcrumbs.map(({ match, breadcrumb }) => (
+            <Breadcrumb.Item key={match.url}>
+              <Link to={match.url}>{breadcrumb}</Link>
+            </Breadcrumb.Item>
+          ))}
         </Breadcrumb>
         <Layout style={{ padding: '24px 0', backgroundColor: '#fff' }}>
           <Sider width={320}>
@@ -98,9 +109,10 @@ DefaultLayout.defaultProps = {
 
 DefaultLayout.propTypes = {
   isLoggedIn: PropTypes.bool.isRequired,
-  user: PropTypes.instanceOf(Object),
+  user: PropTypes.oneOfType([PropTypes.object]),
   children: PropTypes.instanceOf(Object).isRequired,
   dispatch: PropTypes.func.isRequired,
+  breadcrumbs: PropTypes.instanceOf(Object).isRequired,
 }
 
 const mapStateToProps = (state) => {
@@ -110,4 +122,15 @@ const mapStateToProps = (state) => {
   }
 }
 
-export default connect(mapStateToProps, null)(DefaultLayout)
+export default compose(
+  withBreadcrumbs(
+    [
+      // order matters
+      ...authorRoutes,
+      ...publicRoutes,
+      // ...spread other routes
+    ],
+    { disableDefaults: true },
+  ),
+  connect(mapStateToProps, null),
+)(DefaultLayout)

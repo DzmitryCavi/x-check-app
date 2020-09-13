@@ -4,14 +4,16 @@ import { EditOutlined } from '@ant-design/icons'
 
 import Axios from 'axios'
 import Column from 'antd/lib/table/Column'
+import { formatRoute } from 'react-router-named-routes'
 import ButtonLink from '../../component/ButtonLink'
+import { API_URL } from '../../config'
+import { supervisorRoutes } from '../../router/routes'
 
 const RequestsList = () => {
   const [infoTask, setInfoTask] = useState()
 
   useEffect(() => {
-    // Axios.get(`${REACT_APP_API_URL}/reviewRequest`)
-    Axios.get('http://localhost:50005/reviewRequest')
+    Axios.get(`${API_URL}/reviewRequest`)
       .then((resp) => {
         const { data } = resp
         setInfoTask(data)
@@ -69,12 +71,12 @@ const RequestsList = () => {
       <Column
         title="Action"
         key="action"
-        render={() => (
+        dataIndex="id"
+        render={(id) => (
           <ButtonLink
             type="primary"
             icon={<EditOutlined />}
-            linkTo="/review"
-            key={`${'action'}-btn`}
+            linkTo={formatRoute(supervisorRoutes.reviewRequest, { reviewId: id })}
           >
             Review
           </ButtonLink>

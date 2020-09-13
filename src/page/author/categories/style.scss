@@ -1,0 +1,29 @@
+.category-item {
+  position: relative;
+  display: flex;
+  align-items: flex-start;
+  margin-bottom: 20px;
+  border-bottom: 1px solid #ccc;
+  &__remove {
+    font-size: 20px;
+    margin-top: -1px;
+    margin-left: 15px;
+    svg {
+      fill: red;
+    }
+  }
+}
+
+.category-items-list {
+  flex-grow: 1;
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+  margin-bottom: 20px;
+  &__item {
+    &--description {
+      grid-column: 1 / 3;
+    }
+  }
+}
