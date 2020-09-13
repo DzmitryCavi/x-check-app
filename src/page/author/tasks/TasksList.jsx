@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react'
 import PropTypes from 'prop-types'
+import { compareAsc } from 'date-fns'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { formatRoute } from 'react-router-named-routes'
@@ -27,15 +28,21 @@ const TasksList = ({ user }) => {
   const [filtersForm] = Form.useForm()
   const [expandFilter, setExpandFilter] = useState(false)
 
+  const sorter = {
+    id: (a, b) => a.id - b.id,
+    title: (a, b) => a.title.localeCompare(b.title),
+    created_at: (a, b) => compareAsc(new Date(a.created_at), new Date(b.created_at)),
+  }
+
   const filters = {
     title: (title, value) => title.toLowerCase().indexOf(value.toLowerCase()) !== -1,
-    state: (state, value) => state === value,
+    state: (state, value) => state === value || value.length === 0,
   }
 
   useEffect(() => {
     tasksService.getAllByAuthorId(user.id).then((data) => {
       initTasks.current = data
-      setTasks(data)
+      setTasks(initTasks.current)
       setLoading(false)
     })
   }, [user.id])
@@ -114,7 +121,7 @@ const TasksList = ({ user }) => {
                     setExpandFilter(!expandFilter)
                   }}
                 >
-                  {!expandFilter ? <UpOutlined /> : <DownOutlined />} Collapse
+                  {expandFilter ? <UpOutlined /> : <DownOutlined />} Collapse
                 </Button>
               </Form.Item>
             </Col>
@@ -132,16 +139,22 @@ const TasksList = ({ user }) => {
           title="#"
           dataIndex="id"
           key="id"
-          sorter={(a, b) => a.id - b.id}
+          sorter={sorter.id}
           defaultSortOrder="descend"
         />
         <Column
           title="Title"
           key="title"
-          sorter={(a, b) => a.title.localeCompare(b.title)}
+          sorter={sorter.title}
           render={(row) => (
             <Link to={formatRoute(authorRoutes.tasks.view, { taskId: row.id })}>{row.title}</Link>
           )}
+        />
+        <Column
+          title="Created"
+          dataIndex="created_at"
+          key="created_at"
+          sorter={sorter.created_at}
         />
         <Column
           title="State"

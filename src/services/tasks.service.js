@@ -1,5 +1,6 @@
 import axios from 'axios'
 import slug from 'slug'
+import { format } from 'date-fns'
 import { API_URL } from '../config'
 
 const getAllByAuthorId = async (authorId) => {
@@ -18,6 +19,8 @@ const create = async (task, authorId = -1) => {
     authorId,
     slug: slug(task.title),
     state: 'PUBLISHED',
+    created_at: format(new Date(), 'yyyy-MM-dd HH:mm:ss'),
+    updated_at: null,
   })
   return status === 201 && data ? data : null
 }
@@ -26,6 +29,7 @@ const edit = async (task, taskId) => {
   await axios.patch(`${API_URL}/tasks/${taskId}`, {
     ...task,
     slug: slug(task.title),
+    updated_at: format(new Date(), 'yyyy-MM-dd HH:mm:ss'),
   })
 }
 
