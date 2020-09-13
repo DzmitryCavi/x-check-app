@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { InputNumber, Input, Slider } from 'antd'
+import { InputNumber, Input, Slider, Row, Col } from 'antd'
 import PropTypes from 'prop-types'
 
 const ReviewFormItem = ({ value, onChange }) => {
@@ -38,28 +38,44 @@ const ReviewFormItem = ({ value, onChange }) => {
 
   return (
     <span>
-      <InputNumber
-        value={value.number || number}
-        onChange={onNumberChange}
+      <Row
         style={{
-          width: 100,
+          margin: '10px 8px',
         }}
-      />
-      <Slider
-        min={0}
-        max={40}
-        marks={{ 0: 'min', 20: 'half', 40: 'max' }}
-        onChange={onNumberChange}
-        value={typeof value.number === 'number' ? value.number : 0}
-      />
-      <Input.TextArea
-        value={value.discription || discription}
-        style={{
-          width: 80,
-          margin: '0 8px',
-        }}
-        onChange={onDiscriptionChange}
-      />
+      >
+        <Col span={10}>
+          <Slider
+            min={0}
+            max={40}
+            marks={{ 0: 'min', 20: 'half', 40: 'max' }}
+            onChange={onNumberChange}
+            style={{
+              margin: '0 20px',
+            }}
+            value={typeof value.number === 'number' ? value.number : 0}
+          />
+        </Col>
+        <Col span={4}>
+          <InputNumber
+            value={value.number || number}
+            onChange={onNumberChange}
+            style={{
+              width: 100,
+            }}
+          />
+        </Col>
+      </Row>
+      <Row>
+        <Col span={18}>
+          <Input.TextArea
+            value={value.discription || discription}
+            style={{
+              margin: '0 8px',
+            }}
+            onChange={onDiscriptionChange}
+          />
+        </Col>
+      </Row>
     </span>
   )
 }

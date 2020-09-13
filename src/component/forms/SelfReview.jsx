@@ -1,11 +1,13 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import React, { useRef, useEffect, useState } from 'react'
+import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import { Form, notification, Spin, Button } from 'antd'
 import ReviewFormItem from './ReviewFormItem'
 import categoriesService from '../../services/categories.service'
+import requestsService from '../../services/requests.service'
 
-const SelfReview = ({ task }) => {
+const SelfReview = ({ task, user }) => {
   const [categories, setCategories] = useState()
 
   useEffect(() => {
@@ -14,16 +16,17 @@ const SelfReview = ({ task }) => {
 
   const formRef = useRef(null)
 
-  const onFinish = async () => {
+  const onFinish = async (data) => {
+    const requestData = { task: task.id, ...data }
+    requestsService.create(requestData, user)
     notification.success({
       className: 'app-notification app-notification--success',
       message: 'Success',
       description: 'Request sent successfully...',
     })
   }
-
   const init = {
-    score:
+    grade:
       categories && categories.items !== undefined
         ? categories.items.reduce((ac, e) => {
             const result = { ...ac }
@@ -31,7 +34,6 @@ const SelfReview = ({ task }) => {
             return result
           }, {})
         : {},
-    data: 232134234,
   }
 
   return (
@@ -43,8 +45,10 @@ const SelfReview = ({ task }) => {
               <div>{category.title}</div>
               {category.items.map((item) => (
                 <div key={item.id}>
-                  {`${item.description} (${item.minScore}-${item.maxScore})`}
-                  <Form.Item name={item.id} label={item.description}>
+                  <Form.Item
+                    name={['selfGrade', category.title, item.id]}
+                    label={`${item.description} (${item.minScore}-${item.maxScore})`}
+                  >
                     <ReviewFormItem />
                   </Form.Item>
                 </div>
@@ -66,6 +70,13 @@ const SelfReview = ({ task }) => {
 
 SelfReview.propTypes = {
   task: PropTypes.instanceOf(Object).isRequired,
+  user: PropTypes.string.isRequired,
 }
 
-export default SelfReview
+const mapStateToProps = (state) => {
+  return {
+    user: state.auth.user.login,
+  }
+}
+
+export default connect(mapStateToProps, null)(SelfReview)

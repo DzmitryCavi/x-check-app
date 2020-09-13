@@ -1,5 +1,6 @@
 import axios from 'axios'
 import slug from 'slug'
+import { v4 as uuid } from 'uuid'
 import { API_URL } from '../config'
 
 const getAll = async () => {
@@ -21,7 +22,7 @@ const create = async (request, author = -1) => {
   const { data, status } = await axios.post(`${API_URL}/reviewRequest`, {
     ...request,
     author,
-    slug: slug(request.title),
+    id: `request-${uuid()}`,
     state: 'PUBLISHED',
   })
   return status === 201 && data ? data : null
