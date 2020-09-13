@@ -43,10 +43,11 @@ const TasksList = ({ user }) => {
         </ButtonLink>
       </div>
       <Table dataSource={tasks} rowKey="id" loading={loading}>
-        <Column width={60} title="#" dataIndex="id" key="id" />
+        <Column width={60} title="#" dataIndex="id" key="id" sorter={(a, b) => a.id - b.id} />
         <Column
           title="Title"
           key="title"
+          sorter={(a, b) => a.title.localeCompare(b.title)}
           render={(row) => (
             <Link to={formatRoute(authorRoutes.tasks.view, { taskId: row.id })}>{row.title}</Link>
           )}
