@@ -98,7 +98,7 @@ const DefaultLayout = ({ breadcrumbs, isLoggedIn, user, children, dispatch }) =>
           <Content className="default-layout__content">{children}</Content>
         </Layout>
       </Content>
-      <Footer style={{ textAlign: 'center' }}>Ant Design ©2018 Created by Ant UED</Footer>
+      <Footer style={{ textAlign: 'center' }}>©2020 Created by Dream Team</Footer>
     </Layout>
   )
 }
