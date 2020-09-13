@@ -2,18 +2,19 @@ import React, { useState, useEffect } from 'react'
 import { Table, Tag } from 'antd'
 import { EditOutlined } from '@ant-design/icons'
 
-import Axios from 'axios'
+import axios from 'axios'
 import Column from 'antd/lib/table/Column'
 import { formatRoute } from 'react-router-named-routes'
-import ButtonLink from '../../component/ButtonLink'
-import { API_URL } from '../../config'
-import { supervisorRoutes } from '../../router/routes'
+import ButtonLink from '../../../component/ButtonLink'
+import { API_URL } from '../../../config'
+import { supervisorRoutes } from '../../../router/routes'
 
 const RequestsList = () => {
   const [infoTask, setInfoTask] = useState()
 
   useEffect(() => {
-    Axios.get(`${API_URL}/reviewRequest`)
+    axios
+      .get(`${API_URL}/reviewRequest`)
       .then((resp) => {
         const { data } = resp
         setInfoTask(data)

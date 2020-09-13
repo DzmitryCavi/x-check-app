@@ -1,5 +1,5 @@
-import RequestsList from '../../page/requests/RequestsList'
-import TaskReview from '../../page/tasks/TaskReview'
+import RequestsList from '../../page/supervisor/requests/RequestsList'
+import TaskReview from '../../page/supervisor/tasks/TaskReview'
 
 import { supervisorRoutes as routes } from '.'
 

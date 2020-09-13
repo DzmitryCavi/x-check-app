@@ -7,9 +7,6 @@ import publicRoutes from './routes/public'
 import authorRoutes from './routes/author'
 import supervisorRoutes from './routes/supervisor'
 
-// import RequestList from '../page/requests/RequestsList'
-// import TaskReview from '../page/tasks/TaskReview'
-
 const AppRoutes = () => {
   return (
     <Router>
