@@ -114,7 +114,7 @@ const TasksList = ({ user }) => {
                     setExpandFilter(!expandFilter)
                   }}
                 >
-                  {!expandFilter ? <UpOutlined /> : <DownOutlined />} Collapse
+                  {expandFilter ? <UpOutlined /> : <DownOutlined />} Collapse
                 </Button>
               </Form.Item>
             </Col>
