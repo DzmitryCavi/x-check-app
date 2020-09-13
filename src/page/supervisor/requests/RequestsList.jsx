@@ -77,7 +77,7 @@ const RequestsList = () => {
           <ButtonLink
             type="primary"
             icon={<EditOutlined />}
-            linkTo={formatRoute(supervisorRoutes.reviewRequest, { reviewId: id })}
+            linkTo={formatRoute(supervisorRoutes.requests.review, { requestId: id })}
           >
             Review
           </ButtonLink>

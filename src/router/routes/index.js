@@ -20,8 +20,10 @@ export const authorRoutes = {
 export const studentRoutes = {}
 
 export const supervisorRoutes = {
-  requests: '/supervisor/requests',
-  reviewRequest: '/supervisor/request/:reviewId',
+  requests: {
+    list: '/supervisor/requests',
+    review: '/supervisor/requests/:requestId/review',
+  },
 }
 
 // ...

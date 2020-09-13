@@ -1,7 +1,7 @@
 import React from 'react'
 import { Form, InputNumber, Slider } from 'antd'
 
-const TaskReview = () => {
+const RequestView = () => {
   const [form] = Form.useForm()
   return (
     <>
@@ -32,4 +32,4 @@ const TaskReview = () => {
   )
 }
 
-export default TaskReview
+export default RequestView

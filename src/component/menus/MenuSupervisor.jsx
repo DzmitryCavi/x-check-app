@@ -11,7 +11,7 @@ const MenuSupervisor = () => {
         <Link to="/">Home</Link>
       </Menu.Item>
       <Menu.Item icon={<LaptopOutlined />} key="2">
-        <Link to={supervisorRoutes.requests}>Requests</Link>
+        <Link to={supervisorRoutes.requests.list}>Requests</Link>
       </Menu.Item>
     </Menu>
   )
