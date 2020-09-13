@@ -19,4 +19,9 @@ export const authorRoutes = {
 
 export const studentRoutes = {}
 
+export const supervisorRoutes = {
+  requests: '/supervisor/requests',
+  reviewRequest: '/supervisor/request/:reviewId',
+}
+
 // ...

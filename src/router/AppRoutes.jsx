@@ -5,6 +5,10 @@ import RouteController from './RouteController'
 
 import publicRoutes from './routes/public'
 import authorRoutes from './routes/author'
+import supervisorRoutes from './routes/supervisor'
+
+// import RequestList from '../page/requests/RequestsList'
+// import TaskReview from '../page/tasks/TaskReview'
 
 const AppRoutes = () => {
   return (
@@ -13,6 +17,11 @@ const AppRoutes = () => {
         {/* Author */}
         {authorRoutes.map((route) => (
           <RouteController key={route.path} {...route} allowedRoles={['author']} />
+        ))}
+
+        {/* Supervisor */}
+        {supervisorRoutes.map((route) => (
+          <RouteController key={route.path} {...route} allowedRoles={['supervisor']} />
         ))}
 
         {/* Public */}
