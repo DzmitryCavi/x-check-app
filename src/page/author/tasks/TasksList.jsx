@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { formatRoute } from 'react-router-named-routes'
-import { Table, Space, Button, notification } from 'antd'
+import { Table, Space, Button, Tag, notification } from 'antd'
 import { DeleteOutlined, EditOutlined, PlusOutlined, EyeOutlined } from '@ant-design/icons'
 import ButtonLink from '../../../component/ButtonLink'
 import { authorRoutes } from '../../../router/routes'
@@ -51,7 +51,19 @@ const TasksList = ({ user }) => {
             <Link to={formatRoute(authorRoutes.tasks.view, { taskId: row.id })}>{row.title}</Link>
           )}
         />
-        <Column title="State" dataIndex="state" key="state" />
+        <Column
+          title="State"
+          dataIndex="state"
+          key="state"
+          render={(state) => (
+            <Tag
+              color={{ PUBLISHED: 'green', ARCHIVED: 'orange', DRAFT: 'red' }[state]}
+              key={state}
+            >
+              {state}
+            </Tag>
+          )}
+        />
         <Column
           title="Action"
           key="action"
