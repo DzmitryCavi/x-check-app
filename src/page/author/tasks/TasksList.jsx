@@ -29,7 +29,7 @@ const TasksList = ({ user }) => {
 
   const filters = {
     title: (title, value) => title.toLowerCase().indexOf(value.toLowerCase()) !== -1,
-    state: (state, value) => state === value,
+    state: (state, value) => state === value || value.length === 0,
   }
 
   useEffect(() => {
