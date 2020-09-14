@@ -26,4 +26,9 @@ export const supervisorRoutes = {
   },
 }
 
+export const courseManagerRoutes = {
+  marks: {
+    list: '/course_manager/marks',
+  },
+}
 // ...

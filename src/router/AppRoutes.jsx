@@ -6,6 +6,7 @@ import RouteController from './RouteController'
 import publicRoutes from './routes/public'
 import authorRoutes from './routes/author'
 import supervisorRoutes from './routes/supervisor'
+import courseManagerRoutes from './routes/course_manager'
 
 const AppRoutes = () => {
   return (
@@ -19,6 +20,11 @@ const AppRoutes = () => {
         {/* Supervisor */}
         {supervisorRoutes.map((route) => (
           <RouteController key={route.path} {...route} allowedRoles={['supervisor']} />
+        ))}
+
+        {/* Course Manager */}
+        {courseManagerRoutes.map((route) => (
+          <RouteController key={route.path} {...route} allowedRoles={['course_manager']} />
         ))}
 
         {/* Public */}
