@@ -6,19 +6,19 @@ import { connect } from 'react-redux'
 import { notification } from 'antd'
 
 const PrivateRoute = ({ component: Component, isLoggedIn, user, allowedRoles, ...rest }) => {
-  const isAuth = isLoggedIn && user
-  const isAccess = isAuth && (allowedRoles.includes(user.role) || !allowedRoles.length)
-
   const ResultComponent = (props) => {
+    const isAuth = isLoggedIn && user
+    const isAccess = (isAuth && allowedRoles.includes(user.role)) || !allowedRoles.length
+
     useEffect(() => {
-      if (!isAccess) {
+      if (isAuth && !isAccess) {
         notification.error({
           className: 'app-notification app-notification--error',
           message: 'Error',
           description: 'What are you doing... You do not have access to this page!',
         })
       }
-    }, [])
+    }, [isAuth, isAccess])
 
     if (!isAuth) return <Redirect to="/login" />
     if (!isAccess) return <Redirect to="/" />
@@ -29,12 +29,13 @@ const PrivateRoute = ({ component: Component, isLoggedIn, user, allowedRoles, ..
 }
 
 PrivateRoute.defaultProps = {
+  user: null,
   allowedRoles: [],
 }
 
 PrivateRoute.propTypes = {
   isLoggedIn: PropTypes.bool.isRequired,
-  user: PropTypes.instanceOf(Object).isRequired,
+  user: PropTypes.oneOfType([PropTypes.object]),
   allowedRoles: PropTypes.arrayOf(PropTypes.string),
   component: PropTypes.instanceOf(Object).isRequired,
 }

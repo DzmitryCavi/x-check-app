@@ -1,9 +1,9 @@
-import React from 'react'
+import React, { Component } from 'react'
 import { Table, Button, Space } from 'antd'
 import fakeData from './fakeData'
 import MarkInfo from './MarkInfo'
 
-class MarksList extends React.Component {
+class MarksList extends Component {
   constructor() {
     super()
     this.state = {
@@ -11,7 +11,7 @@ class MarksList extends React.Component {
     }
   }
 
-  handleChange = (pagination, filters) => {
+  handleChange = (filters) => {
     this.setState({
       filteredInfo: filters,
     })
