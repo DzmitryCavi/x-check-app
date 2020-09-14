@@ -6,7 +6,7 @@ import RouteController from './RouteController'
 import publicRoutes from './routes/public'
 import authorRoutes from './routes/author'
 import supervisorRoutes from './routes/supervisor'
-import courseManagerRoutes from './routes/course_manager'
+import courseManagerRoutes from './routes/courseManager'
 
 const AppRoutes = () => {
   return (
