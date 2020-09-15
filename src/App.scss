@@ -25,6 +25,15 @@
   margin-bottom: 20px !important;
 }
 
+/**/
+
+.content-loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 30px;
+}
+
 /* Header */
 .app-header {
   display: flex;
@@ -39,6 +48,8 @@
     }
   }
 }
+
+/**/
 
 /* Default Layout */
 .default-layout {

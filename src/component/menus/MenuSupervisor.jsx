@@ -2,6 +2,7 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import { Menu } from 'antd'
 import { UserOutlined, LaptopOutlined } from '@ant-design/icons'
+import { supervisorRoutes } from '../../router/routes'
 
 const MenuSupervisor = () => {
   return (
@@ -10,7 +11,7 @@ const MenuSupervisor = () => {
         <Link to="/">Home</Link>
       </Menu.Item>
       <Menu.Item icon={<LaptopOutlined />} key="2">
-        <Link to="/private">Supervisor</Link>
+        <Link to={supervisorRoutes.requests.list}>Requests</Link>
       </Menu.Item>
     </Menu>
   )

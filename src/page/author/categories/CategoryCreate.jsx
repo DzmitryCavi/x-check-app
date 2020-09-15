@@ -1,11 +1,11 @@
 /* eslint-disable react/jsx-props-no-spreading */
-import React, { useEffect } from 'react'
+import React, { useRef, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { Form, Input, Button, notification } from 'antd'
 
 import './style.scss'
 import { PlusOutlined, MinusCircleOutlined } from '@ant-design/icons'
-import categoriesService from '../../services/categories.service'
+import categoriesService from '../../../services/categories.service'
 
 const { TextArea } = Input
 
@@ -13,28 +13,30 @@ const validateMessages = {
   required: 'Required',
 }
 
-const CategoryEdit = () => {
-  const { categoryId } = useParams()
-  const [form] = Form.useForm()
+const CategoryCreate = () => {
+  const [isBusy, setIsBusy] = useState(false)
 
-  useEffect(() => {
-    categoriesService.getById(categoryId).then((data) => form.setFieldsValue(data))
-  }, [categoryId, form])
+  const { taskId } = useParams()
+  const formRef = useRef(null)
 
   const onFinish = async (data) => {
-    await categoriesService.edit(data, categoryId)
+    setIsBusy(true)
+
+    await categoriesService.create(data, taskId)
 
     notification.success({
       className: 'app-notification app-notification--success',
       message: 'Success',
-      description: 'Category updated successfully...',
+      description: 'Category created successfully...',
     })
+
+    setIsBusy(false)
   }
 
   return (
-    <div className="category-edit-page">
-      <h1 className="page-title">Category Edit</h1>
-      <Form form={form} layout="vertical" validateMessages={validateMessages} onFinish={onFinish}>
+    <div className="category-create-page">
+      <h1 className="page-title">Category Create</h1>
+      <Form ref={formRef} layout="vertical" validateMessages={validateMessages} onFinish={onFinish}>
         <Form.Item
           name="title"
           label="Title"
@@ -129,7 +131,7 @@ const CategoryEdit = () => {
         </Form.Item>
 
         <Form.Item>
-          <Button type="primary" htmlType="submit">
+          <Button type="primary" htmlType="submit" loading={isBusy}>
             Save
           </Button>
         </Form.Item>
@@ -138,4 +140,4 @@ const CategoryEdit = () => {
   )
 }
 
-export default CategoryEdit
+export default CategoryCreate

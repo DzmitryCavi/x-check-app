@@ -10,10 +10,10 @@ const MenuStudent = () => {
         <Link to="/">Home</Link>
       </Menu.Item>
       <Menu.Item icon={<UserOutlined />} key="2">
-        <Link to="/student/requests/">Requests</Link>
+        <Link to="/student/requests">Requests</Link>
       </Menu.Item>
       <Menu.Item icon={<LaptopOutlined />} key="3">
-        <Link to="/student/request">Sent request</Link>
+        <Link to="/student/requests/create">Sent request</Link>
       </Menu.Item>
     </Menu>
   )

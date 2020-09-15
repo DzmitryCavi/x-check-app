@@ -4,13 +4,12 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { Form, Input, Button, notification } from 'antd'
 import { PlusOutlined } from '@ant-design/icons'
-import ButtonLink from '../../component/ButtonLink'
+import ButtonLink from '../../../component/ButtonLink'
+import AntdTinymce from '../../../component/AntdTinymce'
 
-import tasksService from '../../services/tasks.service'
+import tasksService from '../../../services/tasks.service'
 
 import './style.scss'
-
-const { TextArea } = Input
 
 const validateMessages = {
   required: 'Required',
@@ -18,9 +17,12 @@ const validateMessages = {
 
 const TaskCreate = ({ user }) => {
   const [taskId, setTaskId] = useState(null)
+  const [isBusy, setIsBusy] = useState(false)
   const formRef = useRef(null)
 
   const onFinish = async (data) => {
+    setIsBusy(true)
+
     const task = await tasksService.create(data, user.id)
     setTaskId(task.id)
 
@@ -29,6 +31,8 @@ const TaskCreate = ({ user }) => {
       message: 'Success',
       description: 'Task created successfully...',
     })
+
+    setIsBusy(false)
   }
 
   return (
@@ -48,11 +52,11 @@ const TaskCreate = ({ user }) => {
         </Form.Item>
 
         <Form.Item name="description" label="Description">
-          <TextArea rows={5} />
+          <AntdTinymce options={{ height: 400 }} />
         </Form.Item>
 
         <Form.Item>
-          <Button type="primary" htmlType="submit">
+          <Button type="primary" htmlType="submit" loading={isBusy}>
             Create
           </Button>
         </Form.Item>
@@ -62,7 +66,7 @@ const TaskCreate = ({ user }) => {
         <ButtonLink
           type="dashed"
           icon={<PlusOutlined />}
-          linkTo={`/tasks/${taskId}/categories/create`}
+          linkTo={`/author/tasks/${taskId}/categories/create`}
           block
         >
           Category
