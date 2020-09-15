@@ -9,13 +9,12 @@ import { compose } from 'redux'
 
 import publicRoutes from '../router/routes/public'
 import authorRoutes from '../router/routes/author'
+import studentRoutes from '../router/routes/student'
 
 import Can from '../rbac/Can'
 import { logout } from '../store/actions'
-import MenuStudent from '../component/menus/MenuStudent'
-import MenuAuthor from '../component/menus/MenuAuthor'
-import MenuSupervisor from '../component/menus/MenuSupervisor'
-import MenuCourseManager from '../component/menus/MenuCourseManager'
+
+import Navigation from '../component/Navigation'
 
 const { Header, Content, Sider, Footer } = Layout
 
@@ -90,10 +89,26 @@ const DefaultLayout = ({ breadcrumbs, isLoggedIn, user, children, dispatch }) =>
         </Breadcrumb>
         <Layout style={{ padding: '24px 0', backgroundColor: '#fff' }}>
           <Sider width={320}>
-            <Can role={user.role} perform="menu:student" yes={() => <MenuStudent />} />
-            <Can role={user.role} perform="menu:author" yes={() => <MenuAuthor />} />
-            <Can role={user.role} perform="menu:supervisor" yes={() => <MenuSupervisor />} />
-            <Can role={user.role} perform="menu:course_manager" yes={() => <MenuCourseManager />} />
+            <Can
+              role={user.role}
+              perform="menu:student"
+              yes={() => <Navigation items={studentRoutes} />}
+            />
+            <Can
+              role={user.role}
+              perform="menu:author"
+              yes={() => <Navigation items={authorRoutes} />}
+            />
+            <Can
+              role={user.role}
+              perform="menu:supervisor"
+              yes={() => <Navigation items={authorRoutes} />}
+            />
+            <Can
+              role={user.role}
+              perform="menu:course_manager"
+              yes={() => <Navigation items={authorRoutes} />}
+            />
           </Sider>
           <Content className="default-layout__content">{children}</Content>
         </Layout>
@@ -128,6 +143,7 @@ export default compose(
       // order matters
       ...authorRoutes,
       ...publicRoutes,
+      ...studentRoutes,
       // ...spread other routes
     ],
     { disableDefaults: true },

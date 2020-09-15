@@ -7,11 +7,13 @@ export default [
   {
     path: routes.requests.create,
     component: RequestCreate,
-    breadcrumb: 'Request Create',
+    breadcrumb: 'Create Request',
+    isNavigation: true,
   },
   {
     path: routes.requests.list,
     component: RequsetList,
-    breadcrumb: 'Requests',
+    breadcrumb: 'Requests List',
+    isNavigation: true,
   },
 ]
