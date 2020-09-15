@@ -32,6 +32,7 @@ export default [
     path: routes.tasks.list,
     component: TasksList,
     breadcrumb: 'Tasks',
+    isNavigation: true,
   },
   {
     path: routes.categories.edit,
