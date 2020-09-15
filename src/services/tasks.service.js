@@ -8,6 +8,16 @@ const getAllByAuthorId = async (authorId) => {
   return status === 200 && tasks ? tasks : []
 }
 
+const getAll = async () => {
+  const { data: tasks, status } = await axios.get(`${API_URL}/tasks`)
+  return status === 200 && tasks ? tasks : []
+}
+
+const getAllPublished = async () => {
+  const { data: tasks, status } = await axios.get(`${API_URL}/tasks?state=PUBLISHED`)
+  return status === 200 && tasks ? tasks : []
+}
+
 const getById = async (id) => {
   const { data: task, status } = await axios.get(`${API_URL}/tasks/${id}`)
   return status === 200 && task ? task : null
@@ -40,8 +50,10 @@ const destroyById = async (id) => {
 
 export default {
   getAllByAuthorId,
+  getAll,
   getById,
   create,
   edit,
   destroyById,
+  getAllPublished,
 }

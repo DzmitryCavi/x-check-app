@@ -17,8 +17,6 @@ export const authorRoutes = {
   },
 }
 
-export const studentRoutes = {}
-
 export const supervisorRoutes = {
   requests: {
     list: '/supervisor/requests',
@@ -29,6 +27,13 @@ export const supervisorRoutes = {
 export const courseManagerRoutes = {
   marks: {
     list: '/course-manager/marks',
+  },
+}
+
+export const studentRoutes = {
+  requests: {
+    list: '/student/requests',
+    create: '/student/requests/create',
   },
 }
 // ...

@@ -13,7 +13,7 @@
       "error",
       {
         "semi": false,
-        "endOfLine":"auto"
+        "endOfLine": "auto"
       }
     ]
   }
