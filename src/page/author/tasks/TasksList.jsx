@@ -9,6 +9,7 @@ import {
   DeleteOutlined,
   DownOutlined,
   EditOutlined,
+  ExportOutlined,
   PlusOutlined,
   UpOutlined,
 } from '@ant-design/icons'
@@ -73,6 +74,10 @@ const TasksList = ({ user }) => {
     filtersForm.resetFields()
   }
 
+  const exportAll = async () => {
+    await tasksService.exportAll()
+  }
+
   return (
     <div className="tasks-list-page">
       <h1 className="page-title">Tasks</h1>
@@ -129,19 +134,17 @@ const TasksList = ({ user }) => {
         </Form>
       </div>
       <div className="d-flex justify-content-end align-items-center mb-2">
-        <ButtonLink type="primary" icon={<PlusOutlined />} linkTo={authorRoutes.tasks.create}>
-          Create
-        </ButtonLink>
+        <Space>
+          <ButtonLink type="primary" icon={<PlusOutlined />} linkTo={authorRoutes.tasks.create}>
+            Create
+          </ButtonLink>
+          <Button type="primary" icon={<ExportOutlined />} onClick={exportAll}>
+            Export All
+          </Button>
+        </Space>
       </div>
       <Table dataSource={tasks} rowKey="id" loading={loading}>
-        <Column
-          width={60}
-          title="#"
-          dataIndex="id"
-          key="id"
-          sorter={sorter.id}
-          defaultSortOrder="descend"
-        />
+        <Column width={60} title="#" dataIndex="id" key="id" sorter={sorter.id} />
         <Column
           title="Title"
           key="title"
@@ -155,6 +158,7 @@ const TasksList = ({ user }) => {
           dataIndex="created_at"
           key="created_at"
           sorter={sorter.created_at}
+          defaultSortOrder="descend"
         />
         <Column
           title="State"

@@ -1,7 +1,7 @@
 import axios from 'axios'
 import slug from 'slug'
 import { format } from 'date-fns'
-import { API_URL } from '../config'
+import { API_URL, SERVER_URL } from '../config'
 
 const getAllByAuthorId = async (authorId) => {
   const { data: tasks, status } = await axios.get(`${API_URL}/tasks?authorId=${authorId}`)
@@ -48,6 +48,10 @@ const destroyById = async (id) => {
   return status === 200 ? data : null
 }
 
+const exportAll = async () => {
+  window.location.href = `${SERVER_URL}/tasks/export`
+}
+
 export default {
   getAllByAuthorId,
   getAll,
@@ -56,4 +60,5 @@ export default {
   edit,
   destroyById,
   getAllPublished,
+  exportAll,
 }
