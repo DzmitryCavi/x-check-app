@@ -82,26 +82,15 @@ const CategoryEdit = () => {
                     {fields.map((field) => (
                       <div className="category-item" key={field.key}>
                         <div className="category-items-list">
-                          <div className="category-items-list__item category-items-list__item--minScore">
+                          <div className="category-items-list__item category-items-list__item--score">
                             <Form.Item
                               {...field}
                               style={{ marginBottom: 0 }}
-                              name={[field.name, 'minScore']}
-                              fieldKey={[field.fieldKey, 'minScore']}
-                              rules={[{ required: true, message: 'Missing min score' }]}
+                              name={[field.name, 'score']}
+                              fieldKey={[field.fieldKey, 'score']}
+                              rules={[{ required: true, message: 'Missing score' }]}
                             >
-                              <Input placeholder="Min Score" />
-                            </Form.Item>
-                          </div>
-                          <div className="category-items-list__item category-items-list__item--maxScore">
-                            <Form.Item
-                              {...field}
-                              style={{ marginBottom: 0 }}
-                              name={[field.name, 'maxScore']}
-                              fieldKey={[field.fieldKey, 'maxScore']}
-                              rules={[{ required: true, message: 'Missing max score' }]}
-                            >
-                              <Input placeholder="Max Score" />
+                              <Input placeholder="Score" />
                             </Form.Item>
                           </div>
                           <div className="category-items-list__item category-items-list__item--description">

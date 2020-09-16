@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useMemo } from 'react'
 import { useParams } from 'react-router-dom'
-import { Tree, Typography, Empty, Spin } from 'antd'
+import { Tree, Typography, Empty, Spin, Tag } from 'antd'
 import { CarryOutOutlined } from '@ant-design/icons'
 import parse from 'react-html-parser'
 
@@ -14,18 +14,14 @@ const { Title } = Typography
 const transformCategoriesForTree = (categories) =>
   categories.map((category) => ({
     key: String(category.id),
-    title: (
-      <span>
-        {category.title} (<b>Max score:</b>
-        {category.items.reduce((acc, curr) => acc + Number(curr.maxScore), 0)})
-      </span>
-    ),
+    title: <span>{category.title}</span>,
     children: category.items.map((item) => ({
       key: item.id,
       title: (
-        <span>
-          {item.description} (<b>Score:</b> {item.minScore} - {item.maxScore})
-        </span>
+        <div className="item">
+          {parse(item.description)}&nbsp;
+          <Tag color="default">{Number(item.score) > 0 ? `+${item.score}` : item.score}</Tag>
+        </div>
       ),
     })),
   }))
@@ -66,12 +62,12 @@ const Taskview = () => {
 
             <div className="task-categories">
               <Title level={4} className="task-categories__title">
-                Categories:
+                Criteria:
               </Title>
               {treeData.length ? (
                 <Tree showLine={<CarryOutOutlined />} treeData={treeData} />
               ) : (
-                <Empty description="Category not found :(">
+                <Empty description="Criteria not found :(">
                   <ButtonLink type="primary" linkTo={`/author/tasks/${taskId}/categories/create`}>
                     Create Now
                   </ButtonLink>

@@ -3,9 +3,12 @@ import React, { useRef, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { Form, Input, Button, notification } from 'antd'
 
-import './style.scss'
 import { PlusOutlined, MinusCircleOutlined } from '@ant-design/icons'
+import AntdTinymce from '../../../component/AntdTinymce'
+
 import categoriesService from '../../../services/categories.service'
+
+import './style.scss'
 
 const { TextArea } = Input
 
@@ -69,26 +72,15 @@ const CategoryCreate = () => {
                   {fields.map((field) => (
                     <div className="category-item" key={field.key}>
                       <div className="category-items-list">
-                        <div className="category-items-list__item category-items-list__item--minScore">
+                        <div className="category-items-list__item category-items-list__item--score">
                           <Form.Item
                             {...field}
                             style={{ marginBottom: 0 }}
-                            name={[field.name, 'minScore']}
-                            fieldKey={[field.fieldKey, 'minScore']}
-                            rules={[{ required: true, message: 'Missing min score' }]}
+                            name={[field.name, 'score']}
+                            fieldKey={[field.fieldKey, 'score']}
+                            rules={[{ required: true, message: 'Missing score' }]}
                           >
-                            <Input placeholder="Min Score" />
-                          </Form.Item>
-                        </div>
-                        <div className="category-items-list__item category-items-list__item--maxScore">
-                          <Form.Item
-                            {...field}
-                            style={{ marginBottom: 0 }}
-                            name={[field.name, 'maxScore']}
-                            fieldKey={[field.fieldKey, 'maxScore']}
-                            rules={[{ required: true, message: 'Missing max score' }]}
-                          >
-                            <Input placeholder="Max Score" />
+                            <Input placeholder="Score" />
                           </Form.Item>
                         </div>
                         <div className="category-items-list__item category-items-list__item--description">
@@ -99,7 +91,7 @@ const CategoryCreate = () => {
                             fieldKey={[field.fieldKey, 'description']}
                             rules={[{ required: true, message: 'Missing description' }]}
                           >
-                            <TextArea placeholder="Description" rows={4} />
+                            <AntdTinymce options={{ height: 200 }} />
                           </Form.Item>
                         </div>
                       </div>
