@@ -31,6 +31,7 @@ const create = async (task, authorId = -1) => {
     state: 'PUBLISHED',
     created_at: format(new Date(), 'yyyy-MM-dd HH:mm:ss'),
     updated_at: null,
+    categories: [],
   })
   return status === 201 && data ? data : null
 }

@@ -3,11 +3,13 @@ import { useParams } from 'react-router-dom'
 import { Tree, Typography, Empty, Spin, Tag } from 'antd'
 import { CarryOutOutlined } from '@ant-design/icons'
 import parse from 'react-html-parser'
+import { formatRoute } from 'react-router-named-routes'
 
 import ButtonLink from '../../../component/ButtonLink'
 
+import { authorRoutes } from '../../../router/routes'
+
 import tasksService from '../../../services/tasks.service'
-import categoriesService from '../../../services/categories.service'
 
 const { Title } = Typography
 
@@ -15,12 +17,14 @@ const transformCategoriesForTree = (categories) =>
   categories.map((category) => ({
     key: String(category.id),
     title: <span>{category.title}</span>,
-    children: category.items.map((item) => ({
-      key: item.id,
+    children: category.criteria.map((criterion) => ({
+      key: criterion.id,
       title: (
         <div className="item">
-          {parse(item.description)}&nbsp;
-          <Tag color="default">{Number(item.score) > 0 ? `+${item.score}` : item.score}</Tag>
+          {parse(criterion.text)}&nbsp;
+          <Tag color="default">
+            {Number(criterion.score) > 0 ? `+${criterion.score}` : criterion.score}
+          </Tag>
         </div>
       ),
     })),
@@ -31,22 +35,20 @@ const Taskview = () => {
 
   const [loading, setLoading] = useState(true)
   const [task, setTask] = useState([])
-  const [categories, setCategories] = useState([])
 
   useEffect(() => {
     const fetchData = async () => {
       const taskResponse = await tasksService.getById(taskId)
+
       setTask(taskResponse)
-
-      const categoriesResponse = await categoriesService.getAllByTaskId(taskId)
-      setCategories(categoriesResponse)
-
       setLoading(false)
     }
     fetchData()
   }, [taskId])
 
-  const treeData = useMemo(() => transformCategoriesForTree(categories), [categories])
+  const treeData = useMemo(() => transformCategoriesForTree(task.categories || []), [
+    task.categories,
+  ])
 
   return (
     <div className="task-view-page">
@@ -62,13 +64,16 @@ const Taskview = () => {
 
             <div className="task-categories">
               <Title level={4} className="task-categories__title">
-                Criteria:
+                Categories:
               </Title>
               {treeData.length ? (
-                <Tree showLine={<CarryOutOutlined />} treeData={treeData} />
+                <Tree showLine={<CarryOutOutlined />} treeData={treeData} defaultExpandAll />
               ) : (
-                <Empty description="Criteria not found :(">
-                  <ButtonLink type="primary" linkTo={`/author/tasks/${taskId}/categories/create`}>
+                <Empty description="Categories not found :(">
+                  <ButtonLink
+                    type="primary"
+                    linkTo={formatRoute(authorRoutes.categories.create, { taskId })}
+                  >
                     Create Now
                   </ButtonLink>
                 </Empty>

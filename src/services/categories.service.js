@@ -1,6 +1,7 @@
 import axios from 'axios'
 import slug from 'slug'
 import { v4 as uuid } from 'uuid'
+import { format } from 'date-fns'
 import { API_URL } from '../config'
 
 const getAllByTaskId = async (taskId = -1) => {
@@ -13,24 +14,58 @@ const getById = async (id) => {
   return status === 200 && task ? task : null
 }
 
-const create = async (category, taskId = -1) => {
-  await axios.post(`${API_URL}/tasks/${taskId}/categories`, {
-    ...category,
-    slug: slug(category.title),
-    items: category.items.map((item) => ({ ...item, id: uuid() })),
+/**
+ * Create category
+ * @param {Object} task
+ * @param {Object} category
+ */
+const create = async (task, category) => {
+  const { data, status } = await axios.patch(`${API_URL}/tasks/${task.id}`, {
+    ...task,
+    categories: [
+      ...task.categories,
+      {
+        ...category,
+        id: uuid(),
+        slug: slug(category.title),
+        created_at: format(new Date(), 'yyyy-MM-dd HH:mm:ss'),
+        updated_at: null,
+      },
+    ],
   })
+
+  return status === 200 ? data : task
 }
 
-const edit = async (category, categoryId) => {
-  await axios.patch(`${API_URL}/categories/${categoryId}`, {
-    ...category,
-    slug: slug(category.title),
+/**
+ * Edit category
+ * @param {Object} task
+ * @param {Object} payload - category
+ * @param {String|Number} categoryId
+ */
+const edit = async (task, payload, categoryId) => {
+  const { data, status } = await axios.patch(`${API_URL}/tasks/${task.id}`, {
+    ...task,
+    categories: task.categories.map((category) => {
+      if (category.id !== categoryId) return category
+      return {
+        ...category,
+        ...payload,
+        slug: slug(payload.title),
+        updated_at: format(new Date(), 'yyyy-MM-dd HH:mm:ss'),
+      }
+    }),
   })
+
+  return status === 200 ? data : task
 }
 
-const destroyById = async (id) => {
-  const { data, status } = await axios.delete(`${API_URL}/categories/${id}`)
-  return status === 200 ? data : null
+const destroyById = async (task, categoryId) => {
+  const { data, status } = await axios.patch(`${API_URL}/tasks/${task.id}`, {
+    ...task,
+    categories: task.categories.filter((category) => category.id !== categoryId),
+  })
+  return status === 200 ? data : task
 }
 
 export default {
