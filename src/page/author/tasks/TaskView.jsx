@@ -17,8 +17,8 @@ const transformCategoriesForTree = (categories) =>
   categories.map((category) => ({
     key: String(category.id),
     title: <span>{category.title}</span>,
-    children: category.criteria.map((criterion) => ({
-      key: criterion.id,
+    children: category.criteria.map((criterion, idx) => ({
+      key: `${String(category.id)}-${idx}`,
       title: (
         <div className="item">
           {parse(criterion.text)}&nbsp;
