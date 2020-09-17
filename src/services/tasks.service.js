@@ -48,6 +48,17 @@ const destroyById = async (id) => {
   return status === 200 ? data : null
 }
 
+const importTasks = async (file, authorId) => {
+  const formData = new FormData()
+  formData.append('authorId', authorId)
+  formData.append('file', file)
+  await axios.post(`${SERVER_URL}/tasks/import`, formData, {
+    headers: {
+      'Content-Type': 'multipart/form-data',
+    },
+  })
+}
+
 const exportAll = async () => {
   window.location.href = `${SERVER_URL}/tasks/export`
 }
@@ -60,5 +71,6 @@ export default {
   edit,
   destroyById,
   getAllPublished,
+  importTasks,
   exportAll,
 }

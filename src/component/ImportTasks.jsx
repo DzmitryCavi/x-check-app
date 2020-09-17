@@ -1,14 +1,24 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import React from 'react'
+import PropTypes from 'prop-types'
 import { Upload, Button, message } from 'antd'
-import { UploadOutlined } from '@ant-design/icons'
-import { SERVER_URL } from '../config'
+import { ImportOutlined } from '@ant-design/icons'
+import tasksService from '../services/tasks.service'
 
-const Uploader = () => {
+const Uploader = ({ authorId }) => {
+  async function importFile({ onSuccess, onError, file }) {
+    try {
+      await tasksService.importTasks(file, authorId)
+      onSuccess(null, file)
+    } catch (error) {
+      onError()
+    }
+  }
+
   const props = {
     name: 'file',
-    action: `${SERVER_URL}/tasks/import`,
     showUploadList: false,
+    customRequest: importFile,
     beforeUpload: (file) => {
       console.log(file.type)
       if (file.type !== 'application/json') {
@@ -27,11 +37,18 @@ const Uploader = () => {
       }
     },
   }
+
   return (
     <Upload {...props}>
-      <Button icon={<UploadOutlined />}>Import json</Button>
+      <Button type="default" icon={<ImportOutlined />}>
+        Import json
+      </Button>
     </Upload>
   )
+}
+
+Uploader.propTypes = {
+  authorId: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
 }
 
 export default Uploader

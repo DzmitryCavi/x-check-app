@@ -139,10 +139,10 @@ const TasksList = ({ user }) => {
           <ButtonLink type="primary" icon={<PlusOutlined />} linkTo={authorRoutes.tasks.create}>
             Create
           </ButtonLink>
-          <Button type="primary" icon={<ExportOutlined />} onClick={exportAll}>
+          <Button type="default" icon={<ExportOutlined />} onClick={exportAll}>
             Export All
           </Button>
-          <ImportTasks />
+          <ImportTasks authorId={user.id} />
         </Space>
       </div>
       <Table dataSource={tasks} rowKey="id" loading={loading}>
