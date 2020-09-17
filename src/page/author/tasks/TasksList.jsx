@@ -41,12 +41,16 @@ const TasksList = ({ user }) => {
     state: (state, value) => state === value || value.length === 0,
   }
 
+  const fetchTasks = async (authorId) => {
+    setLoading(true)
+    const data = await tasksService.getAllByAuthorId(authorId)
+    initTasks.current = data
+    setTasks(initTasks.current)
+    setLoading(false)
+  }
+
   useEffect(() => {
-    tasksService.getAllByAuthorId(user.id).then((data) => {
-      initTasks.current = data
-      setTasks(initTasks.current)
-      setLoading(false)
-    })
+    fetchTasks(user.id)
   }, [user.id])
 
   const destroyTask = async (taskId) => {
@@ -142,7 +146,7 @@ const TasksList = ({ user }) => {
           <Button type="default" icon={<ExportOutlined />} onClick={exportAll}>
             Export All
           </Button>
-          <ImportTasks authorId={user.id} />
+          <ImportTasks authorId={user.id} onImportSuccess={() => fetchTasks(user.id)} />
         </Space>
       </div>
       <Table dataSource={tasks} rowKey="id" loading={loading}>

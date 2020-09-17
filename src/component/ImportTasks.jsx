@@ -5,7 +5,7 @@ import { Upload, Button, message } from 'antd'
 import { ImportOutlined } from '@ant-design/icons'
 import tasksService from '../services/tasks.service'
 
-const Uploader = ({ authorId }) => {
+const Uploader = ({ authorId, onImportSuccess }) => {
   async function importFile({ onSuccess, onError, file }) {
     try {
       await tasksService.importTasks(file, authorId)
@@ -20,17 +20,14 @@ const Uploader = ({ authorId }) => {
     showUploadList: false,
     customRequest: importFile,
     beforeUpload: (file) => {
-      console.log(file.type)
       if (file.type !== 'application/json') {
         message.error(`${file.name} is not a json file`)
       }
       return file.type === 'application/json'
     },
     onChange(info) {
-      if (info.file.status !== 'uploading') {
-        console.log(info.file, info.fileList)
-      }
       if (info.file.status === 'done') {
+        onImportSuccess()
         message.success(`${info.file.name} file uploaded successfully`)
       } else if (info.file.status === 'error') {
         message.error(`${info.file.name} file upload failed.`)
@@ -47,8 +44,13 @@ const Uploader = ({ authorId }) => {
   )
 }
 
+Uploader.defaultProps = {
+  onImportSuccess: () => {},
+}
+
 Uploader.propTypes = {
   authorId: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
+  onImportSuccess: PropTypes.func,
 }
 
 export default Uploader
