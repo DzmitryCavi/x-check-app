@@ -14,6 +14,7 @@ import {
   UpOutlined,
 } from '@ant-design/icons'
 import ButtonLink from '../../../component/ButtonLink'
+import ImportTasks from '../../../component/ImportTasks'
 import { authorRoutes } from '../../../router/routes'
 
 import tasksService from '../../../services/tasks.service'
@@ -141,6 +142,7 @@ const TasksList = ({ user }) => {
           <Button type="primary" icon={<ExportOutlined />} onClick={exportAll}>
             Export All
           </Button>
+          <ImportTasks />
         </Space>
       </div>
       <Table dataSource={tasks} rowKey="id" loading={loading}>
