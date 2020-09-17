@@ -34,6 +34,7 @@ export const studentRoutes = {
   requests: {
     list: '/student/requests',
     create: '/student/requests/create',
+    edit: '/student/requests/:requestId/edit',
   },
 }
 // ...

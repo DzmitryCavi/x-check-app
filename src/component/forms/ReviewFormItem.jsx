@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { InputNumber, Input, Slider, Row, Col } from 'antd'
 import PropTypes from 'prop-types'
 
-const ReviewFormItem = ({ value, onChange }) => {
+const ReviewFormItem = ({ value, onChange, maxScore }) => {
   const [number, setNumber] = useState(0)
   const [discription, setDiscription] = useState('')
   const triggerChange = (changedValue) => {
@@ -56,6 +56,7 @@ const ReviewFormItem = ({ value, onChange }) => {
           />
         </Col>
         <Col span={4}>
+          {maxScore}
           <InputNumber
             value={value.number || number}
             onChange={onNumberChange}
@@ -83,6 +84,7 @@ const ReviewFormItem = ({ value, onChange }) => {
 ReviewFormItem.propTypes = {
   value: PropTypes.instanceOf(Object),
   onChange: PropTypes.instanceOf(Function),
+  maxScore: PropTypes.number.isRequired,
 }
 
 ReviewFormItem.defaultProps = {

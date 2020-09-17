@@ -2,9 +2,11 @@ import React, { useEffect, useState } from 'react'
 import PropTypes from 'prop-types'
 import { Table, Space, Button } from 'antd'
 import { connect } from 'react-redux'
+import { formatRoute } from 'react-router-named-routes'
+import { DeleteOutlined, EditOutlined } from '@ant-design/icons'
 
 import ButtonLink from '../../../component/ButtonLink'
-
+import { studentRoutes } from '../../../router/routes'
 import requestService from '../../../services/requests.service'
 
 const { Column } = Table
@@ -30,10 +32,17 @@ const RequestList = ({ user }) => {
           title="Action"
           key="action"
           width={300}
-          render={() => (
+          render={(row) => (
             <Space size="middle">
-              <Button type="danger" onClick={() => {}}>
+              <ButtonLink
+                icon={<EditOutlined />}
+                linkTo={formatRoute(studentRoutes.requests.edit, { requestId: row.id })}
+              >
+                {row.id}
                 Edit
+              </ButtonLink>
+              <Button type="danger" icon={<DeleteOutlined />} onClick={() => {}}>
+                Remove
               </Button>
             </Space>
           )}

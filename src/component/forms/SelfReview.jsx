@@ -7,7 +7,7 @@ import ReviewFormItem from './ReviewFormItem'
 import categoriesService from '../../services/categories.service'
 import requestsService from '../../services/requests.service'
 
-const SelfReview = ({ task, user }) => {
+const SelfReview = ({ task, user, requestToEdit }) => {
   const [categories, setCategories] = useState()
 
   useEffect(() => {
@@ -18,27 +18,17 @@ const SelfReview = ({ task, user }) => {
 
   const onFinish = async (data) => {
     const requestData = { task: task.id, ...data }
-    requestsService.create(requestData, user)
+    if (requestToEdit) requestsService.create(requestData, user)
+    else requestsService.edit(data, requestToEdit.id)
     notification.success({
       className: 'app-notification app-notification--success',
       message: 'Success',
       description: 'Request sent successfully...',
     })
   }
-  const init = {
-    grade:
-      categories && categories.items !== undefined
-        ? categories.items.reduce((ac, e) => {
-            const result = { ...ac }
-            result[e.id] = e
-            return result
-          }, {})
-        : {},
-  }
-
   return (
     <div className="task-create-page">
-      <Form ref={formRef} layout="vertical" onFinish={onFinish} initialValues={init}>
+      <Form ref={formRef} layout="vertical" onFinish={onFinish} initialValues={requestToEdit || {}}>
         {categories ? (
           categories.map((category) => (
             <div key={category.id}>
@@ -47,9 +37,9 @@ const SelfReview = ({ task, user }) => {
                 <div key={item.id}>
                   <Form.Item
                     name={['selfGrade', category.title, item.id]}
-                    label={`${item.description} (${item.minScore}-${item.maxScore})`}
+                    label={`${item.description} (0-${item.score})`}
                   >
-                    <ReviewFormItem />
+                    <ReviewFormItem maxScore={item.score} />
                   </Form.Item>
                 </div>
               ))}
@@ -71,6 +61,11 @@ const SelfReview = ({ task, user }) => {
 SelfReview.propTypes = {
   task: PropTypes.instanceOf(Object).isRequired,
   user: PropTypes.string.isRequired,
+  requestToEdit: PropTypes.instanceOf(Object),
+}
+
+SelfReview.defaultProps = {
+  requestToEdit: null,
 }
 
 const mapStateToProps = (state) => {
