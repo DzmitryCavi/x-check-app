@@ -79,6 +79,10 @@ const TasksList = ({ user }) => {
     filtersForm.resetFields()
   }
 
+  const exportTask = (task) => {
+    console.log(task)
+  }
+
   const exportAll = async () => {
     await tasksService.exportAll()
   }
@@ -200,18 +204,18 @@ const TasksList = ({ user }) => {
           title="Action"
           key="action"
           width={220}
-          render={(row) => (
+          render={(row, record) => (
             <Space size="middle">
+              <Button icon={<ExportOutlined />} onClick={() => exportTask(record)}>
+                Export
+              </Button>
+
               <ButtonLink
                 icon={<EditOutlined />}
                 linkTo={formatRoute(authorRoutes.tasks.edit, { taskId: row.id })}
-              >
-                Edit
-              </ButtonLink>
+              />
 
-              <Button type="danger" icon={<DeleteOutlined />} onClick={() => destroyTask(row.id)}>
-                Delete
-              </Button>
+              <Button type="danger" icon={<DeleteOutlined />} onClick={() => destroyTask(row.id)} />
             </Space>
           )}
         />
