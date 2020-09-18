@@ -1,26 +1,19 @@
 /* eslint-disable react/jsx-props-no-spreading */
-import React, { useRef, useEffect, useState } from 'react'
+import React, { useRef } from 'react'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import { Form, notification, Spin, Button, Input } from 'antd'
 import ReviewFormItem from './ReviewFormItem'
-import categoriesService from '../../services/categories.service'
 import requestsService from '../../services/requests.service'
 import { urlWithIpPattern } from '../../services/validators'
 
 const SelfReview = ({ task, user, requestToEdit }) => {
-  const [categories, setCategories] = useState()
-
-  useEffect(() => {
-    categoriesService.getAllByTaskId(task.id).then(setCategories)
-  }, [task.id])
-
+  const { categories } = task
   const formRef = useRef(null)
-
   const onFinish = async (data) => {
     const requestData = { task: task.id, ...data }
-    if (requestToEdit) requestsService.create(requestData, user)
-    else requestsService.edit(data, requestToEdit.id)
+    if (requestToEdit) requestsService.edit(data, requestToEdit.id)
+    else requestsService.create(requestData, user)
     notification.success({
       className: 'app-notification app-notification--success',
       message: 'Success',
@@ -43,11 +36,12 @@ const SelfReview = ({ task, user, requestToEdit }) => {
           categories.map((category) => (
             <div key={category.id}>
               <div>{category.title}</div>
-              {category.items.map((item) => (
-                <div key={item.id}>
+              {category.criteria.map((item, index) => (
+                <div key={`criteria-${index + 1}`}>
                   <Form.Item
-                    name={['selfGrade', category.title, item.id]}
-                    label={`${item.description} (0-${item.score})`}
+                    name={['selfGrade', category.title, index]}
+                    label={`${item.text} (0-${item.score})`}
+                    rules={[{ required: true, message: 'Please grade all' }]}
                   >
                     <ReviewFormItem maxScore={item.score} />
                   </Form.Item>

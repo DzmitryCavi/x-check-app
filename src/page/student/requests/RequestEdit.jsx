@@ -9,16 +9,16 @@ const Reqest = () => {
   const [request, setRequest] = useState(null)
   const [task, setTask] = useState(null)
   const { requestId } = useParams()
-
+  console.log(task)
   useEffect(() => {
     const fatchData = async () => {
       const requestResponse = await requestService.getById(requestId)
-      const taskResponse = await tasksService.getById(request.task)
+      const taskResponse = await tasksService.getById(requestResponse.task)
       setRequest(requestResponse)
       setTask(taskResponse)
     }
     fatchData()
-  }, [request.task, requestId])
+  }, [requestId])
   return <>{task ? <SelfReview task={task} requestToEdit={request} /> : <Spin />}</>
 }
 

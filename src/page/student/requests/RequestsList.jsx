@@ -38,7 +38,6 @@ const RequestList = ({ user }) => {
                 icon={<EditOutlined />}
                 linkTo={formatRoute(studentRoutes.requests.edit, { requestId: row.id })}
               >
-                {row.id}
                 Edit
               </ButtonLink>
               <Button type="danger" icon={<DeleteOutlined />} onClick={() => {}}>

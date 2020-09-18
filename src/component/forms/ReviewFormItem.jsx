@@ -1,10 +1,11 @@
 import React, { useState } from 'react'
-import { InputNumber, Input, Slider, Row, Col } from 'antd'
+import { InputNumber, Input, Row, Col, Radio } from 'antd'
 import PropTypes from 'prop-types'
 
 const ReviewFormItem = ({ value, onChange, maxScore }) => {
   const [number, setNumber] = useState(0)
   const [discription, setDiscription] = useState('')
+
   const triggerChange = (changedValue) => {
     if (onChange) {
       onChange({
@@ -16,9 +17,10 @@ const ReviewFormItem = ({ value, onChange, maxScore }) => {
     }
   }
 
-  const onNumberChange = (score) => {
-    const newNumber = score
-    if (Number.isNaN(score)) {
+  const onNumberChange = (e) => {
+    const newNumber = typeof e === 'number' ? e : e.target.value
+
+    if (Number.isNaN(newNumber)) {
       return
     }
 
@@ -44,7 +46,16 @@ const ReviewFormItem = ({ value, onChange, maxScore }) => {
         }}
       >
         <Col span={10}>
-          <Slider
+          <Radio.Group
+            value={typeof value.number === 'number' ? value.number : 0}
+            size="large"
+            onChange={onNumberChange}
+          >
+            <Radio.Button value={0}>Min</Radio.Button>
+            <Radio.Button value={maxScore / 2}>Half</Radio.Button>
+            <Radio.Button value={+maxScore}>Max</Radio.Button>
+          </Radio.Group>
+          {/* <Slider
             min={0}
             max={40}
             marks={{ 0: 'min', 20: 'half', 40: 'max' }}
@@ -53,12 +64,12 @@ const ReviewFormItem = ({ value, onChange, maxScore }) => {
               margin: '0 20px',
             }}
             value={typeof value.number === 'number' ? value.number : 0}
-          />
+          /> */}
         </Col>
         <Col span={4}>
-          {maxScore}
           <InputNumber
             value={value.number || number}
+            max={maxScore}
             onChange={onNumberChange}
             style={{
               width: 100,
@@ -84,7 +95,7 @@ const ReviewFormItem = ({ value, onChange, maxScore }) => {
 ReviewFormItem.propTypes = {
   value: PropTypes.instanceOf(Object),
   onChange: PropTypes.instanceOf(Function),
-  maxScore: PropTypes.number.isRequired,
+  maxScore: PropTypes.string.isRequired,
 }
 
 ReviewFormItem.defaultProps = {

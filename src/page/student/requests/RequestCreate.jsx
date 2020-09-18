@@ -9,10 +9,10 @@ const Reqest = () => {
   const [tasks, setTasks] = useState([])
 
   useEffect(() => {
-    tasksService.getAll().then(setTasks)
+    tasksService.getAllPublished().then(setTasks)
   }, [])
 
-  const children = tasks.map((el) => <Option key={el.title}>{el.title}</Option>)
+  const children = tasks.map((el) => <Option key={el.id}>{el.title}</Option>)
 
   const [task, changeTask] = useState()
 
