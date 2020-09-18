@@ -1,93 +1,124 @@
 {
   "tasks": [
     {
-      "title": "Task 1",
-      "description": "Description task 1",
+      "title": "Виртуальная клавиатура",
+      "description": "Вам нужно создать виртуальную клавиатуру",
       "authorId": 11542402,
-      "slug": "task-1",
+      "slug": "virtual-keyboard",
       "state": "PUBLISHED",
-      "id": 1
-    },
-    {
-      "title": "Task 2",
-      "description": "Description task 2",
-      "authorId": 11542402,
-      "slug": "task-2",
-      "state": "PUBLISHED",
-      "id": 2
-    },
-    {
-      "title": "Task 3",
-      "description": "Description task 3",
-      "authorId": 11542402,
-      "slug": "task-3",
-      "state": "PUBLISHED",
-      "id": 3
-    }
-  ],
-  "categories": [
-    {
-      "title": "Category task 1",
-      "description": "Description category task 1",
-      "items": [
+      "id": 1,
+      "created_at": "2020-09-16 20:00:00",
+      "update_at": null,
+      "categories": [
         {
-          "minScore": "0",
-          "maxScore": "20",
-          "description": "Description item 1",
-          "id": "af9947d2-c51a-44cb-9a8a-cfbaee688253"
+          "title": "Минимальный набор",
+          "description": "",
+          "criteria": [
+            {
+              "score": "20",
+              "text": "Реализована генерация DOM-элементов и body в index.html пустой изначально (может находится только тег script)"
+            },
+            {
+              "score": "10",
+              "text": "Нажатие на кнопку на физической клавиатуре подсвечивает кнопку на виртуальной (проверять следует нажатие цифр, букв, знаков препинания, backspace, del (если она присутствует), enter, shift, alt, ctrl, tab, caps lock, space, стрелки вниз-вверх-влево-вправо)"
+            }
+          ],
+          "slug": "minimalьnyj-nabor",
+          "id": "d9129bbe-f924-11ea-adc1-0242ac120002",
+          "created_at": "2020-09-16 21:00:00",
+          "update_at": null
         },
         {
-          "minScore": "0",
-          "maxScore": "30",
-          "description": "Description item 2",
-          "id": "68ee7afa-aa0c-4e62-8bf6-1c3e2d57213c"
-        }
-      ],
-      "slug": "category-task-1",
-      "taskId": "1",
-      "id": 1
-    },
-    {
-      "title": "Category task 1",
-      "description": "Category task 1",
-      "items": [
-        {
-          "minScore": "0",
-          "maxScore": "40",
-          "description": "Description item 1",
-          "id": "3d2c1950-ebe7-4365-a619-53f993bdde95"
-        }
-      ],
-      "slug": "category-task-1",
-      "taskId": "1",
-      "id": 2
-    },
-    {
-      "title": "Category task 2",
-      "description": "Description task 2",
-      "items": [
-        {
-          "minScore": "0",
-          "maxScore": "100",
-          "description": "Description item 1",
-          "id": "4f09ee93-a152-45f3-8578-7b9a842754cb"
+          "title": "Стандартный набор",
+          "description": "",
+          "criteria": [
+            {
+              "score": "15",
+              "text": "Есть переключение между русским и английским языком (сочетание клавиш для переключения языка должно быть указано на странице с клавиатурой), а также сохранение выбранного языка"
+            },
+            {
+              "score": "15",
+              "text": "Клики мышкой по кнопкам на виртуальной клавиатуре или нажатие на кнопки физической клавиатуры, выводят символы в инпут (textarea)"
+            }
+          ],
+          "slug": "standartnyj-nabor",
+          "id": "e7d16464-f924-11ea-adc1-0242ac120002",
+          "created_at": "2020-09-16 22:00:00",
+          "update_at": null
         },
         {
-          "minScore": "0",
-          "maxScore": "40",
-          "description": "Description item 2",
-          "id": "b74d550d-26e3-410f-846f-e5fb46e36e68"
+          "title": "Дополнительный набор",
+          "description": "",
+          "criteria": [
+            {
+              "score": "15",
+              "text": "Реализована анимация нажатия на кнопку"
+            }
+          ],
+          "slug": "dopolnitelьnyj-nabor",
+          "id": "f19aee34-f924-11ea-adc1-0242ac120002",
+          "created_at": "2020-09-16 22:30:00",
+          "update_at": null
         },
         {
-          "minScore": "0",
-          "maxScore": "60",
-          "description": "Description item 3",
-          "id": "2684b0a7-f2b9-4f4b-91c5-44f2d2d1448b"
+          "title": "Технические требования",
+          "description": "",
+          "criteria": [
+            {
+              "score": "15",
+              "text": "Использование в коде фишек стандарта ES6 и выше (classes, деструктуризация и т.д.)"
+            },
+            {
+              "score": "10",
+              "text": "Использование eslint"
+            },
+            {
+              "score": "10",
+              "text": "Требования к репозиторию, коммитам и PR выполнены"
+            }
+          ],
+          "slug": "tehnicheskie-trebovaniya",
+          "id": "fb3b08e8-f924-11ea-adc1-0242ac120002",
+          "created_at": "2020-09-16 23:00:00",
+          "update_at": null
+        },
+        {
+          "title": "Штрафы",
+          "description": "",
+          "criteria": [
+            {
+              "score": "-15",
+              "text": "Ошибки в консоли, связанные с исполняемым кодом (ошибки типа favicon.ico: Failed to load resource: the server responded with a status of 404 не учитываются) или предупреждения eslint-config-airbnb-base"
+            }
+          ],
+          "slug": "shtrafy",
+          "id": "00d77dd6-f925-11ea-adc1-0242ac120002",
+          "created_at": "2020-09-16 23:30:00",
+          "update_at": null
         }
-      ],
-      "slug": "category-task-2",
-      "taskId": "2",
-      "id": 3
+      ]
+    },
+    {
+      "title": "English for kids",
+      "description": "English for kids - приложение для изучения английских слов детьми.",
+      "authorId": 11542402,
+      "slug": "english-for-kids",
+      "state": "PUBLISHED",
+      "id": 2,
+      "created_at": "2020-09-15 19:00:00",
+      "update_at": null,
+      "categories": []
+    },
+    {
+      "title": "MovieSearch",
+      "description": "MovieSearch - одностраничное приложение, отображающее информацию о фильмах по запросу пользователя.Для получения информации используется OMDb RESTful API.",
+      "authorId": 11542402,
+      "slug": "movie-search",
+      "state": "PUBLISHED",
+      "id": 3,
+      "created_at": "2020-09-14 15:00:00",
+      "update_at": null,
+      "categories": []
     }
   ],
   "taskScore": [

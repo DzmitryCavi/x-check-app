@@ -1,7 +1,7 @@
 import axios from 'axios'
 import slug from 'slug'
 import { format } from 'date-fns'
-import { API_URL } from '../config'
+import { API_URL, SERVER_URL } from '../config'
 
 const getAllByAuthorId = async (authorId) => {
   const { data: tasks, status } = await axios.get(`${API_URL}/tasks?authorId=${authorId}`)
@@ -31,6 +31,7 @@ const create = async (task, authorId = -1) => {
     state: 'PUBLISHED',
     created_at: format(new Date(), 'yyyy-MM-dd HH:mm:ss'),
     updated_at: null,
+    categories: [],
   })
   return status === 201 && data ? data : null
 }
@@ -48,6 +49,21 @@ const destroyById = async (id) => {
   return status === 200 ? data : null
 }
 
+const importTasks = async (file, authorId) => {
+  const formData = new FormData()
+  formData.append('authorId', authorId)
+  formData.append('file', file)
+  await axios.post(`${SERVER_URL}/tasks/import`, formData, {
+    headers: {
+      'Content-Type': 'multipart/form-data',
+    },
+  })
+}
+
+const exportAll = async () => {
+  window.location.href = `${SERVER_URL}/tasks/export`
+}
+
 export default {
   getAllByAuthorId,
   getAll,
@@ -56,4 +72,6 @@ export default {
   edit,
   destroyById,
   getAllPublished,
+  importTasks,
+  exportAll,
 }

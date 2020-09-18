@@ -9,10 +9,12 @@ import {
   DeleteOutlined,
   DownOutlined,
   EditOutlined,
+  ExportOutlined,
   PlusOutlined,
   UpOutlined,
 } from '@ant-design/icons'
 import ButtonLink from '../../../component/ButtonLink'
+import ImportTasks from '../../../component/ImportTasks'
 import { authorRoutes } from '../../../router/routes'
 
 import tasksService from '../../../services/tasks.service'
@@ -39,12 +41,16 @@ const TasksList = ({ user }) => {
     state: (state, value) => state === value || value.length === 0,
   }
 
+  const fetchTasks = async (authorId) => {
+    setLoading(true)
+    const data = await tasksService.getAllByAuthorId(authorId)
+    initTasks.current = data
+    setTasks(initTasks.current)
+    setLoading(false)
+  }
+
   useEffect(() => {
-    tasksService.getAllByAuthorId(user.id).then((data) => {
-      initTasks.current = data
-      setTasks(initTasks.current)
-      setLoading(false)
-    })
+    fetchTasks(user.id)
   }, [user.id])
 
   const destroyTask = async (taskId) => {
@@ -71,6 +77,14 @@ const TasksList = ({ user }) => {
   const onClearFilter = () => {
     setTasks(initTasks.current)
     filtersForm.resetFields()
+  }
+
+  const exportTask = (task) => {
+    console.log(task)
+  }
+
+  const exportAll = async () => {
+    await tasksService.exportAll()
   }
 
   return (
@@ -129,19 +143,18 @@ const TasksList = ({ user }) => {
         </Form>
       </div>
       <div className="d-flex justify-content-end align-items-center mb-2">
-        <ButtonLink type="primary" icon={<PlusOutlined />} linkTo={authorRoutes.tasks.create}>
-          Create
-        </ButtonLink>
+        <Space>
+          <ButtonLink type="primary" icon={<PlusOutlined />} linkTo={authorRoutes.tasks.create}>
+            Create
+          </ButtonLink>
+          <Button type="default" icon={<ExportOutlined />} onClick={exportAll}>
+            Export All
+          </Button>
+          <ImportTasks authorId={user.id} onImportSuccess={() => fetchTasks(user.id)} />
+        </Space>
       </div>
       <Table dataSource={tasks} rowKey="id" loading={loading}>
-        <Column
-          width={60}
-          title="#"
-          dataIndex="id"
-          key="id"
-          sorter={sorter.id}
-          defaultSortOrder="descend"
-        />
+        <Column width={60} title="#" dataIndex="id" key="id" sorter={sorter.id} />
         <Column
           title="Title"
           key="title"
@@ -151,10 +164,21 @@ const TasksList = ({ user }) => {
           )}
         />
         <Column
-          title="Created"
-          dataIndex="created_at"
-          key="created_at"
-          sorter={sorter.created_at}
+          title="Categories"
+          dataIndex="categories"
+          key="categories"
+          render={(categories, row) => (
+            <Space size="middle">
+              {categories.length}
+              <ButtonLink
+                type="primary"
+                icon={<PlusOutlined />}
+                linkTo={formatRoute(authorRoutes.categories.create, { taskId: row.id })}
+              >
+                Add
+              </ButtonLink>
+            </Space>
+          )}
         />
         <Column
           title="State"
@@ -170,36 +194,28 @@ const TasksList = ({ user }) => {
           )}
         />
         <Column
+          title="Created"
+          dataIndex="created_at"
+          key="created_at"
+          sorter={sorter.created_at}
+          defaultSortOrder="descend"
+        />
+        <Column
           title="Action"
           key="action"
-          width={300}
-          render={(row) => (
+          width={220}
+          render={(row, record) => (
             <Space size="middle">
-              <ButtonLink
-                type="primary"
-                icon={<PlusOutlined />}
-                linkTo={formatRoute(authorRoutes.categories.create, { taskId: row.id })}
-              >
-                Category
-              </ButtonLink>
-
-              {/* <ButtonLink
-                icon={<EyeOutlined />}
-                linkTo={formatRoute(authorRoutes.tasks.view, { taskId: row.id })}
-              >
-                View
-              </ButtonLink> */}
+              <Button icon={<ExportOutlined />} onClick={() => exportTask(record)}>
+                Export
+              </Button>
 
               <ButtonLink
                 icon={<EditOutlined />}
                 linkTo={formatRoute(authorRoutes.tasks.edit, { taskId: row.id })}
-              >
-                Edit
-              </ButtonLink>
+              />
 
-              <Button type="danger" icon={<DeleteOutlined />} onClick={() => destroyTask(row.id)}>
-                Remove
-              </Button>
+              <Button type="danger" icon={<DeleteOutlined />} onClick={() => destroyTask(row.id)} />
             </Space>
           )}
         />

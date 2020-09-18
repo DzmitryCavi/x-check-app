@@ -2,11 +2,14 @@ import React, { useState, useRef, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 import { Form, Input, Button, Table, Space, Radio, Spin, notification } from 'antd'
 import { EditOutlined, DeleteOutlined, PlusOutlined } from '@ant-design/icons'
+import { formatRoute } from 'react-router-named-routes'
 import AntdTinymce from '../../../component/AntdTinymce'
 
 import tasksService from '../../../services/tasks.service'
 import categoriesService from '../../../services/categories.service'
 import ButtonLink from '../../../component/ButtonLink'
+
+import { authorRoutes } from '../../../router/routes'
 
 const { Column } = Table
 
@@ -15,6 +18,7 @@ const validateMessages = {
 }
 
 const TaskEdit = () => {
+  const task = useRef(null)
   const [categories, setCategories] = useState([])
   const [loading, setLoading] = useState(true)
   const [isBusy, setIsBusy] = useState(false)
@@ -26,13 +30,12 @@ const TaskEdit = () => {
   useEffect(() => {
     const fetchData = async () => {
       const taskResponse = await tasksService.getById(taskId)
-
-      const categoriesResponse = await categoriesService.getAllByTaskId(taskId)
+      task.current = taskResponse
 
       setLoading(false)
 
+      setCategories(taskResponse.categories)
       form.setFieldsValue(taskResponse)
-      setCategories(categoriesResponse)
     }
     fetchData()
   }, [form, taskId])
@@ -51,7 +54,9 @@ const TaskEdit = () => {
   }
 
   const destroyCategory = async (categoryId) => {
-    await categoriesService.destroyById(categoryId)
+    const taskResponse = await categoriesService.destroyById(task.current, categoryId)
+    task.current = taskResponse
+
     setCategories((prev) => prev.filter((category) => category.id !== categoryId))
 
     notification.success({
@@ -120,13 +125,12 @@ const TaskEdit = () => {
               <ButtonLink
                 type="primary"
                 icon={<PlusOutlined />}
-                linkTo={`/author/tasks/${taskId}/categories/create`}
+                linkTo={formatRoute(authorRoutes.categories.create, { taskId })}
               >
                 Category
               </ButtonLink>
             </div>
             <Table dataSource={categories} rowKey="id">
-              <Column width={60} title="#" dataIndex="id" key="id" />
               <Column title="Title" dataIndex="title" key="title" />
               <Column title="Description" dataIndex="description" key="description" />
               <Column
@@ -137,9 +141,12 @@ const TaskEdit = () => {
                   <Space size="middle">
                     <ButtonLink
                       icon={<EditOutlined />}
-                      linkTo={`/author/categories/${row.id}/edit`}
+                      linkTo={formatRoute(authorRoutes.categories.edit, {
+                        taskId,
+                        categoryId: row.id,
+                      })}
                     >
-                      Veiw
+                      Edit
                     </ButtonLink>
 
                     <Button

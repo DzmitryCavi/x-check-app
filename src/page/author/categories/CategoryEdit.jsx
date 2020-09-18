@@ -1,11 +1,14 @@
 /* eslint-disable react/jsx-props-no-spreading */
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useRef } from 'react'
 import { useParams } from 'react-router-dom'
 import { Form, Input, Button, Spin, notification } from 'antd'
+import { PlusOutlined, MinusCircleOutlined } from '@ant-design/icons'
+
+import AntdTinymce from '../../../component/AntdTinymce'
+import tasksService from '../../../services/tasks.service'
+import categoriesService from '../../../services/categories.service'
 
 import './style.scss'
-import { PlusOutlined, MinusCircleOutlined } from '@ant-design/icons'
-import categoriesService from '../../../services/categories.service'
 
 const { TextArea } = Input
 
@@ -14,23 +17,31 @@ const validateMessages = {
 }
 
 const CategoryEdit = () => {
+  const task = useRef(null)
   const [loading, setLoading] = useState(true)
   const [isBusy, setIsBusy] = useState(false)
 
-  const { categoryId } = useParams()
+  const { taskId, categoryId } = useParams()
   const [form] = Form.useForm()
 
   useEffect(() => {
-    categoriesService.getById(categoryId).then((data) => {
+    const fetchData = async () => {
+      const taskResponse = await tasksService.getById(taskId)
+      task.current = taskResponse
+
+      const data = taskResponse.categories.find((category) => category.id === categoryId)
+
       setLoading(false)
       form.setFieldsValue(data)
-    })
-  }, [categoryId, form])
+    }
+    fetchData()
+  }, [categoryId, form, taskId])
 
-  const onFinish = async (data) => {
+  const onFinish = async (formData) => {
     setIsBusy(true)
 
-    await categoriesService.edit(data, categoryId)
+    const updatedTask = await categoriesService.edit(task.current, formData, categoryId)
+    task.current = updatedTask
 
     notification.success({
       className: 'app-notification app-notification--success',
@@ -67,52 +78,41 @@ const CategoryEdit = () => {
           </Form.Item>
 
           <Form.Item
-            name="items"
-            label="Items"
+            name="criteria"
+            label="Criteria"
             rules={[
               {
                 required: true,
               },
             ]}
           >
-            <Form.List name="items">
+            <Form.List name="criteria">
               {(fields, { add, remove }) => {
                 return (
                   <div>
                     {fields.map((field) => (
                       <div className="category-item" key={field.key}>
                         <div className="category-items-list">
-                          <div className="category-items-list__item category-items-list__item--minScore">
+                          <div className="category-items-list__item category-items-list__item--score">
                             <Form.Item
                               {...field}
                               style={{ marginBottom: 0 }}
-                              name={[field.name, 'minScore']}
-                              fieldKey={[field.fieldKey, 'minScore']}
-                              rules={[{ required: true, message: 'Missing min score' }]}
+                              name={[field.name, 'score']}
+                              fieldKey={[field.fieldKey, 'score']}
+                              rules={[{ required: true, message: 'Missing score' }]}
                             >
-                              <Input placeholder="Min Score" />
+                              <Input placeholder="Score" />
                             </Form.Item>
                           </div>
-                          <div className="category-items-list__item category-items-list__item--maxScore">
+                          <div className="category-items-list__item category-items-list__item--text">
                             <Form.Item
                               {...field}
                               style={{ marginBottom: 0 }}
-                              name={[field.name, 'maxScore']}
-                              fieldKey={[field.fieldKey, 'maxScore']}
-                              rules={[{ required: true, message: 'Missing max score' }]}
+                              name={[field.name, 'text']}
+                              fieldKey={[field.fieldKey, 'text']}
+                              rules={[{ required: true, message: 'Missing text' }]}
                             >
-                              <Input placeholder="Max Score" />
-                            </Form.Item>
-                          </div>
-                          <div className="category-items-list__item category-items-list__item--description">
-                            <Form.Item
-                              {...field}
-                              style={{ marginBottom: 0 }}
-                              name={[field.name, 'description']}
-                              fieldKey={[field.fieldKey, 'description']}
-                              rules={[{ required: true, message: 'Missing description' }]}
-                            >
-                              <TextArea placeholder="Description" rows={4} />
+                              <AntdTinymce options={{ height: 160 }} />
                             </Form.Item>
                           </div>
                         </div>
