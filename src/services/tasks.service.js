@@ -61,11 +61,13 @@ const importTasks = async (file, authorId) => {
 }
 
 const exportById = async (taskId) => {
-  window.location.href = `${SERVER_URL}/tasks/${taskId}/export`
+  // type = rss | custom | md
+  window.location.href = `${SERVER_URL}/tasks/${taskId}/export?type=rss`
 }
 
 const exportAll = async (authorId) => {
-  window.location.href = `${SERVER_URL}/tasks/export?authorId=${authorId}`
+  // type = rss | custom
+  window.location.href = `${SERVER_URL}/tasks/export?authorId=${authorId}&type=rss`
 }
 
 export default {
