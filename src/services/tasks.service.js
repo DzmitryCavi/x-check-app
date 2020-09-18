@@ -60,6 +60,10 @@ const importTasks = async (file, authorId) => {
   })
 }
 
+const exportById = async (taskId) => {
+  window.location.href = `${SERVER_URL}/tasks/${taskId}/export`
+}
+
 const exportAll = async () => {
   window.location.href = `${SERVER_URL}/tasks/export`
 }
@@ -73,5 +77,6 @@ export default {
   destroyById,
   getAllPublished,
   importTasks,
+  exportById,
   exportAll,
 }

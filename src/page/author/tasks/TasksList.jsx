@@ -79,8 +79,8 @@ const TasksList = ({ user }) => {
     filtersForm.resetFields()
   }
 
-  const exportTask = (task) => {
-    console.log(task)
+  const exportById = async ({ id: taskId }) => {
+    await tasksService.exportById(taskId)
   }
 
   const exportAll = async () => {
@@ -206,7 +206,7 @@ const TasksList = ({ user }) => {
           width={220}
           render={(row, record) => (
             <Space size="middle">
-              <Button icon={<ExportOutlined />} onClick={() => exportTask(record)}>
+              <Button icon={<ExportOutlined />} onClick={() => exportById(record)}>
                 Export
               </Button>
 
