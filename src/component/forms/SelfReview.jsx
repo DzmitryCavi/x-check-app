@@ -2,10 +2,11 @@
 import React, { useRef, useEffect, useState } from 'react'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
-import { Form, notification, Spin, Button } from 'antd'
+import { Form, notification, Spin, Button, Input } from 'antd'
 import ReviewFormItem from './ReviewFormItem'
 import categoriesService from '../../services/categories.service'
 import requestsService from '../../services/requests.service'
+import { urlWithIpPattern } from '../../services/validators'
 
 const SelfReview = ({ task, user, requestToEdit }) => {
   const [categories, setCategories] = useState()
@@ -29,6 +30,15 @@ const SelfReview = ({ task, user, requestToEdit }) => {
   return (
     <div className="task-create-page">
       <Form ref={formRef} layout="vertical" onFinish={onFinish} initialValues={requestToEdit || {}}>
+        <Form.Item
+          name="url"
+          label="Solution URL"
+          rules={[
+            { required: true, pattern: urlWithIpPattern, message: 'Please provide a valid link' },
+          ]}
+        >
+          <Input />
+        </Form.Item>
         {categories ? (
           categories.map((category) => (
             <div key={category.id}>
