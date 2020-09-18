@@ -160,11 +160,21 @@ const TasksList = ({ user }) => {
           )}
         />
         <Column
-          title="Created"
-          dataIndex="created_at"
-          key="created_at"
-          sorter={sorter.created_at}
-          defaultSortOrder="descend"
+          title="Categories"
+          dataIndex="categories"
+          key="categories"
+          render={(categories, row) => (
+            <Space size="middle">
+              {categories.length}
+              <ButtonLink
+                type="primary"
+                icon={<PlusOutlined />}
+                linkTo={formatRoute(authorRoutes.categories.create, { taskId: row.id })}
+              >
+                Add
+              </ButtonLink>
+            </Space>
+          )}
         />
         <Column
           title="State"
@@ -180,26 +190,18 @@ const TasksList = ({ user }) => {
           )}
         />
         <Column
+          title="Created"
+          dataIndex="created_at"
+          key="created_at"
+          sorter={sorter.created_at}
+          defaultSortOrder="descend"
+        />
+        <Column
           title="Action"
           key="action"
-          width={300}
+          width={220}
           render={(row) => (
             <Space size="middle">
-              <ButtonLink
-                type="primary"
-                icon={<PlusOutlined />}
-                linkTo={formatRoute(authorRoutes.categories.create, { taskId: row.id })}
-              >
-                Category
-              </ButtonLink>
-
-              {/* <ButtonLink
-                icon={<EyeOutlined />}
-                linkTo={formatRoute(authorRoutes.tasks.view, { taskId: row.id })}
-              >
-                View
-              </ButtonLink> */}
-
               <ButtonLink
                 icon={<EditOutlined />}
                 linkTo={formatRoute(authorRoutes.tasks.edit, { taskId: row.id })}
@@ -208,7 +210,7 @@ const TasksList = ({ user }) => {
               </ButtonLink>
 
               <Button type="danger" icon={<DeleteOutlined />} onClick={() => destroyTask(row.id)}>
-                Remove
+                Delete
               </Button>
             </Space>
           )}
