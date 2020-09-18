@@ -64,8 +64,8 @@ const exportById = async (taskId) => {
   window.location.href = `${SERVER_URL}/tasks/${taskId}/export`
 }
 
-const exportAll = async () => {
-  window.location.href = `${SERVER_URL}/tasks/export`
+const exportAll = async (authorId) => {
+  window.location.href = `${SERVER_URL}/tasks/export?authorId=${authorId}`
 }
 
 export default {

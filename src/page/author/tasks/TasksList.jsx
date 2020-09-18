@@ -84,7 +84,7 @@ const TasksList = ({ user }) => {
   }
 
   const exportAll = async () => {
-    await tasksService.exportAll()
+    await tasksService.exportAll(user.id)
   }
 
   return (
