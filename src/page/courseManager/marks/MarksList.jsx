@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useCallback } from 'react'
 import { Table, Button, Space, Tag } from 'antd'
 import { formatRoute } from 'react-router-named-routes'
 import ButtonLink from '../../../component/ButtonLink'
@@ -9,17 +9,19 @@ import marksService from '../../../services/marks.service'
 const { Column } = Table
 
 const MarksList = () => {
+  const [marks, setMarks] = useState([])
+  const [loading, setLoading] = useState(true)
+
   const [state, setState] = useState({
     filteredInfo: null,
-    loading: true,
-    marks: [],
   })
 
-  const fetchMarks = () => {
+  const fetchMarks = useCallback(() => {
     marksService.getAllMarks().then((data) => {
-      setState({ ...state, marks: data, loading: false })
+      setMarks(data)
+      setLoading(false)
     })
-  }
+  }, [])
 
   useEffect(() => {
     fetchMarks()
@@ -34,7 +36,7 @@ const MarksList = () => {
   }
 
   const makeFilters = (value) => {
-    let filters = state.marks.reduce((acc, current) => {
+    let filters = marks.reduce((acc, current) => {
       return [...acc, current[value]]
     }, [])
     filters = [...new Set(filters)]
@@ -48,7 +50,6 @@ const MarksList = () => {
 
   let { filteredInfo } = state
   filteredInfo = filteredInfo || {}
-  const { marks, loading } = state
 
   return (
     <>
