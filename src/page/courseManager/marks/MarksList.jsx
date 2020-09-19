@@ -15,11 +15,15 @@ const MarksList = () => {
     marks: [],
   })
 
-  useEffect(() => {
+  const fetchMarks = () => {
     marksService.getAllMarks().then((data) => {
       setState({ ...state, marks: data, loading: false })
     })
-  }, [state])
+  }
+
+  useEffect(() => {
+    fetchMarks()
+  }, [fetchMarks])
 
   const handleChange = (pagination, filters) => {
     setState({ ...state, filteredInfo: filters })
@@ -48,6 +52,7 @@ const MarksList = () => {
 
   return (
     <>
+      <h1 className="page-title">Marks</h1>
       <Space style={{ marginBottom: 16 }}>
         <Button onClick={clearFilters}>Clear filters</Button>
       </Space>

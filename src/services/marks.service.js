@@ -7,7 +7,7 @@ const getAllMarks = async () => {
 }
 
 const getMarksById = async (id) => {
-  const { data: marks, status } = await axios.get(`${API_URL}/review/${id}`)
+  const { data: marks, status } = await axios.get(`${API_URL}/reviews/${id}`)
   return status === 200 && marks ? marks : null
 }
 
