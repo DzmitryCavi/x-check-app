@@ -13,7 +13,7 @@ export const authorRoutes = {
   },
   categories: {
     create: '/author/tasks/:taskId/categories/create',
-    edit: '/author/categories/:categoryId/edit',
+    edit: '/author/tasks/:taskId/categories/:categoryId/edit',
   },
 }
 

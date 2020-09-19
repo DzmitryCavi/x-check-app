@@ -22,7 +22,7 @@ const ButtonAntd = ({ linkTo, linkMode, match, location, history, staticContext,
   )
 
 ButtonAntd.propTypes = {
-  linkTo: PropTypes.string,
+  linkTo: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
   linkMode: PropTypes.oneOf(['replace']),
   location: PropTypes.instanceOf(Object).isRequired,
   match: PropTypes.instanceOf(Object).isRequired,

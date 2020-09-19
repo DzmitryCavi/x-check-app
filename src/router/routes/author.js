@@ -14,6 +14,11 @@ export default [
     breadcrumb: 'Create Category',
   },
   {
+    path: routes.categories.edit,
+    component: CategoryEdit,
+    breadcrumb: 'Edit Category',
+  },
+  {
     path: routes.tasks.view,
     component: TaskView,
     breadcrumb: 'View Task',
@@ -33,10 +38,5 @@ export default [
     component: TasksList,
     breadcrumb: 'Tasks',
     isNavigation: true,
-  },
-  {
-    path: routes.categories.edit,
-    component: CategoryEdit,
-    breadcrumb: 'Edit Category',
   },
 ]

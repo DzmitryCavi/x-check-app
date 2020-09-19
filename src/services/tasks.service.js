@@ -31,6 +31,7 @@ const create = async (task, authorId = -1) => {
     state: 'PUBLISHED',
     created_at: format(new Date(), 'yyyy-MM-dd HH:mm:ss'),
     updated_at: null,
+    categories: [],
   })
   return status === 201 && data ? data : null
 }
@@ -48,8 +49,25 @@ const destroyById = async (id) => {
   return status === 200 ? data : null
 }
 
-const exportAll = async () => {
-  window.location.href = `${SERVER_URL}/tasks/export`
+const importTasks = async (file, authorId) => {
+  const formData = new FormData()
+  formData.append('authorId', authorId)
+  formData.append('file', file)
+  await axios.post(`${SERVER_URL}/tasks/import`, formData, {
+    headers: {
+      'Content-Type': 'multipart/form-data',
+    },
+  })
+}
+
+const exportById = async (taskId) => {
+  // type = rss | custom | md
+  window.location.href = `${SERVER_URL}/tasks/${taskId}/export?type=rss`
+}
+
+const exportAll = async (authorId) => {
+  // type = rss | custom
+  window.location.href = `${SERVER_URL}/tasks/export?authorId=${authorId}&type=rss`
 }
 
 export default {
@@ -60,5 +78,7 @@ export default {
   edit,
   destroyById,
   getAllPublished,
+  importTasks,
+  exportById,
   exportAll,
 }

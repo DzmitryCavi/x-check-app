@@ -4,8 +4,11 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { Form, Input, Button, notification } from 'antd'
 import { PlusOutlined } from '@ant-design/icons'
+import { formatRoute } from 'react-router-named-routes'
+
 import ButtonLink from '../../../component/ButtonLink'
 import AntdTinymce from '../../../component/AntdTinymce'
+import { authorRoutes } from '../../../router/routes'
 
 import tasksService from '../../../services/tasks.service'
 
@@ -64,9 +67,9 @@ const TaskCreate = ({ user }) => {
 
       {taskId ? (
         <ButtonLink
-          type="dashed"
+          type="primary"
           icon={<PlusOutlined />}
-          linkTo={`/author/tasks/${taskId}/categories/create`}
+          linkTo={formatRoute(authorRoutes.categories.create, { taskId })}
           block
         >
           Category
