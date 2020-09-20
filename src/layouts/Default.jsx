@@ -11,6 +11,8 @@ import publicRoutes from '../router/routes/public'
 import authorRoutes from '../router/routes/author'
 import studentRoutes from '../router/routes/student'
 import courseManagerRoutes from '../router/routes/courseManager'
+import supervisorRoutes from '../router/routes/supervisor'
+
 
 import Can from '../rbac/Can'
 import { logout } from '../store/actions'
@@ -103,7 +105,7 @@ const DefaultLayout = ({ breadcrumbs, isLoggedIn, user, children, dispatch }) =>
             <Can
               role={user.role}
               perform="menu:supervisor"
-              yes={() => <Navigation items={authorRoutes} />}
+              yes={() => <Navigation items={supervisorRoutes} />}
             />
             <Can
               role={user.role}
@@ -143,6 +145,7 @@ export default compose(
     [
       // order matters
       ...authorRoutes,
+      ...supervisorRoutes,
       ...publicRoutes,
       ...studentRoutes,
       ...courseManagerRoutes,
