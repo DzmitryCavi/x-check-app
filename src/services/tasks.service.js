@@ -49,25 +49,25 @@ const destroyById = async (id) => {
   return status === 200 ? data : null
 }
 
-const importTasks = async (file, authorId) => {
+const importTasks = async (file, authorId, type) => {
   const formData = new FormData()
   formData.append('authorId', authorId)
   formData.append('file', file)
-  await axios.post(`${SERVER_URL}/tasks/import`, formData, {
+  await axios.post(`${SERVER_URL}/tasks/import?type=${type}`, formData, {
     headers: {
       'Content-Type': 'multipart/form-data',
     },
   })
 }
 
-const exportById = async (taskId) => {
+const exportById = async (taskId, type = 'rss') => {
   // type = rss | custom | md
-  window.location.href = `${SERVER_URL}/tasks/${taskId}/export?type=rss`
+  window.location.href = `${SERVER_URL}/tasks/${taskId}/export?type=${type}`
 }
 
-const exportAll = async (authorId) => {
+const exportAll = async (authorId, type = 'rss') => {
   // type = rss | custom
-  window.location.href = `${SERVER_URL}/tasks/export?authorId=${authorId}&type=rss`
+  window.location.href = `${SERVER_URL}/tasks/export?authorId=${authorId}&type=${type}`
 }
 
 export default {

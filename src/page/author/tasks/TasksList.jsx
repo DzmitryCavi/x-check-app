@@ -4,12 +4,24 @@ import { compareAsc } from 'date-fns'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { formatRoute } from 'react-router-named-routes'
-import { Form, Radio, Input, Row, Col, Table, Space, Button, Tag, notification } from 'antd'
+import {
+  Form,
+  Radio,
+  Input,
+  Row,
+  Col,
+  Table,
+  Space,
+  Button,
+  Tag,
+  notification,
+  Dropdown,
+  Menu,
+} from 'antd'
 import {
   DeleteOutlined,
   DownOutlined,
   EditOutlined,
-  ExportOutlined,
   PlusOutlined,
   UpOutlined,
 } from '@ant-design/icons'
@@ -79,12 +91,12 @@ const TasksList = ({ user }) => {
     filtersForm.resetFields()
   }
 
-  const exportById = async ({ id: taskId }) => {
-    await tasksService.exportById(taskId)
+  const exportById = async ({ id: taskId }, type) => {
+    await tasksService.exportById(taskId, type)
   }
 
-  const exportAll = async () => {
-    await tasksService.exportAll(user.id)
+  const exportAll = async (type) => {
+    await tasksService.exportAll(user.id, type)
   }
 
   return (
@@ -147,10 +159,39 @@ const TasksList = ({ user }) => {
           <ButtonLink type="primary" icon={<PlusOutlined />} linkTo={authorRoutes.tasks.create}>
             Create
           </ButtonLink>
-          <Button type="default" icon={<ExportOutlined />} onClick={exportAll}>
-            Export All
-          </Button>
-          <ImportTasks authorId={user.id} onImportSuccess={() => fetchTasks(user.id)} />
+          <Dropdown
+            placement="bottomRight"
+            overlay={
+              <Menu>
+                <Menu.ItemGroup title="Export">
+                  <Menu.Item onClick={() => exportAll('custom')}>Export All (*.json)</Menu.Item>
+                  <Menu.Item onClick={() => exportAll('rss')}>Export All (RSS *.json)</Menu.Item>
+                </Menu.ItemGroup>
+                <Menu.ItemGroup title="Import">
+                  <Menu.Item>
+                    <ImportTasks
+                      authorId={user.id}
+                      label=" Import (*.json)"
+                      type="custom"
+                      onImportSuccess={() => fetchTasks(user.id)}
+                    />
+                  </Menu.Item>
+                  <Menu.Item>
+                    <ImportTasks
+                      authorId={user.id}
+                      label="Import (RSS *.json)"
+                      type="rss"
+                      onImportSuccess={() => fetchTasks(user.id)}
+                    />
+                  </Menu.Item>
+                </Menu.ItemGroup>
+              </Menu>
+            }
+          >
+            <Button>
+              Export / Import <DownOutlined />
+            </Button>
+          </Dropdown>
         </Space>
       </div>
       <Table dataSource={tasks} rowKey="id" loading={loading}>
@@ -203,12 +244,27 @@ const TasksList = ({ user }) => {
         <Column
           title="Action"
           key="action"
-          width={220}
+          width={200}
           render={(row, record) => (
             <Space size="middle">
-              <Button icon={<ExportOutlined />} onClick={() => exportById(record)}>
-                Export
-              </Button>
+              <Dropdown
+                placement="topRight"
+                overlay={
+                  <Menu>
+                    <Menu.Item onClick={() => exportById(record, 'custom')}>
+                      Export (*.json)
+                    </Menu.Item>
+                    <Menu.Item onClick={() => exportById(record, 'rss')}>
+                      Export (RSS *.json)
+                    </Menu.Item>
+                    <Menu.Item onClick={() => exportById(record, 'md')}>
+                      Export (MarkDown *.md)
+                    </Menu.Item>
+                  </Menu>
+                }
+              >
+                <Button>Export</Button>
+              </Dropdown>
 
               <ButtonLink
                 icon={<EditOutlined />}
