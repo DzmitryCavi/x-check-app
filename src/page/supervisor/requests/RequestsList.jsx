@@ -14,34 +14,29 @@ const RequestsList = () => {
 
   useEffect(() => {
     requestService.getAll().then((data) => {
-      // initRequests = data
       setInfoTask(data)
       setLoading(false)
     })
   }, [])
-
-  useEffect(() => {
-    setInfoTask(infoTask)
-  }, [infoTask])
 
   return loading ? (
     <div className="content-loading">
       <Spin tip="Loading..." />
     </div>
   ) : (
-    <Table dataSource={infoTask} pagination={{ pageSize: 10 }} rowKey="author">
+    <Table dataSource={infoTask} pagination={{ pageSize: 10 }} rowKey="id">
       <>
         <Column
           title="Name"
           dataIndex="author"
           key="author"
-          sorter={(a, b) => a.author.localeCompare(b.author)}
+          sorter={(a, b) => String(a.author).localeCompare(String(b.author))}
         />
         <Column
           title="Task"
           dataIndex="task"
           key="task"
-          sorter={(a, b) => a.task.localeCompare(b.task)}
+          sorter={(a, b) => String(a.task).localeCompare(String(b.task))}
         />
         <Column
           title="Status"
