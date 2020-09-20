@@ -3,7 +3,7 @@ import { Link, useLocation } from 'react-router-dom'
 import PropTypes from 'prop-types'
 
 import { Menu } from 'antd'
-import { HomeOutlined } from '@ant-design/icons'
+import { HomeOutlined, DashOutlined } from '@ant-design/icons'
 import { publicRoutes } from '../router/routes'
 
 const Navigation = ({ items }) => {
@@ -15,6 +15,7 @@ const Navigation = ({ items }) => {
       </Menu.Item>
       {items
         .filter((item) => item.isNavigation)
+        .map((item) => (!item.icon ? { ...item, icon: DashOutlined } : item))
         .map((item) => (
           <Menu.Item icon={<item.icon />} key={item.path}>
             <Link to={item.path}>{item.breadcrumb}</Link>

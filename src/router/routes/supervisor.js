@@ -1,3 +1,5 @@
+import { UnorderedListOutlined } from '@ant-design/icons'
+
 import RequestsList from '../../page/supervisor/requests/RequestsList'
 import RequestReview from '../../page/supervisor/requests/RequestReview'
 
@@ -14,5 +16,6 @@ export default [
     component: RequestsList,
     breadcrumb: 'Requests list',
     isNavigation: true,
+    icon: UnorderedListOutlined,
   },
 ]
