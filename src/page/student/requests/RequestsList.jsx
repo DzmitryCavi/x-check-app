@@ -21,7 +21,7 @@ const RequestList = ({ user }) => {
     <div className="tasks-list-page">
       <h1 className="page-title">Requests</h1>
       <div className="d-flex justify-content-end align-items-center mb-2">
-        <ButtonLink type="primary" linkTo="/student/request">
+        <ButtonLink type="primary" linkTo={studentRoutes.requests.create}>
           Sent
         </ButtonLink>
       </div>

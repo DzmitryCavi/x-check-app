@@ -1,18 +1,21 @@
 /* eslint-disable react/jsx-props-no-spreading */
-import React, { useRef } from 'react'
+import React from 'react'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
-import { Form, notification, Spin, Button, Input } from 'antd'
+import { Form, notification, Spin, Button, Input, Typography } from 'antd'
 import ReviewFormItem from './ReviewFormItem'
 import requestsService from '../../services/requests.service'
 import { urlWithIpPattern } from '../../services/validators'
 
+const { Title } = Typography
+
 const SelfReview = ({ task, user, requestToEdit }) => {
   const { categories } = task
-  const formRef = useRef(null)
+  const [form] = Form.useForm()
+
   const onFinish = async (data) => {
-    const requestData = { task: task.id, ...data }
-    if (requestToEdit) requestsService.edit(data, requestToEdit.id)
+    const requestData = { task: task.id, ...data, state: 'PUBLISHED' }
+    if (requestToEdit) requestsService.edit(requestData, requestToEdit.id)
     else requestsService.create(requestData, user)
     notification.success({
       className: 'app-notification app-notification--success',
@@ -20,9 +23,22 @@ const SelfReview = ({ task, user, requestToEdit }) => {
       description: 'Request sent successfully...',
     })
   }
+
+  const onSave = async () => {
+    const requestData = { task: task.id, ...form.getFieldsValue(), state: 'PENDING' }
+    if (requestToEdit) requestsService.edit(requestData, requestToEdit.id)
+    else requestsService.create(requestData, user)
+    notification.success({
+      className: 'app-notification app-notification--success',
+      message: 'Success',
+      description: 'Data from request saved...',
+    })
+  }
+
   return (
     <div className="task-create-page">
-      <Form ref={formRef} layout="vertical" onFinish={onFinish} initialValues={requestToEdit || {}}>
+      <Title level={2}>Запрос на проверку задания - {task.title}</Title>
+      <Form form={form} layout="vertical" onFinish={onFinish} initialValues={requestToEdit || {}}>
         <Form.Item
           name="url"
           label="Solution URL"
@@ -32,6 +48,7 @@ const SelfReview = ({ task, user, requestToEdit }) => {
         >
           <Input />
         </Form.Item>
+        <Title level={3}>Самопроверка</Title>
         {categories ? (
           categories.map((category) => (
             <div key={category.id}>
@@ -54,7 +71,12 @@ const SelfReview = ({ task, user, requestToEdit }) => {
         )}
         <Form.Item>
           <Button type="primary" htmlType="submit">
-            Submit
+            Отправить
+          </Button>
+        </Form.Item>
+        <Form.Item>
+          <Button type="primary" onClick={onSave}>
+            Сохранить (не отправляя)
           </Button>
         </Form.Item>
       </Form>

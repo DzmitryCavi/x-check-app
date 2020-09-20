@@ -28,7 +28,6 @@ const create = async (request, author = -1) => {
     ...request,
     author,
     id: `request-${uuid()}`,
-    state: 'PUBLISHED',
   })
   return status === 201 && data ? data : null
 }

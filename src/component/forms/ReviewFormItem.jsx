@@ -1,10 +1,15 @@
 import React, { useState } from 'react'
-import { InputNumber, Input, Row, Col, Radio } from 'antd'
+import { Input, Row, Col, Radio, Collapse } from 'antd'
 import PropTypes from 'prop-types'
+import { CaretRightOutlined } from '@ant-design/icons'
+import NumericInput from '../NumericInput'
+
+const { Panel } = Collapse
 
 const ReviewFormItem = ({ value, onChange, maxScore }) => {
-  const [number, setNumber] = useState(0)
-  const [discription, setDiscription] = useState('')
+  const [number, setNumber] = useState(null)
+  const [discription, setDiscription] = useState(null)
+  const [isNeedComment, setIsNeedComment] = useState(false)
 
   const triggerChange = (changedValue) => {
     if (onChange) {
@@ -18,11 +23,14 @@ const ReviewFormItem = ({ value, onChange, maxScore }) => {
   }
 
   const onNumberChange = (e) => {
-    const newNumber = typeof e === 'number' ? e : e.target.value
-
+    const newNumber = typeof e === 'string' ? +e : e.target.value
+    const isMax = newNumber === +maxScore
+    const isMin = newNumber === 0
     if (Number.isNaN(newNumber)) {
       return
     }
+
+    setIsNeedComment(!isMax && !isMin)
 
     setNumber(newNumber)
 
@@ -45,47 +53,43 @@ const ReviewFormItem = ({ value, onChange, maxScore }) => {
           margin: '10px 8px',
         }}
       >
-        <Col span={10}>
+        <Col span={6}>
           <Radio.Group
-            value={typeof value.number === 'number' ? value.number : 0}
-            size="large"
+            value={value && typeof value.number === 'number' ? value.number : null}
             onChange={onNumberChange}
           >
-            <Radio.Button value={0}>Min</Radio.Button>
+            <Radio.Button danger value={0}>
+              Min
+            </Radio.Button>
             <Radio.Button value={maxScore / 2}>Half</Radio.Button>
             <Radio.Button value={+maxScore}>Max</Radio.Button>
           </Radio.Group>
-          {/* <Slider
-            min={0}
-            max={40}
-            marks={{ 0: 'min', 20: 'half', 40: 'max' }}
-            onChange={onNumberChange}
-            style={{
-              margin: '0 20px',
-            }}
-            value={typeof value.number === 'number' ? value.number : 0}
-          /> */}
         </Col>
         <Col span={4}>
-          <InputNumber
-            value={value.number || number}
-            max={maxScore}
+          <NumericInput
+            value={value ? value.number : number}
             onChange={onNumberChange}
-            style={{
-              width: 100,
-            }}
+            max={maxScore}
           />
         </Col>
       </Row>
       <Row>
-        <Col span={18}>
-          <Input.TextArea
-            value={value.discription || discription}
-            style={{
-              margin: '0 8px',
-            }}
-            onChange={onDiscriptionChange}
-          />
+        <Col span={24}>
+          <Collapse
+            bordered={false}
+            activeKey={isNeedComment ? 'input' : null}
+            expandIcon={({ isActive }) => <CaretRightOutlined rotate={isActive ? 90 : 0} />}
+          >
+            <Panel header="Leave comment here" key="input" disabled={!isNeedComment}>
+              <Input.TextArea
+                value={value ? value.discription : discription}
+                style={{
+                  margin: '0 8px',
+                }}
+                onChange={onDiscriptionChange}
+              />
+            </Panel>
+          </Collapse>
         </Col>
       </Row>
     </span>
