@@ -1,64 +1,66 @@
-import React, { Component } from 'react'
-import { Button, Modal } from 'antd'
-import PropTypes from 'prop-types'
-import fakeData from './fakeData'
+import React, { useState, useEffect } from 'react'
+import { useParams } from 'react-router-dom'
+import { Spin, Descriptions, Tag } from 'antd'
+import marksService from '../../../services/marks.service'
 
-export default class MarkInfo extends Component {
-  constructor() {
-    super()
-    this.state = {
-      visible: false,
+const MarkInfo = () => {
+  const { marksId } = useParams()
+
+  const [loading, setLoading] = useState(true)
+
+  const [mark, setMark] = useState([])
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const markResponse = await marksService.getMarksById(marksId)
+      setMark(markResponse)
+      setLoading(false)
     }
-  }
+    fetchData()
+  }, [marksId])
 
-  showModal = () => {
-    this.setState({
-      visible: true,
-    })
-  }
+  const { task, student, author, state, grade } = mark
 
-  handleCancel = () => {
-    this.setState({
-      visible: false,
-    })
-  }
-
-  render() {
-    const { infoKey } = this.props
-    const [element] = fakeData.filter((el) => el.key === infoKey)
-    const { task, maxScore, reviewer, info, student, score } = element
-    const { basicP1, extraP1, finesP1 } = info
-    const { visible } = this.state
-    const styleSheet = {
-      modalText: { fontWeight: '500', fontSize: '15px' },
-    }
-
-    return (
-      <>
-        <Button type="primary" onClick={this.showModal}>
-          info
-        </Button>
-        <Modal
-          title={`Task: ${task}   |    Student: ${student}`}
-          visible={visible}
-          onCancel={this.handleCancel}
-          footer={[]}
-        >
-          <h3>reviewer: {reviewer}</h3>
-          <h4>score: {score}</h4>
-          <p style={styleSheet.modalText}>max_score: {maxScore}</p>
-          <p style={styleSheet.modalText}>basic scope: {basicP1.score}</p>
-          <p style={styleSheet.modalText}>extra scope: {extraP1.score}</p>
-          <p style={styleSheet.modalText}>comment: {basicP1.comment}</p>
-          <p style={styleSheet.modalText}>comment: {extraP1.comment}</p>
-          <p style={styleSheet.modalText}>comment: {finesP1.comment}</p>
-          <p style={styleSheet.modalText}>errors: {finesP1.score}</p>
-        </Modal>
-      </>
-    )
-  }
+  return (
+    <div className="mark-view-page">
+      {loading ? (
+        <div className="content-loading">
+          <Spin tip="Loading..." />
+        </div>
+      ) : (
+        <Descriptions title="Mark Info" layout="vertical" bordered="true">
+          <Descriptions.Item label="Task">{task}</Descriptions.Item>
+          <Descriptions.Item label="Student">{student}</Descriptions.Item>
+          <Descriptions.Item label="Mentor">{author}</Descriptions.Item>
+          <Descriptions.Item label="State">
+            <Tag
+              color={{ ACCEPTED: 'green', DISPUTED: 'orange', REJECTED: 'red' }[state]}
+              key={state}
+            >
+              {state}
+            </Tag>
+          </Descriptions.Item>
+          <Descriptions.Item label="Score">{grade.score}</Descriptions.Item>
+          <Descriptions.Item label="Max Score">{grade.maxScore}</Descriptions.Item>
+          <Descriptions.Item span={3}>
+            <br />
+          </Descriptions.Item>
+          <Descriptions.Item label="Basic Scope" span={2}>
+            {grade.basic_p1.comment}
+          </Descriptions.Item>
+          <Descriptions.Item label="Basic Score">{grade.basic_p1.score}</Descriptions.Item>
+          <Descriptions.Item label="Extra Scope" span={2}>
+            {grade.extra_p1.comment}
+          </Descriptions.Item>
+          <Descriptions.Item label="Extra Score">{grade.extra_p1.score}</Descriptions.Item>
+          <Descriptions.Item label="Errors" span={2}>
+            {grade.fines_p1.comment}
+          </Descriptions.Item>
+          <Descriptions.Item label="Removed Score">-{grade.fines_p1.score}</Descriptions.Item>
+        </Descriptions>
+      )}
+    </div>
+  )
 }
 
-MarkInfo.propTypes = {
-  infoKey: PropTypes.number.isRequired,
-}
+export default MarkInfo

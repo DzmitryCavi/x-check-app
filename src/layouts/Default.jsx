@@ -10,7 +10,9 @@ import { compose } from 'redux'
 import publicRoutes from '../router/routes/public'
 import authorRoutes from '../router/routes/author'
 import studentRoutes from '../router/routes/student'
+import courseManagerRoutes from '../router/routes/courseManager'
 import supervisorRoutes from '../router/routes/supervisor'
+
 
 import Can from '../rbac/Can'
 import { logout } from '../store/actions'
@@ -108,7 +110,7 @@ const DefaultLayout = ({ breadcrumbs, isLoggedIn, user, children, dispatch }) =>
             <Can
               role={user.role}
               perform="menu:course_manager"
-              yes={() => <Navigation items={authorRoutes} />}
+              yes={() => <Navigation items={courseManagerRoutes} />}
             />
           </Sider>
           <Content className="default-layout__content">{children}</Content>
@@ -146,6 +148,7 @@ export default compose(
       ...supervisorRoutes,
       ...publicRoutes,
       ...studentRoutes,
+      ...courseManagerRoutes,
       // ...spread other routes
     ],
     { disableDefaults: true },

@@ -27,6 +27,7 @@ export const supervisorRoutes = {
 export const courseManagerRoutes = {
   marks: {
     list: '/course-manager/marks',
+    info: '/course-manager/marks/:marksId/info',
   },
 }
 
