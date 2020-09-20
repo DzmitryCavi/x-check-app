@@ -1,26 +1,59 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
+import { Col, Row } from 'antd'
+import Can from '../rbac/Can'
+
+import HomeNavigation from '../component/HomeNavigation'
+
+import authorRoutes from '../router/routes/author'
+import studentRoutes from '../router/routes/student'
+import courseManagerRoutes from '../router/routes/courseManager'
+import supervisorRoutes from '../router/routes/supervisor'
 
 const Home = (props) => {
   const { user } = props
 
   return (
     <div className="home-page">
-      <h1>Home</h1>
-      <img
-        style={{ width: 160, height: 160, borderRadius: '50%', marginBottom: '20px' }}
-        src={user.avatar_url}
-        alt="Logo"
-      />
-      <p>
-        <b>Login: </b>
-        {user.login}
-      </p>
-      <p>
-        <b>Role: </b>
-        {user.role}
-      </p>
+      <Row gutter={16}>
+        <Can
+          role={user.role}
+          perform="menu:student"
+          yes={() => (
+            <Col span={8}>
+              <HomeNavigation items={studentRoutes} />
+            </Col>
+          )}
+        />
+        <Can
+          role={user.role}
+          perform="menu:author"
+          yes={() => (
+            <Col span={8}>
+              <HomeNavigation items={authorRoutes} />
+            </Col>
+          )}
+        />
+        <Can
+          role={user.role}
+          perform="menu:supervisor"
+          yes={() => (
+            <Col span={8}>
+              <HomeNavigation items={supervisorRoutes} />
+            </Col>
+          )}
+        />
+        <Can
+          role={user.role}
+          perform="menu:course_manager"
+          yes={() => (
+            <Col span={8}>
+              <HomeNavigation items={courseManagerRoutes} />
+            </Col>
+          )}
+        />
+      </Row>
     </div>
   )
 }

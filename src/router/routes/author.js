@@ -39,7 +39,10 @@ export default [
     path: routes.tasks.list,
     component: TasksList,
     breadcrumb: 'Tasks',
-    isNavigation: true,
-    icon: ApartmentOutlined,
+    description: 'Task management',
+    navigation: {
+      label: 'Tasks',
+      icon: ApartmentOutlined,
+    },
   },
 ]

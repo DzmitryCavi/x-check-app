@@ -14,11 +14,15 @@ const Navigation = ({ items }) => {
         <Link to={publicRoutes.home}>Home</Link>
       </Menu.Item>
       {items
-        .filter((item) => item.isNavigation)
-        .map((item) => (!item.icon ? { ...item, icon: DashOutlined } : item))
+        .filter((item) => item.navigation)
+        .map((item) =>
+          !item.navigation.icon
+            ? { ...item, navigation: { ...items.navigation, icon: DashOutlined } }
+            : item,
+        )
         .map((item) => (
-          <Menu.Item icon={<item.icon />} key={item.path}>
-            <Link to={item.path}>{item.breadcrumb}</Link>
+          <Menu.Item icon={<item.navigation.icon />} key={item.path}>
+            <Link to={item.path}>{item.navigation.label || item.breadcrumb}</Link>
           </Menu.Item>
         ))}
     </Menu>

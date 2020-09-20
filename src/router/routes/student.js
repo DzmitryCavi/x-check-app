@@ -1,3 +1,5 @@
+import { UnorderedListOutlined } from '@ant-design/icons'
+
 import RequestCreate from '../../page/student/requests/RequestCreate'
 import RequsetList from '../../page/student/requests/RequestsList'
 
@@ -14,6 +16,10 @@ export default [
     path: routes.requests.list,
     component: RequsetList,
     breadcrumb: 'Requests List',
-    isNavigation: true,
+    description: 'Requests management',
+    navigation: {
+      label: 'Requests List',
+      icon: UnorderedListOutlined,
+    },
   },
 ]

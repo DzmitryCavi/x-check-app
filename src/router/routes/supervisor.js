@@ -15,7 +15,10 @@ export default [
     path: routes.requests.list,
     component: RequestsList,
     breadcrumb: 'Requests list',
-    isNavigation: true,
-    icon: UnorderedListOutlined,
+    description: 'Requests management',
+    navigation: {
+      label: 'Requests list',
+      icon: UnorderedListOutlined,
+    },
   },
 ]
