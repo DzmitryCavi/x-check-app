@@ -1,3 +1,5 @@
+import { ApartmentOutlined } from '@ant-design/icons'
+
 import TasksList from '../../page/author/tasks/TasksList'
 import TaskCreate from '../../page/author/tasks/TaskCreate'
 import TaskEdit from '../../page/author/tasks/TaskEdit'
@@ -38,5 +40,6 @@ export default [
     component: TasksList,
     breadcrumb: 'Tasks',
     isNavigation: true,
+    icon: ApartmentOutlined,
   },
 ]
