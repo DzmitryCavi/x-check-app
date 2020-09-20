@@ -18,12 +18,16 @@ const getByAuthor = async (author) => {
   return status === 200 && task ? task : null
 }
 
+const getById = async (id) => {
+  const { data: task, status } = await axios.get(`${API_URL}/reviewRequest/${id}`)
+  return status === 200 && task ? task : null
+}
+
 const create = async (request, author = -1) => {
   const { data, status } = await axios.post(`${API_URL}/reviewRequest`, {
     ...request,
     author,
     id: `request-${uuid()}`,
-    state: 'PUBLISHED',
   })
   return status === 201 && data ? data : null
 }
@@ -47,4 +51,5 @@ export default {
   edit,
   destroyById,
   getAllPublished,
+  getById,
 }

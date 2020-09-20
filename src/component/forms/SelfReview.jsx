@@ -1,55 +1,66 @@
 /* eslint-disable react/jsx-props-no-spreading */
-import React, { useRef, useEffect, useState } from 'react'
+import React from 'react'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
-import { Form, notification, Spin, Button } from 'antd'
+import { Form, notification, Spin, Button, Input, Typography } from 'antd'
 import ReviewFormItem from './ReviewFormItem'
-import categoriesService from '../../services/categories.service'
 import requestsService from '../../services/requests.service'
+import { urlWithIpPattern } from '../../services/validators'
 
-const SelfReview = ({ task, user }) => {
-  const [categories, setCategories] = useState()
+const { Title } = Typography
 
-  useEffect(() => {
-    categoriesService.getAllByTaskId(task.id).then(setCategories)
-  }, [task.id])
-
-  const formRef = useRef(null)
+const SelfReview = ({ task, user, requestToEdit }) => {
+  const { categories } = task
+  const [form] = Form.useForm()
 
   const onFinish = async (data) => {
-    const requestData = { task: task.id, ...data }
-    requestsService.create(requestData, user)
+    const requestData = { task: task.id, ...data, state: 'PUBLISHED' }
+    if (requestToEdit) requestsService.edit(requestData, requestToEdit.id)
+    else requestsService.create(requestData, user)
     notification.success({
       className: 'app-notification app-notification--success',
       message: 'Success',
       description: 'Request sent successfully...',
     })
   }
-  const init = {
-    grade:
-      categories && categories.items !== undefined
-        ? categories.items.reduce((ac, e) => {
-            const result = { ...ac }
-            result[e.id] = e
-            return result
-          }, {})
-        : {},
+
+  const onSave = async () => {
+    const requestData = { task: task.id, ...form.getFieldsValue(), state: 'PENDING' }
+    if (requestToEdit) requestsService.edit(requestData, requestToEdit.id)
+    else requestsService.create(requestData, user)
+    notification.success({
+      className: 'app-notification app-notification--success',
+      message: 'Success',
+      description: 'Data from request saved...',
+    })
   }
 
   return (
     <div className="task-create-page">
-      <Form ref={formRef} layout="vertical" onFinish={onFinish} initialValues={init}>
+      <Title level={2}>Запрос на проверку задания - {task.title}</Title>
+      <Form form={form} layout="vertical" onFinish={onFinish} initialValues={requestToEdit || {}}>
+        <Form.Item
+          name="url"
+          label="Solution URL"
+          rules={[
+            { required: true, pattern: urlWithIpPattern, message: 'Please provide a valid link' },
+          ]}
+        >
+          <Input />
+        </Form.Item>
+        <Title level={3}>Самопроверка</Title>
         {categories ? (
           categories.map((category) => (
             <div key={category.id}>
               <div>{category.title}</div>
-              {category.items.map((item) => (
-                <div key={item.id}>
+              {category.criteria.map((item, index) => (
+                <div key={`criteria-${index + 1}`}>
                   <Form.Item
-                    name={['selfGrade', category.title, item.id]}
-                    label={`${item.description} (${item.minScore}-${item.maxScore})`}
+                    name={['selfGrade', category.title, index]}
+                    label={`${item.text} (0-${item.score})`}
+                    rules={[{ required: true, message: 'Please grade all' }]}
                   >
-                    <ReviewFormItem />
+                    <ReviewFormItem maxScore={item.score} />
                   </Form.Item>
                 </div>
               ))}
@@ -60,7 +71,12 @@ const SelfReview = ({ task, user }) => {
         )}
         <Form.Item>
           <Button type="primary" htmlType="submit">
-            Submit
+            Отправить
+          </Button>
+        </Form.Item>
+        <Form.Item>
+          <Button type="primary" onClick={onSave}>
+            Сохранить (не отправляя)
           </Button>
         </Form.Item>
       </Form>
@@ -71,6 +87,11 @@ const SelfReview = ({ task, user }) => {
 SelfReview.propTypes = {
   task: PropTypes.instanceOf(Object).isRequired,
   user: PropTypes.string.isRequired,
+  requestToEdit: PropTypes.instanceOf(Object),
+}
+
+SelfReview.defaultProps = {
+  requestToEdit: null,
 }
 
 const mapStateToProps = (state) => {

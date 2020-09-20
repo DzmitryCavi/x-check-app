@@ -1,7 +1,8 @@
 import { UnorderedListOutlined } from '@ant-design/icons'
 
 import RequestCreate from '../../page/student/requests/RequestCreate'
-import RequsetList from '../../page/student/requests/RequestsList'
+import RequestsList from '../../page/student/requests/RequestsList'
+import RequestEdit from '../../page/student/requests/RequestEdit'
 
 import { studentRoutes as routes } from '.'
 
@@ -13,8 +14,13 @@ export default [
     isNavigation: true,
   },
   {
+    path: routes.requests.edit,
+    component: RequestEdit,
+    breadcrumb: 'Edit Request',
+  },
+  {
     path: routes.requests.list,
-    component: RequsetList,
+    component: RequestsList,
     breadcrumb: 'Requests List',
     description: 'Requests management',
     navigation: {
