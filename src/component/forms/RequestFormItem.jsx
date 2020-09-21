@@ -6,10 +6,10 @@ import NumericInput from '../NumericInput'
 
 const { Panel } = Collapse
 
-const ReviewFormItem = ({ value, onChange, maxScore }) => {
-  const [number, setNumber] = useState(null)
-  const [discription, setDiscription] = useState(null)
-  const [isNeedComment, setIsNeedComment] = useState(false)
+const RequestFormItem = ({ value, onChange, maxScore }) => {
+  const [number, setNumber] = useState(value ? value.number : null)
+  const [discription, setDiscription] = useState(value ? value.discription : null)
+  const [isNeedComment, setIsNeedComment] = useState(!!(value && value.number !== +maxScore))
 
   const triggerChange = (changedValue) => {
     if (onChange) {
@@ -24,18 +24,32 @@ const ReviewFormItem = ({ value, onChange, maxScore }) => {
 
   const onNumberChange = (e) => {
     const newNumber = typeof e === 'string' ? +e : e.target.value
+    let newDiscription = ''
     const isMax = newNumber === +maxScore
     const isMin = newNumber === 0
     if (Number.isNaN(newNumber)) {
       return
     }
 
-    setIsNeedComment(!isMax && !isMin)
+    setIsNeedComment(!isMax)
+
+    switch (true) {
+      case isMax:
+        newDiscription = 'Well done!'
+        break
+      case isMin:
+        newDiscription = 'No ticket today'
+        break
+      default:
+        newDiscription = 'Some things are done, some are not'
+    }
 
     setNumber(newNumber)
+    setDiscription(newDiscription)
 
     triggerChange({
       number: newNumber,
+      discription: newDiscription,
     })
   }
 
@@ -66,11 +80,7 @@ const ReviewFormItem = ({ value, onChange, maxScore }) => {
           </Radio.Group>
         </Col>
         <Col span={4}>
-          <NumericInput
-            value={value ? value.number : number}
-            onChange={onNumberChange}
-            max={maxScore}
-          />
+          <NumericInput value={number} onChange={onNumberChange} max={maxScore} />
         </Col>
       </Row>
       <Row>
@@ -82,7 +92,7 @@ const ReviewFormItem = ({ value, onChange, maxScore }) => {
           >
             <Panel header="Leave comment here" key="input" disabled={!isNeedComment}>
               <Input.TextArea
-                value={value ? value.discription : discription}
+                value={discription}
                 style={{
                   margin: '0 8px',
                 }}
@@ -96,15 +106,15 @@ const ReviewFormItem = ({ value, onChange, maxScore }) => {
   )
 }
 
-ReviewFormItem.propTypes = {
+RequestFormItem.propTypes = {
   value: PropTypes.instanceOf(Object),
   onChange: PropTypes.instanceOf(Function),
   maxScore: PropTypes.string.isRequired,
 }
 
-ReviewFormItem.defaultProps = {
+RequestFormItem.defaultProps = {
   value: {},
   onChange: () => {},
 }
 
-export default ReviewFormItem
+export default RequestFormItem

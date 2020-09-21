@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 import { Spin } from 'antd'
-import SelfReview from '../../../component/forms/SelfReview'
+import RequestForm from '../../../component/forms/RequestForm'
 import requestService from '../../../services/requests.service'
 import tasksService from '../../../services/tasks.service'
 
@@ -19,7 +19,7 @@ const Reqest = () => {
     }
     fatchData()
   }, [requestId])
-  return <>{task ? <SelfReview task={task} requestToEdit={request} /> : <Spin />}</>
+  return <>{task ? <RequestForm task={task} requestToEdit={request} /> : <Spin />}</>
 }
 
 export default Reqest

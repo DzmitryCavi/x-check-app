@@ -1,4 +1,4 @@
-import { UnorderedListOutlined } from '@ant-design/icons'
+import { UnorderedListOutlined, CodeOutlined } from '@ant-design/icons'
 
 import RequestCreate from '../../page/student/requests/RequestCreate'
 import RequestsList from '../../page/student/requests/RequestsList'
@@ -11,7 +11,10 @@ export default [
     path: routes.requests.create,
     component: RequestCreate,
     breadcrumb: 'Create Request',
-    isNavigation: true,
+    navigation: {
+      label: 'Sent Requests',
+      icon: CodeOutlined,
+    },
   },
   {
     path: routes.requests.edit,

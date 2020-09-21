@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { Select } from 'antd'
-import SelfReview from '../../../component/forms/SelfReview'
+import RequestForm from '../../../component/forms/RequestForm'
 import tasksService from '../../../services/tasks.service'
 
 const { Option } = Select
@@ -29,7 +29,7 @@ const Reqest = () => {
       >
         {children}
       </Select>
-      {task ? <SelfReview task={task} /> : <div>Выберите таску</div>}
+      {task ? <RequestForm task={task} /> : <div>Выберите таску</div>}
     </div>
   )
 }

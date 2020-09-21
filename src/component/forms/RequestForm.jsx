@@ -3,13 +3,13 @@ import React from 'react'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import { Form, notification, Spin, Button, Input, Typography } from 'antd'
-import ReviewFormItem from './ReviewFormItem'
+import RequestFormItem from './RequestFormItem'
 import requestsService from '../../services/requests.service'
 import { urlWithIpPattern } from '../../services/validators'
 
 const { Title } = Typography
 
-const SelfReview = ({ task, user, requestToEdit }) => {
+const RequestForm = ({ task, user, requestToEdit }) => {
   const { categories } = task
   const [form] = Form.useForm()
 
@@ -60,7 +60,7 @@ const SelfReview = ({ task, user, requestToEdit }) => {
                     label={`${item.text} (0-${item.score})`}
                     rules={[{ required: true, message: 'Please grade all' }]}
                   >
-                    <ReviewFormItem maxScore={item.score} />
+                    <RequestFormItem maxScore={item.score} />
                   </Form.Item>
                 </div>
               ))}
@@ -84,13 +84,13 @@ const SelfReview = ({ task, user, requestToEdit }) => {
   )
 }
 
-SelfReview.propTypes = {
+RequestForm.propTypes = {
   task: PropTypes.instanceOf(Object).isRequired,
   user: PropTypes.string.isRequired,
   requestToEdit: PropTypes.instanceOf(Object),
 }
 
-SelfReview.defaultProps = {
+RequestForm.defaultProps = {
   requestToEdit: null,
 }
 
@@ -100,4 +100,4 @@ const mapStateToProps = (state) => {
   }
 }
 
-export default connect(mapStateToProps, null)(SelfReview)
+export default connect(mapStateToProps, null)(RequestForm)
