@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import PropTypes from 'prop-types'
-import { Table, Space, Button } from 'antd'
+import { Table, Space, Button, notification } from 'antd'
 import { connect } from 'react-redux'
 import { formatRoute } from 'react-router-named-routes'
 import { DeleteOutlined, EditOutlined } from '@ant-design/icons'
@@ -17,6 +17,17 @@ const RequestList = ({ user }) => {
     requestService.getByAuthor(user).then(setRequsets)
   }, [user])
 
+  const destroyRequest = async (requestId) => {
+    await requestService.destroyById(requestId)
+    setRequsets((prev) => prev.filter((request) => request.id !== requestId))
+
+    notification.success({
+      className: 'app-notification app-notification--info',
+      message: 'Success',
+      description: 'Request deleted successfully...',
+    })
+  }
+
   return (
     <div className="tasks-list-page">
       <h1 className="page-title">Requests</h1>
@@ -26,7 +37,8 @@ const RequestList = ({ user }) => {
         </ButtonLink>
       </div>
       <Table dataSource={requests} rowKey="id">
-        <Column title="Task" dataIndex="task" key="title" />
+        <Column title="Task" dataIndex="name" key="name" />
+        <Column title="Created at" dataIndex="created_at" key="created_at" />
         <Column title="State" dataIndex="state" key="state" />
         <Column
           title="Action"
@@ -40,7 +52,13 @@ const RequestList = ({ user }) => {
               >
                 Edit
               </ButtonLink>
-              <Button type="danger" icon={<DeleteOutlined />} onClick={() => {}}>
+              <Button
+                type="danger"
+                icon={<DeleteOutlined />}
+                onClick={() => {
+                  destroyRequest(row.id)
+                }}
+              >
                 Remove
               </Button>
             </Space>

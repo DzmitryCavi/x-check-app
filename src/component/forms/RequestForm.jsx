@@ -14,7 +14,7 @@ const RequestForm = ({ task, user, requestToEdit }) => {
   const [form] = Form.useForm()
 
   const onFinish = async (data) => {
-    const requestData = { task: task.id, ...data, state: 'PUBLISHED' }
+    const requestData = { name: task.title, task: task.id, ...data, state: 'PUBLISHED' }
     if (requestToEdit) requestsService.edit(requestData, requestToEdit.id)
     else requestsService.create(requestData, user)
     notification.success({
@@ -25,7 +25,12 @@ const RequestForm = ({ task, user, requestToEdit }) => {
   }
 
   const onSave = async () => {
-    const requestData = { task: task.id, ...form.getFieldsValue(), state: 'PENDING' }
+    const requestData = {
+      name: task.title,
+      task: task.id,
+      ...form.getFieldsValue(),
+      state: 'PENDING',
+    }
     if (requestToEdit) requestsService.edit(requestData, requestToEdit.id)
     else requestsService.create(requestData, user)
     notification.success({
@@ -75,7 +80,7 @@ const RequestForm = ({ task, user, requestToEdit }) => {
           </Button>
         </Form.Item>
         <Form.Item>
-          <Button type="primary" onClick={onSave}>
+          <Button type="primary" onClick={onSave} danger>
             Сохранить (не отправляя)
           </Button>
         </Form.Item>

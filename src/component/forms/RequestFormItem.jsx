@@ -7,9 +7,11 @@ import NumericInput from '../NumericInput'
 const { Panel } = Collapse
 
 const RequestFormItem = ({ value, onChange, maxScore }) => {
-  const [number, setNumber] = useState(value ? value.number : null)
-  const [discription, setDiscription] = useState(value ? value.discription : null)
-  const [isNeedComment, setIsNeedComment] = useState(!!(value && value.number !== +maxScore))
+  const [number, setNumber] = useState(value.number)
+  const [discription, setDiscription] = useState(value.discription)
+  const [isNeedComment, setIsNeedComment] = useState(
+    value.number === +maxScore && value.number === null,
+  )
 
   const triggerChange = (changedValue) => {
     if (onChange) {
@@ -69,7 +71,7 @@ const RequestFormItem = ({ value, onChange, maxScore }) => {
       >
         <Col span={6}>
           <Radio.Group
-            value={value && typeof value.number === 'number' ? value.number : null}
+            value={typeof value.number === 'number' ? value.number : null}
             onChange={onNumberChange}
           >
             <Radio.Button danger value={0}>
@@ -113,7 +115,7 @@ RequestFormItem.propTypes = {
 }
 
 RequestFormItem.defaultProps = {
-  value: {},
+  value: { nubmer: null, discription: null },
   onChange: () => {},
 }
 
