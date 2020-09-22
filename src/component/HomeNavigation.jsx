@@ -16,6 +16,7 @@ const HomeNavigation = ({ items }) => {
     )
     .map((item) => (
       <Card
+        key={item.path}
         actions={[
           <Link to={item.path}>
             <EyeOutlined style={{ color: '#096dd9' }} />
