@@ -17,7 +17,8 @@ const Reqest = () => {
   const [task, changeTask] = useState()
 
   const handleChange = (selected) => {
-    changeTask(tasks[selected - 1])
+    const selectedTask = tasks.find((el) => el.id === +selected)
+    changeTask(selectedTask)
   }
   return (
     <div>
