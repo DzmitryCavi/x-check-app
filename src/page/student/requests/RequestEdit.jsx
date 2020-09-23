@@ -9,7 +9,6 @@ const Reqest = () => {
   const [request, setRequest] = useState(null)
   const [task, setTask] = useState(null)
   const { requestId } = useParams()
-  console.log(task)
   useEffect(() => {
     const fatchData = async () => {
       const requestResponse = await requestService.getById(requestId)

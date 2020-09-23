@@ -39,6 +39,7 @@ const RequestList = ({ user }) => {
       <Table dataSource={requests} rowKey="id">
         <Column title="Task" dataIndex="name" key="name" />
         <Column title="Created at" dataIndex="created_at" key="created_at" />
+        <Column title="Updated at" dataIndex="updated_at" key="updated_at" />
         <Column title="State" dataIndex="state" key="state" />
         <Column
           title="Action"
