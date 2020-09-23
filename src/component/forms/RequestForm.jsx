@@ -1,8 +1,8 @@
 /* eslint-disable react/jsx-props-no-spreading */
-import React from 'react'
+import React, { useState } from 'react'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
-import { Form, notification, Spin, Button, Input, Typography } from 'antd'
+import { Form, Spin, Button, Input, Typography, Result } from 'antd'
 import RequestFormItem from './RequestFormItem'
 import requestsService from '../../services/requests.service'
 import { urlWithIpPattern } from '../../services/validators'
@@ -11,17 +11,14 @@ const { Title } = Typography
 
 const RequestForm = ({ task, user, requestToEdit }) => {
   const { categories } = task
+  const [isSuccess, setIsSuccess] = useState(false)
   const [form] = Form.useForm()
 
   const onFinish = async (data) => {
     const requestData = { name: task.title, task: task.id, ...data, state: 'PUBLISHED' }
     if (requestToEdit) requestsService.edit(requestData, requestToEdit.id)
     else requestsService.create(requestData, user)
-    notification.success({
-      className: 'app-notification app-notification--success',
-      message: 'Success',
-      description: 'Request sent successfully...',
-    })
+    setIsSuccess(true)
   }
 
   const onSave = async () => {
@@ -33,16 +30,12 @@ const RequestForm = ({ task, user, requestToEdit }) => {
     }
     if (requestToEdit) requestsService.edit(requestData, requestToEdit.id)
     else requestsService.create(requestData, user)
-    notification.success({
-      className: 'app-notification app-notification--success',
-      message: 'Success',
-      description: 'Data from request saved...',
-    })
+    setIsSuccess(true)
   }
 
-  return (
-    <div className="task-create-page">
-      <Title level={2}>Запрос на проверку задания - {task.title}</Title>
+  return !isSuccess ? (
+    <>
+      <Title level={2}>Request to review the task - {task.title}</Title>
       <Form form={form} layout="vertical" onFinish={onFinish} initialValues={requestToEdit || {}}>
         <Form.Item
           name="url"
@@ -53,7 +46,7 @@ const RequestForm = ({ task, user, requestToEdit }) => {
         >
           <Input />
         </Form.Item>
-        <Title level={3}>Самопроверка</Title>
+        <Title level={3}>Self-review</Title>
         {categories ? (
           categories.map((category) => (
             <div key={category.id}>
@@ -76,16 +69,22 @@ const RequestForm = ({ task, user, requestToEdit }) => {
         )}
         <Form.Item>
           <Button type="primary" htmlType="submit">
-            Отправить
+            SENT
           </Button>
         </Form.Item>
         <Form.Item>
           <Button type="primary" onClick={onSave} danger>
-            Сохранить (не отправляя)
+            DRAFT
           </Button>
         </Form.Item>
       </Form>
-    </div>
+    </>
+  ) : (
+    <Result
+      status="success"
+      title="Request Has Been Sent Successfully !"
+      subTitle="You can see the request status in the list!"
+    />
   )
 }
 

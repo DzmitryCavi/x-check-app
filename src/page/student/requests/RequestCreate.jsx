@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Select } from 'antd'
+import { Select, Spin } from 'antd'
 import RequestForm from '../../../component/forms/RequestForm'
 import tasksService from '../../../services/tasks.service'
 
@@ -27,7 +27,13 @@ const Reqest = () => {
         onChange={handleChange}
         style={{ width: 200 }}
       >
-        {children}
+        {children.length ? (
+          children
+        ) : (
+          <Option>
+            <Spin />
+          </Option>
+        )}
       </Select>
       {task ? <RequestForm task={task} /> : <div>Выберите таску</div>}
     </div>
