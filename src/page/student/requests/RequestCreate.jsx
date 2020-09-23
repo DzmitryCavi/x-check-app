@@ -23,7 +23,7 @@ const Reqest = () => {
     <div>
       <Select
         size="large"
-        defaultValue="Таски тут ..."
+        defaultValue="Tasks are here..."
         onChange={handleChange}
         style={{ width: 200 }}
       >
@@ -35,7 +35,7 @@ const Reqest = () => {
           </Option>
         )}
       </Select>
-      {task ? <RequestForm task={task} /> : <div>Выберите таску</div>}
+      {task ? <RequestForm task={task} /> : <div>Select a task</div>}
     </div>
   )
 }
