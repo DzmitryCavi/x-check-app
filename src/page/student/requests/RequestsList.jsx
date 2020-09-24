@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import PropTypes from 'prop-types'
-import { Table, Space, Button, notification } from 'antd'
+import { Table, Space, Button, notification, Tag } from 'antd'
 import { connect } from 'react-redux'
 import { formatRoute } from 'react-router-named-routes'
 import { DeleteOutlined, EditOutlined } from '@ant-design/icons'
@@ -40,7 +40,29 @@ const RequestList = ({ user }) => {
         <Column title="Task" dataIndex="name" key="name" />
         <Column title="Created at" dataIndex="created_at" key="created_at" />
         <Column title="Updated at" dataIndex="updated_at" key="updated_at" />
-        <Column title="State" dataIndex="state" key="state" />
+        <Column
+          title="State"
+          dataIndex="state"
+          key="state"
+          render={(state) => {
+            let color = ''
+            switch (state) {
+              case 'SUBMITTED':
+                color = 'geekblue'
+                break
+              case 'GRADED':
+                color = 'green'
+                break
+              default:
+                color = 'volcano'
+            }
+            return (
+              <Tag color={color} key={state}>
+                {state}
+              </Tag>
+            )
+          }}
+        />
         <Column
           title="Action"
           key="action"

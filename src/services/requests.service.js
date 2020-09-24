@@ -1,5 +1,4 @@
 import axios from 'axios'
-import slug from 'slug'
 import { v4 as uuid } from 'uuid'
 import { format } from 'date-fns'
 import { API_URL } from '../config'
@@ -39,7 +38,6 @@ const create = async (request, author = -1) => {
 const edit = async (request, requestId) => {
   await axios.patch(`${API_URL}/reviewRequest/${requestId}`, {
     ...request,
-    slug: slug(request.title),
     updated_at: format(new Date(), 'yyyy-MM-dd HH:mm:ss'),
   })
 }

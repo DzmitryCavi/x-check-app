@@ -15,7 +15,7 @@ const RequestForm = ({ task, user, requestToEdit }) => {
   const [form] = Form.useForm()
 
   const onFinish = async (data) => {
-    const requestData = { name: task.title, task: task.id, ...data, state: 'PUBLISHED' }
+    const requestData = { name: task.title, task: task.id, ...data, state: 'SUBMITTED' }
     if (requestToEdit) requestsService.edit(requestData, requestToEdit.id)
     else requestsService.create(requestData, user)
     setIsSuccess(true)
@@ -26,7 +26,7 @@ const RequestForm = ({ task, user, requestToEdit }) => {
       name: task.title,
       task: task.id,
       ...form.getFieldsValue(),
-      state: 'PENDING',
+      state: 'DRAFT',
     }
     if (requestToEdit) requestsService.edit(requestData, requestToEdit.id)
     else requestsService.create(requestData, user)
@@ -72,11 +72,13 @@ const RequestForm = ({ task, user, requestToEdit }) => {
             SENT
           </Button>
         </Form.Item>
-        <Form.Item>
-          <Button type="primary" onClick={onSave} danger>
-            DRAFT
-          </Button>
-        </Form.Item>
+        {(!requestToEdit || requestToEdit.state === 'DRAFT') && (
+          <Form.Item>
+            <Button type="primary" onClick={onSave} danger>
+              DRAFT
+            </Button>
+          </Form.Item>
+        )}
       </Form>
     </>
   ) : (
