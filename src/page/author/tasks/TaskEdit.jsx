@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
-import { Form, Input, Button, Table, Space, Radio, Spin, notification } from 'antd'
+import { Form, Input, Button, Table, Space, Radio, Spin, Alert, message } from 'antd'
 import { EditOutlined, DeleteOutlined, PlusOutlined } from '@ant-design/icons'
 import { formatRoute } from 'react-router-named-routes'
 import AntdTinymce from '../../../component/AntdTinymce'
@@ -21,6 +21,7 @@ const TaskEdit = () => {
   const task = useRef(null)
   const [categories, setCategories] = useState([])
   const [loading, setLoading] = useState(true)
+  const [isEdited, setIsEdited] = useState(false)
   const [isBusy, setIsBusy] = useState(false)
 
   const { taskId } = useParams()
@@ -44,12 +45,8 @@ const TaskEdit = () => {
     setIsBusy(true)
     await tasksService.edit(data, taskId)
 
-    notification.success({
-      className: 'app-notification app-notification--success',
-      message: 'Success',
-      description: 'Task updated successfully...',
-    })
-
+    message.success('Task updated successfully.')
+    setIsEdited(true)
     setIsBusy(false)
   }
 
@@ -59,11 +56,7 @@ const TaskEdit = () => {
 
     setCategories((prev) => prev.filter((category) => category.id !== categoryId))
 
-    notification.success({
-      className: 'app-notification app-notification--success',
-      message: 'Success',
-      description: 'Category deleted successfully...',
-    })
+    message.success('Category deleted successfully.')
   }
 
   return (
@@ -111,7 +104,7 @@ const TaskEdit = () => {
             </Form.Item>
 
             <Form.Item name="description" label="Description">
-              <AntdTinymce options={{ height: 400 }} />
+              <AntdTinymce options={{ height: 360 }} />
             </Form.Item>
 
             <Form.Item>
@@ -120,6 +113,17 @@ const TaskEdit = () => {
               </Button>
             </Form.Item>
           </Form>
+
+          {isEdited ? (
+            <Alert
+              style={{ marginBottom: 30 }}
+              message="Task updated successfully"
+              type="success"
+              showIcon
+              closable
+            />
+          ) : null}
+
           <div className="categories-list">
             <div className="d-flex justify-content-end align-items-center mb-2">
               <ButtonLink

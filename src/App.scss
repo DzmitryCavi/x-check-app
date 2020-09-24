@@ -69,6 +69,19 @@
     padding-bottom: 20px;
     border-bottom: 1px solid #ccc;
   }
+
+  .page-subtitle {
+    font-size: 18px;
+    margin-bottom: 20px;
+  }
+}
+
+/* App Notification */
+.app-notification {
+  &--success {
+    //background-color: #f6ffed;
+    //border: 1px solid #b7eb8f;
+  }
 }
 
 /* Fix Ant Design Bug */

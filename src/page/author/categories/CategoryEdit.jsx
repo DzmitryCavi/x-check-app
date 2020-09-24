@@ -1,7 +1,7 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import React, { useEffect, useState, useRef } from 'react'
 import { useParams } from 'react-router-dom'
-import { Form, Input, Button, Spin, notification } from 'antd'
+import { Form, Input, Button, Spin, message, Alert } from 'antd'
 import { PlusOutlined, MinusCircleOutlined } from '@ant-design/icons'
 
 import AntdTinymce from '../../../component/AntdTinymce'
@@ -19,6 +19,7 @@ const validateMessages = {
 const CategoryEdit = () => {
   const task = useRef(null)
   const [loading, setLoading] = useState(true)
+  const [isEdited, setIsEdited] = useState(false)
   const [isBusy, setIsBusy] = useState(false)
 
   const { taskId, categoryId } = useParams()
@@ -43,12 +44,8 @@ const CategoryEdit = () => {
     const updatedTask = await categoriesService.edit(task.current, formData, categoryId)
     task.current = updatedTask
 
-    notification.success({
-      className: 'app-notification app-notification--success',
-      message: 'Success',
-      description: 'Category updated successfully...',
-    })
-
+    message.success('Category updated successfully.')
+    setIsEdited(true)
     setIsBusy(false)
   }
 
@@ -150,6 +147,10 @@ const CategoryEdit = () => {
           </Form.Item>
         </Form>
       )}
+
+      {isEdited ? (
+        <Alert message="Category updated successfully" type="success" showIcon closable />
+      ) : null}
     </div>
   )
 }
