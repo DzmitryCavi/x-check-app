@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { Col, Row } from 'antd'
+import { Row } from 'antd'
 import Can from '../rbac/Can'
 
 import HomeNavigation from '../component/HomeNavigation'
@@ -20,38 +20,22 @@ const Home = (props) => {
         <Can
           role={user.role}
           perform="menu:student"
-          yes={() => (
-            <Col span={8}>
-              <HomeNavigation items={studentRoutes} />
-            </Col>
-          )}
+          yes={() => <HomeNavigation items={studentRoutes} />}
         />
         <Can
           role={user.role}
           perform="menu:author"
-          yes={() => (
-            <Col span={8}>
-              <HomeNavigation items={authorRoutes} />
-            </Col>
-          )}
+          yes={() => <HomeNavigation items={authorRoutes} />}
         />
         <Can
           role={user.role}
           perform="menu:supervisor"
-          yes={() => (
-            <Col span={8}>
-              <HomeNavigation items={supervisorRoutes} />
-            </Col>
-          )}
+          yes={() => <HomeNavigation items={supervisorRoutes} />}
         />
         <Can
           role={user.role}
           perform="menu:course_manager"
-          yes={() => (
-            <Col span={8}>
-              <HomeNavigation items={courseManagerRoutes} />
-            </Col>
-          )}
+          yes={() => <HomeNavigation items={courseManagerRoutes} />}
         />
       </Row>
     </div>
