@@ -43,7 +43,7 @@ const NumericInput = (props) => {
     }
   }
 
-  const { value } = props
+  const { value, max } = props
   const title = value ? (
     <span className="numeric-input-title">{value !== '-' ? formatNumber(value) : '-'}</span>
   ) : (
@@ -55,7 +55,7 @@ const NumericInput = (props) => {
         {...props}
         onChange={onChange}
         onBlur={onBlur}
-        placeholder="Score"
+        placeholder={max > 0 ? `0 - ${max}` : ''}
         maxLength={2}
         style={{ width: 60 }}
       />

@@ -79,7 +79,7 @@ const RequestForm = ({ task, user, requestToEdit }) => {
               dataSource={category.criteria}
               renderItem={(item, index) => (
                 <List.Item key={`criteria-${index + 1}`}>
-                  <Text>{parse(`${item.text} (0-${item.score})`)}</Text>
+                  <Text>{parse(`${item.text}`)}</Text>
                   <Form.Item
                     name={['selfGrade', category.title, index]}
                     rules={[{ required: true, message: 'Please grade all' }]}
