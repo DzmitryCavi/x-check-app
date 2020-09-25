@@ -52,6 +52,11 @@ const CategoryEdit = () => {
   return (
     <div className="category-edit-page">
       <h1 className="page-title">Category Edit</h1>
+      {task.current ? (
+        <div className="category-task">
+          <b>Task:</b> {task.current.title}
+        </div>
+      ) : null}
       {loading ? (
         <div className="content-loading">
           <Spin tip="Loading..." />

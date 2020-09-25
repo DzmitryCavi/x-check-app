@@ -4,6 +4,13 @@ import { v4 as uuid } from 'uuid'
 import { format } from 'date-fns'
 import { API_URL } from '../config'
 
+const getMaxScore = (category) => {
+  return category.criteria.reduce(
+    (acc, curr) => (Number(curr.score) > 0 ? acc + Number(curr.score) : curr),
+    0,
+  )
+}
+
 const getAllByTaskId = async (taskId = -1) => {
   const { data: categories, status } = await axios.get(`${API_URL}/tasks/${taskId}/categories`)
   return status === 200 && categories ? categories : []
@@ -28,6 +35,7 @@ const create = async (task, category) => {
         ...category,
         id: uuid(),
         slug: slug(category.title),
+        maxScore: getMaxScore(category),
         created_at: format(new Date(), 'yyyy-MM-dd HH:mm:ss'),
         updated_at: null,
       },
@@ -52,6 +60,7 @@ const edit = async (task, payload, categoryId) => {
         ...category,
         ...payload,
         slug: slug(payload.title),
+        maxScore: getMaxScore(category),
         updated_at: format(new Date(), 'yyyy-MM-dd HH:mm:ss'),
       }
     }),
