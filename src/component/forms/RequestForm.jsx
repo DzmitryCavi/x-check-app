@@ -2,12 +2,13 @@
 import React, { useState } from 'react'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
-import { Form, Spin, Button, Input, Typography, Result, Row, Col, Space } from 'antd'
+import { Form, Spin, Button, Input, Typography, Result, Row, Col, List } from 'antd'
+import parse from 'react-html-parser'
 import RequestFormItem from './RequestFormItem'
 import requestsService from '../../services/requests.service'
 import { urlWithIpPattern } from '../../services/validators'
 
-const { Title } = Typography
+const { Title, Text } = Typography
 
 const RequestForm = ({ task, user, requestToEdit }) => {
   const { categories } = task
@@ -70,20 +71,24 @@ const RequestForm = ({ task, user, requestToEdit }) => {
         <Title level={3}>Self-review</Title>
         {categories ? (
           categories.map((category) => (
-            <Space style={{ width: '100%' }} direction="vertical" key={category.id}>
-              <Title level={4}>{category.title}</Title>
-              {category.criteria.map((item, index) => (
-                <div key={`criteria-${index + 1}`} style={{ height: '' }}>
+            <List
+              itemLayout="vertical"
+              header={<Title level={4}>{category.title}</Title>}
+              key={category.id}
+              size="large"
+              dataSource={category.criteria}
+              renderItem={(item, index) => (
+                <List.Item key={`criteria-${index + 1}`}>
+                  <Text>{parse(`${item.text} (0-${item.score})`)}</Text>
                   <Form.Item
                     name={['selfGrade', category.title, index]}
-                    label={`${item.text} (0-${item.score})`}
                     rules={[{ required: true, message: 'Please grade all' }]}
                   >
                     <RequestFormItem maxScore={item.score} />
                   </Form.Item>
-                </div>
-              ))}
-            </Space>
+                </List.Item>
+              )}
+            />
           ))
         ) : (
           <Spin size="large" />
@@ -95,9 +100,9 @@ const RequestForm = ({ task, user, requestToEdit }) => {
             </Form.Item>
           </Col>
 
-          <Col span={2}>
+          <Col span={1}>
             <Form.Item>
-              <Button type="primary" htmlType="submit">
+              <Button type="primary" size="small" htmlType="submit">
                 SENT
               </Button>
             </Form.Item>
@@ -105,7 +110,7 @@ const RequestForm = ({ task, user, requestToEdit }) => {
           <Col span={1}>
             {(!requestToEdit || requestToEdit.state === 'DRAFT') && (
               <Form.Item>
-                <Button type="primary" onClick={onSave} danger>
+                <Button type="primary" size="small" onClick={onSave} danger>
                   DRAFT
                 </Button>
               </Form.Item>
