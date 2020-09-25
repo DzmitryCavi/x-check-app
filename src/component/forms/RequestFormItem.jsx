@@ -7,10 +7,10 @@ import NumericInput from '../NumericInput'
 const { Panel } = Collapse
 
 const RequestFormItem = ({ value, onChange, maxScore }) => {
-  const [number, setNumber] = useState(value.number)
-  const [discription, setDiscription] = useState(value.discription)
+  const [number, setNumber] = useState(value ? value.number : null)
+  const [discription, setDiscription] = useState(value ? value.discription : null)
   const [isNeedComment, setIsNeedComment] = useState(
-    value.number === +maxScore && value.number === null,
+    !!(value && value.number !== +maxScore && value.number !== null),
   )
 
   const triggerChange = (changedValue) => {
@@ -25,7 +25,7 @@ const RequestFormItem = ({ value, onChange, maxScore }) => {
   }
 
   const onNumberChange = (e) => {
-    const newNumber = typeof e === 'string' ? +e : e.target.value
+    const newNumber = typeof e === 'string' ? +e : +e.target.value
     let newDiscription = ''
     const isMax = newNumber === +maxScore
     const isMin = newNumber === 0
@@ -62,26 +62,24 @@ const RequestFormItem = ({ value, onChange, maxScore }) => {
     })
   }
 
-  return (
-    <span>
+  const Criteria = (
+    <>
       <Row
         style={{
-          margin: '10px 8px',
+          margin: '10px 0px',
         }}
       >
-        <Col span={6}>
+        <Col span={3}>
           <Radio.Group
-            value={typeof value.number === 'number' ? value.number : null}
+            value={value && typeof value.number === 'number' ? value.number : null}
             onChange={onNumberChange}
           >
-            <Radio.Button danger value={0}>
-              Min
-            </Radio.Button>
+            <Radio.Button value={0}>Min</Radio.Button>
             <Radio.Button value={maxScore / 2}>Half</Radio.Button>
             <Radio.Button value={+maxScore}>Max</Radio.Button>
           </Radio.Group>
         </Col>
-        <Col span={4}>
+        <Col span={2}>
           <NumericInput value={number} onChange={onNumberChange} max={maxScore} />
         </Col>
       </Row>
@@ -104,8 +102,35 @@ const RequestFormItem = ({ value, onChange, maxScore }) => {
           </Collapse>
         </Col>
       </Row>
-    </span>
+    </>
   )
+
+  const fine = (
+    <>
+      <Row
+        style={{
+          margin: '10px 8px',
+        }}
+      >
+        <Col span={2}>
+          <Radio.Group
+            value={value && typeof value.number === 'number' ? value.number : null}
+            onChange={onNumberChange}
+          >
+            <Radio.Button value={0}>No</Radio.Button>
+            <Radio.Button value={maxScore} style={{ color: 'red' }}>
+              Yes
+            </Radio.Button>
+          </Radio.Group>
+        </Col>
+        <Col span={2}>
+          <NumericInput value={number} disabled onChange={onNumberChange} max={maxScore} />
+        </Col>
+      </Row>
+    </>
+  )
+
+  return maxScore > 0 ? Criteria : fine
 }
 
 RequestFormItem.propTypes = {
@@ -115,7 +140,7 @@ RequestFormItem.propTypes = {
 }
 
 RequestFormItem.defaultProps = {
-  value: { nubmer: null, discription: null },
+  value: { number: null, discription: null },
   onChange: () => {},
 }
 

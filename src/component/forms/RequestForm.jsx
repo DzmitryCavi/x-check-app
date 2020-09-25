@@ -2,7 +2,7 @@
 import React, { useState } from 'react'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
-import { Form, Spin, Button, Input, Typography, Result } from 'antd'
+import { Form, Spin, Button, Input, Typography, Result, Row, Col, Space } from 'antd'
 import RequestFormItem from './RequestFormItem'
 import requestsService from '../../services/requests.service'
 import { urlWithIpPattern } from '../../services/validators'
@@ -12,31 +12,53 @@ const { Title } = Typography
 const RequestForm = ({ task, user, requestToEdit }) => {
   const { categories } = task
   const [isSuccess, setIsSuccess] = useState(false)
+  const [score, setScore] = useState((requestToEdit && requestToEdit.score) || 0)
   const [form] = Form.useForm()
 
   const onFinish = async (data) => {
-    const requestData = { name: task.title, task: task.id, ...data, state: 'SUBMITTED' }
+    const requestData = {
+      name: task.title,
+      task: task.id,
+      ...data,
+      score,
+      state: 'SUBMITTED',
+    }
     if (requestToEdit) requestsService.edit(requestData, requestToEdit.id)
     else requestsService.create(requestData, user)
     setIsSuccess(true)
   }
-
+  console.log(score)
   const onSave = async () => {
     const requestData = {
       name: task.title,
       task: task.id,
       ...form.getFieldsValue(),
+      score,
       state: 'DRAFT',
     }
     if (requestToEdit) requestsService.edit(requestData, requestToEdit.id)
     else requestsService.create(requestData, user)
     setIsSuccess(true)
   }
+  const calculateScore = (_, allFields) => {
+    setScore(
+      allFields.reduce(
+        (ac, el) => ac + (el.value && typeof el.value === 'object' ? +el.value.number : 0),
+        0,
+      ),
+    )
+  }
 
   return !isSuccess ? (
     <>
       <Title level={2}>Request to review the task - {task.title}</Title>
-      <Form form={form} layout="vertical" onFinish={onFinish} initialValues={requestToEdit || {}}>
+      <Form
+        form={form}
+        layout="vertical"
+        onFinish={onFinish}
+        onFieldsChange={calculateScore}
+        initialValues={requestToEdit || {}}
+      >
         <Form.Item
           name="url"
           label="Solution URL"
@@ -49,10 +71,10 @@ const RequestForm = ({ task, user, requestToEdit }) => {
         <Title level={3}>Self-review</Title>
         {categories ? (
           categories.map((category) => (
-            <div key={category.id}>
-              <div>{category.title}</div>
+            <Space style={{ width: '100%' }} direction="vertical" key={category.id}>
+              <Title level={4}>{category.title}</Title>
               {category.criteria.map((item, index) => (
-                <div key={`criteria-${index + 1}`}>
+                <div key={`criteria-${index + 1}`} style={{ height: '' }}>
                   <Form.Item
                     name={['selfGrade', category.title, index]}
                     label={`${item.text} (0-${item.score})`}
@@ -62,23 +84,35 @@ const RequestForm = ({ task, user, requestToEdit }) => {
                   </Form.Item>
                 </div>
               ))}
-            </div>
+            </Space>
           ))
         ) : (
           <Spin size="large" />
         )}
-        <Form.Item>
-          <Button type="primary" htmlType="submit">
-            SENT
-          </Button>
-        </Form.Item>
-        {(!requestToEdit || requestToEdit.state === 'DRAFT') && (
-          <Form.Item>
-            <Button type="primary" onClick={onSave} danger>
-              DRAFT
-            </Button>
-          </Form.Item>
-        )}
+        <Row gutter={[10, 48]}>
+          <Col span={24}>
+            <Form.Item name="score">
+              <Title level={3}>{`Score: ${score}`}</Title>
+            </Form.Item>
+          </Col>
+
+          <Col span={2}>
+            <Form.Item>
+              <Button type="primary" htmlType="submit">
+                SENT
+              </Button>
+            </Form.Item>
+          </Col>
+          <Col span={1}>
+            {(!requestToEdit || requestToEdit.state === 'DRAFT') && (
+              <Form.Item>
+                <Button type="primary" onClick={onSave} danger>
+                  DRAFT
+                </Button>
+              </Form.Item>
+            )}
+          </Col>
+        </Row>
       </Form>
     </>
   ) : (

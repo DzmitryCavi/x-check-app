@@ -55,8 +55,9 @@ const NumericInput = (props) => {
         {...props}
         onChange={onChange}
         onBlur={onBlur}
-        placeholder="Input a number"
+        placeholder="Score"
         maxLength={2}
+        style={{ width: 60 }}
       />
     </Tooltip>
   )
