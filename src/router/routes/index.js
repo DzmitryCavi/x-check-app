@@ -25,6 +25,9 @@ export const supervisorRoutes = {
 }
 
 export const courseManagerRoutes = {
+  tasks: {
+    list: '/course-manager/tasks',
+  },
   marks: {
     list: '/course-manager/marks',
     info: '/course-manager/marks/:marksId/info',

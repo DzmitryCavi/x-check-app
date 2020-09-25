@@ -1,11 +1,22 @@
-import { UnorderedListOutlined } from '@ant-design/icons'
+import { ApartmentOutlined, UnorderedListOutlined } from '@ant-design/icons'
 
+import TasksList from '../../page/courseManager/tasks/TasksList'
 import MarksList from '../../page/courseManager/marks/MarksList'
 import MarkInfo from '../../page/courseManager/marks/MarkInfo'
 
 import { courseManagerRoutes as routes } from '.'
 
 export default [
+  {
+    path: routes.tasks.list,
+    component: TasksList,
+    breadcrumb: 'Tasks List',
+    description: 'Tasks management',
+    navigation: {
+      label: 'Tasks List',
+      icon: ApartmentOutlined,
+    },
+  },
   {
     path: routes.marks.info,
     component: MarkInfo,
