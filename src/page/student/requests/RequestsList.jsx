@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { Table, Space, Button, notification, Tag } from 'antd'
 import { connect } from 'react-redux'
 import { formatRoute } from 'react-router-named-routes'
-import { DeleteOutlined, EditOutlined } from '@ant-design/icons'
+import { DeleteOutlined, EditOutlined, CarryOutTwoTone } from '@ant-design/icons'
 
 import ButtonLink from '../../../component/ButtonLink'
 import { studentRoutes } from '../../../router/routes'
@@ -42,48 +42,61 @@ const RequestList = ({ user }) => {
         <Column title="Updated at" dataIndex="updated_at" key="updated_at" />
         <Column
           title="State"
-          dataIndex="state"
           key="state"
-          render={(state) => {
+          render={({ state, id }) => {
             let color = ''
+            let isGraduated = false
             switch (state) {
               case 'SUBMITTED':
                 color = 'geekblue'
                 break
               case 'GRADED':
                 color = 'green'
+                isGraduated = true
                 break
               default:
                 color = 'volcano'
             }
             return (
-              <Tag color={color} key={state}>
-                {state}
-              </Tag>
+              <Space size="middle">
+                <Tag color={color} key={state}>
+                  {state}
+                </Tag>
+                {isGraduated && (
+                  <ButtonLink
+                    type="ghost"
+                    size="small"
+                    style={{ fontSize: 12, color: '#52c41a' }}
+                    icon={<CarryOutTwoTone twoToneColor="#52c41a" />}
+                    linkTo={formatRoute(studentRoutes.requests.grade, { requestId: id })}
+                  >
+                    View Grade
+                  </ButtonLink>
+                )}
+              </Space>
             )
           }}
         />
         <Column
           title="Action"
           key="action"
-          width={300}
+          width={100}
           render={(row) => (
             <Space size="middle">
               <ButtonLink
+                size="small"
                 icon={<EditOutlined />}
                 linkTo={formatRoute(studentRoutes.requests.edit, { requestId: row.id })}
-              >
-                Edit
-              </ButtonLink>
+              />
+
               <Button
+                size="small"
                 type="danger"
                 icon={<DeleteOutlined />}
                 onClick={() => {
                   destroyRequest(row.id)
                 }}
-              >
-                Remove
-              </Button>
+              />
             </Space>
           )}
         />

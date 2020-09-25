@@ -27,7 +27,6 @@ const RequestForm = ({ task, user, requestToEdit }) => {
     else requestsService.create(requestData, user)
     setIsSuccess(true)
   }
-  console.log(score)
   const onSave = async () => {
     const requestData = {
       name: task.title,

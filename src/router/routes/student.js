@@ -5,6 +5,7 @@ import RequestsList from '../../page/student/requests/RequestsList'
 import RequestEdit from '../../page/student/requests/RequestEdit'
 
 import { studentRoutes as routes } from '.'
+import Grade from '../../page/student/response/Grade'
 
 export default [
   {
@@ -20,6 +21,11 @@ export default [
     path: routes.requests.edit,
     component: RequestEdit,
     breadcrumb: 'Edit Request',
+  },
+  {
+    path: routes.requests.grade,
+    component: Grade,
+    breadcrumb: 'Grade',
   },
   {
     path: routes.requests.list,

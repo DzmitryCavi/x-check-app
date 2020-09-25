@@ -36,6 +36,7 @@ export const studentRoutes = {
     list: '/student/requests',
     create: '/student/requests/create',
     edit: '/student/requests/:requestId/edit',
+    grade: '/student/requests/:requestId/grade',
   },
 }
 // ...
