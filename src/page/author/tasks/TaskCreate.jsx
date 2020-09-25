@@ -2,8 +2,8 @@
 import React, { useState, useRef } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { Form, Input, Button, notification } from 'antd'
-import { PlusOutlined } from '@ant-design/icons'
+import { Form, Input, Button, message, Result } from 'antd'
+import { ApartmentOutlined, PlusOutlined } from '@ant-design/icons'
 import { formatRoute } from 'react-router-named-routes'
 
 import ButtonLink from '../../../component/ButtonLink'
@@ -19,63 +19,80 @@ const validateMessages = {
 }
 
 const TaskCreate = ({ user }) => {
-  const [taskId, setTaskId] = useState(null)
+  const [task, setTask] = useState(null)
   const [isBusy, setIsBusy] = useState(false)
   const formRef = useRef(null)
 
   const onFinish = async (data) => {
     setIsBusy(true)
 
-    const task = await tasksService.create(data, user.id)
-    setTaskId(task.id)
+    const responseTask = await tasksService.create(data, user.id)
 
-    notification.success({
-      className: 'app-notification app-notification--success',
-      message: 'Success',
-      description: 'Task created successfully...',
-    })
+    setTask(responseTask)
 
+    message.success('Task created successfully')
     setIsBusy(false)
   }
 
   return (
     <div className="task-create-page">
       <h1 className="page-title">Task Create</h1>
-      <Form ref={formRef} layout="vertical" validateMessages={validateMessages} onFinish={onFinish}>
-        <Form.Item
-          name="title"
-          label="Title"
-          rules={[
-            {
-              required: true,
-            },
-          ]}
+      {!task ? (
+        <Form
+          ref={formRef}
+          layout="vertical"
+          validateMessages={validateMessages}
+          onFinish={onFinish}
         >
-          <Input />
-        </Form.Item>
+          <Form.Item
+            name="title"
+            label="Title"
+            rules={[
+              {
+                required: true,
+              },
+            ]}
+          >
+            <Input />
+          </Form.Item>
 
-        <Form.Item name="description" label="Description">
-          <AntdTinymce options={{ height: 400 }} />
-        </Form.Item>
+          <Form.Item name="description" label="Description">
+            <AntdTinymce options={{ height: 360 }} />
+          </Form.Item>
 
-        <Form.Item>
-          <Button type="primary" htmlType="submit" loading={isBusy}>
-            Create
-          </Button>
-        </Form.Item>
-      </Form>
-
-      {taskId ? (
-        <ButtonLink
-          type="primary"
-          icon={<PlusOutlined />}
-          linkTo={formatRoute(authorRoutes.categories.create, { taskId })}
-          block
-        >
-          Category
-        </ButtonLink>
+          <Form.Item>
+            <Button type="primary" htmlType="submit" loading={isBusy}>
+              Create
+            </Button>
+          </Form.Item>
+        </Form>
       ) : (
-        ''
+        <Result
+          status="success"
+          title="Task created successfully!"
+          subTitle={`Task name: ${task.title}.`}
+          extra={[
+            <Button key="task-create" type="primary" onClick={() => setTask(null)}>
+              Create New Task
+            </Button>,
+            <ButtonLink
+              key="tasks-list"
+              type="default"
+              icon={<ApartmentOutlined />}
+              linkTo={authorRoutes.tasks.list}
+            >
+              Go Tasks List
+            </ButtonLink>,
+            <ButtonLink
+              key="category-create"
+              type="primary"
+              icon={<PlusOutlined />}
+              linkTo={formatRoute(authorRoutes.categories.create, { taskId: task.id })}
+            >
+              Category
+            </ButtonLink>,
+          ]}
+        />
       )}
     </div>
   )

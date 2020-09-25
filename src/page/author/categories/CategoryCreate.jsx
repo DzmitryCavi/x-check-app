@@ -1,13 +1,17 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import React, { useRef, useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
-import { Form, Input, Button, notification } from 'antd'
+import { Form, Input, Button, Spin, message, Result } from 'antd'
 
-import { PlusOutlined, MinusCircleOutlined } from '@ant-design/icons'
+import { PlusOutlined, MinusCircleOutlined, ApartmentOutlined } from '@ant-design/icons'
 import AntdTinymce from '../../../component/AntdTinymce'
 
 import tasksService from '../../../services/tasks.service'
 import categoriesService from '../../../services/categories.service'
+
+import ButtonLink from '../../../component/ButtonLink'
+
+import { authorRoutes } from '../../../router/routes'
 
 import './style.scss'
 
@@ -19,6 +23,8 @@ const validateMessages = {
 
 const CategoryCreate = () => {
   const task = useRef(null)
+  const [category, setCategory] = useState(null)
+  const [loading, setLoading] = useState(true)
   const [isBusy, setIsBusy] = useState(false)
 
   const { taskId } = useParams()
@@ -28,29 +34,55 @@ const CategoryCreate = () => {
     const fetchData = async () => {
       const taskResponse = await tasksService.getById(taskId)
       task.current = taskResponse
+
+      setLoading(false)
     }
     fetchData()
   }, [taskId])
 
-  const onFinish = async (category) => {
+  const onFinish = async (data) => {
     setIsBusy(true)
 
-    const updatedTask = await categoriesService.create(task.current, category)
+    const updatedTask = await categoriesService.create(task.current, data)
     task.current = updatedTask
 
-    notification.success({
-      className: 'app-notification app-notification--success',
-      message: 'Success',
-      description: 'Category created successfully...',
-    })
+    message.success('Category created successfully')
 
     setIsBusy(false)
+    setCategory(data)
     form.resetFields()
   }
 
-  return (
-    <div className="category-create-page">
-      <h1 className="page-title">Category Create</h1>
+  let content = null
+  if (loading) {
+    content = (
+      <div className="content-loading">
+        <Spin tip="Loading..." />
+      </div>
+    )
+  } else if (category) {
+    content = (
+      <Result
+        status="success"
+        title="Category created successfully!"
+        subTitle={`Category name: ${category.title}.`}
+        extra={[
+          <Button key="category-create" type="primary" onClick={() => setCategory(null)}>
+            Create New Category
+          </Button>,
+          <ButtonLink
+            key="tasks-list"
+            type="default"
+            icon={<ApartmentOutlined />}
+            linkTo={authorRoutes.tasks.list}
+          >
+            Go Tasks List
+          </ButtonLink>,
+        ]}
+      />
+    )
+  } else {
+    content = (
       <Form form={form} layout="vertical" validateMessages={validateMessages} onFinish={onFinish}>
         <Form.Item
           name="title"
@@ -140,6 +172,18 @@ const CategoryCreate = () => {
           </Button>
         </Form.Item>
       </Form>
+    )
+  }
+
+  return (
+    <div className="category-create-page">
+      <h1 className="page-title">Category Create</h1>
+      {task.current ? (
+        <div className="category-task">
+          <b>Task:</b> {task.current.title}
+        </div>
+      ) : null}
+      {content}
     </div>
   )
 }

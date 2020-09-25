@@ -14,7 +14,7 @@ import {
   Space,
   Button,
   Tag,
-  notification,
+  message,
   Dropdown,
   Menu,
 } from 'antd'
@@ -65,15 +65,15 @@ const TasksList = ({ user }) => {
     fetchTasks(user.id)
   }, [user.id])
 
+  useEffect(() => {
+    initTasks.current = tasks
+  }, [tasks])
+
   const destroyTask = async (taskId) => {
     await tasksService.destroyById(taskId)
     setTasks((prev) => prev.filter((task) => task.id !== taskId))
 
-    notification.success({
-      className: 'app-notification app-notification--info',
-      message: 'Success',
-      description: 'Task deleted successfully...',
-    })
+    message.success('Task deleted successfully.')
   }
 
   const onFilter = (filterData) => {
