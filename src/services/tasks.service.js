@@ -29,9 +29,13 @@ const create = async (task, authorId = -1) => {
     authorId,
     slug: slug(task.title),
     state: 'PUBLISHED',
+    categories: [],
+
+    start_date: null,
+    end_date: null,
+
     created_at: format(new Date(), 'yyyy-MM-dd HH:mm:ss'),
     updated_at: null,
-    categories: [],
   })
   return status === 201 && data ? data : null
 }
@@ -70,6 +74,19 @@ const exportAll = async (authorId, type = 'rss') => {
   window.location.href = `${SERVER_URL}/tasks/export?authorId=${authorId}&type=${type}`
 }
 
+/**
+ * Change Date Constraints
+ * @param {[moment || null, moment || null] || null} date
+ */
+const сhangeDateConstraints = async (taskId, dateRange) => {
+  const [start, end] = dateRange || [null, null]
+
+  await axios.patch(`${API_URL}/tasks/${taskId}`, {
+    startDate: start ? start.format('YYYY-MM-DD HH:mm:ss') : null,
+    endDate: end ? end.format('YYYY-MM-DD HH:mm:ss') : null,
+  })
+}
+
 export default {
   getAllByAuthorId,
   getAll,
@@ -81,4 +98,5 @@ export default {
   importTasks,
   exportById,
   exportAll,
+  сhangeDateConstraints,
 }

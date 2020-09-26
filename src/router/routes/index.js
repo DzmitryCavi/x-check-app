@@ -25,6 +25,10 @@ export const supervisorRoutes = {
 }
 
 export const courseManagerRoutes = {
+  tasks: {
+    list: '/course-manager/tasks',
+    view: '/course-manager/tasks/:taskId/view',
+  },
   marks: {
     list: '/course-manager/marks',
     info: '/course-manager/marks/:marksId/info',

@@ -144,11 +144,11 @@ export default compose(
     [
       // order matters
       ...authorRoutes,
-      ...supervisorRoutes,
-      ...publicRoutes,
       ...studentRoutes,
       ...courseManagerRoutes,
+      ...supervisorRoutes,
       // ...spread other routes
+      ...publicRoutes,
     ],
     { disableDefaults: true },
   ),
