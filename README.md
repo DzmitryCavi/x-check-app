@@ -62,6 +62,18 @@ Here is a working live demo : [X Check App](https://brave-banach-54e725.netlify.
 
 ![](./documentation/TaskList.PNG)
 
+## For Work
+
+- For running : npm start
+
+- For testing : npm test
+
+- For prod building : npm build
+
+- Lint : npm lint
+
+- Eject: npm eject
+
 ## Built with
 
 -  [Create React App](https://github.com/facebook/create-react-app) - This project (X Check App) was bootstrapped with Create React App.
