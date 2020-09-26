@@ -19,7 +19,7 @@ X Check App is an app for checking and managing tasks.
 
 ## Demo
 
-Here is a working live demo : [RsLang](https://brave-banach-54e725.netlify.app)
+Here is a working live demo : [X Check App](https://brave-banach-54e725.netlify.app)
 
 ## Site
 
