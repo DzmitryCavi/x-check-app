@@ -23,10 +23,14 @@ const NumericInput = (props) => {
   const onChange = (e) => {
     const { value } = e.target
     const reg = /^-?\d*(\.\d*)?$/
-    // eslint-disable-next-line no-restricted-globals
-    if ((!isNaN(value) && reg.test(value)) || value === '' || value === '-') {
-      props.onChange(+value > +props.max ? props.max : value)
+    if ((Number.isNaN(value) || !reg.test(value)) && value !== '' && value !== '-') return
+
+    if (!props.max) {
+      props.onChange(value)
+      return
     }
+
+    props.onChange(Number(value) > props.max ? props.max : value)
   }
 
   // '.' at the end or only '-' in the input box.
@@ -43,7 +47,7 @@ const NumericInput = (props) => {
     }
   }
 
-  const { value, max } = props
+  const { value } = props
   const title = value ? (
     <span className="numeric-input-title">{value !== '-' ? formatNumber(value) : '-'}</span>
   ) : (
@@ -51,29 +55,25 @@ const NumericInput = (props) => {
   )
   return (
     <Tooltip trigger={['focus']} title={title} placement="topLeft" overlayClassName="numeric-input">
-      <Input
-        {...props}
-        onChange={onChange}
-        onBlur={onBlur}
-        placeholder={max > 0 ? `0 - ${max}` : ''}
-        maxLength={2}
-        style={{ width: 60 }}
-      />
+      <Input {...props} onChange={onChange} onBlur={onBlur} />
     </Tooltip>
   )
 }
 
 NumericInput.defaultProps = {
   onBlur: null,
+  maxLength: null,
   max: null,
-  value: null,
+  value: '',
+  onChange: () => {},
 }
 
 NumericInput.propTypes = {
-  value: PropTypes.number,
-  onChange: PropTypes.instanceOf(Function).isRequired,
-  onBlur: PropTypes.instanceOf(Function),
-  max: PropTypes.string,
+  value: PropTypes.string,
+  onChange: PropTypes.func,
+  onBlur: PropTypes.func,
+  maxLength: PropTypes.number,
+  max: PropTypes.number,
 }
 
 export default NumericInput

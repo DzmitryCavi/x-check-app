@@ -5,6 +5,8 @@ import { Form, Input, Button, Spin, message, Alert } from 'antd'
 import { PlusOutlined, MinusCircleOutlined } from '@ant-design/icons'
 
 import AntdTinymce from '../../../component/AntdTinymce'
+import NumericInput from '../../../component/NumericInput'
+
 import tasksService from '../../../services/tasks.service'
 import categoriesService from '../../../services/categories.service'
 
@@ -106,7 +108,7 @@ const CategoryEdit = () => {
                               fieldKey={[field.fieldKey, 'score']}
                               rules={[{ required: true, message: 'Missing score' }]}
                             >
-                              <Input placeholder="Score" />
+                              <NumericInput placeholder="Score" />
                             </Form.Item>
                           </div>
                           <div className="category-items-list__item category-items-list__item--text">
