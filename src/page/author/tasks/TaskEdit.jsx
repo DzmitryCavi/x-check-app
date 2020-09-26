@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
-import { Form, Input, Button, Table, Space, Radio, Spin, Alert, message } from 'antd'
+import { Form, Input, Button, Table, Space, Radio, Spin, Alert, message, Popconfirm } from 'antd'
 import { EditOutlined, DeleteOutlined, PlusOutlined } from '@ant-design/icons'
 import { formatRoute } from 'react-router-named-routes'
 import AntdTinymce from '../../../component/AntdTinymce'
@@ -140,7 +140,7 @@ const TaskEdit = () => {
               <Column
                 title="Action"
                 key="action"
-                width={200}
+                width={100}
                 render={(row) => (
                   <Space size="middle">
                     <ButtonLink
@@ -149,17 +149,11 @@ const TaskEdit = () => {
                         taskId,
                         categoryId: row.id,
                       })}
-                    >
-                      Edit
-                    </ButtonLink>
+                    />
 
-                    <Button
-                      type="danger"
-                      icon={<DeleteOutlined />}
-                      onClick={() => destroyCategory(row.id)}
-                    >
-                      Remove
-                    </Button>
+                    <Popconfirm title="Sure to delete?" onConfirm={() => destroyCategory(row.id)}>
+                      <Button type="danger" icon={<DeleteOutlined />} />
+                    </Popconfirm>
                   </Space>
                 )}
               />
