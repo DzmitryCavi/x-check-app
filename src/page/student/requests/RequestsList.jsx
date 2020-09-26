@@ -142,7 +142,7 @@ const RequestList = ({ user }) => {
           <ButtonLink
             type="primary"
             linkTo={studentRoutes.requests.create}
-            style={{ position: 'absolute', top: 0, right: 0, height: '100%' }}
+            style={{ position: 'absolute', right: 0, bottom: 0, height: 46 }}
           >
             Sent request
           </ButtonLink>
