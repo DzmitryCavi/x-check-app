@@ -5,10 +5,7 @@ import { format } from 'date-fns'
 import { API_URL } from '../config'
 
 const getMaxScore = (category) => {
-  return category.criteria.reduce(
-    (acc, curr) => (Number(curr.score) > 0 ? acc + Number(curr.score) : curr),
-    0,
-  )
+  return category.criteria.reduce((acc, curr) => acc + Number(curr.score), 0)
 }
 
 const getAllByTaskId = async (taskId = -1) => {
