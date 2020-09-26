@@ -41,8 +41,12 @@ const CategoryEdit = () => {
   const onFinish = async (formData) => {
     setIsBusy(true)
 
+    console.log(task.current)
     const updatedTask = await categoriesService.edit(task.current, formData, categoryId)
     task.current = updatedTask
+
+    const data = updatedTask.categories.find((category) => category.id === categoryId)
+    form.setFieldsValue(data)
 
     message.success('Category updated successfully.')
     setIsEdited(true)
