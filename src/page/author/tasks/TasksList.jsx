@@ -17,6 +17,7 @@ import {
   message,
   Dropdown,
   Menu,
+  Popconfirm,
 } from 'antd'
 import {
   DeleteOutlined,
@@ -271,7 +272,9 @@ const TasksList = ({ user }) => {
                 linkTo={formatRoute(authorRoutes.tasks.edit, { taskId: row.id })}
               />
 
-              <Button type="danger" icon={<DeleteOutlined />} onClick={() => destroyTask(row.id)} />
+              <Popconfirm title="Sure to delete?" onConfirm={() => destroyTask(row.id)}>
+                <Button type="danger" icon={<DeleteOutlined />} />
+              </Popconfirm>
             </Space>
           )}
         />
