@@ -16,12 +16,17 @@ const Grade = () => {
   const [categories, setCategories] = useState(null)
   const [form] = Form.useForm()
 
+  //  Старая версия для категорий без посчитанного score
   const score =
     categories &&
     categories.reduce(
       (ac, { criteria }) => ac + criteria.reduce((a, el) => a + (+el.score > 0 ? +el.score : 0), 0),
       0,
     )
+
+  //  новая версия
+  //  const score = categories && categories.reduce((ac, catergory) => ac + +catergory.score, 0)
+
   const onFinish = () => {}
 
   useEffect(() => {
@@ -40,14 +45,6 @@ const Grade = () => {
       {loading ? (
         <Spin tip="Loading..." />
       ) : (
-        // <List
-        //   header={
-
-        //   }
-        //   bordered
-        // >
-        //   a
-        // </List>
         <Form form={form} layout="vertical" onFinish={onFinish} initialValues={request}>
           <Title level={1} className="task-categories__title">
             {`Evaluation of the task "${request.name}"`}
@@ -70,7 +67,7 @@ const Grade = () => {
               dataSource={category.criteria}
               renderItem={(item, index) => (
                 <List.Item key={`criteria-${index + 1}`}>
-                  <Text>{parse(`${item.text} (0-${item.score})`)}</Text>
+                  <Text>{parse(item.text)}</Text>
                   <Form.Item
                     name={['selfGrade', category.title, index]}
                     rules={[{ required: true, message: 'Please grade all' }]}
