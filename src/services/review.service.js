@@ -4,22 +4,22 @@ import { format } from 'date-fns'
 import { API_URL } from '../config'
 
 const getAll = async () => {
-  const { data: tasks, status } = await axios.get(`${API_URL}/review`)
+  const { data: tasks, status } = await axios.get(`${API_URL}/reviews`)
   return status === 200 && tasks ? tasks : []
 }
 
 const getById = async (id) => {
-  const { data: task, status } = await axios.get(`${API_URL}/review/${id}`)
+  const { data: task, status } = await axios.get(`${API_URL}/reviews/${id}`)
   return status === 200 && task ? task : null
 }
 
 const getByRequestId = async (id) => {
-  const { data: task, status } = await axios.get(`${API_URL}/review?requestId=${id}`)
+  const { data: task, status } = await axios.get(`${API_URL}/reviews?requestId=${id}`)
   return status === 200 && task ? task : null
 }
 
 const create = async (review, author = -1) => {
-  const { data, status } = await axios.post(`${API_URL}/review`, {
+  const { data, status } = await axios.post(`${API_URL}/reviews`, {
     ...review,
     author,
     id: `review-${uuid()}`,
@@ -31,14 +31,14 @@ const create = async (review, author = -1) => {
 }
 
 const edit = async (review, reviewId) => {
-  await axios.patch(`${API_URL}/reviewRequest/${reviewId}`, {
+  await axios.patch(`${API_URL}/reviews/${reviewId}`, {
     ...review,
     updated_at: format(new Date(), 'yyyy-MM-dd HH:mm:ss'),
   })
 }
 
 const destroyById = async (id) => {
-  const { data, status } = await axios.delete(`${API_URL}/review/${id}`)
+  const { data, status } = await axios.delete(`${API_URL}/reviews/${id}`)
   return status === 200 ? data : null
 }
 

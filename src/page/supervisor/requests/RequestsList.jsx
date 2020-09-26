@@ -7,16 +7,22 @@ import { formatRoute } from 'react-router-named-routes'
 import ButtonLink from '../../../component/ButtonLink'
 import { supervisorRoutes } from '../../../router/routes'
 import requestService from '../../../services/requests.service'
+import reviewService from '../../../services/review.service'
 
 const RequestsList = () => {
-  const [infoTask, setInfoTask] = useState()
+  const [requests, setRequests] = useState()
+  const [reviews, setReviews] = useState()
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    requestService.getAll().then((data) => {
-      setInfoTask(data)
+    const fetchData = async () => {
+      const requestResponse = await requestService.getAllSubmitted()
+      const reviewsResponse = await reviewService.getAll()
+      setRequests(requestResponse)
+      setReviews(reviewsResponse)
       setLoading(false)
-    })
+    }
+    fetchData()
   }, [])
 
   return loading ? (
@@ -24,43 +30,34 @@ const RequestsList = () => {
       <Spin tip="Loading..." />
     </div>
   ) : (
-    <Table dataSource={infoTask} pagination={{ pageSize: 10 }} rowKey="id">
+    <Table dataSource={requests} pagination={{ pageSize: 10 }} rowKey="id">
       <>
         <Column
-          title="Name"
+          title="Student"
           dataIndex="author"
           key="author"
           sorter={(a, b) => String(a.author).localeCompare(String(b.author))}
         />
         <Column
           title="Task"
-          dataIndex="task"
-          key="task"
+          dataIndex="name"
+          key="name"
           sorter={(a, b) => String(a.task).localeCompare(String(b.task))}
         />
         <Column
           title="Status"
-          dataIndex="state"
-          key="state"
+          key="status"
           sorter={(a, b) => a.state.localeCompare(b.state)}
-          render={(state) => {
-            let color
-            if (state === 'PUBLISHED') {
-              color = 'green'
-            } else if (state === 'COMPLETED') {
-              color = 'blue'
-            } else if (state === 'DRAFT') {
-              color = 'red'
-            } else {
-              color = 'blue'
-            }
-
+          render={(col) => {
+            const isWithReview = Object.keys(reviews).reduce(
+              (ac, el) => ac || reviews[el].requestId === col.id,
+              false,
+            )
+            const status = isWithReview ? 'DRAFT' : 'NEW'
             return (
-              <>
-                <Tag color={color} key={state}>
-                  {state}
-                </Tag>
-              </>
+              <Tag color={isWithReview ? 'red' : 'green'} key={status}>
+                {status}
+              </Tag>
             )
           }}
         />

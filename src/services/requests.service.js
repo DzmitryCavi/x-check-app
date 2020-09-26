@@ -8,8 +8,8 @@ const getAll = async () => {
   return status === 200 && tasks ? tasks : []
 }
 
-const getAllPublished = async () => {
-  const { data: tasks, status } = await axios.get(`${API_URL}/reviewRequest?state=PUBLISHED`)
+const getAllSubmitted = async () => {
+  const { data: tasks, status } = await axios.get(`${API_URL}/reviewRequest?state=SUBMITTED`)
   return status === 200 && tasks ? tasks : []
 }
 
@@ -21,6 +21,13 @@ const getByAuthor = async (author) => {
 const getById = async (id) => {
   const { data: task, status } = await axios.get(`${API_URL}/reviewRequest/${id}`)
   return status === 200 && task ? task : null
+}
+
+const closeByID = async (requestId) => {
+  await axios.patch(`${API_URL}/reviewRequest/${requestId}`, {
+    closed_at: format(new Date(), 'yyyy-MM-dd HH:mm:ss'),
+    state: 'GRADED',
+  })
 }
 
 const create = async (request, author = -1) => {
@@ -53,6 +60,7 @@ export default {
   create,
   edit,
   destroyById,
-  getAllPublished,
+  getAllSubmitted,
   getById,
+  closeByID,
 }

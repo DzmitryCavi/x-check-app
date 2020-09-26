@@ -2,15 +2,14 @@
 import React, { useState, useEffect } from 'react'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
-import { Form, Spin, Button, Input, Typography, Result, Row, Col, Space } from 'antd'
+import { Form, Spin, Button, Typography, Result, Row, Col, Space } from 'antd'
 import { useParams } from 'react-router-dom'
-//  import RequestFormItem from './RequestFormItem'
+import ReviewFormItem from './ReviewFormItem'
 import requestsService from '../../services/requests.service'
 import tasksService from '../../services/tasks.service'
 import reviewService from '../../services/review.service'
-import { urlWithIpPattern } from '../../services/validators'
 
-const { Title } = Typography
+const { Title, Link } = Typography
 
 const ReviewForm = ({ user }) => {
   const [isSuccess, setIsSuccess] = useState(false)
@@ -42,14 +41,17 @@ const ReviewForm = ({ user }) => {
     const reviewData = {
       name: task.title,
       task: task.id,
-      requestId: request.id,
+      requestId,
       student: request.author,
       ...data,
       score,
       state: 'GRADED',
     }
     if (reviewToEdit) reviewService.edit(reviewData, reviewToEdit.id)
-    else reviewService.create(reviewData, user)
+    else {
+      reviewService.create(reviewData, user)
+      requestsService.closeByID(requestId)
+    }
     setIsSuccess(true)
   }
 
@@ -83,6 +85,11 @@ const ReviewForm = ({ user }) => {
       {!isSuccess ? (
         <>
           <Title level={2}>Request to review the task - {task.title}</Title>
+          <Title level={3}>Solution URL</Title>
+
+          <Link href={request.url} target="_blank">
+            {request.url}
+          </Link>
           <Form
             form={form}
             layout="vertical"
@@ -90,20 +97,7 @@ const ReviewForm = ({ user }) => {
             onFieldsChange={calculateScore}
             initialValues={reviewToEdit || {}}
           >
-            <Form.Item
-              name="url"
-              label="Solution URL"
-              rules={[
-                {
-                  required: true,
-                  pattern: urlWithIpPattern,
-                  message: 'Please provide a valid link',
-                },
-              ]}
-            >
-              <Input />
-            </Form.Item>
-            <Title level={3}>Self-review</Title>
+            <Title level={3}>Review</Title>
             {task.categories.map((category) => (
               <Space style={{ width: '100%' }} direction="vertical" key={category.id}>
                 <Title level={4}>{category.title}</Title>
@@ -114,7 +108,10 @@ const ReviewForm = ({ user }) => {
                       label={`${item.text} (0-${item.score})`}
                       rules={[{ required: true, message: 'Please grade all' }]}
                     >
-                      {/* <RequestFormItem maxScore={item.score} selfGrade={selfGrade[category.title]} /> */}
+                      <ReviewFormItem
+                        maxScore={item.score}
+                        selfGrade={request.selfGrade[category.title][index]}
+                      />
                     </Form.Item>
                   </div>
                 ))}
