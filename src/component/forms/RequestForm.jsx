@@ -1,5 +1,5 @@
 /* eslint-disable react/jsx-props-no-spreading */
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import { Form, Spin, Button, Input, Typography, Result, Row, Col, List } from 'antd'
@@ -10,11 +10,20 @@ import { urlWithIpPattern } from '../../services/validators'
 
 const { Title, Text } = Typography
 
-const RequestForm = ({ task, user, requestToEdit }) => {
+const RequestForm = ({ task, user, requestToEdit, setIsNewRequest }) => {
   const { categories } = task
   const [isSuccess, setIsSuccess] = useState(false)
   const [score, setScore] = useState((requestToEdit && requestToEdit.score) || 0)
   const [form] = Form.useForm()
+
+  useEffect(() => {
+    return task
+      ? () => {
+          form.resetFields()
+          setIsSuccess(false)
+        }
+      : null
+  }, [task, form])
 
   const onFinish = async (data) => {
     const requestData = {
@@ -27,6 +36,7 @@ const RequestForm = ({ task, user, requestToEdit }) => {
     if (requestToEdit) requestsService.edit(requestData, requestToEdit.id)
     else requestsService.create(requestData, user)
     setIsSuccess(true)
+    if (setIsNewRequest) setIsNewRequest(true)
   }
   const onSave = async () => {
     const requestData = {
@@ -39,6 +49,7 @@ const RequestForm = ({ task, user, requestToEdit }) => {
     if (requestToEdit) requestsService.edit(requestData, requestToEdit.id)
     else requestsService.create(requestData, user)
     setIsSuccess(true)
+    if (setIsNewRequest) setIsNewRequest(true)
   }
   const calculateScore = (_, allFields) => {
     setScore(
@@ -132,10 +143,12 @@ RequestForm.propTypes = {
   task: PropTypes.instanceOf(Object).isRequired,
   user: PropTypes.string.isRequired,
   requestToEdit: PropTypes.instanceOf(Object),
+  setIsNewRequest: PropTypes.instanceOf(Function),
 }
 
 RequestForm.defaultProps = {
   requestToEdit: null,
+  setIsNewRequest: null,
 }
 
 const mapStateToProps = (state) => {
