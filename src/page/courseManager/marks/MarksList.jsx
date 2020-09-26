@@ -1,10 +1,10 @@
-import React, { useState, useEffect, useCallback } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Table, Button, Space, Tag } from 'antd'
 import { formatRoute } from 'react-router-named-routes'
 import ButtonLink from '../../../component/ButtonLink'
 import { courseManagerRoutes } from '../../../router/routes'
 
-import marksService from '../../../services/marks.service'
+import rviewService from '../../../services/review.service'
 
 const { Column } = Table
 
@@ -16,16 +16,14 @@ const MarksList = () => {
     filteredInfo: null,
   })
 
-  const fetchMarks = useCallback(() => {
-    marksService.getAllMarks().then((data) => {
-      setMarks(data)
-      setLoading(false)
-    })
-  }, [])
-
   useEffect(() => {
-    fetchMarks()
-  }, [fetchMarks])
+    const fetchData = async () => {
+      const markResponse = await rviewService.getAllGraded()
+      setMarks(markResponse)
+      setLoading(false)
+    }
+    fetchData()
+  }, [])
 
   const handleChange = (pagination, filters) => {
     setState({ ...state, filteredInfo: filters })
@@ -58,11 +56,10 @@ const MarksList = () => {
         <Button onClick={clearFilters}>Clear filters</Button>
       </Space>
       <Table dataSource={marks} onChange={handleChange} rowKey="id" loading={loading}>
-        <Column width={60} title="#" dataIndex="id" key="id" />
         <Column
           title="Task"
-          dataIndex="task"
-          filters={makeFilters('task')}
+          dataIndex="name"
+          filters={makeFilters('name')}
           onFilter={(value, record) => record.task.includes(value)}
           filteredValue={filteredInfo.task || null}
         />
@@ -97,7 +94,7 @@ const MarksList = () => {
         />
         <Column
           title="Score"
-          dataIndex="grade"
+          dataIndex="score"
           key="score"
           render={(el) => <p key={el}>{el.score}</p>}
           sorter={(a, b) => a.grade.score - b.grade.score}

@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 import { Spin, Descriptions, Tag } from 'antd'
-import marksService from '../../../services/marks.service'
+
+import reviewService from '../../../services/review.service'
 
 const MarkInfo = () => {
   const { marksId } = useParams()
@@ -12,7 +13,7 @@ const MarkInfo = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const markResponse = await marksService.getMarksById(marksId)
+      const markResponse = await reviewService.getById(marksId)
       setMark(markResponse)
       setLoading(false)
     }
