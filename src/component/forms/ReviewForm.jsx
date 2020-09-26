@@ -104,7 +104,7 @@ const ReviewForm = ({ user }) => {
                 {category.criteria.map((item, index) => (
                   <div key={`criteria-${index + 1}`} style={{ height: '' }}>
                     <Form.Item
-                      name={['Grade', category.title, index]}
+                      name={['grade', category.title, index]}
                       label={`${item.text} (0-${item.score})`}
                       rules={[{ required: true, message: 'Please grade all' }]}
                     >

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 import { Typography, Form, Spin, List, Progress } from 'antd'
 import parse from 'react-html-parser'
-
+import reviewsService from '../../../services/review.service'
 import requestsService from '../../../services/requests.service'
 import tasksService from '../../../services/tasks.service'
 import GradeItem from './GradeItem'
@@ -13,6 +13,7 @@ const Grade = () => {
   const { requestId } = useParams()
   const [loading, setLoading] = useState(true)
   const [request, setRequest] = useState(null)
+  const [review, setReview] = useState(null)
   const [categories, setCategories] = useState(null)
   const [form] = Form.useForm()
 
@@ -33,6 +34,8 @@ const Grade = () => {
     const fetchData = async () => {
       const requestResponse = await requestsService.getById(requestId)
       const tasksResponse = await tasksService.getById(requestResponse.task)
+      const reviewResponse = await reviewsService.getByRequestId(requestResponse.id)
+      setReview(reviewResponse[0])
       setRequest(requestResponse)
       setCategories(tasksResponse.categories)
       setLoading(false)
@@ -72,7 +75,7 @@ const Grade = () => {
                     name={['selfGrade', category.title, index]}
                     rules={[{ required: true, message: 'Please grade all' }]}
                   >
-                    <GradeItem />
+                    <GradeItem maxScore={item.score} review={review.grade[category.title][index]} />
                   </Form.Item>
                 </List.Item>
               )}

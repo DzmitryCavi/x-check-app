@@ -9,7 +9,7 @@ const TabInner = (score, maxScore, comment) => (
   </Row>
 )
 
-const GradeItem = ({ value, maxScore }) => {
+const GradeItem = ({ value, maxScore, review }) => {
   const [tabKey, setTabKey] = useState('Grade')
   const tabList = [
     {
@@ -23,7 +23,7 @@ const GradeItem = ({ value, maxScore }) => {
   ]
 
   const contentListNoTitle = {
-    Grade: TabInner(value.number, maxScore, value.discription),
+    Grade: TabInner(review.number, maxScore, review.discription),
     'Self-grade': TabInner(value.number, maxScore, value.discription),
   }
 
@@ -48,6 +48,7 @@ const GradeItem = ({ value, maxScore }) => {
 GradeItem.propTypes = {
   value: PropTypes.instanceOf(Object),
   maxScore: PropTypes.number.isRequired,
+  review: PropTypes.instanceOf(Object).isRequired,
 }
 
 GradeItem.defaultProps = {
