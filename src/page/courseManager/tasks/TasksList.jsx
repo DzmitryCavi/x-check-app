@@ -5,22 +5,10 @@ import { compareAsc } from 'date-fns'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { formatRoute } from 'react-router-named-routes'
-import {
-  Form,
-  Radio,
-  Input,
-  Row,
-  Col,
-  Table,
-  Space,
-  Button,
-  Tag,
-  Dropdown,
-  Menu,
-  DatePicker,
-} from 'antd'
+import { Form, Radio, Input, Row, Col, Table, Space, Button, Tag, Dropdown, Menu } from 'antd'
 import { DownOutlined, UpOutlined } from '@ant-design/icons'
 import ImportTasks from '../../../component/ImportTasks'
+import TaskDateConstraints from '../../../component/TaskDateConstraints'
 import { courseManagerRoutes } from '../../../router/routes'
 
 import tasksService from '../../../services/tasks.service'
@@ -109,10 +97,6 @@ const TasksList = ({ user }) => {
     }
 
     return ''
-  }
-
-  const сhangeDateConstraints = async (taskId, dateRange) => {
-    await tasksService.сhangeDateConstraints(taskId, dateRange)
   }
 
   return (
@@ -235,20 +219,11 @@ const TasksList = ({ user }) => {
           }}
         />
         <Column
+          width={460}
           title="Start & End Date"
           dataIndex="date"
           key="date"
-          render={(row, task) => (
-            <DatePicker.RangePicker
-              defaultValue={[
-                task.startDate ? moment(task.startDate) : null,
-                task.endDate ? moment(task.endDate) : null,
-              ]}
-              allowEmpty={[true, true]}
-              onChange={(dateRange) => сhangeDateConstraints(task.id, dateRange)}
-              showTime
-            />
-          )}
+          render={(row, task) => <TaskDateConstraints task={task} onChange={() => {}} />}
         />
         <Column
           title="Created"
