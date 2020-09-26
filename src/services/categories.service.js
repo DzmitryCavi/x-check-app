@@ -32,6 +32,10 @@ const create = async (task, category) => {
         ...category,
         id: uuid(),
         slug: slug(category.title),
+        criteria: category.criteria.map((criterion) => ({
+          ...criterion,
+          id: uuid(),
+        })),
         maxScore: getMaxScore(category),
         created_at: format(new Date(), 'yyyy-MM-dd HH:mm:ss'),
         updated_at: null,
@@ -45,19 +49,27 @@ const create = async (task, category) => {
 /**
  * Edit category
  * @param {Object} task
- * @param {Object} payload - category
+ * @param {Object} newCategory
  * @param {String|Number} categoryId
  */
-const edit = async (task, payload, categoryId) => {
+const edit = async (task, newCategory, categoryId) => {
   const { data, status } = await axios.patch(`${API_URL}/tasks/${task.id}`, {
     ...task,
     categories: task.categories.map((category) => {
       if (category.id !== categoryId) return category
       return {
         ...category,
-        ...payload,
-        slug: slug(payload.title),
-        maxScore: getMaxScore(category),
+        ...newCategory,
+        slug: slug(newCategory.title),
+        criteria: newCategory.criteria.map((criterion) => {
+          return criterion.id === undefined
+            ? {
+                ...criterion,
+                id: uuid(),
+              }
+            : criterion
+        }),
+        maxScore: getMaxScore(newCategory),
         updated_at: format(new Date(), 'yyyy-MM-dd HH:mm:ss'),
       }
     }),
