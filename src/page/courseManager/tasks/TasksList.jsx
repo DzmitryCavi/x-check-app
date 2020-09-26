@@ -21,7 +21,7 @@ import {
 } from 'antd'
 import { DownOutlined, UpOutlined } from '@ant-design/icons'
 import ImportTasks from '../../../component/ImportTasks'
-import { authorRoutes } from '../../../router/routes'
+import { courseManagerRoutes } from '../../../router/routes'
 
 import tasksService from '../../../services/tasks.service'
 
@@ -214,7 +214,9 @@ const TasksList = ({ user }) => {
           key="title"
           sorter={sorter.title}
           render={(row) => (
-            <Link to={formatRoute(authorRoutes.tasks.view, { taskId: row.id })}>{row.title}</Link>
+            <Link to={formatRoute(courseManagerRoutes.tasks.view, { taskId: row.id })}>
+              {row.title}
+            </Link>
           )}
         />
         <Column
