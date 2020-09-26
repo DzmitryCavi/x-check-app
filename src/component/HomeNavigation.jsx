@@ -15,7 +15,7 @@ const HomeNavigation = ({ items }) => {
         : item,
     )
     .map((item) => (
-      <Col span={8}>
+      <Col span={8} key={item.path}>
         <Link to={item.path}>
           <Card key={item.path}>
             <Meta
