@@ -1,4 +1,3 @@
-/* eslint-disable react/jsx-props-no-spreading */
 import React, { useRef, useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 import { Form, Input, Button, Spin, message, Result } from 'antd'

@@ -17,6 +17,7 @@
       }
     ],
     "react/jsx-props-no-spreading": [
+      0,
       {
         "html": "ignore",
         "custom": "ignore"
