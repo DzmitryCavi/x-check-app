@@ -1,11 +1,18 @@
 import React, { useState } from 'react'
 import PropTypes from 'prop-types'
-import { Card, Button, Row, Col } from 'antd'
+import { Card, Button, Row, Col, Progress, Statistic } from 'antd'
 
 const TabInner = (score, maxScore, comment) => (
   <Row>
-    <Col span={4}>{`${score} of ${maxScore}`}</Col>
-    <Col span={8}>{`comment: ${comment}`}</Col>
+    <Col span={2}>
+      <Progress type="circle" percent={(score / maxScore) * 100} width={50} />
+    </Col>
+    <Col span={2}>
+      <Statistic title="Score" value={score} suffix={`/ ${maxScore}`} />
+    </Col>
+    <Col>
+      <Statistic title="Comment" value={comment} style={{ width: '100%' }} />
+    </Col>
   </Row>
 )
 
@@ -32,7 +39,7 @@ const GradeItem = ({ value, maxScore, review }) => {
       <Card
         style={{ width: '100%' }}
         size="small"
-        tabBarExtraContent={<Button>Dispute</Button>}
+        tabBarExtraContent={<Button danger>Dispute</Button>}
         tabList={tabList}
         activeTabKey={tabKey}
         onTabChange={(key) => {

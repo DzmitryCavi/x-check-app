@@ -75,7 +75,10 @@ const Grade = () => {
                     name={['selfGrade', category.title, index]}
                     rules={[{ required: true, message: 'Please grade all' }]}
                   >
-                    <GradeItem maxScore={item.score} review={review.grade[category.title][index]} />
+                    <GradeItem
+                      maxScore={+item.score}
+                      review={review.grade[category.title][index]}
+                    />
                   </Form.Item>
                 </List.Item>
               )}
