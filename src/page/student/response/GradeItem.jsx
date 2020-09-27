@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-props-no-spreading */
 import React, { useState } from 'react'
 import PropTypes from 'prop-types'
 import { Card, Button, Row, Col, Progress, Statistic, Collapse, Form, Input } from 'antd'
@@ -22,6 +23,26 @@ const TabInner = (score, maxScore, comment) => (
     </Col>
   </Row>
 )
+
+const CustomTextArea = ({ onChange, value, criteria, ...other }) => {
+  const triggerChange = (e) => {
+    const result = e.target.value
+      ? {
+          comment: e.target.value,
+        }
+      : undefined
+    onChange(result)
+  }
+
+  return (
+    <Input.TextArea
+      {...other}
+      value={value && value.comment}
+      placeholder="Leave comment here"
+      onChange={triggerChange}
+    />
+  )
+}
 
 const GradeItem = ({ value, maxScore, review, criteria }) => {
   const [tabKey, setTabKey] = useState('Grade')
@@ -68,13 +89,23 @@ const GradeItem = ({ value, maxScore, review, criteria }) => {
       </Card>
       <Collapse ghost activeKey={isExpanded ? '1' : null}>
         <Panel showArrow={false} key="1">
-          <Form.Item name={['dispute', criteria]}>
-            <Input.TextArea placeholder="Leave comment here" />
+          <Form.Item name={['dispute', 'criterias', criteria]}>
+            <CustomTextArea placeholder="Leave comment here" />
           </Form.Item>
         </Panel>
       </Collapse>
     </>
   )
+}
+
+CustomTextArea.propTypes = {
+  value: PropTypes.instanceOf(Object),
+  onChange: PropTypes.instanceOf(Function),
+  criteria: PropTypes.string.isRequired,
+}
+CustomTextArea.defaultProps = {
+  value: { criteria: null, comment: null },
+  onChange: () => {},
 }
 
 GradeItem.propTypes = {
