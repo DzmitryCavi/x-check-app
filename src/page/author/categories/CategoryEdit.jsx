@@ -141,7 +141,18 @@ const CategoryEdit = () => {
                               fieldKey={[field.fieldKey, 'text']}
                               rules={[{ required: true, message: 'Missing text' }]}
                             >
-                              <AntdTinymce options={{ height: 160 }} />
+                              <AntdTinymce
+                                isQuickBars
+                                options={{
+                                  inline: true,
+                                  quickbars_insert_toolbar:
+                                    'bullist numlist outdent indent | quicklink',
+                                  quickbars_selection_toolbar:
+                                    'bold italic underline | formatselect | blockquote quicklink | code',
+                                }}
+                                menubar={false}
+                                toolbar={[]}
+                              />
                             </Form.Item>
                           </div>
                         </div>

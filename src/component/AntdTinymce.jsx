@@ -25,7 +25,7 @@ let defaultOptions = {
 let apiKey = TINYMCE_KEY
 
 const AntdTinymce = (props) => {
-  const { value, onChange, plugins, menubar, toolbar, options = {} } = props
+  const { value, onChange, isQuickBars, plugins, menubar, toolbar, options = {} } = props
   const initOptions = { ...defaultOptions, ...options }
 
   const onEditorChange = (newContent) => {
@@ -38,7 +38,7 @@ const AntdTinymce = (props) => {
     <Editor
       apiKey={apiKey}
       init={{
-        plugins: plugins.length ? plugins : defaultPlugins,
+        plugins: isQuickBars ? plugins.concat(['quickbars']) : plugins,
         menubar: menubar || defaultMenubar,
         toolbar: toolbar || defaultToolbar,
         ...initOptions,
@@ -66,17 +66,19 @@ AntdTinymce.setDefaultOptions = (options) => {
 }
 
 AntdTinymce.defaultProps = {
-  plugins: [],
-  toolbar: '',
+  isQuickBars: false,
+  plugins: defaultPlugins,
+  toolbar: false,
+  menubar: false,
   options: {},
-  menubar: null,
   onChange: () => {},
   value: '',
 }
 
 AntdTinymce.propTypes = {
+  isQuickBars: PropTypes.bool,
   plugins: PropTypes.instanceOf(Array),
-  toolbar: PropTypes.string,
+  toolbar: PropTypes.oneOfType([PropTypes.array, PropTypes.bool]),
   options: PropTypes.instanceOf(Object),
   menubar: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
   onChange: PropTypes.func,
