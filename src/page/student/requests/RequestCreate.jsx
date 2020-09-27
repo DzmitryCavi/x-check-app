@@ -15,7 +15,7 @@ const Reqest = ({ user }) => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const taskResponse = await tasksService.getAllPublished()
+      const taskResponse = await tasksService.getAll({ state: 'PUBLISHED' })
       const requestsResponse = await requestService.getByAuthor(user.login)
       setTasks(
         requestsResponse.reduce(
