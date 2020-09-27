@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
-import { Typography, Form, Spin, List, Progress } from 'antd'
+import { Typography, Form, Spin, List, Progress, Button } from 'antd'
 import parse from 'react-html-parser'
 import reviewsService from '../../../services/review.service'
 import requestsService from '../../../services/requests.service'
@@ -28,7 +28,9 @@ const Grade = () => {
   //  новая версия
   //  const score = categories && categories.reduce((ac, catergory) => ac + +catergory.score, 0)
 
-  const onFinish = () => {}
+  const onFinish = (data) => {
+    console.log(data)
+  }
 
   useEffect(() => {
     const fetchData = async () => {
@@ -77,13 +79,19 @@ const Grade = () => {
                   >
                     <GradeItem
                       maxScore={+item.score}
-                      review={review.grade[category.title][index]}
+                      review={review.grade[category.title].find((el) => el.criteria === item.id)}
+                      criteria={item.id}
                     />
                   </Form.Item>
                 </List.Item>
               )}
             />
           ))}
+          <Form.Item>
+            <Button type="primary" size="small" htmlType="submit">
+              OPEN DISPUTE
+            </Button>
+          </Form.Item>
         </Form>
       )}
     </>
