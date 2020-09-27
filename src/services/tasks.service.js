@@ -66,8 +66,8 @@ const create = async (task, authorId = -1) => {
     state: 'PUBLISHED',
     categories: [],
 
-    start_date: null,
-    end_date: null,
+    startDate: null,
+    endDate: null,
 
     created_at: format(new Date(), 'yyyy-MM-dd HH:mm:ss'),
     updated_at: null,
