@@ -15,6 +15,12 @@
         "semi": false,
         "endOfLine": "auto"
       }
+    ],
+    "react/jsx-props-no-spreading": [
+      {
+        "html": "ignore",
+        "custom": "ignore"
+      }
     ]
   }
 }
