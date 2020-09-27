@@ -1,4 +1,3 @@
-/* eslint-disable react/jsx-props-no-spreading */
 import React, { useState, useRef } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'

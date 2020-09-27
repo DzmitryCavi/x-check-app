@@ -5,10 +5,12 @@ import parse from 'react-html-parser'
 import reviewsService from '../../../services/review.service'
 import requestsService from '../../../services/requests.service'
 import tasksService from '../../../services/tasks.service'
+import { studentRoutes } from '../../../router/routes'
 import disputeService from '../../../services/dispute.service'
 import GradeItem from './GradeItem'
+import ButtonLink from '../../../component/ButtonLink'
 
-const { Title, Text } = Typography
+const { Title } = Typography
 
 const Grade = () => {
   const { requestId } = useParams()
@@ -52,7 +54,15 @@ const Grade = () => {
       ) : (
         <>
           {isSuccess ? (
-            <Result />
+            <Result
+              status="success"
+              title="Successfully Opened Dispute !"
+              extra={[
+                <ButtonLink type="primary" linkTo={studentRoutes.requests.list}>
+                  Go to request list
+                </ButtonLink>,
+              ]}
+            />
           ) : (
             <Form
               form={form}
@@ -69,7 +79,7 @@ const Grade = () => {
               <Title level={1} className="task-categories__title">
                 {`Evaluation of the task "${request.name}"`}
                 <Progress
-                  percent={(score / 100) * request.score}
+                  percent={Math.floor((request.score / score) * 100)}
                   strokeColor={{
                     0: 'red',
                     30: '#87d068',
@@ -87,7 +97,7 @@ const Grade = () => {
                   dataSource={category.criteria}
                   renderItem={(item, index) => (
                     <List.Item key={`criteria-${index + 1}`}>
-                      <Text>{parse(item.text)}</Text>
+                      <Title level={5}>{parse(item.text)}</Title>
                       <Form.Item
                         name={['selfGrade', category.title, index]}
                         rules={[{ required: true, message: 'Please grade all' }]}

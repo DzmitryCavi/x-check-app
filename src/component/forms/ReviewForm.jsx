@@ -1,4 +1,3 @@
-/* eslint-disable react/jsx-props-no-spreading */
 import React, { useState, useEffect } from 'react'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
@@ -27,9 +26,10 @@ const ReviewForm = ({ user }) => {
 
       const taskResponse = await tasksService.getById(requestResponse.task)
 
-      if (requestResponse.status === 'GRADED') {
-        const reviewResponse = await reviewService.getByRequestId(requestResponse.id)
-        setReviewToEdit(reviewResponse)
+      if (requestResponse.state === 'GRADED') {
+        const [reviewsResponse] = await reviewService.getByRequestId(requestResponse.id)
+        setReviewToEdit(reviewsResponse)
+        setScore(reviewsResponse.score)
       }
       setRequest(requestResponse)
       setTask(taskResponse)

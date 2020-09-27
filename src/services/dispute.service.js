@@ -2,6 +2,7 @@ import axios from 'axios'
 import { v4 as uuid } from 'uuid'
 import { format } from 'date-fns'
 import { API_URL } from '../config'
+import reviwsService from './review.service'
 
 const getAll = async () => {
   const { data: tasks, status } = await axios.get(`${API_URL}/dispute`)
@@ -16,6 +17,21 @@ const getById = async (id) => {
 const getByReviewId = async (id) => {
   const { data: task, status } = await axios.get(`${API_URL}/dispute?reviewId=${id}`)
   return status === 200 && task ? task : null
+}
+
+const getCountOfDisputeByReviewAuthor = async () => {
+  const user = JSON.parse(localStorage.getItem('user'))
+  const reviewsResponse = await reviwsService.getAllGradedByAuthor(user.login)
+  const disputeResponse = await getAll()
+  return reviewsResponse.reduce(
+    (ac, review) =>
+      disputeResponse.find((dispute) => {
+        return dispute.reviewId === review.id
+      })
+        ? ac + 1
+        : ac,
+    0,
+  )
 }
 
 const create = async (dispute) => {
@@ -42,6 +58,7 @@ const destroyById = async (id) => {
 }
 
 export default {
+  getCountOfDisputeByReviewAuthor,
   getAll,
   create,
   edit,

@@ -1,4 +1,3 @@
-/* eslint-disable react/jsx-props-no-spreading */
 import React, { useState } from 'react'
 import PropTypes from 'prop-types'
 import { Card, Button, Row, Col, Progress, Statistic, Collapse, Form, Input } from 'antd'
@@ -24,7 +23,7 @@ const TabInner = (score, maxScore, comment) => (
   </Row>
 )
 
-const CustomTextArea = ({ onChange, value, criteria, ...other }) => {
+const CustomTextArea = ({ onChange, value, ...other }) => {
   const triggerChange = (e) => {
     const result = e.target.value
       ? {
@@ -101,7 +100,6 @@ const GradeItem = ({ value, maxScore, review, criteria }) => {
 CustomTextArea.propTypes = {
   value: PropTypes.instanceOf(Object),
   onChange: PropTypes.instanceOf(Function),
-  criteria: PropTypes.string.isRequired,
 }
 CustomTextArea.defaultProps = {
   value: { criteria: null, comment: null },
