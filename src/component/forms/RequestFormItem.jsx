@@ -6,7 +6,7 @@ import NumericInput from '../NumericInput'
 
 const { Panel } = Collapse
 
-const RequestFormItem = ({ value, onChange, maxScore }) => {
+const RequestFormItem = ({ value, onChange, maxScore, criteria }) => {
   const [number, setNumber] = useState(value ? value.number : null)
   const [discription, setDiscription] = useState(value ? value.discription : null)
   const [isNeedComment, setIsNeedComment] = useState(
@@ -18,6 +18,7 @@ const RequestFormItem = ({ value, onChange, maxScore }) => {
       onChange({
         number,
         discription,
+        criteria,
         ...value,
         ...changedValue,
       })
@@ -157,6 +158,7 @@ RequestFormItem.propTypes = {
   value: PropTypes.instanceOf(Object),
   onChange: PropTypes.instanceOf(Function),
   maxScore: PropTypes.string.isRequired,
+  criteria: PropTypes.string.isRequired,
 }
 
 RequestFormItem.defaultProps = {

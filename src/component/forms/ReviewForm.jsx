@@ -4,12 +4,13 @@ import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import { Form, Spin, Button, Typography, Result, Row, Col, Space } from 'antd'
 import { useParams } from 'react-router-dom'
+import parse from 'react-html-parser'
 import ReviewFormItem from './ReviewFormItem'
 import requestsService from '../../services/requests.service'
 import tasksService from '../../services/tasks.service'
 import reviewService from '../../services/review.service'
 
-const { Title, Link } = Typography
+const { Title, Link, Text } = Typography
 
 const ReviewForm = ({ user }) => {
   const [isSuccess, setIsSuccess] = useState(false)
@@ -103,14 +104,17 @@ const ReviewForm = ({ user }) => {
                 <Title level={4}>{category.title}</Title>
                 {category.criteria.map((item, index) => (
                   <div key={`criteria-${index + 1}`} style={{ height: '' }}>
+                    <Text>{parse(`${item.text}`)}</Text>
                     <Form.Item
                       name={['grade', category.title, index]}
-                      label={`${item.text} (0-${item.score})`}
                       rules={[{ required: true, message: 'Please grade all' }]}
                     >
                       <ReviewFormItem
                         maxScore={item.score}
-                        selfGrade={request.selfGrade[category.title][index]}
+                        selfGrade={request.selfGrade[category.title].find(
+                          (el) => el.criteria === item.id,
+                        )}
+                        criteria={item.id}
                       />
                     </Form.Item>
                   </div>
