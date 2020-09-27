@@ -1,35 +1,36 @@
 import React, { useState, useEffect } from 'react'
+import PropTypes from 'prop-types'
 import { Select, Spin } from 'antd'
+import { connect } from 'react-redux'
 import RequestForm from '../../../component/forms/RequestForm'
 import tasksService from '../../../services/tasks.service'
 import requestService from '../../../services/requests.service'
 
 const { Option } = Select
 
-const Reqest = () => {
+const Reqest = ({ user }) => {
   const [tasks, setTasks] = useState([])
   const [isLoading, setIsLoading] = useState(true)
   const [isNewRequest, setIsNewRequest] = useState(true)
 
-  const fetchData = async () => {
-    const taskResponse = await tasksService.getAllPublished()
-    const requestsResponse = await requestService.getAll()
-    setTasks(
-      requestsResponse.reduce(
-        (ac, request) => ac.filter((task) => task.id !== request.task),
-        taskResponse,
-      ),
-    )
-  }
-
   useEffect(() => {
+    const fetchData = async () => {
+      const taskResponse = await tasksService.getAllPublished()
+      const requestsResponse = await requestService.getByAuthor(user.login)
+      setTasks(
+        requestsResponse.reduce(
+          (ac, request) => ac.filter((task) => task.id !== request.task),
+          taskResponse,
+        ),
+      )
+    }
     if (isNewRequest) {
       setIsLoading(true)
       fetchData()
       setIsLoading(false)
       setIsNewRequest(false)
     }
-  }, [isNewRequest])
+  }, [isNewRequest, user])
 
   const children = tasks.map((el) => <Option key={el.id}>{el.title}</Option>)
 
@@ -60,4 +61,14 @@ const Reqest = () => {
   )
 }
 
-export default Reqest
+Reqest.propTypes = {
+  user: PropTypes.instanceOf(Object).isRequired,
+}
+
+const mapStateToProps = (state) => {
+  return {
+    user: state.auth.user,
+  }
+}
+
+export default connect(mapStateToProps, null)(Reqest)
