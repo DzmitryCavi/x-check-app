@@ -31,21 +31,27 @@ const { Column } = Table
 
 const TasksList = ({ user }) => {
   const [tasks, setTasks] = useState([])
+  const [paginator, setPaginator] = useState(null)
   const [loading, setLoading] = useState(true)
 
   const [filtersForm] = Form.useForm()
 
-  const sorter = {
+  const sortRules = {
     id: (a, b) => a.id - b.id,
     title: (a, b) => a.title.localeCompare(b.title),
     created_at: (a, b) => compareAsc(new Date(a.created_at), new Date(b.created_at)),
   }
 
-  const fetchTasks = async (authorId, filterData) => {
+  const fetchTasks = async (
+    authorId,
+    pagination = { current: 1, pageSize: 5 },
+    filters = { title: '', state: '' },
+  ) => {
     setLoading(true)
-    const data = await tasksService.getAllByAuthorId(authorId, filterData)
+    const response = await tasksService.getAll({ pagination, filters, authorId })
 
-    setTasks(data)
+    setPaginator(response.pagination)
+    setTasks(response.data)
     setLoading(false)
   }
 
@@ -61,7 +67,7 @@ const TasksList = ({ user }) => {
   }
 
   const onFilter = async (filterData) => {
-    await fetchTasks(user.id, filterData)
+    await fetchTasks(user.id, undefined, filterData)
   }
 
   const onClearFilter = async () => {
@@ -75,6 +81,10 @@ const TasksList = ({ user }) => {
 
   const exportAll = async (type) => {
     await tasksService.exportAll(user.id, type)
+  }
+
+  const handleTableChange = async (pagination) => {
+    await fetchTasks(user.id, pagination)
   }
 
   return (
@@ -163,12 +173,19 @@ const TasksList = ({ user }) => {
           </Collapse.Panel>
         </Collapse>
       </div>
-      <Table dataSource={tasks} rowKey="id" loading={loading} bordered>
-        <Column width={60} title="#" dataIndex="id" key="id" sorter={sorter.id} />
+      <Table
+        dataSource={tasks}
+        rowKey="id"
+        loading={loading}
+        pagination={paginator}
+        onChange={handleTableChange}
+        bordered
+      >
+        <Column width={60} title="#" dataIndex="id" key="id" sorter={sortRules.id} />
         <Column
           title="Title"
           key="title"
-          sorter={sorter.title}
+          sorter={sortRules.title}
           render={(row) => (
             <Link to={formatRoute(authorRoutes.tasks.view, { taskId: row.id })}>{row.title}</Link>
           )}
@@ -207,7 +224,7 @@ const TasksList = ({ user }) => {
           title="Created"
           dataIndex="created_at"
           key="created_at"
-          sorter={sorter.created_at}
+          sorter={sortRules.created_at}
           defaultSortOrder="descend"
         />
         <Column

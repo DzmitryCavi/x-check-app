@@ -3,20 +3,54 @@ import slug from 'slug'
 import { format } from 'date-fns'
 import { API_URL, SERVER_URL } from '../config'
 
-const getAllByAuthorId = async (authorId, { title, state } = { title: '', state: '' }) => {
-  const queryParams = [`authorId=${authorId}`, `title_like=${title}`, `state_like=${state}`]
-  const { data: tasks, status } = await axios.get(`${API_URL}/tasks?${queryParams.join('&')}`)
-  return status === 200 && tasks ? tasks : []
+const getTasksQueryParams = (params) => {
+  const { pagination, filters, ...other } = params
+
+  const queryOtherParams = []
+  Object.keys(other).forEach((key) => {
+    queryOtherParams.push(`${key}=${other[key]}`)
+  })
+
+  const queryFiltersParams = []
+  if (filters) {
+    const { title, state } = filters
+    queryFiltersParams.push(`title_like=${title}`, `state_like=${state}`)
+  }
+
+  const queryPaginationParams = []
+  if (pagination) {
+    const { current, pageSize } = pagination
+    queryPaginationParams.push(`_page=${current}`, `_limit=${pageSize}`)
+  }
+
+  const queryParams = [...queryPaginationParams, ...queryFiltersParams, ...queryOtherParams].join(
+    '&',
+  )
+
+  return queryParams ? `?${queryParams}` : ''
 }
 
-const getAll = async () => {
-  const { data: tasks, status } = await axios.get(`${API_URL}/tasks`)
-  return status === 200 && tasks ? tasks : []
-}
+/**
+ * Get All Tasks - pagination && filters (optionals)
+ * @param {Object} pagination
+ * @param {Object} filters
+ * @param  {...any} other
+ */
+const getAll = async ({ pagination, filters, ...other } = {}) => {
+  const queryParams = getTasksQueryParams({ pagination, filters, ...other })
 
-const getAllPublished = async () => {
-  const { data: tasks, status } = await axios.get(`${API_URL}/tasks?state=PUBLISHED`)
-  return status === 200 && tasks ? tasks : []
+  const { data, status, headers } = await axios.get(`${API_URL}/tasks${queryParams}`)
+  const isSuccess = status === 200 && data
+
+  if (!pagination) return isSuccess ? data : []
+
+  return {
+    data: isSuccess ? data : [],
+    pagination: {
+      ...pagination,
+      total: isSuccess ? headers['x-total-count'] : 0,
+    },
+  }
 }
 
 const getById = async (id) => {
@@ -89,13 +123,11 @@ const сhangeDateConstraints = async (taskId, dateRange) => {
 }
 
 export default {
-  getAllByAuthorId,
   getAll,
   getById,
   create,
   edit,
   destroyById,
-  getAllPublished,
   importTasks,
   exportById,
   exportAll,
