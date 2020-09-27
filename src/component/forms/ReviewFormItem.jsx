@@ -94,7 +94,12 @@ const ReviewFormItem = ({ value, onChange, maxScore, selfGrade }) => {
           </Radio.Group>
         </Col>
         <Col span={2}>
-          <NumericInput value={number} onChange={onNumberChange} max={maxScore} />
+          <NumericInput
+            value={number !== null ? String(number) : number}
+            onChange={onNumberChange}
+            max={+maxScore}
+            placeholder={maxScore > 0 && `0-${maxScore}`}
+          />
         </Col>
       </Row>
       <Row>
@@ -138,7 +143,12 @@ const ReviewFormItem = ({ value, onChange, maxScore, selfGrade }) => {
           </Radio.Group>
         </Col>
         <Col span={2}>
-          <NumericInput value={number} disabled onChange={onNumberChange} max={maxScore} />
+          <NumericInput
+            value={number !== null ? String(number) : number}
+            disabled
+            onChange={onNumberChange}
+            max={+maxScore}
+          />
         </Col>
       </Row>
     </>

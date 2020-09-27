@@ -25,7 +25,17 @@ const RequestFormItem = ({ value, onChange, maxScore }) => {
   }
 
   const onNumberChange = (e) => {
-    const newNumber = typeof e === 'string' ? +e : +e.target.value
+    let newNumber
+    switch (typeof e) {
+      case 'string':
+        newNumber = +e
+        break
+      case 'number':
+        newNumber = e
+        break
+      default:
+        newNumber = +e.target.value
+    }
     let newDiscription = ''
     const isMax = newNumber === +maxScore
     const isMin = newNumber === 0
@@ -80,7 +90,12 @@ const RequestFormItem = ({ value, onChange, maxScore }) => {
           </Radio.Group>
         </Col>
         <Col span={2}>
-          <NumericInput value={number} onChange={onNumberChange} max={maxScore} />
+          <NumericInput
+            value={number !== null ? String(number) : number}
+            onChange={onNumberChange}
+            max={+maxScore}
+            placeholder={maxScore > 0 && `0-${maxScore}`}
+          />
         </Col>
       </Row>
       <Row>
@@ -124,7 +139,12 @@ const RequestFormItem = ({ value, onChange, maxScore }) => {
           </Radio.Group>
         </Col>
         <Col span={2}>
-          <NumericInput value={number} disabled onChange={onNumberChange} max={maxScore} />
+          <NumericInput
+            value={number !== null ? String(number) : number}
+            disabled
+            onChange={onNumberChange}
+            max={+maxScore}
+          />
         </Col>
       </Row>
     </>
