@@ -1,7 +1,7 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import React, { useEffect, useState, useRef } from 'react'
 import { useParams } from 'react-router-dom'
-import { Form, Input, Button, Spin, message, Alert } from 'antd'
+import { Form, Input, Button, Spin, message, Alert, Select } from 'antd'
 import { PlusOutlined, MinusCircleOutlined } from '@ant-design/icons'
 
 import AntdTinymce from '../../../component/AntdTinymce'
@@ -17,6 +17,11 @@ const { TextArea } = Input
 const validateMessages = {
   required: 'Required',
 }
+
+const availabilities = [
+  { key: 'mentor', label: 'Mentor' },
+  { key: 'student', label: 'Student' },
+]
 
 const CategoryEdit = () => {
   const task = useRef(null)
@@ -100,6 +105,22 @@ const CategoryEdit = () => {
                     {fields.map((field) => (
                       <div className="category-item" key={field.key}>
                         <div className="category-items-list">
+                          <div className="category-items-list__item category-items-list__item--availability">
+                            <Form.Item
+                              {...field}
+                              style={{ marginBottom: 0 }}
+                              name={[field.name, 'availability']}
+                              fieldKey={[field.fieldKey, 'availability']}
+                            >
+                              <Select mode="tags" placeholder="Available to all">
+                                {availabilities.map((availability) => (
+                                  <Select.Option key={availability.key}>
+                                    {availability.label}
+                                  </Select.Option>
+                                ))}
+                              </Select>
+                            </Form.Item>
+                          </div>
                           <div className="category-items-list__item category-items-list__item--score">
                             <Form.Item
                               {...field}

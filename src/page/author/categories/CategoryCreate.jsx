@@ -1,7 +1,7 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import React, { useRef, useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
-import { Form, Input, Button, Spin, message, Result } from 'antd'
+import { Form, Input, Button, Spin, message, Result, Select } from 'antd'
 
 import { PlusOutlined, MinusCircleOutlined, ApartmentOutlined } from '@ant-design/icons'
 import AntdTinymce from '../../../component/AntdTinymce'
@@ -21,6 +21,11 @@ const { TextArea } = Input
 const validateMessages = {
   required: 'Required',
 }
+
+const availabilities = [
+  { key: 'mentor', label: 'Mentor' },
+  { key: 'student', label: 'Student' },
+]
 
 const CategoryCreate = () => {
   const task = useRef(null)
@@ -117,6 +122,22 @@ const CategoryCreate = () => {
                   {fields.map((field) => (
                     <div className="category-item" key={field.key}>
                       <div className="category-items-list">
+                        <div className="category-items-list__item category-items-list__item--availability">
+                          <Form.Item
+                            {...field}
+                            style={{ marginBottom: 0 }}
+                            name={[field.name, 'availability']}
+                            fieldKey={[field.fieldKey, 'availability']}
+                          >
+                            <Select mode="tags" placeholder="Available to all">
+                              {availabilities.map((availability) => (
+                                <Select.Option key={availability.key}>
+                                  {availability.label}
+                                </Select.Option>
+                              ))}
+                            </Select>
+                          </Form.Item>
+                        </div>
                         <div className="category-items-list__item category-items-list__item--score">
                           <Form.Item
                             {...field}
