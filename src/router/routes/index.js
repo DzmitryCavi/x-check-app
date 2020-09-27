@@ -18,6 +18,7 @@ export const authorRoutes = {
 }
 
 export const supervisorRoutes = {
+  reviews: '/supervisor/reviews',
   requests: {
     list: '/supervisor/requests',
     review: '/supervisor/requests/:requestId/review',

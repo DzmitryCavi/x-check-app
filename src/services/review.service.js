@@ -13,6 +13,11 @@ const getAllGraded = async () => {
   return status === 200 && tasks ? tasks : []
 }
 
+const getAllGradedByAuthor = async (author) => {
+  const { data: tasks, status } = await axios.get(`${API_URL}/reviews?author=${author}`)
+  return status === 200 && tasks ? tasks : []
+}
+
 const getById = async (id) => {
   const { data: task, status } = await axios.get(`${API_URL}/reviews/${id}`)
   return status === 200 && task ? task : null
@@ -48,6 +53,7 @@ const destroyById = async (id) => {
 }
 
 export default {
+  getAllGradedByAuthor,
   getAllGraded,
   getAll,
   create,

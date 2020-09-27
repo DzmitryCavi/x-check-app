@@ -1,7 +1,8 @@
-import { UnorderedListOutlined } from '@ant-design/icons'
+import { UnorderedListOutlined, HistoryOutlined } from '@ant-design/icons'
 
 import RequestsList from '../../page/supervisor/requests/RequestsList'
 import RequestReview from '../../page/supervisor/requests/RequestReview'
+import ReviewHistory from '../../page/supervisor/requests/ReviewHistory'
 
 import { supervisorRoutes as routes } from '.'
 
@@ -19,6 +20,16 @@ export default [
     navigation: {
       label: 'Requests list',
       icon: UnorderedListOutlined,
+    },
+  },
+  {
+    path: routes.reviews,
+    component: ReviewHistory,
+    breadcrumb: 'Review History',
+    description: 'Processed Requests',
+    navigation: {
+      label: 'Review History',
+      icon: HistoryOutlined,
     },
   },
 ]
