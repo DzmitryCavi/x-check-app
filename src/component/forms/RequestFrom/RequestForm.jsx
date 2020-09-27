@@ -4,8 +4,8 @@ import PropTypes from 'prop-types'
 import { Form, Spin, Button, Input, Typography, Result, Row, Col, List } from 'antd'
 import parse from 'react-html-parser'
 import RequestFormItem from './RequestFormItem'
-import requestsService from '../../services/requests.service'
-import { urlWithIpPattern } from '../../services/validators'
+import requestsService from '../../../services/requests.service'
+import { urlWithIpPattern } from '../../../services/validators'
 
 const { Title, Text } = Typography
 

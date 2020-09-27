@@ -154,7 +154,7 @@ const ReviewHistory = ({ user }) => {
           onFilter={(value, record) => record.name.includes(value)}
           title="State"
           key="state"
-          render={({ state, requestId }) => {
+          render={({ state, id }) => {
             return (
               <Space size="middle">
                 {state === 'DISPUTE' ? (
@@ -168,7 +168,7 @@ const ReviewHistory = ({ user }) => {
                       size="small"
                       style={{ fontSize: 12, color: 'red' }}
                       icon={<CarryOutTwoTone twoToneColor="red" />}
-                      linkTo={formatRoute(supervisorRoutes.requests.review, { requestId })}
+                      linkTo={formatRoute(supervisorRoutes.reviews.dispute, { reviewId: id })}
                     >
                       View
                     </ButtonLink>

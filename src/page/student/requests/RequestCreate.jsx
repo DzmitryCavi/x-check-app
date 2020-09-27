@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
 import { Select, Spin } from 'antd'
 import { connect } from 'react-redux'
-import RequestForm from '../../../component/forms/RequestForm'
+import RequestForm from '../../../component/forms/RequestFrom/RequestForm'
 import tasksService from '../../../services/tasks.service'
 import requestService from '../../../services/requests.service'
 

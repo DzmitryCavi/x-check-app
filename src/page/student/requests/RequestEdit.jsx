@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 import { Spin } from 'antd'
-import RequestForm from '../../../component/forms/RequestForm'
+import RequestForm from '../../../component/forms/RequestFrom/RequestForm'
 import requestService from '../../../services/requests.service'
 import tasksService from '../../../services/tasks.service'
 

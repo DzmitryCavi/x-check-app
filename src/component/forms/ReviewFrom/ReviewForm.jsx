@@ -5,9 +5,9 @@ import { Form, Spin, Button, Typography, Result, Row, Col, Space } from 'antd'
 import { useParams } from 'react-router-dom'
 import parse from 'react-html-parser'
 import ReviewFormItem from './ReviewFormItem'
-import requestsService from '../../services/requests.service'
-import tasksService from '../../services/tasks.service'
-import reviewService from '../../services/review.service'
+import requestsService from '../../../services/requests.service'
+import tasksService from '../../../services/tasks.service'
+import reviewService from '../../../services/review.service'
 
 const { Title, Link, Text } = Typography
 

@@ -1,12 +1,13 @@
 import React, { useState } from 'react'
-import { Input, Row, Col, Radio, Collapse } from 'antd'
+import { Input, Row, Col, Radio, Collapse, Typography } from 'antd'
 import PropTypes from 'prop-types'
 import { CaretRightOutlined } from '@ant-design/icons'
-import NumericInput from '../NumericInput'
+import NumericInput from '../../NumericInput'
 
 const { Panel } = Collapse
+const { Text } = Typography
 
-const RequestFormItem = ({ value, onChange, maxScore, criteria }) => {
+const ReviewFormItem = ({ value, onChange, maxScore, selfGrade, criteria }) => {
   const [number, setNumber] = useState(value ? value.number : null)
   const [discription, setDiscription] = useState(value ? value.discription : null)
   const [isNeedComment, setIsNeedComment] = useState(
@@ -16,9 +17,9 @@ const RequestFormItem = ({ value, onChange, maxScore, criteria }) => {
   const triggerChange = (changedValue) => {
     if (onChange) {
       onChange({
+        criteria,
         number,
         discription,
-        criteria,
         ...value,
         ...changedValue,
       })
@@ -26,17 +27,7 @@ const RequestFormItem = ({ value, onChange, maxScore, criteria }) => {
   }
 
   const onNumberChange = (e) => {
-    let newNumber
-    switch (typeof e) {
-      case 'string':
-        newNumber = +e
-        break
-      case 'number':
-        newNumber = e
-        break
-      default:
-        newNumber = +e.target.value
-    }
+    const newNumber = typeof e === 'string' ? +e : +e.target.value
     let newDiscription = ''
     const isMax = newNumber === +maxScore
     const isMin = newNumber === 0
@@ -75,6 +66,19 @@ const RequestFormItem = ({ value, onChange, maxScore, criteria }) => {
 
   const Criteria = (
     <>
+      <Row>
+        <Col span={24}>
+          <Text strong type="secondary">
+            Self-review:
+          </Text>
+        </Col>
+        <Col span={24}>
+          <Text type="secondary">{`Score: ${selfGrade.number}`}</Text>
+        </Col>
+        <Col>
+          <Text type="secondary">{`Comment: ${selfGrade.discription}`}</Text>
+        </Col>
+      </Row>
       <Row
         style={{
           margin: '10px 0px',
@@ -154,16 +158,17 @@ const RequestFormItem = ({ value, onChange, maxScore, criteria }) => {
   return maxScore > 0 ? Criteria : fine
 }
 
-RequestFormItem.propTypes = {
+ReviewFormItem.propTypes = {
   value: PropTypes.instanceOf(Object),
   onChange: PropTypes.instanceOf(Function),
   maxScore: PropTypes.string.isRequired,
+  selfGrade: PropTypes.instanceOf(Object).isRequired,
   criteria: PropTypes.string.isRequired,
 }
 
-RequestFormItem.defaultProps = {
+ReviewFormItem.defaultProps = {
   value: { number: null, discription: null },
   onChange: () => {},
 }
 
-export default RequestFormItem
+export default ReviewFormItem

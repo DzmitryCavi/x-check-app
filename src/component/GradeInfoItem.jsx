@@ -43,7 +43,7 @@ const CustomTextArea = ({ onChange, value, ...other }) => {
   )
 }
 
-const GradeItem = ({ value, maxScore, review, criteria }) => {
+const GradeItem = ({ value, maxScore, review, criteria, isDispute }) => {
   const [tabKey, setTabKey] = useState('Grade')
   const [isExpanded, setIsExpanded] = useState(false)
   const tabList = [
@@ -68,15 +68,17 @@ const GradeItem = ({ value, maxScore, review, criteria }) => {
         style={{ width: '100%' }}
         size="small"
         tabBarExtraContent={
-          <Button
-            danger
-            type={isExpanded ? 'primary' : 'default'}
-            onClick={() => {
-              setIsExpanded(!isExpanded)
-            }}
-          >
-            Dispute
-          </Button>
+          !isDispute && (
+            <Button
+              danger
+              type={isExpanded ? 'primary' : 'default'}
+              onClick={() => {
+                setIsExpanded(!isExpanded)
+              }}
+            >
+              Dispute
+            </Button>
+          )
         }
         tabList={tabList}
         activeTabKey={tabKey}
@@ -107,6 +109,7 @@ CustomTextArea.defaultProps = {
 }
 
 GradeItem.propTypes = {
+  isDispute: PropTypes.bool,
   value: PropTypes.instanceOf(Object),
   maxScore: PropTypes.number.isRequired,
   review: PropTypes.instanceOf(Object).isRequired,
@@ -114,6 +117,7 @@ GradeItem.propTypes = {
 }
 
 GradeItem.defaultProps = {
+  isDispute: false,
   value: { number: null, discription: null },
 }
 

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
-import { Typography, Form, Spin, List, Progress, Button, Result } from 'antd'
+import { Typography, Form, Spin, List, Button, Result, Card } from 'antd'
 import parse from 'react-html-parser'
 import reviewsService from '../../../services/review.service'
 import requestsService from '../../../services/requests.service'
@@ -10,42 +10,48 @@ import disputeService from '../../../services/dispute.service'
 import GradeItem from '../../../component/GradeInfoItem'
 import ButtonLink from '../../../component/ButtonLink'
 
-const { Title } = Typography
+const { Title, Link, Text } = Typography
 
-const Grade = () => {
-  const { requestId } = useParams()
+const Dispute = () => {
+  const { reviewId } = useParams()
   const [loading, setLoading] = useState(true)
   const [request, setRequest] = useState(null)
   const [review, setReview] = useState(null)
+  const [dispute, setDispute] = useState(null)
   const [categories, setCategories] = useState(null)
   const [isSuccess, setIsSuccess] = useState(false)
-  const [isNeedToSubmit, setIsNeedToSubmit] = useState(false)
   const [form] = Form.useForm()
 
-  const score = categories && categories.reduce((ac, catergory) => ac + +catergory.maxScore, 0)
-
   const onFinish = (data) => {
-    const { criterias } = data.dispute
-    Object.keys(criterias).map((el) => {
-      if (criterias[el] === undefined) delete criterias[el]
-      return el
-    })
-    disputeService.create({ criterias, reviewId: review.id })
+    console.log(data)
     setIsSuccess(true)
+  }
+
+  const filterCategoriesByDisput = (categoriesToFilter, { criterias }) => {
+    const categoryReduser = (ac, criteria) => {
+      return Object.keys(criterias).find((el) => el === criteria.id) ? ac.concat([criteria]) : ac
+    }
+    const categoriesReduser = (ac, category) => {
+      const data = category.criteria.reduce(categoryReduser, [])
+      return data.length ? ac.concat([{ ...category, criteria: data }]) : ac
+    }
+    return categoriesToFilter.reduce(categoriesReduser, [])
   }
 
   useEffect(() => {
     const fetchData = async () => {
-      const requestResponse = await requestsService.getById(requestId)
+      const reviewResponse = await reviewsService.getById(reviewId)
+      const requestResponse = await requestsService.getById(reviewResponse.requestId)
       const tasksResponse = await tasksService.getById(requestResponse.task)
-      const reviewResponse = await reviewsService.getByRequestId(requestResponse.id)
-      setReview(reviewResponse[0])
+      const disputeResponse = await disputeService.getByReviewId(reviewId)
+      setDispute(...disputeResponse)
+      setReview(reviewResponse)
       setRequest(requestResponse)
-      setCategories(tasksResponse.categories)
+      setCategories(filterCategoriesByDisput(tasksResponse.categories, ...disputeResponse))
       setLoading(false)
     }
     fetchData()
-  }, [requestId])
+  }, [reviewId])
 
   return (
     <>
@@ -58,51 +64,37 @@ const Grade = () => {
               status="success"
               title="Successfully Opened Dispute !"
               extra={[
-                <ButtonLink type="primary" linkTo={studentRoutes.requests.list}>
-                  Go to request list
+                <ButtonLink type="primary" linkTo={studentRoutes.review.list}>
+                  Go to review list
                 </ButtonLink>,
               ]}
             />
           ) : (
-            <Form
-              form={form}
-              layout="vertical"
-              onFinish={onFinish}
-              initialValues={request}
-              onFieldsChange={() => {
-                const { criterias } = form.getFieldValue().dispute
-                setIsNeedToSubmit(
-                  Object.keys(criterias).filter((el) => criterias[el] !== undefined).length !== 0,
-                )
-              }}
-            >
+            <Form form={form} layout="vertical" onFinish={onFinish} initialValues={request}>
               <Title level={1} className="task-categories__title">
-                {`Evaluation of the task "${request.name}"`}
-                <Progress
-                  percent={Math.floor((request.score / score) * 100)}
-                  strokeColor={{
-                    0: 'red',
-                    30: '#87d068',
-                    100: '#87d068',
-                  }}
-                />
-                Score: {request.score} of {score}
+                {`Dispute of the task "${request.name}"`}
               </Title>
+              <Title level={3}>Solution url:</Title>
+              <Link href={request.url}>{request.url}</Link>
+              <Title level={4}>Disputed tasks</Title>
               {categories.map((category) => (
                 <List
                   itemLayout="vertical"
-                  header={<Title level={4}>{category.title}</Title>}
                   key={category.id}
                   size="large"
                   dataSource={category.criteria}
                   renderItem={(item, index) => (
                     <List.Item key={`criteria-${index + 1}`}>
                       <Title level={5}>{parse(item.text)}</Title>
+                      <Card>
+                        <Text type="danger">{dispute.criterias[item.id].comment}</Text>
+                      </Card>
                       <Form.Item
                         name={['selfGrade', category.title, index]}
                         rules={[{ required: true, message: 'Please grade all' }]}
                       >
                         <GradeItem
+                          isDispute
                           maxScore={+item.score}
                           review={review.grade[category.title].find(
                             (el) => el.criteria === item.id,
@@ -115,11 +107,9 @@ const Grade = () => {
                 />
               ))}
               <Form.Item>
-                {isNeedToSubmit && (
-                  <Button type="primary" size="small" htmlType="submit">
-                    OPEN DISPUTE
-                  </Button>
-                )}
+                <Button type="primary" htmlType="submit">
+                  SENT RESPONSE
+                </Button>
               </Form.Item>
             </Form>
           )}
@@ -129,4 +119,4 @@ const Grade = () => {
   )
 }
 
-export default Grade
+export default Dispute
