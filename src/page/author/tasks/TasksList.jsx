@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react'
+import React, { useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
 import { compareAsc } from 'date-fns'
 import { connect } from 'react-redux'
@@ -18,14 +18,9 @@ import {
   Dropdown,
   Menu,
   Popconfirm,
+  Collapse,
 } from 'antd'
-import {
-  DeleteOutlined,
-  DownOutlined,
-  EditOutlined,
-  PlusOutlined,
-  UpOutlined,
-} from '@ant-design/icons'
+import { DeleteOutlined, DownOutlined, EditOutlined, PlusOutlined } from '@ant-design/icons'
 import ButtonLink from '../../../component/ButtonLink'
 import ImportTasks from '../../../component/ImportTasks'
 import { authorRoutes } from '../../../router/routes'
@@ -35,13 +30,10 @@ import tasksService from '../../../services/tasks.service'
 const { Column } = Table
 
 const TasksList = ({ user }) => {
-  const initTasks = useRef([])
-
   const [tasks, setTasks] = useState([])
   const [loading, setLoading] = useState(true)
 
   const [filtersForm] = Form.useForm()
-  const [expandFilter, setExpandFilter] = useState(false)
 
   const sorter = {
     id: (a, b) => a.id - b.id,
@@ -49,26 +41,17 @@ const TasksList = ({ user }) => {
     created_at: (a, b) => compareAsc(new Date(a.created_at), new Date(b.created_at)),
   }
 
-  const filters = {
-    title: (title, value) => title.toLowerCase().indexOf(value.toLowerCase()) !== -1,
-    state: (state, value) => state === value || value.length === 0,
-  }
-
-  const fetchTasks = async (authorId) => {
+  const fetchTasks = async (authorId, filterData) => {
     setLoading(true)
-    const data = await tasksService.getAllByAuthorId(authorId)
-    initTasks.current = data
-    setTasks(initTasks.current)
+    const data = await tasksService.getAllByAuthorId(authorId, filterData)
+
+    setTasks(data)
     setLoading(false)
   }
 
   useEffect(() => {
     fetchTasks(user.id)
   }, [user.id])
-
-  useEffect(() => {
-    initTasks.current = tasks
-  }, [tasks])
 
   const destroyTask = async (taskId) => {
     await tasksService.destroyById(taskId)
@@ -77,18 +60,12 @@ const TasksList = ({ user }) => {
     message.success('Task deleted successfully.')
   }
 
-  const onFilter = (filterData) => {
-    setTasks(
-      initTasks.current.filter((row) =>
-        Object.keys(filterData).every((key) =>
-          typeof filters[key] !== 'function' ? true : filters[key](row[key], filterData[key]),
-        ),
-      ),
-    )
+  const onFilter = async (filterData) => {
+    await fetchTasks(user.id, filterData)
   }
 
-  const onClearFilter = () => {
-    setTasks(initTasks.current)
+  const onClearFilter = async () => {
+    await fetchTasks(user.id)
     filtersForm.resetFields()
   }
 
@@ -103,59 +80,7 @@ const TasksList = ({ user }) => {
   return (
     <div className="tasks-list-page">
       <h1 className="page-title">Tasks</h1>
-      <div className="tasks-filters">
-        <h2 className="tasks-filters__title">Filters:</h2>
-        <Form
-          form={filtersForm}
-          layout="vertical"
-          onFinish={onFilter}
-          initialValues={{
-            title: '',
-            state: '',
-          }}
-        >
-          <Row gutter={30}>
-            {expandFilter ? (
-              <>
-                <Col span={6}>
-                  <Form.Item name="title" label="Title">
-                    <Input />
-                  </Form.Item>
-                </Col>
-                <Col span={6}>
-                  <Form.Item label="State" name="state">
-                    <Radio.Group>
-                      <Radio.Button value="DRAFT">DRAFT</Radio.Button>
-                      <Radio.Button value="PUBLISHED">PUBLISHED</Radio.Button>
-                      <Radio.Button value="ARCHIVED">ARCHIVED</Radio.Button>
-                    </Radio.Group>
-                  </Form.Item>
-                </Col>
-              </>
-            ) : null}
-            <Col span={24}>
-              <Form.Item>
-                <Button type="primary" htmlType="submit" disabled={!expandFilter}>
-                  Filter
-                </Button>
-                <Button style={{ margin: '0 8px' }} onClick={onClearFilter}>
-                  Clear
-                </Button>
-                <Button
-                  style={{ fontSize: 12 }}
-                  type="link"
-                  onClick={() => {
-                    setExpandFilter(!expandFilter)
-                  }}
-                >
-                  {expandFilter ? <UpOutlined /> : <DownOutlined />} Collapse
-                </Button>
-              </Form.Item>
-            </Col>
-          </Row>
-        </Form>
-      </div>
-      <div className="d-flex justify-content-end align-items-center mb-2">
+      <div className="d-flex justify-content-end align-items-center mb-3">
         <Space>
           <ButtonLink type="primary" icon={<PlusOutlined />} linkTo={authorRoutes.tasks.create}>
             Create
@@ -195,7 +120,50 @@ const TasksList = ({ user }) => {
           </Dropdown>
         </Space>
       </div>
-      <Table dataSource={tasks} rowKey="id" loading={loading}>
+
+      <div className="tasks-filters mb-3">
+        <Collapse className="tasks-filters-collapse">
+          <Collapse.Panel header="Filter">
+            <Form
+              form={filtersForm}
+              layout="vertical"
+              onFinish={onFilter}
+              initialValues={{
+                title: '',
+                state: '',
+              }}
+            >
+              <Row gutter={30}>
+                <Col span={6}>
+                  <Form.Item name="title" label="Title">
+                    <Input />
+                  </Form.Item>
+                </Col>
+                <Col span={6}>
+                  <Form.Item label="State" name="state">
+                    <Radio.Group>
+                      <Radio.Button value="DRAFT">DRAFT</Radio.Button>
+                      <Radio.Button value="PUBLISHED">PUBLISHED</Radio.Button>
+                      <Radio.Button value="ARCHIVED">ARCHIVED</Radio.Button>
+                    </Radio.Group>
+                  </Form.Item>
+                </Col>
+                <Col span={24}>
+                  <Form.Item className="mb-0">
+                    <Button type="primary" htmlType="submit">
+                      Filter
+                    </Button>
+                    <Button style={{ margin: '0 8px' }} onClick={onClearFilter}>
+                      Clear
+                    </Button>
+                  </Form.Item>
+                </Col>
+              </Row>
+            </Form>
+          </Collapse.Panel>
+        </Collapse>
+      </div>
+      <Table dataSource={tasks} rowKey="id" loading={loading} bordered>
         <Column width={60} title="#" dataIndex="id" key="id" sorter={sorter.id} />
         <Column
           title="Title"

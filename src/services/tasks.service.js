@@ -3,8 +3,9 @@ import slug from 'slug'
 import { format } from 'date-fns'
 import { API_URL, SERVER_URL } from '../config'
 
-const getAllByAuthorId = async (authorId) => {
-  const { data: tasks, status } = await axios.get(`${API_URL}/tasks?authorId=${authorId}`)
+const getAllByAuthorId = async (authorId, { title, state } = { title: '', state: '' }) => {
+  const queryParams = [`authorId=${authorId}`, `title_like=${title}`, `state_like=${state}`]
+  const { data: tasks, status } = await axios.get(`${API_URL}/tasks?${queryParams.join('&')}`)
   return status === 200 && tasks ? tasks : []
 }
 
