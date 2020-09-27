@@ -111,6 +111,7 @@ const CategoryEdit = () => {
                               style={{ marginBottom: 0 }}
                               name={[field.name, 'availability']}
                               fieldKey={[field.fieldKey, 'availability']}
+                              initialValue={[]}
                             >
                               <Select mode="tags" placeholder="Available to all">
                                 {availabilities.map((availability) => (

@@ -44,7 +44,7 @@ const TasksList = ({ user }) => {
 
   const fetchTasks = async (
     authorId,
-    pagination = { current: 1, pageSize: 5 },
+    pagination = { current: 1, pageSize: 10 },
     filters = { title: '', state: '' },
   ) => {
     setLoading(true)
@@ -61,7 +61,8 @@ const TasksList = ({ user }) => {
 
   const destroyTask = async (taskId) => {
     await tasksService.destroyById(taskId)
-    setTasks((prev) => prev.filter((task) => task.id !== taskId))
+    const filterData = filtersForm.getFieldsValue(['title', 'state'])
+    await fetchTasks(user.id, undefined, filterData)
 
     message.success('Task deleted successfully.')
   }
@@ -84,7 +85,8 @@ const TasksList = ({ user }) => {
   }
 
   const handleTableChange = async (pagination) => {
-    await fetchTasks(user.id, pagination)
+    const filterData = filtersForm.getFieldsValue(['title', 'state'])
+    await fetchTasks(user.id, pagination, filterData)
   }
 
   return (
@@ -132,17 +134,17 @@ const TasksList = ({ user }) => {
       </div>
 
       <div className="tasks-filters mb-3">
-        <Collapse className="tasks-filters-collapse">
-          <Collapse.Panel header="Filter">
-            <Form
-              form={filtersForm}
-              layout="vertical"
-              onFinish={onFilter}
-              initialValues={{
-                title: '',
-                state: '',
-              }}
-            >
+        <Form
+          form={filtersForm}
+          layout="vertical"
+          onFinish={onFilter}
+          initialValues={{
+            title: '',
+            state: '',
+          }}
+        >
+          <Collapse className="tasks-filters-collapse">
+            <Collapse.Panel header="Filter">
               <Row gutter={30}>
                 <Col span={6}>
                   <Form.Item name="title" label="Title">
@@ -169,9 +171,9 @@ const TasksList = ({ user }) => {
                   </Form.Item>
                 </Col>
               </Row>
-            </Form>
-          </Collapse.Panel>
-        </Collapse>
+            </Collapse.Panel>
+          </Collapse>
+        </Form>
       </div>
       <Table
         dataSource={tasks}
