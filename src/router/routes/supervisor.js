@@ -1,4 +1,5 @@
 import { UnorderedListOutlined, HistoryOutlined } from '@ant-design/icons'
+import DisputeService from '../../services/dispute.service'
 
 import RequestsList from '../../page/supervisor/requests/RequestsList'
 import RequestReview from '../../page/supervisor/requests/RequestReview'
@@ -30,6 +31,11 @@ export default [
     navigation: {
       label: 'Review History',
       icon: HistoryOutlined,
+      withBadge: true,
+      badgeCount: () => {
+        const data = DisputeService.getCountOfDisputeByReviewAuthor()
+        return data
+      },
     },
   },
 ]

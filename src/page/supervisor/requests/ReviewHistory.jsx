@@ -40,13 +40,12 @@ const ReviewHistory = ({ user }) => {
   const fetchRequests = async (author) => {
     const reviewsResponse = await reviewsService.getAllGradedByAuthor(author)
     const disputeResponse = await disputeService.getAll()
-
     initRequests.current = reviewsResponse.map((review) =>
       disputeResponse.find((dispute) => {
         return dispute.reviewId === review.id
       })
-        ? { ...review, dispute: true }
-        : { ...review, dispute: false },
+        ? { ...review, state: 'DISPUTE' }
+        : review,
     )
     setReviews(initRequests.current)
   }
@@ -123,7 +122,7 @@ const ReviewHistory = ({ user }) => {
                     <Form.Item label="State" name="state">
                       <Radio.Group>
                         <Radio.Button value="DRAFT">DRAFT</Radio.Button>
-                        <Radio.Button value="SUBMITTED">SUBMITTED</Radio.Button>
+                        <Radio.Button value="DISPUTE">DISPUTE</Radio.Button>
                         <Radio.Button value="GRADED">GRADED</Radio.Button>
                       </Radio.Group>
                     </Form.Item>
@@ -155,14 +154,14 @@ const ReviewHistory = ({ user }) => {
           onFilter={(value, record) => record.name.includes(value)}
           title="State"
           key="state"
-          render={({ state, dispute, requestId }) => {
+          render={({ state, requestId }) => {
             return (
               <Space size="middle">
-                {dispute ? (
+                {state === 'DISPUTE' ? (
                   <>
                     {' '}
                     <Tag color="red" key={state}>
-                      DISPUTE
+                      {state}
                     </Tag>
                     <ButtonLink
                       type="ghost"
@@ -176,7 +175,7 @@ const ReviewHistory = ({ user }) => {
                   </>
                 ) : (
                   <Tag color="green" key={state}>
-                    GRADED
+                    {state}
                   </Tag>
                 )}
               </Space>
