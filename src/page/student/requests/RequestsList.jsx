@@ -14,6 +14,7 @@ import {
   Input,
   Collapse,
   Typography,
+  Popconfirm,
 } from 'antd'
 import { connect } from 'react-redux'
 import { compareAsc } from 'date-fns'
@@ -197,16 +198,14 @@ const RequestList = ({ user }) => {
                 icon={<EditOutlined />}
                 linkTo={formatRoute(studentRoutes.requests.edit, { requestId: row.id })}
               />
-
-              <Button
-                size="small"
-                type="danger"
-                icon={<DeleteOutlined />}
-                disabled={row.state !== 'DRAFT'}
-                onClick={() => {
-                  destroyRequest(row.id)
-                }}
-              />
+              <Popconfirm title="Sure to delete?" onConfirm={() => destroyRequest(row.id)}>
+                <Button
+                  size="small"
+                  type="danger"
+                  icon={<DeleteOutlined />}
+                  disabled={row.state !== 'DRAFT'}
+                />
+              </Popconfirm>
             </Space>
           )}
         />

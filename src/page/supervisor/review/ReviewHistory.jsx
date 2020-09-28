@@ -13,6 +13,7 @@ import {
   Input,
   Collapse,
   Typography,
+  Popconfirm,
 } from 'antd'
 import { useAsync } from 'react-use'
 import { connect } from 'react-redux'
@@ -46,7 +47,7 @@ const ReviewHistory = ({ user }) => {
     setLoading(false)
   }, [user])
 
-  const destroyRequest = async (requestId) => {
+  const destroyReview = async (requestId) => {
     await reviewsService.destroyById(requestId)
     setReviews((prev) => prev.filter((request) => request.id !== requestId))
 
@@ -171,7 +172,7 @@ const ReviewHistory = ({ user }) => {
                 break
               case 'DRAFT':
                 children = (
-                  <Tag color="orange" key={state}>
+                  <Tag color="yeallow" key={state}>
                     {state}
                   </Tag>
                 )
@@ -198,16 +199,14 @@ const ReviewHistory = ({ user }) => {
                 icon={<EditOutlined />}
                 linkTo={formatRoute(supervisorRoutes.requests.review, { requestId: row.requestId })}
               />
-
-              <Button
-                size="small"
-                type="danger"
-                disabled={row.state !== 'DRAFT'}
-                icon={<DeleteOutlined />}
-                onClick={() => {
-                  destroyRequest(row.id)
-                }}
-              />
+              <Popconfirm title="Sure to delete?" onConfirm={() => destroyReview(row.id)}>
+                <Button
+                  size="small"
+                  type="danger"
+                  icon={<DeleteOutlined />}
+                  disabled={row.state !== 'DRAFT'}
+                />
+              </Popconfirm>
             </Space>
           )}
         />
