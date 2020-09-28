@@ -116,10 +116,15 @@ const exportAll = async (authorId, type = 'rss') => {
 const сhangeDateConstraints = async (taskId, dateRange) => {
   const [start, end] = dateRange || [null, null]
 
-  await axios.patch(`${API_URL}/tasks/${taskId}`, {
+  const {
+    data: { id, startDate, endDate },
+    status,
+  } = await axios.patch(`${API_URL}/tasks/${taskId}`, {
     startDate: start ? start.format('YYYY-MM-DD HH:mm:ss') : null,
     endDate: end ? end.format('YYYY-MM-DD HH:mm:ss') : null,
   })
+
+  return status === 200 && id ? { startDate, endDate } : { startDate: null, endDate: null }
 }
 
 export default {

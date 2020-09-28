@@ -105,6 +105,12 @@ const TasksList = ({ user }) => {
     await fetchTasks(pagination, filterData)
   }
 
+  const onDateConstraintsChange = (taskId, { startDate, endDate }) => {
+    setTasks((prev) =>
+      prev.map((task) => (taskId === task.id ? { ...task, startDate, endDate } : task)),
+    )
+  }
+
   return (
     <div className="tasks-list-page">
       <h1 className="page-title">Tasks</h1>
@@ -226,7 +232,9 @@ const TasksList = ({ user }) => {
           title="Start & End Date"
           dataIndex="date"
           key="date"
-          render={(row, task) => <TaskDateConstraints task={task} onChange={() => {}} />}
+          render={(row, task) => (
+            <TaskDateConstraints task={task} onChange={onDateConstraintsChange} />
+          )}
         />
         <Column
           title="Created"
