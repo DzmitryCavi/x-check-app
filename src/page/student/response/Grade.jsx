@@ -34,7 +34,7 @@ const Grade = () => {
     setReview(...reviewResponse)
     setRequest(requestResponse)
     setCategories(tasksResponse.categories)
-    if (reviewResponse[0].status === 'ACCEPTED') setisAcceptedReview(true)
+    if (reviewResponse[0].state === 'ACCEPTED') setisAcceptedReview(true)
     setLoading(false)
   }, [requestId])
 
@@ -51,6 +51,7 @@ const Grade = () => {
 
   const acceptGrade = () => {
     reviewsService.edit({ state: 'ACCEPTED' }, review.id)
+    setIsSuccess(true)
   }
 
   return (
@@ -114,7 +115,7 @@ const Grade = () => {
                             (el) => el.criteriaId === item.id,
                           )}
                           criteria={item.id}
-                          isDispute={!isAcceptedReview}
+                          isDispute={isAcceptedReview}
                         />
                       </Form.Item>
                     </List.Item>
@@ -122,7 +123,7 @@ const Grade = () => {
                 />
               ))}
               <Form.Item>
-                {isAcceptedReview && (
+                {!isAcceptedReview && (
                   <>
                     {isNeedToSubmit ? (
                       <Button
