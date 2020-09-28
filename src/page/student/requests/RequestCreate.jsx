@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
 import { Select, Spin } from 'antd'
+import moment from 'moment'
 import { connect } from 'react-redux'
 import RequestForm from '../../../component/forms/RequestFrom/RequestForm'
 import tasksService from '../../../services/tasks.service'
@@ -13,16 +14,26 @@ const Reqest = ({ user }) => {
   const [isLoading, setIsLoading] = useState(true)
   const [isNewRequest, setIsNewRequest] = useState(true)
 
+  const statusIsActive = ({ startDate, endDate }) => {
+    const start = startDate ? moment(startDate) : null
+    const end = endDate ? moment(endDate) : null
+    const date = moment()
+    return (
+      (start && end && date.isBetween(start, endDate)) ||
+      (start && !end && date.isAfter(start)) ||
+      (!start && end && date.isBefore(end))
+    )
+  }
+
   useEffect(() => {
     const fetchData = async () => {
       const taskResponse = await tasksService.getAll({ state: 'PUBLISHED' })
       const requestsResponse = await requestService.getByAuthor(user.login)
-      setTasks(
-        requestsResponse.reduce(
-          (ac, request) => ac.filter((task) => task.id !== request.taskId),
-          taskResponse,
-        ),
-      )
+      const tasksToSelect = requestsResponse
+        .reduce((ac, request) => ac.filter(({ id }) => id !== request.taskId), taskResponse)
+        .filter(({ startDate, endDate }) => statusIsActive({ startDate, endDate }))
+
+      setTasks(tasksToSelect)
     }
     if (isNewRequest) {
       setIsLoading(true)
@@ -32,21 +43,22 @@ const Reqest = ({ user }) => {
     }
   }, [isNewRequest, user])
 
-  const children = tasks.map((el) => <Option key={el.id}>{el.title}</Option>)
+  const children = tasks.map(({ id, title }) => <Option key={id}>{title}</Option>)
 
   const [task, changeTask] = useState()
 
   const handleChange = (selected) => {
-    const selectedTask = tasks.find((el) => el.id === +selected)
+    const selectedTask = tasks.find(({ id }) => id === +selected)
     changeTask(selectedTask)
   }
+
   return (
     <>
       <Select
         size="large"
         defaultValue="Select a task"
         onChange={handleChange}
-        style={{ width: 200 }}
+        style={{ width: '50%' }}
       >
         {!isLoading ? (
           children
