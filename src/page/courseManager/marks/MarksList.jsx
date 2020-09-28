@@ -82,7 +82,7 @@ const MarksList = () => {
           dataIndex="state"
           render={(element) => (
             <Tag
-              color={{ ACCEPTED: 'green', DISPUTED: 'orange', REJECTED: 'red' }[element]}
+              color={{ GRADED: 'green', DISPUTED: 'orange', REJECTED: 'red' }[element]}
               key={element}
             >
               {element}
