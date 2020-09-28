@@ -37,7 +37,7 @@ const Grade = () => {
   useEffect(() => {
     const fetchData = async () => {
       const requestResponse = await requestsService.getById(requestId)
-      const tasksResponse = await tasksService.getById(requestResponse.task)
+      const tasksResponse = await tasksService.getById(requestResponse.taskId)
       const reviewResponse = await reviewsService.getByRequestId(requestResponse.id)
       setReview(reviewResponse[0])
       setRequest(requestResponse)
@@ -105,7 +105,7 @@ const Grade = () => {
                         <GradeItem
                           maxScore={+item.score}
                           review={review.grade[category.title].find(
-                            (el) => el.criteria === item.id,
+                            (el) => el.criteriaId === item.id,
                           )}
                           criteria={item.id}
                         />

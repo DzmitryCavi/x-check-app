@@ -23,8 +23,9 @@ const ReviewForm = ({ user }) => {
   useEffect(() => {
     const fetchData = async () => {
       const requestResponse = await requestsService.getById(requestId)
+      console.log(requestResponse)
 
-      const taskResponse = await tasksService.getById(requestResponse.task)
+      const taskResponse = await tasksService.getById(requestResponse.taskId)
 
       if (requestResponse.state === 'GRADED') {
         const [reviewsResponse] = await reviewService.getByRequestId(requestResponse.id)
@@ -41,7 +42,7 @@ const ReviewForm = ({ user }) => {
   const onFinish = async (data) => {
     const reviewData = {
       name: task.title,
-      task: task.id,
+      taskId: task.id,
       requestId,
       student: request.author,
       ...data,
@@ -59,7 +60,7 @@ const ReviewForm = ({ user }) => {
   const onSave = async () => {
     const reviewData = {
       name: task.title,
-      task: task.id,
+      taskId: task.id,
       requestId: request.id,
       ...form.getFieldsValue(),
       student: request.author,
@@ -112,7 +113,7 @@ const ReviewForm = ({ user }) => {
                       <ReviewFormItem
                         maxScore={item.score}
                         selfGrade={request.selfGrade[category.title].find(
-                          (el) => el.criteria === item.id,
+                          (el) => el.criteriaId === item.id,
                         )}
                         criteria={item.id}
                       />

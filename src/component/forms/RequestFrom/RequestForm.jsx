@@ -27,7 +27,7 @@ const RequestForm = ({ task, user, requestToEdit, setIsNewRequest }) => {
   const onFinish = async (data) => {
     const requestData = {
       name: task.title,
-      task: task.id,
+      taskId: task.id,
       ...data,
       score,
       state: 'SUBMITTED',
@@ -40,7 +40,7 @@ const RequestForm = ({ task, user, requestToEdit, setIsNewRequest }) => {
   const onSave = async () => {
     const requestData = {
       name: task.title,
-      task: task.id,
+      taskId: task.id,
       ...form.getFieldsValue(),
       score,
       state: 'DRAFT',

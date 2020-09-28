@@ -12,7 +12,7 @@ const Reqest = () => {
   useEffect(() => {
     const fatchData = async () => {
       const requestResponse = await requestService.getById(requestId)
-      const taskResponse = await tasksService.getById(requestResponse.task)
+      const taskResponse = await tasksService.getById(requestResponse.taskId)
       setRequest(requestResponse)
       setTask(taskResponse)
     }

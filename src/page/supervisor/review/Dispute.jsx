@@ -42,7 +42,7 @@ const Dispute = () => {
     const fetchData = async () => {
       const reviewResponse = await reviewsService.getById(reviewId)
       const requestResponse = await requestsService.getById(reviewResponse.requestId)
-      const tasksResponse = await tasksService.getById(requestResponse.task)
+      const tasksResponse = await tasksService.getById(requestResponse.taskId)
       const disputeResponse = await disputeService.getByReviewId(reviewId)
       setDispute(...disputeResponse)
       setReview(reviewResponse)
@@ -97,7 +97,7 @@ const Dispute = () => {
                           isDispute
                           maxScore={+item.score}
                           review={review.grade[category.title].find(
-                            (el) => el.criteria === item.id,
+                            (el) => el.criteriaId === item.id,
                           )}
                           criteria={item.id}
                         />

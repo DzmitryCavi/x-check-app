@@ -19,7 +19,7 @@ const Reqest = ({ user }) => {
       const requestsResponse = await requestService.getByAuthor(user.login)
       setTasks(
         requestsResponse.reduce(
-          (ac, request) => ac.filter((task) => task.id !== request.task),
+          (ac, request) => ac.filter((task) => task.id !== request.taskId),
           taskResponse,
         ),
       )
