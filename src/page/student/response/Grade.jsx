@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 import { Typography, Form, Spin, List, Progress, Button, Result } from 'antd'
+import { CheckOutlined, CloseOutlined } from '@ant-design/icons'
 import parse from 'react-html-parser'
 import reviewsService from '../../../services/review.service'
 import requestsService from '../../../services/requests.service'
@@ -20,6 +21,7 @@ const Grade = () => {
   const [categories, setCategories] = useState(null)
   const [isSuccess, setIsSuccess] = useState(false)
   const [isNeedToSubmit, setIsNeedToSubmit] = useState(false)
+  const [isAcceptedReview, setisAcceptedReview] = useState(false)
   const [form] = Form.useForm()
 
   const maxScore = categories && categories.reduce((ac, catergory) => ac + +catergory.maxScore, 0)
@@ -31,7 +33,12 @@ const Grade = () => {
       return el
     })
     disputeService.create({ criterias, reviewId: review.id })
+    reviewsService.edit({ state: 'DISPUTE' }, review.id)
     setIsSuccess(true)
+  }
+
+  const acceptGrade = () => {
+    reviewsService.edit({ state: 'ACCEPTED' }, review.id)
   }
 
   useEffect(() => {
@@ -39,9 +46,10 @@ const Grade = () => {
       const requestResponse = await requestsService.getById(requestId)
       const tasksResponse = await tasksService.getById(requestResponse.taskId)
       const reviewResponse = await reviewsService.getByRequestId(requestResponse.id)
-      setReview(reviewResponse[0])
+      setReview(...reviewResponse)
       setRequest(requestResponse)
       setCategories(tasksResponse.categories)
+      if (reviewResponse[0].status === 'ACCEPTED') setisAcceptedReview(true)
       setLoading(false)
     }
     fetchData()
@@ -50,7 +58,7 @@ const Grade = () => {
   return (
     <>
       {loading ? (
-        <Spin tip="Loading..." />
+        <Spin className="content-loading " size="large" />
       ) : (
         <>
           {isSuccess ? (
@@ -108,6 +116,7 @@ const Grade = () => {
                             (el) => el.criteriaId === item.id,
                           )}
                           criteria={item.id}
+                          isDispute={!isAcceptedReview}
                         />
                       </Form.Item>
                     </List.Item>
@@ -115,10 +124,31 @@ const Grade = () => {
                 />
               ))}
               <Form.Item>
-                {isNeedToSubmit && (
-                  <Button type="primary" size="small" htmlType="submit">
-                    OPEN DISPUTE
-                  </Button>
+                {isAcceptedReview && (
+                  <>
+                    {isNeedToSubmit ? (
+                      <Button
+                        icon={<CloseOutlined />}
+                        shape="round"
+                        type="primary"
+                        size="large"
+                        htmlType="submit"
+                        danger
+                      >
+                        OPEN DISPUTE
+                      </Button>
+                    ) : (
+                      <Button
+                        icon={<CheckOutlined />}
+                        shape="round"
+                        type="primary"
+                        size="large"
+                        onClick={acceptGrade}
+                      >
+                        ACCEPT
+                      </Button>
+                    )}
+                  </>
                 )}
               </Form.Item>
             </Form>

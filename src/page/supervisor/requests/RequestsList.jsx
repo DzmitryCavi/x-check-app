@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Table, Tag, Spin } from 'antd'
+import { Table, Tag } from 'antd'
 import { EditOutlined } from '@ant-design/icons'
 
 import Column from 'antd/lib/table/Column'
@@ -10,8 +10,8 @@ import requestService from '../../../services/requests.service'
 import reviewService from '../../../services/review.service'
 
 const RequestsList = () => {
-  const [requests, setRequests] = useState()
-  const [reviews, setReviews] = useState()
+  const [requests, setRequests] = useState([])
+  const [reviews, setReviews] = useState([])
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
@@ -25,12 +25,8 @@ const RequestsList = () => {
     fetchData()
   }, [])
 
-  return loading ? (
-    <div className="content-loading">
-      <Spin tip="Loading..." />
-    </div>
-  ) : (
-    <Table dataSource={requests} pagination={{ pageSize: 10 }} rowKey="id">
+  return (
+    <Table dataSource={requests} pagination={{ pageSize: 10 }} rowKey="id" loading={loading}>
       <>
         <Column
           title="Student"

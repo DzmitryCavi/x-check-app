@@ -27,7 +27,6 @@ import {
 import ButtonLink from '../../../component/ButtonLink'
 import { supervisorRoutes } from '../../../router/routes'
 import reviewsService from '../../../services/review.service'
-import disputeService from '../../../services/dispute.service'
 
 const { Column } = Table
 const { Panel } = Collapse
@@ -35,19 +34,15 @@ const { Title } = Typography
 
 const ReviewHistory = ({ user }) => {
   const [reviews, setReviews] = useState([])
+  const [loading, setLoading] = useState(true)
   const initRequests = useRef([])
 
   const fetchRequests = async (author) => {
+    setLoading(true)
     const reviewsResponse = await reviewsService.getAllGradedByAuthor(author)
-    const disputeResponse = await disputeService.getAllOngoing()
-    initRequests.current = reviewsResponse.map((review) =>
-      disputeResponse.find((dispute) => {
-        return dispute.reviewId === review.id
-      })
-        ? { ...review, state: 'DISPUTE' }
-        : review,
-    )
+    initRequests.current = reviewsResponse
     setReviews(initRequests.current)
+    setLoading(false)
   }
 
   useEffect(() => {
@@ -94,7 +89,7 @@ const ReviewHistory = ({ user }) => {
 
   return (
     <>
-      <Title>Requests</Title>
+      <Title>Reviews</Title>
       <Row>
         <Col span={24}>
           <Collapse
@@ -146,7 +141,7 @@ const ReviewHistory = ({ user }) => {
         </Col>
       </Row>
 
-      <Table dataSource={reviews} rowKey="id">
+      <Table dataSource={reviews} rowKey="id" loading={loading}>
         <Column title="Task" dataIndex="name" key="name" sorter={sorter.name} />
         <Column title="Created at" dataIndex="created_at" key="created_at" sorter={sorter.data} />
         <Column title="Updated at" dataIndex="updated_at" key="updated_at" sorter={sorter.data} />

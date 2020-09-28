@@ -34,6 +34,7 @@ const { Title } = Typography
 
 const RequestList = ({ user }) => {
   const [requests, setRequsets] = useState([])
+  const [isLoading, setIsLoading] = useState(true)
   const initRequests = useRef([])
 
   const fetchRequests = async (id) => {
@@ -44,11 +45,8 @@ const RequestList = ({ user }) => {
 
   useEffect(() => {
     fetchRequests(user)
+    setIsLoading(false)
   }, [user])
-
-  // useEffect(() => {
-  //   initRequests.current = requests
-  // }, [requests])
 
   const destroyRequest = async (requestId) => {
     await requestService.destroyById(requestId)
@@ -149,7 +147,7 @@ const RequestList = ({ user }) => {
         </Col>
       </Row>
 
-      <Table dataSource={requests} rowKey="id">
+      <Table dataSource={requests} rowKey="id" loading={isLoading}>
         <Column title="Task" dataIndex="name" key="name" sorter={sorter.name} />
         <Column title="Created at" dataIndex="created_at" key="created_at" sorter={sorter.data} />
         <Column title="Updated at" dataIndex="updated_at" key="updated_at" sorter={sorter.data} />

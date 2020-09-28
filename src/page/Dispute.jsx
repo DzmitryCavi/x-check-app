@@ -24,6 +24,7 @@ const Dispute = () => {
 
   const onFinish = () => {
     disputeService.close(dispute.id)
+    reviewsService.edit({ state: 'ACCEPTED' }, review.id)
     setIsSuccess(true)
   }
 
