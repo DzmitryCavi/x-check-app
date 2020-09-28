@@ -7,7 +7,7 @@ import NumericInput from '../../NumericInput'
 const { Panel } = Collapse
 const { Text } = Typography
 
-const ReviewFormItem = ({ value, onChange, maxScore, selfGrade, criteria }) => {
+const ReviewFormItem = ({ value, onChange, maxScore, selfGrade, criteriaId }) => {
   const [number, setNumber] = useState(value ? value.number : null)
   const [discription, setDiscription] = useState(value ? value.discription : null)
   const [isNeedComment, setIsNeedComment] = useState(
@@ -17,7 +17,7 @@ const ReviewFormItem = ({ value, onChange, maxScore, selfGrade, criteria }) => {
   const triggerChange = (changedValue) => {
     if (onChange) {
       onChange({
-        criteria,
+        criteriaId,
         number,
         discription,
         ...value,
@@ -163,7 +163,7 @@ ReviewFormItem.propTypes = {
   onChange: PropTypes.instanceOf(Function),
   maxScore: PropTypes.string.isRequired,
   selfGrade: PropTypes.instanceOf(Object).isRequired,
-  criteria: PropTypes.string.isRequired,
+  criteriaId: PropTypes.string.isRequired,
 }
 
 ReviewFormItem.defaultProps = {

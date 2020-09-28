@@ -5,7 +5,7 @@ import parse from 'react-html-parser'
 import reviewsService from '../../../services/review.service'
 import requestsService from '../../../services/requests.service'
 import tasksService from '../../../services/tasks.service'
-import { studentRoutes } from '../../../router/routes'
+import { supervisorRoutes } from '../../../router/routes'
 import disputeService from '../../../services/dispute.service'
 import GradeItem from '../../../component/GradeInfoItem'
 import ButtonLink from '../../../component/ButtonLink'
@@ -22,8 +22,8 @@ const Dispute = () => {
   const [isSuccess, setIsSuccess] = useState(false)
   const [form] = Form.useForm()
 
-  const onFinish = (data) => {
-    console.log(data)
+  const onFinish = () => {
+    disputeService.close(dispute.id)
     setIsSuccess(true)
   }
 
@@ -64,7 +64,7 @@ const Dispute = () => {
               status="success"
               title="Successfully Opened Dispute !"
               extra={[
-                <ButtonLink type="primary" linkTo={studentRoutes.review.list}>
+                <ButtonLink type="primary" linkTo={supervisorRoutes.reviews.list} key="link">
                   Go to review list
                 </ButtonLink>,
               ]}
@@ -108,7 +108,7 @@ const Dispute = () => {
               ))}
               <Form.Item>
                 <Button type="primary" htmlType="submit">
-                  SENT RESPONSE
+                  ClOSE DISPUT
                 </Button>
               </Form.Item>
             </Form>

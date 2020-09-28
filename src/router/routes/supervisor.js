@@ -1,5 +1,6 @@
 import { UnorderedListOutlined, HistoryOutlined } from '@ant-design/icons'
 import DisputeService from '../../services/dispute.service'
+import RequestService from '../../services/requests.service'
 
 import RequestsList from '../../page/supervisor/requests/RequestsList'
 import RequestReview from '../../page/supervisor/requests/RequestReview'
@@ -27,6 +28,11 @@ export default [
     navigation: {
       label: 'Requests list',
       icon: UnorderedListOutlined,
+      withBadge: true,
+      badgeCount: () => {
+        const count = RequestService.getAllSubmitted().then((data) => data.length)
+        return count
+      },
     },
   },
   {
@@ -39,8 +45,8 @@ export default [
       icon: HistoryOutlined,
       withBadge: true,
       badgeCount: () => {
-        const data = DisputeService.getCountOfDisputeByReviewAuthor()
-        return data
+        const count = DisputeService.getCountOfDisputeByReviewAuthor()
+        return count
       },
     },
   },

@@ -113,7 +113,7 @@ const ReviewForm = ({ user }) => {
                         selfGrade={request.selfGrade[category.title].find(
                           (el) => el.criteriaId === item.id,
                         )}
-                        criteria={item.id}
+                        criteriaId={item.id}
                       />
                     </Form.Item>
                   </div>

@@ -58,7 +58,7 @@ const Grade = () => {
               status="success"
               title="Successfully Opened Dispute !"
               extra={[
-                <ButtonLink type="primary" linkTo={studentRoutes.requests.list}>
+                <ButtonLink type="primary" linkTo={studentRoutes.requests.list} key="link_to_list">
                   Go to request list
                 </ButtonLink>,
               ]}

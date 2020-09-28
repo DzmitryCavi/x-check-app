@@ -39,7 +39,7 @@ const ReviewHistory = ({ user }) => {
 
   const fetchRequests = async (author) => {
     const reviewsResponse = await reviewsService.getAllGradedByAuthor(author)
-    const disputeResponse = await disputeService.getAll()
+    const disputeResponse = await disputeService.getAllOngoing()
     initRequests.current = reviewsResponse.map((review) =>
       disputeResponse.find((dispute) => {
         return dispute.reviewId === review.id
