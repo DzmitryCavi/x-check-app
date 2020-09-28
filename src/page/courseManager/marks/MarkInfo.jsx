@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import { useParams } from 'react-router-dom'
+import { useAsync } from 'react-use'
 import { Spin, Descriptions, Tag, Form, Typography, List, Progress } from 'antd'
 import parse from 'react-html-parser'
 import reviewsService from '../../../services/review.service'
@@ -11,9 +12,7 @@ const { Title } = Typography
 
 const MarkInfo = () => {
   const { marksId } = useParams()
-
   const [loading, setLoading] = useState(true)
-
   const [mark, setMark] = useState([])
   const [request, setRequest] = useState([])
   const [categories, setCategories] = useState([])
@@ -21,17 +20,14 @@ const MarkInfo = () => {
 
   const maxScore = categories && categories.reduce((ac, catergory) => ac + +catergory.maxScore, 0)
 
-  useEffect(() => {
-    const fetchData = async () => {
-      const markResponse = await reviewsService.getById(marksId)
-      const requestResponse = await requestsService.getById(markResponse.requestId)
-      const tasksResponse = await tasksService.getById(requestResponse.taskId)
-      setMark(markResponse)
-      setRequest(requestResponse)
-      setCategories(tasksResponse.categories)
-      setLoading(false)
-    }
-    fetchData()
+  useAsync(async () => {
+    const markResponse = await reviewsService.getById(marksId)
+    const requestResponse = await requestsService.getById(markResponse.requestId)
+    const tasksResponse = await tasksService.getById(requestResponse.taskId)
+    setMark(markResponse)
+    setRequest(requestResponse)
+    setCategories(tasksResponse.categories)
+    setLoading(false)
   }, [marksId])
 
   const { name, student, author, state, created_at: createdAt } = mark

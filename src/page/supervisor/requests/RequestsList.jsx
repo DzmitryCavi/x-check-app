@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
+import { useAsync } from 'react-use'
 import { Table, Tag } from 'antd'
 import { EditOutlined } from '@ant-design/icons'
-
 import Column from 'antd/lib/table/Column'
 import { formatRoute } from 'react-router-named-routes'
 import ButtonLink from '../../../component/ButtonLink'
@@ -14,15 +14,12 @@ const RequestsList = () => {
   const [reviews, setReviews] = useState([])
   const [loading, setLoading] = useState(true)
 
-  useEffect(() => {
-    const fetchData = async () => {
-      const requestResponse = await requestService.getAllSubmitted()
-      const reviewsResponse = await reviewService.getAll()
-      setRequests(requestResponse)
-      setReviews(reviewsResponse)
-      setLoading(false)
-    }
-    fetchData()
+  useAsync(async () => {
+    const requestResponse = await requestService.getAllSubmitted()
+    const reviewsResponse = await reviewService.getAll()
+    setRequests(requestResponse)
+    setReviews(reviewsResponse)
+    setLoading(false)
   }, [])
 
   return (

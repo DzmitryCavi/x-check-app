@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
+import { useAsync } from 'react-use'
 import { useParams } from 'react-router-dom'
 import { Typography, Form, Spin, List, Button, Result, Card } from 'antd'
 import parse from 'react-html-parser'
@@ -22,12 +23,6 @@ const Dispute = () => {
   const [isSuccess, setIsSuccess] = useState(false)
   const [form] = Form.useForm()
 
-  const onFinish = () => {
-    disputeService.close(dispute.id)
-    reviewsService.edit({ state: 'ACCEPTED' }, review.id)
-    setIsSuccess(true)
-  }
-
   const filterCategoriesByDisput = (categoriesToFilter, { criterias }) => {
     const categoryReduser = (ac, criteria) => {
       return Object.keys(criterias).find((el) => el === criteria.id) ? ac.concat([criteria]) : ac
@@ -39,20 +34,23 @@ const Dispute = () => {
     return categoriesToFilter.reduce(categoriesReduser, [])
   }
 
-  useEffect(() => {
-    const fetchData = async () => {
-      const reviewResponse = await reviewsService.getById(reviewId)
-      const requestResponse = await requestsService.getById(reviewResponse.requestId)
-      const tasksResponse = await tasksService.getById(requestResponse.taskId)
-      const disputeResponse = await disputeService.getByReviewId(reviewId)
-      setDispute(...disputeResponse)
-      setReview(reviewResponse)
-      setRequest(requestResponse)
-      setCategories(filterCategoriesByDisput(tasksResponse.categories, ...disputeResponse))
-      setLoading(false)
-    }
-    fetchData()
+  useAsync(async () => {
+    const reviewResponse = await reviewsService.getById(reviewId)
+    const requestResponse = await requestsService.getById(reviewResponse.requestId)
+    const tasksResponse = await tasksService.getById(requestResponse.taskId)
+    const disputeResponse = await disputeService.getByReviewId(reviewId)
+    setDispute(...disputeResponse)
+    setReview(reviewResponse)
+    setRequest(requestResponse)
+    setCategories(filterCategoriesByDisput(tasksResponse.categories, ...disputeResponse))
+    setLoading(false)
   }, [reviewId])
+
+  const onFinish = () => {
+    disputeService.close(dispute.id)
+    reviewsService.edit({ state: 'ACCEPTED' }, review.id)
+    setIsSuccess(true)
+  }
 
   return (
     <>

@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
+import { useAsync } from 'react-use'
 import { useParams } from 'react-router-dom'
 import { Spin } from 'antd'
 import RequestForm from '../../../component/forms/RequestFrom/RequestForm'
@@ -9,15 +10,14 @@ const Reqest = () => {
   const [request, setRequest] = useState(null)
   const [task, setTask] = useState(null)
   const { requestId } = useParams()
-  useEffect(() => {
-    const fatchData = async () => {
-      const requestResponse = await requestService.getById(requestId)
-      const taskResponse = await tasksService.getById(requestResponse.taskId)
-      setRequest(requestResponse)
-      setTask(taskResponse)
-    }
-    fatchData()
+
+  useAsync(async () => {
+    const requestResponse = await requestService.getById(requestId)
+    const taskResponse = await tasksService.getById(requestResponse.taskId)
+    setRequest(requestResponse)
+    setTask(taskResponse)
   }, [requestId])
+
   return <>{task ? <RequestForm task={task} requestToEdit={request} /> : <Spin />}</>
 }
 

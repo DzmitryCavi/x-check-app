@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
+import { useAsync } from 'react-use'
 import { Table, Button, Space, Tag } from 'antd'
 import { formatRoute } from 'react-router-named-routes'
 import ButtonLink from '../../../component/ButtonLink'
@@ -16,13 +17,10 @@ const MarksList = () => {
     filteredInfo: null,
   })
 
-  useEffect(() => {
-    const fetchData = async () => {
-      const markResponse = await rviewService.getAllGraded()
-      setMarks(markResponse)
-      setLoading(false)
-    }
-    fetchData()
+  useAsync(async () => {
+    const markResponse = await rviewService.getAllGraded()
+    setMarks(markResponse)
+    setLoading(false)
   }, [])
 
   const handleChange = (pagination, filters) => {
