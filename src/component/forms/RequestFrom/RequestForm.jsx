@@ -94,7 +94,7 @@ const RequestForm = ({ task, user, requestToEdit, setIsNewRequest }) => {
                     name={['selfGrade', category.title, index]}
                     rules={[{ required: true, message: 'Please grade all' }]}
                   >
-                    <RequestFormItem maxScore={item.score} criteria={item.id} />
+                    <RequestFormItem maxScore={item.score} criteriaId={item.id} />
                   </Form.Item>
                 </List.Item>
               )}

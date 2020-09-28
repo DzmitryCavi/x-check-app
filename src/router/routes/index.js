@@ -31,6 +31,7 @@ export const courseManagerRoutes = {
     view: '/course-manager/tasks/:taskId/view',
   },
   marks: {
+    dispute: '/course-manager/marks/:reviewId/dispute',
     list: '/course-manager/marks',
     info: '/course-manager/marks/:marksId/info',
   },

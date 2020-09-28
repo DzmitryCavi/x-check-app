@@ -5,7 +5,7 @@ import RequestService from '../../services/requests.service'
 import RequestsList from '../../page/supervisor/requests/RequestsList'
 import RequestReview from '../../page/supervisor/requests/RequestReview'
 import ReviewHistory from '../../page/supervisor/review/ReviewHistory'
-import Dispute from '../../page/supervisor/review/Dispute'
+import Dispute from '../../page/Dispute'
 
 import { supervisorRoutes as routes } from '.'
 

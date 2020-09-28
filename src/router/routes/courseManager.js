@@ -6,6 +6,7 @@ import MarksList from '../../page/courseManager/marks/MarksList'
 import MarkInfo from '../../page/courseManager/marks/MarkInfo'
 
 import { courseManagerRoutes as routes } from '.'
+import Dispute from '../../page/Dispute'
 
 export default [
   {
@@ -37,5 +38,11 @@ export default [
       label: 'Marks List',
       icon: UnorderedListOutlined,
     },
+  },
+  {
+    path: routes.marks.dispute,
+    component: Dispute,
+    breadcrumb: 'Dispute',
+    description: 'Dispute managment',
   },
 ]
