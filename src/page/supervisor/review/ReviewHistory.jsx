@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from 'react'
+import React, { useState, useRef } from 'react'
 import PropTypes from 'prop-types'
 import {
   Table,
@@ -14,6 +14,7 @@ import {
   Collapse,
   Typography,
 } from 'antd'
+import { useAsync } from 'react-use'
 import { connect } from 'react-redux'
 import { compareAsc } from 'date-fns'
 import { formatRoute } from 'react-router-named-routes'
@@ -37,16 +38,12 @@ const ReviewHistory = ({ user }) => {
   const [loading, setLoading] = useState(true)
   const initRequests = useRef([])
 
-  const fetchRequests = async (author) => {
+  useAsync(async () => {
     setLoading(true)
-    const reviewsResponse = await reviewsService.getAllGradedByAuthor(author)
+    const reviewsResponse = await reviewsService.getAllGradedByAuthor(user)
     initRequests.current = reviewsResponse
     setReviews(initRequests.current)
     setLoading(false)
-  }
-
-  useEffect(() => {
-    fetchRequests(user)
   }, [user])
 
   const destroyRequest = async (requestId) => {

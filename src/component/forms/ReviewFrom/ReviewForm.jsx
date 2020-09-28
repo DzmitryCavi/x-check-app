@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
+import { useAsync } from 'react-use'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import { Form, Spin, Button, Typography, Result, Row, Col, Space } from 'antd'
@@ -20,21 +21,18 @@ const ReviewForm = ({ user }) => {
   const [reviewToEdit, setReviewToEdit] = useState(null)
   const [form] = Form.useForm()
   const { requestId } = useParams()
-  useEffect(() => {
-    const fetchData = async () => {
-      const requestResponse = await requestsService.getById(requestId)
-      const taskResponse = await tasksService.getById(requestResponse.taskId)
 
-      if (requestResponse.state === 'GRADED') {
-        const [reviewsResponse] = await reviewService.getByRequestId(requestResponse.id)
-        setReviewToEdit(reviewsResponse)
-        setScore(reviewsResponse.score)
-      }
-      setRequest(requestResponse)
-      setTask(taskResponse)
-      setLoading(false)
+  useAsync(async () => {
+    const requestResponse = await requestsService.getById(requestId)
+    const taskResponse = await tasksService.getById(requestResponse.taskId)
+    if (requestResponse.state === 'GRADED') {
+      const [reviewsResponse] = await reviewService.getByRequestId(requestResponse.id)
+      setReviewToEdit(reviewsResponse)
+      setScore(reviewsResponse.score)
     }
-    fetchData()
+    setRequest(requestResponse)
+    setTask(taskResponse)
+    setLoading(false)
   }, [requestId])
 
   const onFinish = async (data) => {
@@ -80,7 +78,7 @@ const ReviewForm = ({ user }) => {
   }
 
   return loading ? (
-    <Spin />
+    <Spin className="content-loading" size="large" />
   ) : (
     <>
       {!isSuccess ? (

@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
+import { useAsync } from 'react-use'
 import PropTypes from 'prop-types'
 import { Select, Spin } from 'antd'
 import moment from 'moment'
@@ -25,8 +26,9 @@ const Reqest = ({ user }) => {
     )
   }
 
-  useEffect(() => {
-    const fetchData = async () => {
+  useAsync(async () => {
+    if (isNewRequest) {
+      setIsLoading(true)
       const taskResponse = await tasksService.getAll({ state: 'PUBLISHED' })
       const requestsResponse = await requestService.getByAuthor(user.login)
       const tasksToSelect = requestsResponse
@@ -34,13 +36,9 @@ const Reqest = ({ user }) => {
         .filter(({ startDate, endDate }) => statusIsActive({ startDate, endDate }))
 
       setTasks(tasksToSelect)
-    }
-    if (isNewRequest) {
-      setIsLoading(true)
-      fetchData()
       setIsLoading(false)
-      setIsNewRequest(false)
     }
+    setIsNewRequest(false)
   }, [isNewRequest, user])
 
   const children = tasks.map(({ id, title }) => <Option key={id}>{title}</Option>)

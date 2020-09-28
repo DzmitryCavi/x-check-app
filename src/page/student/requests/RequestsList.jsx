@@ -1,4 +1,5 @@
 import React, { useState, useRef } from 'react'
+import { useAsync } from 'react-use'
 import PropTypes from 'prop-types'
 import {
   Table,
@@ -23,7 +24,6 @@ import {
   CarryOutTwoTone,
   CaretRightOutlined,
 } from '@ant-design/icons'
-import { useAsync } from 'react-use'
 
 import ButtonLink from '../../../component/ButtonLink'
 import { studentRoutes } from '../../../router/routes'

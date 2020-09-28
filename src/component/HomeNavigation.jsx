@@ -1,15 +1,16 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 import PropTypes from 'prop-types'
 
 import { Card, Col, Badge } from 'antd'
 import { MenuOutlined } from '@ant-design/icons'
 import Meta from 'antd/lib/card/Meta'
+import { useAsync } from 'react-use'
 
 const CustomCard = ({ ...item }) => {
   const [count, setCount] = useState(0)
 
-  useEffect(() => {
+  useAsync(async () => {
     if (item.navigation.withBadge) {
       item.navigation.badgeCount().then(setCount)
     }

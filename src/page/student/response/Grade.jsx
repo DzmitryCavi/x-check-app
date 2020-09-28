@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
+import { useAsync } from 'react-use'
 import { useParams } from 'react-router-dom'
 import { Typography, Form, Spin, List, Progress, Button, Result } from 'antd'
 import { CheckOutlined, CloseOutlined } from '@ant-design/icons'
@@ -26,6 +27,17 @@ const Grade = () => {
 
   const maxScore = categories && categories.reduce((ac, catergory) => ac + +catergory.maxScore, 0)
 
+  useAsync(async () => {
+    const requestResponse = await requestsService.getById(requestId)
+    const tasksResponse = await tasksService.getById(requestResponse.taskId)
+    const reviewResponse = await reviewsService.getByRequestId(requestResponse.id)
+    setReview(...reviewResponse)
+    setRequest(requestResponse)
+    setCategories(tasksResponse.categories)
+    if (reviewResponse[0].status === 'ACCEPTED') setisAcceptedReview(true)
+    setLoading(false)
+  }, [requestId])
+
   const onFinish = (data) => {
     const { criterias } = data.dispute
     Object.keys(criterias).map((el) => {
@@ -40,20 +52,6 @@ const Grade = () => {
   const acceptGrade = () => {
     reviewsService.edit({ state: 'ACCEPTED' }, review.id)
   }
-
-  useEffect(() => {
-    const fetchData = async () => {
-      const requestResponse = await requestsService.getById(requestId)
-      const tasksResponse = await tasksService.getById(requestResponse.taskId)
-      const reviewResponse = await reviewsService.getByRequestId(requestResponse.id)
-      setReview(...reviewResponse)
-      setRequest(requestResponse)
-      setCategories(tasksResponse.categories)
-      if (reviewResponse[0].status === 'ACCEPTED') setisAcceptedReview(true)
-      setLoading(false)
-    }
-    fetchData()
-  }, [requestId])
 
   return (
     <>
