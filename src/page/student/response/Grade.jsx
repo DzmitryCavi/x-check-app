@@ -22,7 +22,7 @@ const Grade = () => {
   const [isNeedToSubmit, setIsNeedToSubmit] = useState(false)
   const [form] = Form.useForm()
 
-  const score = categories && categories.reduce((ac, catergory) => ac + +catergory.maxScore, 0)
+  const maxScore = categories && categories.reduce((ac, catergory) => ac + +catergory.maxScore, 0)
 
   const onFinish = (data) => {
     const { criterias } = data.dispute
@@ -79,14 +79,14 @@ const Grade = () => {
               <Title level={1} className="task-categories__title">
                 {`Evaluation of the task "${request.name}"`}
                 <Progress
-                  percent={Math.floor((request.score / score) * 100)}
+                  percent={Math.floor((review.score / maxScore) * 100)}
                   strokeColor={{
                     0: 'red',
                     30: '#87d068',
                     100: '#87d068',
                   }}
                 />
-                Score: {request.score} of {score}
+                Score: {review.score} of {maxScore}
               </Title>
               {categories.map((category) => (
                 <List
