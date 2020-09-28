@@ -23,8 +23,6 @@ const ReviewForm = ({ user }) => {
   useEffect(() => {
     const fetchData = async () => {
       const requestResponse = await requestsService.getById(requestId)
-      console.log(requestResponse)
-
       const taskResponse = await tasksService.getById(requestResponse.taskId)
 
       if (requestResponse.state === 'GRADED') {
