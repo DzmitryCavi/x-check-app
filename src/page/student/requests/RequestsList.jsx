@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from 'react'
+import React, { useState, useRef } from 'react'
 import PropTypes from 'prop-types'
 import {
   Table,
@@ -23,6 +23,7 @@ import {
   CarryOutTwoTone,
   CaretRightOutlined,
 } from '@ant-design/icons'
+import { useAsync } from 'react-use'
 
 import ButtonLink from '../../../component/ButtonLink'
 import { studentRoutes } from '../../../router/routes'
@@ -37,14 +38,10 @@ const RequestList = ({ user }) => {
   const [isLoading, setIsLoading] = useState(true)
   const initRequests = useRef([])
 
-  const fetchRequests = async (id) => {
-    const data = await requestService.getByAuthor(id)
+  useAsync(async () => {
+    const data = await requestService.getByAuthor(user)
     initRequests.current = data
     setRequsets(initRequests.current)
-  }
-
-  useEffect(() => {
-    fetchRequests(user)
     setIsLoading(false)
   }, [user])
 
