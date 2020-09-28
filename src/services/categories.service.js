@@ -26,6 +26,7 @@ const getById = async (id) => {
 const create = async (task, category) => {
   const { data, status } = await axios.patch(`${API_URL}/tasks/${task.id}`, {
     ...task,
+    state: 'PUBLISHED',
     categories: [
       ...task.categories,
       {

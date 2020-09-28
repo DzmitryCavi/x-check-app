@@ -63,7 +63,7 @@ const create = async (task, authorId = -1) => {
     ...task,
     authorId,
     slug: slug(task.title),
-    state: 'PUBLISHED',
+    state: 'DRAFT',
     categories: [],
 
     startDate: null,
