@@ -1,8 +1,9 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import PropTypes from 'prop-types'
 import { compareAsc } from 'date-fns'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
+import { useAsync } from 'react-use'
 import { formatRoute } from 'react-router-named-routes'
 import {
   Form,
@@ -55,8 +56,8 @@ const TasksList = ({ user }) => {
     setLoading(false)
   }
 
-  useEffect(() => {
-    fetchTasks(user.id)
+  useAsync(async () => {
+    await fetchTasks(user.id)
   }, [user.id])
 
   const destroyTask = async (taskId) => {

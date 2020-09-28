@@ -1,4 +1,5 @@
-import React, { useEffect, useState, useRef } from 'react'
+import React, { useState, useRef } from 'react'
+import { useAsync } from 'react-use'
 import { useParams } from 'react-router-dom'
 import { Form, Input, Button, Spin, message, Alert, Select } from 'antd'
 import { PlusOutlined, MinusCircleOutlined } from '@ant-design/icons'
@@ -31,17 +32,14 @@ const CategoryEdit = () => {
   const { taskId, categoryId } = useParams()
   const [form] = Form.useForm()
 
-  useEffect(() => {
-    const fetchData = async () => {
-      const taskResponse = await tasksService.getById(taskId)
-      task.current = taskResponse
+  useAsync(async () => {
+    const taskResponse = await tasksService.getById(taskId)
+    task.current = taskResponse
 
-      const data = taskResponse.categories.find((category) => category.id === categoryId)
+    const data = taskResponse.categories.find((category) => category.id === categoryId)
 
-      setLoading(false)
-      form.setFieldsValue(data)
-    }
-    fetchData()
+    setLoading(false)
+    form.setFieldsValue(data)
   }, [categoryId, form, taskId])
 
   const onFinish = async (formData) => {

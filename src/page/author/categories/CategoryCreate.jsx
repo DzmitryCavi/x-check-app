@@ -1,4 +1,5 @@
-import React, { useRef, useState, useEffect } from 'react'
+import React, { useRef, useState } from 'react'
+import { useAsync } from 'react-use'
 import { useParams } from 'react-router-dom'
 import { Form, Input, Button, Spin, message, Result, Select } from 'antd'
 
@@ -35,14 +36,11 @@ const CategoryCreate = () => {
   const { taskId } = useParams()
   const [form] = Form.useForm()
 
-  useEffect(() => {
-    const fetchData = async () => {
-      const taskResponse = await tasksService.getById(taskId)
-      task.current = taskResponse
+  useAsync(async () => {
+    const taskResponse = await tasksService.getById(taskId)
+    task.current = taskResponse
 
-      setLoading(false)
-    }
-    fetchData()
+    setLoading(false)
   }, [taskId])
 
   const onFinish = async (data) => {

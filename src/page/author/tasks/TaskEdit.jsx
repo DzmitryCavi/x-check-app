@@ -1,4 +1,5 @@
-import React, { useState, useRef, useEffect } from 'react'
+import React, { useState, useRef } from 'react'
+import { useAsync } from 'react-use'
 import { useParams } from 'react-router-dom'
 import { Form, Input, Button, Table, Space, Radio, Spin, Alert, message, Popconfirm } from 'antd'
 import { EditOutlined, DeleteOutlined, PlusOutlined } from '@ant-design/icons'
@@ -28,17 +29,14 @@ const TaskEdit = () => {
   const formRef = useRef(null)
   const [form] = Form.useForm()
 
-  useEffect(() => {
-    const fetchData = async () => {
-      const taskResponse = await tasksService.getById(taskId)
-      task.current = taskResponse
+  useAsync(async () => {
+    const taskResponse = await tasksService.getById(taskId)
+    task.current = taskResponse
 
-      setLoading(false)
+    setLoading(false)
 
-      setCategories(taskResponse.categories)
-      form.setFieldsValue(taskResponse)
-    }
-    fetchData()
+    setCategories(taskResponse.categories)
+    form.setFieldsValue(taskResponse)
   }, [form, taskId])
 
   const onFinish = async (data) => {

@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
+import { useAsync } from 'react-use'
 import PropTypes from 'prop-types'
 import moment from 'moment'
 import { compareAsc } from 'date-fns'
@@ -53,8 +54,8 @@ const TasksList = ({ user }) => {
     setLoading(false)
   }
 
-  useEffect(() => {
-    fetchTasks()
+  useAsync(async () => {
+    await fetchTasks()
   }, [])
 
   const onFilter = async (filterData) => {

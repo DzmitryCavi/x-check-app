@@ -1,4 +1,5 @@
-import React, { useState, useEffect, useMemo } from 'react'
+import React, { useState, useMemo } from 'react'
+import { useAsync } from 'react-use'
 import { useParams } from 'react-router-dom'
 import { Tree, Typography, Empty, Spin, Tag } from 'antd'
 import { CarryOutOutlined } from '@ant-design/icons'
@@ -36,14 +37,11 @@ const Taskview = () => {
   const [loading, setLoading] = useState(true)
   const [task, setTask] = useState([])
 
-  useEffect(() => {
-    const fetchData = async () => {
-      const taskResponse = await tasksService.getById(taskId)
+  useAsync(async () => {
+    const taskResponse = await tasksService.getById(taskId)
 
-      setTask(taskResponse)
-      setLoading(false)
-    }
-    fetchData()
+    setTask(taskResponse)
+    setLoading(false)
   }, [taskId])
 
   const treeData = useMemo(() => transformCategoriesForTree(task.categories || []), [
