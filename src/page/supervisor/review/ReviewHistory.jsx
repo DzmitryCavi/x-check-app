@@ -147,9 +147,11 @@ const ReviewHistory = ({ user }) => {
           title="State"
           key="state"
           render={({ state, id }) => {
-            return (
-              <Space size="middle">
-                {state === 'DISPUTE' ? (
+            let children = <></>
+
+            switch (state) {
+              case 'DISPUTE':
+                children = (
                   <>
                     {' '}
                     <Tag color="red" key={state}>
@@ -165,13 +167,24 @@ const ReviewHistory = ({ user }) => {
                       View
                     </ButtonLink>
                   </>
-                ) : (
+                )
+                break
+              case 'DRAFT':
+                children = (
+                  <Tag color="orange" key={state}>
+                    {state}
+                  </Tag>
+                )
+                break
+              default:
+                children = (
                   <Tag color="green" key={state}>
                     {state}
                   </Tag>
-                )}
-              </Space>
-            )
+                )
+            }
+
+            return <Space size="middle">{children}</Space>
           }}
         />
         <Column
@@ -189,6 +202,7 @@ const ReviewHistory = ({ user }) => {
               <Button
                 size="small"
                 type="danger"
+                disabled={row.state !== 'DRAFT'}
                 icon={<DeleteOutlined />}
                 onClick={() => {
                   destroyRequest(row.id)

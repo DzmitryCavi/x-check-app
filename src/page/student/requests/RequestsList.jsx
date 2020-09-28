@@ -202,6 +202,7 @@ const RequestList = ({ user }) => {
                 size="small"
                 type="danger"
                 icon={<DeleteOutlined />}
+                disabled={row.state !== 'DRAFT'}
                 onClick={() => {
                   destroyRequest(row.id)
                 }}
