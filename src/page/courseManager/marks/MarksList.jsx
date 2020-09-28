@@ -96,15 +96,7 @@ const MarksList = () => {
           title="Score"
           dataIndex="score"
           key="score"
-          render={(el) => <p key={el}>{el.score}</p>}
           sorter={(a, b) => a.grade.score - b.grade.score}
-        />
-        <Column
-          title="Max score"
-          dataIndex="grade"
-          key="Maxscore"
-          render={(el) => <p key={el}>{el.maxScore}</p>}
-          sorter={(a, b) => a.grade.maxScore - b.grade.maxScore}
         />
         <Column
           title="Action"

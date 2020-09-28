@@ -69,6 +69,7 @@ const ReviewForm = ({ user }) => {
     else reviewService.create(reviewData, user)
     setIsSuccess(true)
   }
+
   const calculateScore = (_, allFields) => {
     setScore(
       allFields.reduce(
