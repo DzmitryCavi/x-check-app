@@ -21,7 +21,6 @@ import {
   Collapse,
 } from 'antd'
 import { DownOutlined } from '@ant-design/icons'
-import ImportTasks from '../../../component/ImportTasks'
 import TaskDateConstraints from '../../../component/TaskDateConstraints'
 import { courseManagerRoutes } from '../../../router/routes'
 
@@ -120,33 +119,13 @@ const TasksList = ({ user }) => {
             placement="bottomRight"
             overlay={
               <Menu>
-                <Menu.ItemGroup title="Export">
-                  <Menu.Item onClick={() => exportAll('custom')}>Export All (*.json)</Menu.Item>
-                  <Menu.Item onClick={() => exportAll('rss')}>Export All (RSS *.json)</Menu.Item>
-                </Menu.ItemGroup>
-                <Menu.ItemGroup title="Import">
-                  <Menu.Item>
-                    <ImportTasks
-                      authorId={user.id}
-                      label=" Import (*.json)"
-                      type="custom"
-                      onImportSuccess={() => fetchTasks(user.id)}
-                    />
-                  </Menu.Item>
-                  <Menu.Item>
-                    <ImportTasks
-                      authorId={user.id}
-                      label="Import (RSS *.json)"
-                      type="rss"
-                      onImportSuccess={() => fetchTasks(user.id)}
-                    />
-                  </Menu.Item>
-                </Menu.ItemGroup>
+                <Menu.Item onClick={() => exportAll('custom')}>Export All (*.json)</Menu.Item>
+                <Menu.Item onClick={() => exportAll('rss')}>Export All (RSS *.json)</Menu.Item>
               </Menu>
             }
           >
             <Button>
-              Export / Import <DownOutlined />
+              Export <DownOutlined />
             </Button>
           </Dropdown>
         </Space>
