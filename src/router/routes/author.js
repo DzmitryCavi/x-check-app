@@ -43,6 +43,7 @@ export default [
     navigation: {
       label: 'Tasks',
       icon: ApartmentOutlined,
+      color: 'rgb(235, 47, 150)',
     },
   },
 ]
