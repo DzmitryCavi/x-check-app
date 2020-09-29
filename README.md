@@ -44,13 +44,14 @@
 **Запуск системы.** Доступ к веб-сервису **X-Check App** осуществляется интерактивно через сеть Интернет посредством обращения по адресу: **[ссылка](https://brave-banach-54e725.netlify.app/)**.
 
 **Вход в систему.** Процесс входа производится через GitHub аккаунт с предварительным выбором роли, которая будет в дальнейшем использоваться для входа в персональный раздел.
-![Auth Page](./documentation/authorization.PNG)
+
+![Auth Page](https://user-images.githubusercontent.com/11542402/94576324-e15bf600-027d-11eb-95be-af2799211473.png)
 
 # Автор (author)
 
 ### Главная страница
 
-![](./documentation/home.PNG)
+![Author Main Page](https://user-images.githubusercontent.com/11542402/94578363-516b7b80-0280-11eb-829b-e3d4d41b0d0d.png)
 
 ### Страница со списком всех заданий автора
 
@@ -63,7 +64,7 @@
 - Переход на страницу создания категории текущей задачи (клик по кнопке [+Add])
 - Export / Import как одной так и нескольких задач (собственный формат | формат RSS)
 
-![](./documentation/Tasks.PNG)
+![Author Tasks Page](https://user-images.githubusercontent.com/11542402/94578761-c474f200-0280-11eb-9b62-d673e98ef0ed.png)
 
 ### Страница создания задачи
 
@@ -74,7 +75,7 @@
   - Статус (DRAFT) - по умолчанию, пока у задачи нет категории
   - Описание (description) с возможностью форматирования текста (вставка ссылок, списков, таблиц и тд.)
 
-![](./documentation/TaskCreate.PNG)
+![Author Create Task](https://user-images.githubusercontent.com/11542402/94578988-01d97f80-0281-11eb-86b0-2cdc0ed2163b.png)
 
 ### Страница редактирования задачи
 
@@ -89,6 +90,8 @@
   - Переход к редактированию категории
   - Удаление категории
 
+![Author Edit Page](https://user-images.githubusercontent.com/11542402/94579236-4107d080-0281-11eb-8022-3d903cfbc10d.png)
+
 ### Страница создания (редактирования) категории
 
 Функциональные возможности:
@@ -101,7 +104,13 @@
     - Оценка (положительное | отрицательное число)
     - Текст критерия
 
+![Author Create/Edit Category](https://user-images.githubusercontent.com/11542402/94579681-c7241700-0281-11eb-9e6b-73d8610ecfc8.png)
+
 # Курс-менеджер (courseManager)
+
+### Главная страница
+
+![Course Manager Home Page](https://user-images.githubusercontent.com/11542402/94581411-bd031800-0283-11eb-8a80-cb3dfd762df4.png)
 
 ### Страница со списком всех опубликованных заданий (Tasks List)
 
@@ -110,9 +119,9 @@
 - Фильтрация заданий (по имени и статусу), сортировка по полям
 - Переход на страницу детального просмотра
 
-![](./documentation/MarksList.PNG)
+![Course Manager Tasks List Page (PUBLISHED)](https://user-images.githubusercontent.com/11542402/94580129-369a0680-0282-11eb-9e95-2f9a67faf991.png)
 
-### Страница со списком результатов проверкок (Marks List)
+### Страница со списком результатов проверок (Marks List)
 
 Функциональные возможности:
 
@@ -121,7 +130,7 @@
 - Выставления временных ограничений (выдача заданий на выполнение - startDate & endDate)
 - Export как одной так и нескольких задач (собственный формат | формат RSS)
 
-![](./documentation/MarksList.PNG)
+![Course Manager Marks List Page](https://user-images.githubusercontent.com/11542402/94580210-516c7b00-0282-11eb-816b-d8bf679407a6.png)
 
 # Студент (student)
 

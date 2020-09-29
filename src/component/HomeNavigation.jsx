@@ -22,7 +22,11 @@ const CustomCard = ({ ...item }) => {
         <Link to={item.path}>
           <Card>
             <Meta
-              avatar={<item.navigation.icon style={{ color: '#7cb305', fontSize: 32 }} />}
+              avatar={
+                <item.navigation.icon
+                  style={{ color: item.navigation.color || 'rgba(0, 0, 0, .85)', fontSize: 32 }}
+                />
+              }
               title={item.navigation.label || item.breadcrumb}
               description={item.description || '—'}
             />

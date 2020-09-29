@@ -10,7 +10,10 @@ const Navigation = ({ items }) => {
   const location = useLocation()
   return (
     <Menu mode="inline" defaultSelectedKeys={[location.pathname]} style={{ height: '100%' }}>
-      <Menu.Item icon={<HomeOutlined />} key={publicRoutes.home}>
+      <Menu.Item
+        icon={<HomeOutlined style={{ color: 'rgb(24, 144, 255)' }} />}
+        key={publicRoutes.home}
+      >
         <Link to={publicRoutes.home}>Home</Link>
       </Menu.Item>
       {items
@@ -21,7 +24,14 @@ const Navigation = ({ items }) => {
             : item,
         )
         .map((item) => (
-          <Menu.Item icon={<item.navigation.icon />} key={item.path}>
+          <Menu.Item
+            icon={
+              <item.navigation.icon
+                style={{ color: item.navigation.color || 'rgba(0, 0, 0, .85)' }}
+              />
+            }
+            key={item.path}
+          >
             <Link to={item.path}>{item.navigation.label || item.breadcrumb}</Link>
           </Menu.Item>
         ))}
