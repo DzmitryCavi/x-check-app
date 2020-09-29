@@ -1,7 +1,20 @@
 import React, { useState } from 'react'
 import { useAsync } from 'react-use'
 import { useParams } from 'react-router-dom'
-import { Typography, Form, Spin, List, Button, Result, Row, Col, Radio, Descriptions } from 'antd'
+import {
+  Typography,
+  Form,
+  Spin,
+  List,
+  Button,
+  Result,
+  Row,
+  Col,
+  Radio,
+  Descriptions,
+  Tag,
+} from 'antd'
+
 import parse from 'react-html-parser'
 import PropTypes from 'prop-types'
 import reviewsService from '../services/review.service'
@@ -21,10 +34,10 @@ const FormItemForRespond = ({ item }) => {
     <Row>
       <Col>
         <Form.Item
-          name={['dispute', item.id]}
+          name={['dispute', item.id, 'state']}
           rules={[{ required: true, message: 'Please answer all' }]}
           onChange={(e) => {
-            setDisabled(e.target.value === 'REJECT')
+            setDisabled(e.target.value !== 'ACCEPT')
           }}
         >
           <Radio.Group style={{ marginTop: 16 }}>
@@ -38,16 +51,26 @@ const FormItemForRespond = ({ item }) => {
         </Form.Item>
       </Col>
       <Col>
-        <Form.Item
-          name={['dispute', item.id, 'neWscore']}
-          rules={[{ required: !disabled, message: 'Please answer all' }]}
-        >
-          <NumericInput
-            disabled={disabled}
-            placeholder="new score"
-            style={{ marginTop: 16, width: 100 }}
-          />
-        </Form.Item>
+        {+item.score > 0 ? (
+          <Form.Item
+            name={['dispute', item.id, 'number']}
+            rules={[{ required: !disabled, message: 'Please answer all' }]}
+          >
+            <NumericInput
+              max={+item.score}
+              disabled={disabled}
+              placeholder="new score"
+              style={{ marginTop: 16, marginLeft: 10, width: 100 }}
+            />
+          </Form.Item>
+        ) : (
+          <Tag
+            color={disabled ? 'error' : 'success'}
+            style={{ marginTop: 21, marginLeft: 10, width: 100 }}
+          >
+            IS {!disabled && 'NOT'} MISTAKE
+          </Tag>
+        )}
       </Col>
     </Row>
   )
@@ -73,7 +96,6 @@ const Dispute = () => {
     }
     return categoriesToFilter.reduce(categoriesReduser, [])
   }
-
   useAsync(async () => {
     const reviewResponse = await reviewsService.getById(reviewId)
     const requestResponse = await requestsService.getById(reviewResponse.requestId)
@@ -86,9 +108,43 @@ const Dispute = () => {
     setLoading(false)
   }, [reviewId])
 
-  const onFinish = () => {
+  const onFinish = ({ dispute: fromData }) => {
+    const { grade } = review
+    const newGrade = {}
+    let scoreDifference = 0
+
+    Object.keys(grade).forEach((category) => {
+      newGrade[category] = grade[category].map((criteria) => {
+        const isDisputedCriteria = Object.keys(fromData).find((el) => el === criteria.criteriaId)
+        const isAccepted = isDisputedCriteria && fromData[criteria.criteriaId].state === 'ACCEPT'
+        const isPenalty = criteria.number < 0
+        if (isDisputedCriteria) {
+          switch (true) {
+            case isAccepted && !isPenalty:
+              scoreDifference += +fromData[criteria.criteriaId].number
+              break
+            case isAccepted && isPenalty:
+              scoreDifference += Math.abs(criteria.number)
+              break
+            default:
+              scoreDifference += 0
+          }
+
+          return isPenalty
+            ? {
+                ...criteria,
+                number: isAccepted ? 0 : criteria.number,
+              }
+            : { ...criteria, number: +fromData[criteria.criteriaId].number || criteria.number }
+        }
+        return criteria
+      })
+    })
+
+    const newScore = review.score + scoreDifference
+
     disputeService.close(dispute.id)
-    reviewsService.edit({ state: 'ACCEPTED' }, review.id)
+    reviewsService.edit({ state: 'ACCEPTED', grade: newGrade, score: newScore }, review.id)
     setIsSuccess(true)
   }
 
@@ -125,10 +181,7 @@ const Dispute = () => {
                   renderItem={(item) => (
                     <List.Item key={item.id}>
                       <Title level={5}>{parse(item.text)}</Title>
-                      <Form.Item
-                        name={['selfGrade', category.title, index]}
-                        rules={[{ required: true, message: 'Please grade all' }]}
-                      >
+                      <Form.Item name={['selfGrade', category.title, index]}>
                         <GradeItem
                           isDispute
                           maxScore={+item.score}

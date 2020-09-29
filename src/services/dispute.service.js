@@ -32,7 +32,7 @@ const getCountOfDisputeByReviewAuthor = async () => {
     (ac, review) =>
       disputeResponse.find((dispute) => {
         return dispute.reviewId === review.id
-      })
+      }) && review.state !== 'ACCEPTED'
         ? ac + 1
         : ac,
     0,
