@@ -28,7 +28,9 @@ const DefaultLayout = ({ breadcrumbs, isLoggedIn, user, children, dispatch }) =>
   const ProfileMenu = (
     <Menu>
       <Menu.Item key="1" icon={<ProfileOutlined />}>
-        Profile
+        <a href="https://app.rs.school/profile" target="_blank" rel="noopener noreferrer">
+          Profile
+        </a>
       </Menu.Item>
       <Menu.Item key="2" icon={<LogoutOutlined />} onClick={exit}>
         Logout
@@ -50,6 +52,7 @@ const DefaultLayout = ({ breadcrumbs, isLoggedIn, user, children, dispatch }) =>
           <>
             <Dropdown overlay={ProfileMenu}>
               <Button
+                href="https://app.rs.school/profile"
                 type="dashed"
                 size="large"
                 icon={
