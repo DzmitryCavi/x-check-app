@@ -44,6 +44,7 @@
 ![Auth Page](./documentation/authorization.PNG)
 
 
+
 # Автор (author)
 
 ### Главная страница
@@ -178,7 +179,19 @@
 
 # Ментор (supervisor)
 
-Пишем... :)
+### Страница навигации (Home)
+  Функциональные фозможности:
+- Переход к списку запросов на проверку (Request list)
+- Переход к списку обработанных запросов (Review history)
+- На каждом элементе навигации существует бэйдж уведомляющий о наличии запросов (число необработанныз запросов на Request list и число споров на Review history). Если уведомлений нет, бэйдж отсутствует
+
+
+![image](https://user-images.githubusercontent.com/48457759/94571698-3c6df880-023e-11eb-803a-1410f2934815.png)
+
+### Страница со списком запросов (Requests list)
+Функциональные фозможности:
+- Просмотр списка всех существующих запросов пользователя
+
 
 ## For Work
 
@@ -211,4 +224,3 @@ The RsLang app was created by a team of RSSchool students as a learning project.
 
 # [Rolling Scopes School ](https://rs.school/)
 
-![изображение](https://user-images.githubusercontent.com/48457759/94551457-0f314280-025e-11eb-96bc-3d8de220435d.png)
