@@ -46,7 +46,7 @@ const TasksList = ({ user }) => {
     filters = { title: '', state: '' },
   ) => {
     setLoading(true)
-    const response = await tasksService.getAll({ pagination, filters })
+    const response = await tasksService.getAll({ pagination, filters, state: 'PUBLISHED' })
 
     setPaginator(response.pagination)
     setTasks(response.data)
