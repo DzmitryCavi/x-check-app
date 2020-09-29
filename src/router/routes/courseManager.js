@@ -26,12 +26,18 @@ export default [
     },
   },
   {
-    path: routes.marks.info,
+    path: routes.reviews.info,
     component: MarkInfo,
     breadcrumb: 'Mark Info',
   },
   {
-    path: routes.marks.list,
+    path: routes.reviews.dispute,
+    component: Dispute,
+    breadcrumb: 'Dispute',
+    description: 'Dispute managment',
+  },
+  {
+    path: routes.reviews.list,
     component: MarksList,
     breadcrumb: 'Marks List',
     description: 'Marks management',
@@ -40,11 +46,5 @@ export default [
       icon: UnorderedListOutlined,
       color: '#ffaf1c',
     },
-  },
-  {
-    path: routes.marks.dispute,
-    component: Dispute,
-    breadcrumb: 'Dispute',
-    description: 'Dispute managment',
   },
 ]

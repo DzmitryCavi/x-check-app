@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { useAsync } from 'react-use'
 import { Table, Button, Space, Tag } from 'antd'
 import { formatRoute } from 'react-router-named-routes'
+import { CarryOutTwoTone } from '@ant-design/icons'
 import ButtonLink from '../../../component/ButtonLink'
 import { courseManagerRoutes } from '../../../router/routes'
 
@@ -77,15 +78,29 @@ const MarksList = () => {
         />
         <Column
           title="State"
-          dataIndex="state"
-          render={(element) => (
-            <Tag
-              color={{ GRADED: 'green', DISPUTED: 'orange', REJECTED: 'red' }[element]}
-              key={element}
-            >
-              {element}
-            </Tag>
-          )}
+          render={({ state: status, id }) => {
+            return (
+              <>
+                <Tag
+                  color={{ ACCEPTED: 'green', GRADED: 'green', DISPUTE: 'red' }[status]}
+                  key={status}
+                >
+                  {status}
+                </Tag>
+                {status === 'DISPUTE' && (
+                  <ButtonLink
+                    type="ghost"
+                    size="small"
+                    style={{ fontSize: 12, color: 'red' }}
+                    icon={<CarryOutTwoTone twoToneColor="red" />}
+                    linkTo={formatRoute(courseManagerRoutes.reviews.dispute, { reviewId: id })}
+                  >
+                    View
+                  </ButtonLink>
+                )}
+              </>
+            )
+          }}
           filters={makeFilters('state')}
           onFilter={(value, record) => record.state.includes(value)}
           filteredValue={filteredInfo.state || null}
@@ -103,7 +118,7 @@ const MarksList = () => {
             <ButtonLink
               type="primary"
               size="large"
-              linkTo={formatRoute(courseManagerRoutes.marks.info, { marksId: row.id })}
+              linkTo={formatRoute(courseManagerRoutes.reviews.info, { reviewId: row.id })}
             >
               Info
             </ButtonLink>

@@ -11,7 +11,7 @@ import GradeItem from '../../../component/GradeInfoItem'
 const { Title } = Typography
 
 const MarkInfo = () => {
-  const { marksId } = useParams()
+  const { reviewId } = useParams()
   const [loading, setLoading] = useState(true)
   const [mark, setMark] = useState([])
   const [request, setRequest] = useState([])
@@ -21,14 +21,14 @@ const MarkInfo = () => {
   const maxScore = categories && categories.reduce((ac, catergory) => ac + +catergory.maxScore, 0)
 
   useAsync(async () => {
-    const markResponse = await reviewsService.getById(marksId)
+    const markResponse = await reviewsService.getById(reviewId)
     const requestResponse = await requestsService.getById(markResponse.requestId)
     const tasksResponse = await tasksService.getById(requestResponse.taskId)
     setMark(markResponse)
     setRequest(requestResponse)
     setCategories(tasksResponse.categories)
     setLoading(false)
-  }, [marksId])
+  }, [reviewId])
 
   const { name, student, author, state, created_at: createdAt } = mark
 

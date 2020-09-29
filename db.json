@@ -328,8 +328,8 @@
       "authorId": 11542402,
       "slug": "virtual-keyboard",
       "state": "PUBLISHED",
-      "startDate": null,
-      "endDate": null,
+      "startDate": "2020-09-13 13:05:06",
+      "endDate": "2022-09-29 13: 05: 06",
       "created_at": "2020-09-16 20:00:00",
       "updated_at": null,
       "categories": [
@@ -448,6 +448,229 @@
   "crossCheckSession": [],
   "reviewRequest": [
     {
+      "name": "X Check App / RS Assessment Too (hardz)",
+      "taskId": 4,
+      "url": "https://mail.yandex.by/?addMultiUserFromDropdownButton=true#inbox",
+      "selfGrade": {
+        "Базовая функциональность": [
+          {
+            "number": 5,
+            "discription": "Some things are done, some are not",
+            "criteriaId": "5a8187fb-e3f9-495f-88a4-d440b2ffc582"
+          },
+          {
+            "number": 10,
+            "discription": "Well done!",
+            "criteriaId": "7f97c6ce-7675-4d28-bc70-c36ef7d3461e"
+          },
+          {
+            "number": 10,
+            "discription": "Some things are done, some are not",
+            "criteriaId": "00a70240-c559-45cb-823e-3a1efe32db32"
+          },
+          {
+            "number": 10,
+            "discription": "Well done!",
+            "criteriaId": "afe9ba7e-4e77-4058-9eca-c83cb6484da8"
+          },
+          {
+            "number": 5,
+            "discription": "Some things are done, some are not",
+            "criteriaId": "fc3d8ac2-42c4-4144-b382-e80f26af1db6"
+          },
+          {
+            "number": 10,
+            "discription": "Well done!",
+            "criteriaId": "0c008f85-3aab-4b4a-bd8d-ccac9513d21b"
+          },
+          {
+            "number": 10,
+            "discription": "Some things are done, some are not",
+            "criteriaId": "24cc0943-b1f3-4c3b-908c-f329c8ce7d8d"
+          },
+          {
+            "number": 10,
+            "discription": "Well done!",
+            "criteriaId": "3350abab-8a60-4176-95fd-78dd26ef8a75"
+          },
+          {
+            "number": 5,
+            "discription": "Some things are done, some are not",
+            "criteriaId": "bb337c8c-a201-49cb-a72d-691b30999fcd"
+          },
+          {
+            "number": 10,
+            "discription": "Well done!",
+            "criteriaId": "c66caade-0ed3-4333-86da-a2a1e0a940c9"
+          },
+          {
+            "number": 5,
+            "discription": "Some things are done, some are not",
+            "criteriaId": "af0b6404-da25-4aba-ac9d-93d8f97223b1"
+          },
+          {
+            "number": 10,
+            "discription": "Well done!",
+            "criteriaId": "5b3f8526-a84a-4abf-ad2a-815b08735893"
+          }
+        ],
+        "Дополнительные возможности при создании задания": [
+          {
+            "number": 5,
+            "discription": "Some things are done, some are not",
+            "criteriaId": "f231b3dc-9015-40fe-b3ea-a1c740130db5"
+          },
+          {
+            "number": 10,
+            "discription": "Well done!",
+            "criteriaId": "4775be48-82da-4f7e-8984-09cf104aca27"
+          },
+          {
+            "number": 5,
+            "discription": "Some things are done, some are not",
+            "criteriaId": "5c2975b3-ce14-4f0f-b88a-556b72fb1e34"
+          },
+          {
+            "number": 10,
+            "discription": "Well done!",
+            "criteriaId": "f23d1e6d-bed0-4f60-be45-5c0a7c19c925"
+          },
+          {
+            "number": 15,
+            "discription": "Some things are done, some are not",
+            "criteriaId": "30950c7e-ad8c-422c-a557-6147df8f1128"
+          },
+          {
+            "number": 20,
+            "discription": "Well done!",
+            "criteriaId": "7c079873-76ca-455a-b323-b071f7c60a16"
+          }
+        ],
+        "Дополнительные возможности при проверке задания": [
+          {
+            "number": 5,
+            "discription": "Some things are done, some are not",
+            "criteriaId": "d87132fb-2b27-4bfd-9e1b-b226ae1b73f9"
+          },
+          {
+            "number": 10,
+            "discription": "Well done!",
+            "criteriaId": "ac17fb9d-8140-440b-8858-145f32603900"
+          },
+          {
+            "number": 5,
+            "discription": "Some things are done, some are not",
+            "criteriaId": "0141c1f6-ede6-4448-96ee-8d2e53712380"
+          },
+          {
+            "number": 10,
+            "discription": "Well done!",
+            "criteriaId": "1c8b3e4e-fa74-41a7-a501-efa01f14edd4"
+          }
+        ],
+        "Дополнительные возможности после проверки задания": [
+          {
+            "number": 5,
+            "discription": "Some things are done, some are not",
+            "criteriaId": "6897d5ba-4e09-46ab-9399-dfbf5a47b761"
+          },
+          {
+            "number": 30,
+            "discription": "Well done!",
+            "criteriaId": "cb3dc60e-4bbf-4265-98ec-1a551a1ca9f1"
+          },
+          {
+            "number": 5,
+            "discription": "Some things are done, some are not",
+            "criteriaId": "68a10051-9dd0-457d-97f6-de9dd2111725"
+          }
+        ],
+        "Кросс-чек": [
+          {
+            "number": 20,
+            "discription": "Well done!",
+            "criteriaId": "7f7223e1-085e-4ceb-9235-9fb6aea4b0b1"
+          },
+          {
+            "number": 5,
+            "discription": "Some things are done, some are not",
+            "criteriaId": "6a217973-ac79-4047-bd47-7dad9618bff5"
+          },
+          {
+            "number": 10,
+            "discription": "Well done!",
+            "criteriaId": "09f9210b-b4ca-4630-9a9c-0406663c8c21"
+          },
+          {
+            "number": 5,
+            "discription": "Some things are done, some are not",
+            "criteriaId": "d5dc7282-886f-4c25-9cf8-f197ef3f7e6a"
+          }
+        ],
+        "Дополнительная функциональность": [
+          {
+            "number": 15,
+            "discription": "Some things are done, some are not",
+            "criteriaId": "97950e0e-dd46-4b25-8e7e-e894695a2345"
+          },
+          {
+            "number": 10,
+            "discription": "Some things are done, some are not",
+            "criteriaId": "58699b03-02e7-4023-86b9-73a1028f1978"
+          },
+          {
+            "number": 5,
+            "discription": "Some things are done, some are not",
+            "criteriaId": "c8446ce8-6891-4f72-a571-5e7e04cb1b6a"
+          },
+          {
+            "number": 5,
+            "discription": "Some things are done, some are not",
+            "criteriaId": "f7bf9ea4-c3a7-4e91-87b1-f648eb0f2200"
+          },
+          {
+            "number": 15,
+            "discription": "Some things are done, some are not",
+            "criteriaId": "40b9f08d-c8ec-49eb-952b-07a086d7ece7"
+          }
+        ],
+        "Качество кода": [
+          {
+            "number": 10,
+            "discription": "Some things are done, some are not",
+            "criteriaId": "616adf03-e127-46da-8471-39679caf2a3d"
+          },
+          {
+            "number": 50,
+            "discription": "Well done!",
+            "criteriaId": "fceeab79-560e-46fa-87be-ed5c258f06c0"
+          },
+          {
+            "number": 30,
+            "discription": "Well done!",
+            "criteriaId": "52257dbb-5b8d-47cb-a18b-073e8f847f69"
+          },
+          {
+            "number": 20,
+            "discription": "Well done!",
+            "criteriaId": "dc78f591-35dd-41df-86d2-1abfda94fff9"
+          },
+          {
+            "number": 10,
+            "discription": "Well done!",
+            "criteriaId": "f7904a2c-aca4-4b1d-8b8d-af8c73eac303"
+          }
+        ]
+      },
+      "score": 445,
+      "state": "SUBMITTED",
+      "author": "DzmitryCavi",
+      "id": "request-51cf673a-9d1a-4685-b8bd-bb64eaefa4b2",
+      "created_at": "2020-09-27 13:24:15",
+      "updated_at": null,
+      "closed_at": null
+    },
+    {
       "name": "Виртуальная клавиатура",
       "taskId": 1,
       "url": "https://mail.yandex.by/?addMultiUserFromDropdownButton=true#inbox",
@@ -517,6 +740,94 @@
       "closed_at": "2020-09-27 13:25:18"
     }
   ],
-  "reviews": [],
-  "dispute": []
+  "reviews": [
+    {
+      "name": "Виртуальная клавиатура",
+      "taskId": 1,
+      "requestId": "request-0396240e-8e7c-45c9-beec-25c52e23c23d",
+      "student": "DzmitryCavi",
+      "grade": {
+        "Минимальный набор": [
+          {
+            "criteriaId": "4dbaadb6-1f54-40e7-bfbd-f6dc67419b4f",
+            "number": 10,
+            "discription": "Some things are done, some are not"
+          },
+          {
+            "criteriaId": "38c1559c-c40c-4a8b-8349-20296017c2a8",
+            "number": 0,
+            "discription": "No ticket today"
+          }
+        ],
+        "Стандартный набор": [
+          {
+            "criteriaId": "cd5499ca-f743-441f-a40b-ce1c41629b31",
+            "number": 15,
+            "discription": "Well done!"
+          },
+          {
+            "criteriaId": "23bce45b-3535-47ae-9bea-776b2eab76aa",
+            "number": 15,
+            "discription": "Well done!"
+          }
+        ],
+        "Дополнительный набор": [
+          {
+            "criteriaId": "7cb425b7-70fe-436b-9385-34fa5cef2a34",
+            "number": 15,
+            "discription": "Well done!"
+          }
+        ],
+        "Технические требования": [
+          {
+            "criteriaId": "8cb39341-72f4-49f5-9560-760bfa02ab9a",
+            "number": 0,
+            "discription": "No ticket today"
+          },
+          {
+            "criteriaId": "fed29c0a-4367-40d4-b21c-7e636a9082a0",
+            "number": 10,
+            "discription": "Well done!"
+          },
+          {
+            "criteriaId": "3a5e02dd-04a0-422d-a45a-ba7a60f18f18",
+            "number": 5,
+            "discription": "Some things are done, some are not"
+          }
+        ],
+        "Штрафы": [
+          {
+            "criteriaId": "72ec6975-d208-4678-9764-9bcc1651a86b",
+            "number": -15,
+            "discription": "Well done!"
+          }
+        ]
+      },
+      "score": 55,
+      "state": "ACCEPTED",
+      "author": "DzmitryCavi",
+      "id": "review-b3e23c22-4e9c-4148-8b65-346a65eaaf63",
+      "created_at": "2020-09-27 13:25:18",
+      "updated_at": "2020-09-30 00:42:34",
+      "closed_at": null
+    }
+  ],
+  "dispute": [
+    {
+      "criterias": {
+        "4dbaadb6-1f54-40e7-bfbd-f6dc67419b4f": {
+          "comment": "asdsad"
+        },
+        "72ec6975-d208-4678-9764-9bcc1651a86b": {
+          "comment": "No"
+        }
+      },
+      "reviewId": "review-b3e23c22-4e9c-4148-8b65-346a65eaaf63",
+      "id": "dispute-80d8a403-6c4e-4c0f-b722-bf2202a8ff5b",
+      "created_at": "2020-09-30 00:07:00",
+      "state": "CLOSED",
+      "updated_at": null,
+      "closed_at": "2020-09-30 00:42:34"
+    }
+  ]
 }

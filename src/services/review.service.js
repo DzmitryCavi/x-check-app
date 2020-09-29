@@ -9,7 +9,9 @@ const getAll = async () => {
 }
 
 const getAllGraded = async () => {
-  const { data: tasks, status } = await axios.get(`${API_URL}/reviews?state=GRADED`)
+  const { data: tasks, status } = await axios.get(
+    `${API_URL}/reviews?state=GRADED&state=DISPUTE&state=ACCEPTED`,
+  )
   return status === 200 && tasks ? tasks : []
 }
 
