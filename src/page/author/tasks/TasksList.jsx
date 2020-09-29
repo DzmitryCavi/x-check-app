@@ -123,6 +123,14 @@ const TasksList = ({ user }) => {
                       onImportSuccess={() => fetchTasks(user.id)}
                     />
                   </Menu.Item>
+                  <Menu.Item>
+                    <ImportTasks
+                      authorId={user.id}
+                      label="Import (one-task.md)"
+                      type="md"
+                      onImportSuccess={() => {}}
+                    />
+                  </Menu.Item>
                 </Menu.ItemGroup>
               </Menu>
             }

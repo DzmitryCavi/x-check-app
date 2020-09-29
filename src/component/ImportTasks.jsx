@@ -6,7 +6,9 @@ import tasksService from '../services/tasks.service'
 const Uploader = ({ authorId, label, type, onImportSuccess }) => {
   async function importFile({ onSuccess, onError, file }) {
     try {
-      await tasksService.importTasks(file, authorId, type)
+      const data = await tasksService.importTasks(file, authorId, type)
+
+      onImportSuccess(data)
       onSuccess(null, file)
     } catch (error) {
       onError()
@@ -18,14 +20,18 @@ const Uploader = ({ authorId, label, type, onImportSuccess }) => {
     showUploadList: false,
     customRequest: importFile,
     beforeUpload: (file) => {
-      if (file.type !== 'application/json') {
+      if (['custom', 'rss'].includes(type) && file.type !== 'application/json') {
         message.error(`${file.name} is not a json file`)
+        return false
       }
-      return file.type === 'application/json'
+      if (type === 'md' && file.name.split('.').pop() !== 'md') {
+        message.error(`${file.name} is not a markdown file`)
+        return false
+      }
+      return true
     },
     onChange(info) {
       if (info.file.status === 'done') {
-        onImportSuccess()
         message.success(`${info.file.name} file uploaded successfully`)
       } else if (info.file.status === 'error') {
         message.error(`${info.file.name} file upload failed.`)

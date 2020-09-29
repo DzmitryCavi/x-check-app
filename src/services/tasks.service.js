@@ -92,11 +92,13 @@ const importTasks = async (file, authorId, type) => {
   const formData = new FormData()
   formData.append('authorId', authorId)
   formData.append('file', file)
-  await axios.post(`${SERVER_URL}/tasks/import?type=${type}`, formData, {
+  const { data } = await axios.post(`${SERVER_URL}/tasks/import?type=${type}`, formData, {
     headers: {
       'Content-Type': 'multipart/form-data',
     },
   })
+
+  return data
 }
 
 const exportById = async (taskId, type = 'rss') => {
