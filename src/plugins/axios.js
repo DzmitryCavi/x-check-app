@@ -10,7 +10,7 @@ axios.interceptors.response.use(
   (response) => response,
   (error) => {
     const { dispatch } = store
-    dispatch(setError(error.message, error.response.status))
+    dispatch(setError(error.message, error.response?.status ?? 500))
     notification.error({
       className: 'app-notification app-notification--error',
       message: 'Error',
