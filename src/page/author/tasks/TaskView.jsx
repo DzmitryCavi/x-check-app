@@ -1,8 +1,8 @@
 import React, { useState, useMemo } from 'react'
 import { useAsync } from 'react-use'
-import { useParams } from 'react-router-dom'
+import { Link, useParams } from 'react-router-dom'
 import { Tree, Typography, Empty, Spin, Tag } from 'antd'
-import { CarryOutOutlined } from '@ant-design/icons'
+import { CarryOutOutlined, EditOutlined } from '@ant-design/icons'
 import parse from 'react-html-parser'
 import { formatRoute } from 'react-router-named-routes'
 
@@ -14,10 +14,22 @@ import tasksService from '../../../services/tasks.service'
 
 const { Title } = Typography
 
-const transformCategoriesForTree = (categories) =>
+const transformCategoriesForTree = (categories, taskId) =>
   categories.map((category) => ({
     key: String(category.id),
-    title: <span>{category.title}</span>,
+    title: (
+      <>
+        {category.title}&nbsp;
+        <Link
+          to={formatRoute(authorRoutes.categories.edit, {
+            taskId,
+            categoryId: category.id,
+          })}
+        >
+          <EditOutlined /> click to edit
+        </Link>
+      </>
+    ),
     children: category.criteria.map((criterion, idx) => ({
       key: `${String(category.id)}-${idx}`,
       title: (
@@ -44,41 +56,55 @@ const Taskview = () => {
     setLoading(false)
   }, [taskId])
 
-  const treeData = useMemo(() => transformCategoriesForTree(task.categories || []), [
+  const treeData = useMemo(() => transformCategoriesForTree(task.categories || [], taskId), [
     task.categories,
+    taskId,
   ])
 
   return (
     <div className="task-view-page">
-      <h1 className="page-title">{task.title}</h1>
       {loading ? (
         <div className="content-loading">
           <Spin tip="Loading..." />
         </div>
       ) : (
-        <div className="task">
-          <div className="task__body">
-            <div className="task__description">{parse(task.description)}</div>
+        <>
+          <h1 className="page-title">
+            {task.title}&nbsp;
+            <Link
+              to={formatRoute(authorRoutes.tasks.edit, {
+                taskId,
+              })}
+            >
+              <small>
+                <EditOutlined /> click to edit
+              </small>
+            </Link>
+          </h1>
+          <div className="task">
+            <div className="task__body">
+              <div className="task__description">{parse(task.description)}</div>
 
-            <div className="task-categories">
-              <Title level={4} className="task-categories__title">
-                Categories:
-              </Title>
-              {treeData.length ? (
-                <Tree showLine={<CarryOutOutlined />} treeData={treeData} defaultExpandAll />
-              ) : (
-                <Empty description="Categories not found :(">
-                  <ButtonLink
-                    type="primary"
-                    linkTo={formatRoute(authorRoutes.categories.create, { taskId })}
-                  >
-                    Create Now
-                  </ButtonLink>
-                </Empty>
-              )}
+              <div className="task-categories">
+                <Title level={4} className="task-categories__title">
+                  Categories:
+                </Title>
+                {treeData.length ? (
+                  <Tree showLine={<CarryOutOutlined />} treeData={treeData} defaultExpandAll />
+                ) : (
+                  <Empty description="Categories not found :(">
+                    <ButtonLink
+                      type="primary"
+                      linkTo={formatRoute(authorRoutes.categories.create, { taskId })}
+                    >
+                      Create Now
+                    </ButtonLink>
+                  </Empty>
+                )}
+              </div>
             </div>
           </div>
-        </div>
+        </>
       )}
     </div>
   )

@@ -1,4 +1,22 @@
 /* Task View Page */
+
+.task {
+  &__description {
+    pre {
+      padding: 16px;
+      overflow: auto;
+      font-size: 85%;
+      line-height: 1.45;
+      background-color: #f6f8fa;
+      border-radius: 6px;
+      code {
+        font-size: 1em;
+        font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, Courier, monospace;
+      }
+    }
+  }
+}
+
 .task-categories {
   margin-top: 30px;
 
