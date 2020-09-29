@@ -15,6 +15,7 @@ export default [
     navigation: {
       label: 'Sent Requests',
       icon: CodeOutlined,
+      color: '#52c41a',
     },
   },
   {
@@ -35,6 +36,7 @@ export default [
     navigation: {
       label: 'Requests List',
       icon: UnorderedListOutlined,
+      color: '#850bff',
     },
   },
 ]
