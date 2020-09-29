@@ -1,8 +1,9 @@
 import React, { useState } from 'react'
 import { useAsync } from 'react-use'
 import { useParams } from 'react-router-dom'
-import { Typography, Form, Spin, List, Button, Result, Card } from 'antd'
+import { Typography, Form, Spin, List, Button, Result, Row, Col, Radio, Descriptions } from 'antd'
 import parse from 'react-html-parser'
+import PropTypes from 'prop-types'
 import reviewsService from '../services/review.service'
 import requestsService from '../services/requests.service'
 import tasksService from '../services/tasks.service'
@@ -10,8 +11,47 @@ import { supervisorRoutes } from '../router/routes'
 import disputeService from '../services/dispute.service'
 import GradeItem from '../component/GradeInfoItem'
 import ButtonLink from '../component/ButtonLink'
+import NumericInput from '../component/NumericInput'
 
 const { Title, Link, Text } = Typography
+
+const FormItemForRespond = ({ item }) => {
+  const [disabled, setDisabled] = useState(true)
+  return (
+    <Row>
+      <Col>
+        <Form.Item
+          name={['dispute', item.id]}
+          rules={[{ required: true, message: 'Please answer all' }]}
+          onChange={(e) => {
+            setDisabled(e.target.value === 'REJECT')
+          }}
+        >
+          <Radio.Group style={{ marginTop: 16 }}>
+            <Radio.Button value="ACCEPT" style={{ color: '#52c41a' }}>
+              ACCEPT
+            </Radio.Button>
+            <Radio.Button value="REJECT" style={{ color: '#ff4d4f' }}>
+              REJECT
+            </Radio.Button>
+          </Radio.Group>
+        </Form.Item>
+      </Col>
+      <Col>
+        <Form.Item
+          name={['dispute', item.id, 'neWscore']}
+          rules={[{ required: !disabled, message: 'Please answer all' }]}
+        >
+          <NumericInput
+            disabled={disabled}
+            placeholder="new score"
+            style={{ marginTop: 16, width: 100 }}
+          />
+        </Form.Item>
+      </Col>
+    </Row>
+  )
+}
 
 const Dispute = () => {
   const { reviewId } = useParams()
@@ -76,18 +116,15 @@ const Dispute = () => {
               <Title level={3}>Solution url:</Title>
               <Link href={request.url}>{request.url}</Link>
               <Title level={4}>Disputed tasks</Title>
-              {categories.map((category) => (
+              {categories.map((category, index) => (
                 <List
                   itemLayout="vertical"
                   key={category.id}
                   size="large"
                   dataSource={category.criteria}
-                  renderItem={(item, index) => (
-                    <List.Item key={`criteria-${index + 1}`}>
+                  renderItem={(item) => (
+                    <List.Item key={item.id}>
                       <Title level={5}>{parse(item.text)}</Title>
-                      <Card>
-                        <Text type="danger">{dispute.criterias[item.id].comment}</Text>
-                      </Card>
                       <Form.Item
                         name={['selfGrade', category.title, index]}
                         rules={[{ required: true, message: 'Please grade all' }]}
@@ -101,6 +138,14 @@ const Dispute = () => {
                           criteria={item.id}
                         />
                       </Form.Item>
+                      <Descriptions size="small" bordered>
+                        <Descriptions.Item span={3} label="Comment">
+                          <Text type="danger">{dispute.criterias[item.id].comment}</Text>
+                        </Descriptions.Item>
+                        <Descriptions.Item span={3} label="Responde">
+                          <FormItemForRespond item={item} />
+                        </Descriptions.Item>
+                      </Descriptions>
                     </List.Item>
                   )}
                 />
@@ -116,6 +161,10 @@ const Dispute = () => {
       )}
     </>
   )
+}
+
+FormItemForRespond.propTypes = {
+  item: PropTypes.instanceOf(Object).isRequired,
 }
 
 export default Dispute

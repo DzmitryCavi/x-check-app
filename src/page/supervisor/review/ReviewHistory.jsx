@@ -13,6 +13,7 @@ import {
   Input,
   Collapse,
   Typography,
+  Popconfirm,
 } from 'antd'
 import { useAsync } from 'react-use'
 import { connect } from 'react-redux'
@@ -46,7 +47,7 @@ const ReviewHistory = ({ user }) => {
     setLoading(false)
   }, [user])
 
-  const destroyRequest = async (requestId) => {
+  const destroyReview = async (requestId) => {
     await reviewsService.destroyById(requestId)
     setReviews((prev) => prev.filter((request) => request.id !== requestId))
 
@@ -147,9 +148,11 @@ const ReviewHistory = ({ user }) => {
           title="State"
           key="state"
           render={({ state, id }) => {
-            return (
-              <Space size="middle">
-                {state === 'DISPUTE' ? (
+            let children = <></>
+
+            switch (state) {
+              case 'DISPUTE':
+                children = (
                   <>
                     {' '}
                     <Tag color="red" key={state}>
@@ -165,13 +168,24 @@ const ReviewHistory = ({ user }) => {
                       View
                     </ButtonLink>
                   </>
-                ) : (
+                )
+                break
+              case 'DRAFT':
+                children = (
+                  <Tag color="yeallow" key={state}>
+                    {state}
+                  </Tag>
+                )
+                break
+              default:
+                children = (
                   <Tag color="green" key={state}>
                     {state}
                   </Tag>
-                )}
-              </Space>
-            )
+                )
+            }
+
+            return <Space size="middle">{children}</Space>
           }}
         />
         <Column
@@ -185,15 +199,14 @@ const ReviewHistory = ({ user }) => {
                 icon={<EditOutlined />}
                 linkTo={formatRoute(supervisorRoutes.requests.review, { requestId: row.requestId })}
               />
-
-              <Button
-                size="small"
-                type="danger"
-                icon={<DeleteOutlined />}
-                onClick={() => {
-                  destroyRequest(row.id)
-                }}
-              />
+              <Popconfirm title="Sure to delete?" onConfirm={() => destroyReview(row.id)}>
+                <Button
+                  size="small"
+                  type="danger"
+                  icon={<DeleteOutlined />}
+                  disabled={row.state !== 'DRAFT'}
+                />
+              </Popconfirm>
             </Space>
           )}
         />
