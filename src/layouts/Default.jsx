@@ -118,7 +118,12 @@ const DefaultLayout = ({ breadcrumbs, isLoggedIn, user, children, dispatch }) =>
           <Content className="default-layout__content">{children}</Content>
         </Layout>
       </Content>
-      <Footer style={{ textAlign: 'center' }}>©2020 Created by Dream Team</Footer>
+      <Footer style={{ textAlign: 'center' }}>
+        ©{new Date().getFullYear()} Created by{' '}
+        <a href="https://discord.gg/MVuXZQj" target="_blank" rel="noopener noreferrer">
+          Dream Team
+        </a>
+      </Footer>
     </Layout>
   )
 }
