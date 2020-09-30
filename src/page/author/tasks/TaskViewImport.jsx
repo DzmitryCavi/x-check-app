@@ -44,9 +44,14 @@ const TaskViewImport = ({ history, location }) => {
       <div className="task">
         <div className="task__body">
           <div className="d-flex justify-content-start">
-            <Button className="mb-2" type="primary" onClick={() => form.submit()}>
-              Save
-            </Button>
+            <Space className="mb-2">
+              <Button type="primary" icon={<SaveOutlined />} onClick={() => form.submit()}>
+                Save
+              </Button>
+              <Button type="default" icon={<RollbackOutlined />} onClick={() => history.goBack()}>
+                Cancel
+              </Button>
+            </Space>
           </div>
 
           <Form.Provider
@@ -224,21 +229,11 @@ const TaskViewImport = ({ history, location }) => {
           </Form.Provider>
 
           <div className="d-flex justify-content-start">
-            <Space>
-              <Button
-                className="mt-3"
-                type="primary"
-                icon={<SaveOutlined />}
-                onClick={() => form.submit()}
-              >
+            <Space className="mt-3">
+              <Button type="primary" icon={<SaveOutlined />} onClick={() => form.submit()}>
                 Save
               </Button>
-              <Button
-                className="mt-3"
-                type="default"
-                icon={<RollbackOutlined />}
-                onClick={() => history.goBack()}
-              >
+              <Button type="default" icon={<RollbackOutlined />} onClick={() => history.goBack()}>
                 Cancel
               </Button>
             </Space>
