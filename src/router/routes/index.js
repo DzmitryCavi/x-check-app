@@ -10,6 +10,7 @@ export const authorRoutes = {
     create: '/author/tasks/create',
     edit: '/author/tasks/:taskId/edit',
     view: '/author/tasks/:taskId/view',
+    viewImport: '/author/tasks/view/import',
   },
   categories: {
     create: '/author/tasks/:taskId/categories/create',

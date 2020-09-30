@@ -43,16 +43,21 @@ const transformCategoriesForTree = (categories, taskId) =>
     })),
   }))
 
-const Taskview = () => {
+const TaskView = () => {
   const { taskId } = useParams()
 
   const [loading, setLoading] = useState(true)
   const [task, setTask] = useState([])
 
   useAsync(async () => {
-    const taskResponse = await tasksService.getById(taskId)
+    console.log(taskId)
 
-    setTask(taskResponse)
+    let taskResponse
+    if (taskId) {
+      taskResponse = await tasksService.getById(taskId)
+    }
+
+    setTask(taskResponse || {})
     setLoading(false)
   }, [taskId])
 
@@ -110,4 +115,4 @@ const Taskview = () => {
   )
 }
 
-export default Taskview
+export default TaskView

@@ -21,6 +21,11 @@ export default [
     breadcrumb: 'Edit Category',
   },
   {
+    path: routes.tasks.viewImport,
+    component: TaskView,
+    breadcrumb: 'View Import Task',
+  },
+  {
     path: routes.tasks.view,
     component: TaskView,
     breadcrumb: 'View Task',
