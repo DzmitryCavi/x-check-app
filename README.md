@@ -284,17 +284,23 @@
 
 ![image](https://user-images.githubusercontent.com/48457759/94600215-41f92c00-029a-11eb-9990-47c463d2d739.png)
 
-## For Work
+## Инструкциz для начала разработки и для деплоя продакшн версии
 
-- For running : npm start
+- Скопируйте репозиторий : git clone https://github.com/DzmitryCavi/x-check-app.git
 
-- For testing : npm test
+- Установите пакеты : npm i
 
-- For prod building : npm build
+- Запуск приложения : npm run start
+
+- Запуск тестов : npm test
+
+- Сборка проекта : npm build
 
 - Lint : npm lint
 
 - Eject: npm eject
+
+- Для деплоя воспользуйтесь сервисом по типу netlify: [подробности](https://docs.netlify.com/site-deploys/create-deploys/#deploy-with-git)
 
 ## Built with
 
@@ -310,7 +316,7 @@
 
 - [EsLint](https://eslint.org/) - ESLint is a tool for identifying and reporting on patterns found in ECMAScript/JavaScript code, with the goal of making code more consistent and avoiding bugs.
 
-# Дополнительные полезные возможности, не описанные в требованиях к заданию.
+## Дополнительные полезные возможности, не описанные в требованиях к заданию.
 
 - Встроенный текстовы редактор при создании таксов, позволяющий форматировать текст, создавать списки, таблицы и др.
 
