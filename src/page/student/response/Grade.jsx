@@ -1,7 +1,19 @@
 import React, { useState } from 'react'
 import { useAsync } from 'react-use'
 import { useParams } from 'react-router-dom'
-import { Typography, Form, Spin, List, Progress, Button, Result } from 'antd'
+import {
+  Typography,
+  Form,
+  Spin,
+  List,
+  Progress,
+  Button,
+  Result,
+  Card,
+  Statistic,
+  Row,
+  Col,
+} from 'antd'
 import { CheckCircleOutlined, CloseOutlined } from '@ant-design/icons'
 import parse from 'react-html-parser'
 import reviewsService from '../../../services/review.service'
@@ -124,6 +136,24 @@ const Grade = () => {
               )}
             />
           ))}
+          {review.extra && (
+            <List.Item key="extra" className="ml-2 mb-2">
+              <Card title="Extra" style={{ width: '100%' }} size="small">
+                <Row>
+                  <Col span={2}>
+                    <Statistic title="Score" value={review.extra.score} />
+                  </Col>
+                  <Col>
+                    <Statistic
+                      title="Comment"
+                      value={review.extra.comment}
+                      style={{ width: '100%' }}
+                    />
+                  </Col>
+                </Row>
+              </Card>
+            </List.Item>
+          )}
           <Form.Item>
             {!isAcceptedReview && (
               <>

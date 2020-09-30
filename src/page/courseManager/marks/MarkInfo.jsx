@@ -48,7 +48,9 @@ const MarkInfo = () => {
           </Descriptions.Item>
           <Descriptions.Item label="State">
             <Tag
-              color={{ GRADED: 'green', DISPUTED: 'orange', REJECTED: 'red' }[state]}
+              color={
+                { GRADED: 'green', DISPUTED: 'orange', REJECTED: 'red', ACCEPTED: 'green' }[state]
+              }
               key={state}
             >
               {state}

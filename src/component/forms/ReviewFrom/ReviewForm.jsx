@@ -2,15 +2,16 @@ import React, { useState } from 'react'
 import { useAsync } from 'react-use'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
-import { Form, Spin, Button, Typography, Result, Space } from 'antd'
+import { Form, Spin, Button, Typography, Result, Space, Card, Input } from 'antd'
 import { useParams } from 'react-router-dom'
 import parse from 'react-html-parser'
 import ReviewFormItem from './ReviewFormItem'
 import requestsService from '../../../services/requests.service'
 import tasksService from '../../../services/tasks.service'
 import reviewService from '../../../services/review.service'
+import NumericInput from '../../NumericInput'
 
-const { Title, Link } = Typography
+const { Title, Link, Text } = Typography
 
 const ReviewForm = ({ user }) => {
   const [isSuccess, setIsSuccess] = useState(false)
@@ -25,8 +26,8 @@ const ReviewForm = ({ user }) => {
   useAsync(async () => {
     const requestResponse = await requestsService.getById(requestId)
     const taskResponse = await tasksService.getById(requestResponse.taskId)
-    if (requestResponse.state === 'GRADED') {
-      const [reviewsResponse] = await reviewService.getByRequestId(requestResponse.id)
+    const [reviewsResponse] = await reviewService.getByRequestId(requestResponse.id)
+    if (reviewsResponse) {
       setReviewToEdit(reviewsResponse)
       setScore(reviewsResponse.score)
     }
@@ -45,8 +46,10 @@ const ReviewForm = ({ user }) => {
       score,
       state: 'GRADED',
     }
-    if (reviewToEdit) reviewService.edit(reviewData, reviewToEdit.id)
-    else {
+    if (reviewToEdit) {
+      reviewService.edit(reviewData, reviewToEdit.id)
+      requestsService.closeByID(requestId)
+    } else {
       reviewService.create(reviewData, user)
       requestsService.closeByID(requestId)
     }
@@ -69,12 +72,13 @@ const ReviewForm = ({ user }) => {
   }
 
   const calculateScore = (_, allFields) => {
-    setScore(
-      allFields.reduce(
-        (ac, el) => ac + (el.value && typeof el.value === 'object' ? +el.value.number : 0),
-        0,
-      ),
+    const extra = +allFields.find((el) => el.name[1] === 'score').value || 0
+    const gradeScore = allFields.reduce(
+      (ac, el) => ac + (el.value && typeof el.value === 'object' ? +el.value.number : 0),
+      0,
     )
+
+    setScore(gradeScore + extra)
   }
 
   return loading ? (
@@ -93,10 +97,16 @@ const ReviewForm = ({ user }) => {
             </Link>
           </Title>
 
+          {request.feedback && (
+            <Card title="Feedback from student" bordered={false}>
+              <Text style={{ fontStyle: 'italic' }}>{request.feedback}</Text>
+            </Card>
+          )}
+
           <hr style={{ marginTop: 50, marginBottom: 30 }} />
 
           <Title level={3} className="page-subtitle page-subtitle--border mb-3">
-            Review:
+            Grade:
           </Title>
 
           <Form
@@ -131,6 +141,15 @@ const ReviewForm = ({ user }) => {
                 ))}
               </Space>
             ))}
+
+            <Form.Item name={['extra', 'score']} label="Extra point or penalty (Not obligatory)">
+              <NumericInput placeholder="any point" />
+            </Form.Item>
+
+            <Form.Item name={['extra', 'comment']} label="Comment">
+              <Input.TextArea />
+            </Form.Item>
+
             <Form.Item name="score">
               <Title level={3}>{`Score: ${score}`}</Title>
             </Form.Item>

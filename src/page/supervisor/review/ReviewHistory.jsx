@@ -166,7 +166,7 @@ const ReviewHistory = ({ user }) => {
                 break
               case 'DRAFT':
                 children = (
-                  <Tag color="yeallow" key={state}>
+                  <Tag color="orange" key={state}>
                     {state}
                   </Tag>
                 )
