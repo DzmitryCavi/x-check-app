@@ -1,8 +1,9 @@
 import React, { useState } from 'react'
 import { useAsync } from 'react-use'
+import { Link } from 'react-router-dom'
 import { Table, Button, Space, Tag } from 'antd'
 import { formatRoute } from 'react-router-named-routes'
-import { CarryOutTwoTone } from '@ant-design/icons'
+import { CarryOutTwoTone, EyeOutlined } from '@ant-design/icons'
 import ButtonLink from '../../../component/ButtonLink'
 import { courseManagerRoutes } from '../../../router/routes'
 
@@ -61,6 +62,11 @@ const MarksList = () => {
           filters={makeFilters('name')}
           onFilter={(value, record) => record.task.includes(value)}
           filteredValue={filteredInfo.task || null}
+          render={(row, record) => (
+            <Link to={formatRoute(courseManagerRoutes.reviews.info, { reviewId: record.id })}>
+              {row}
+            </Link>
+          )}
         />
         <Column
           title="Student"
@@ -114,11 +120,12 @@ const MarksList = () => {
         <Column
           title="Action"
           key="action"
+          width={80}
           render={(row) => (
             <ButtonLink
               type="primary"
-              size="large"
               linkTo={formatRoute(courseManagerRoutes.reviews.info, { reviewId: row.id })}
+              icon={<EyeOutlined />}
             >
               Info
             </ButtonLink>

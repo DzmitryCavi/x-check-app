@@ -33,6 +33,10 @@
   margin-bottom: 30px !important;
 }
 
+.mt-2 {
+  margin-top: 20px !important;
+}
+
 /**/
 
 .content-loading {
@@ -79,8 +83,20 @@
   }
 
   .page-subtitle {
-    font-size: 18px;
+    position: relative;
+    font-size: 22px;
     margin-bottom: 20px;
+    &--border {
+      &:before {
+        content: '';
+        position: absolute;
+        bottom: -12px;
+        left: 0;
+        width: 50px;
+        height: 3px;
+        background-color: #1890ff;
+      }
+    }
   }
 }
 

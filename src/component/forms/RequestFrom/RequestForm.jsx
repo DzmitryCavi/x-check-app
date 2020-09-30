@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
-import { Form, Spin, Button, Input, Typography, Result, Row, Col, List } from 'antd'
+import { Form, Spin, Button, Input, Typography, Result, List, Space } from 'antd'
 import parse from 'react-html-parser'
 import RequestFormItem from './RequestFormItem'
 import requestsService from '../../../services/requests.service'
@@ -61,7 +61,9 @@ const RequestForm = ({ task, user, requestToEdit, setIsNewRequest }) => {
 
   return !isSuccess ? (
     <>
-      <Title level={2}>Request to review the task - {task.title}</Title>
+      <Title level={2} className="page-subtitle page-subtitle--border mt-2 mb-3">
+        Request to review the task
+      </Title>
       <Form
         form={form}
         layout="vertical"
@@ -78,14 +80,20 @@ const RequestForm = ({ task, user, requestToEdit, setIsNewRequest }) => {
         >
           <Input />
         </Form.Item>
-        <Title level={3}>Self-review</Title>
+        <Title level={2} className="page-subtitle page-subtitle--border mb-2">
+          Self-review
+        </Title>
         {categories ? (
           categories.map((category) => (
             <List
               itemLayout="vertical"
-              header={<Title level={4}>{category.title}</Title>}
+              header={
+                <Title level={4} className="mt-0">
+                  {category.title}
+                </Title>
+              }
               key={category.id}
-              size="large"
+              // size="large"
               dataSource={category.criteria}
               renderItem={(item, index) => (
                 <List.Item key={`criteria-${index + 1}`}>
@@ -103,30 +111,21 @@ const RequestForm = ({ task, user, requestToEdit, setIsNewRequest }) => {
         ) : (
           <Spin size="large" />
         )}
-        <Row gutter={[10, 48]}>
-          <Col span={24}>
-            <Form.Item name="score">
-              <Title level={3}>{`Score: ${score}`}</Title>
-            </Form.Item>
-          </Col>
-
-          <Col span={1}>
-            <Form.Item>
-              <Button type="primary" size="small" htmlType="submit">
-                SENT
-              </Button>
-            </Form.Item>
-          </Col>
-          <Col span={1}>
+        <Form.Item name="score">
+          <Title level={3}>{`Score: ${score}`}</Title>
+        </Form.Item>
+        <Form.Item>
+          <Space>
+            <Button type="primary" htmlType="submit">
+              Sent
+            </Button>
             {(!requestToEdit || requestToEdit.state === 'DRAFT') && (
-              <Form.Item>
-                <Button type="primary" size="small" onClick={onSave} danger>
-                  DRAFT
-                </Button>
-              </Form.Item>
+              <Button type="primary" onClick={onSave} danger>
+                Draft
+              </Button>
             )}
-          </Col>
-        </Row>
+          </Space>
+        </Form.Item>
       </Form>
     </>
   ) : (

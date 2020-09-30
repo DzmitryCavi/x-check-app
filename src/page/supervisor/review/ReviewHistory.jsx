@@ -19,16 +19,13 @@ import { useAsync } from 'react-use'
 import { connect } from 'react-redux'
 import { compareAsc } from 'date-fns'
 import { formatRoute } from 'react-router-named-routes'
-import {
-  DeleteOutlined,
-  EditOutlined,
-  CarryOutTwoTone,
-  CaretRightOutlined,
-} from '@ant-design/icons'
+import { DeleteOutlined, EditOutlined, CarryOutTwoTone } from '@ant-design/icons'
 
 import ButtonLink from '../../../component/ButtonLink'
 import { supervisorRoutes } from '../../../router/routes'
 import reviewsService from '../../../services/review.service'
+
+import '../style.scss'
 
 const { Column } = Table
 const { Panel } = Collapse
@@ -86,58 +83,55 @@ const ReviewHistory = ({ user }) => {
   }
 
   return (
-    <>
-      <Title>Reviews</Title>
-      <Row>
-        <Col span={24}>
-          <Collapse
-            bordered={false}
-            expandIcon={({ isActive }) => <CaretRightOutlined rotate={isActive ? 90 : 0} />}
-          >
+    <div className="review-history-page">
+      <Title level={2} className="page-title">
+        Reviews
+      </Title>
+      <div className="requests-filters mb-3">
+        <Form
+          form={filtersForm}
+          layout="vertical"
+          onFinish={onFilter}
+          initialValues={{
+            name: '',
+            state: '',
+          }}
+          style={{ width: '100%' }}
+        >
+          <Collapse className="review-history-filters-collapse">
             <Panel header="Filters" key="1">
-              <Form
-                form={filtersForm}
-                layout="vertical"
-                onFinish={onFilter}
-                initialValues={{
-                  name: '',
-                  state: '',
-                }}
-                style={{ width: '100%' }}
-              >
-                <Row>
-                  <Col span={6}>
-                    <Form.Item name="name" label="Name">
-                      <Input />
-                    </Form.Item>
-                  </Col>
-                  <Col span={6}>
-                    <Form.Item label="State" name="state">
-                      <Radio.Group>
-                        <Radio.Button value="DRAFT">DRAFT</Radio.Button>
-                        <Radio.Button value="DISPUTE">DISPUTE</Radio.Button>
-                        <Radio.Button value="GRADED">GRADED</Radio.Button>
-                      </Radio.Group>
-                    </Form.Item>
-                  </Col>
-                </Row>
-                <Row>
-                  <Col span={3}>
-                    <Form.Item>
-                      <Button type="primary" htmlType="submit">
-                        Filter
-                      </Button>
-                      <Button style={{ margin: '0 8px' }} onClick={onClearFilter}>
-                        Clear
-                      </Button>
-                    </Form.Item>
-                  </Col>
-                </Row>
-              </Form>
+              <Row>
+                <Col span={6}>
+                  <Form.Item name="name" label="Name">
+                    <Input />
+                  </Form.Item>
+                </Col>
+                <Col span={6}>
+                  <Form.Item label="State" name="state">
+                    <Radio.Group>
+                      <Radio.Button value="DRAFT">DRAFT</Radio.Button>
+                      <Radio.Button value="DISPUTE">DISPUTE</Radio.Button>
+                      <Radio.Button value="GRADED">GRADED</Radio.Button>
+                    </Radio.Group>
+                  </Form.Item>
+                </Col>
+              </Row>
+              <Row>
+                <Col span={24}>
+                  <Form.Item>
+                    <Button type="primary" htmlType="submit">
+                      Filter
+                    </Button>
+                    <Button style={{ margin: '0 8px' }} onClick={onClearFilter}>
+                      Clear
+                    </Button>
+                  </Form.Item>
+                </Col>
+              </Row>
             </Panel>
           </Collapse>
-        </Col>
-      </Row>
+        </Form>
+      </div>
 
       <Table dataSource={reviews} rowKey="id" loading={loading}>
         <Column title="Task" dataIndex="name" key="name" sorter={sorter.name} />
@@ -211,7 +205,7 @@ const ReviewHistory = ({ user }) => {
           )}
         />
       </Table>
-    </>
+    </div>
   )
 }
 

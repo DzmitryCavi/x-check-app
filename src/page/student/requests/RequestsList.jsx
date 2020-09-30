@@ -19,16 +19,13 @@ import {
 import { connect } from 'react-redux'
 import { compareAsc } from 'date-fns'
 import { formatRoute } from 'react-router-named-routes'
-import {
-  DeleteOutlined,
-  EditOutlined,
-  CarryOutTwoTone,
-  CaretRightOutlined,
-} from '@ant-design/icons'
+import { DeleteOutlined, EditOutlined, CarryOutTwoTone } from '@ant-design/icons'
 
 import ButtonLink from '../../../component/ButtonLink'
 import { studentRoutes } from '../../../router/routes'
 import requestService from '../../../services/requests.service'
+
+import './style.scss'
 
 const { Column } = Table
 const { Panel } = Collapse
@@ -85,67 +82,62 @@ const RequestList = ({ user }) => {
   }
 
   return (
-    <>
-      <Title>Requests</Title>
-      <Row>
-        <Col span={24}>
-          <Collapse
-            bordered={false}
-            expandIcon={({ isActive }) => <CaretRightOutlined rotate={isActive ? 90 : 0} />}
-          >
+    <div className="request-list-page">
+      <Title level={2} className="page-title">
+        Requests
+      </Title>
+      <div className="d-flex justify-content-end align-items-center mb-3">
+        <ButtonLink type="primary" linkTo={studentRoutes.requests.create}>
+          Sent request
+        </ButtonLink>
+      </div>
+      <div className="requests-filters mb-3">
+        <Form
+          form={filtersForm}
+          layout="vertical"
+          onFinish={onFilter}
+          initialValues={{
+            name: '',
+            state: '',
+          }}
+          style={{ width: '100%' }}
+        >
+          <Collapse className="requests-filters-collapse">
             <Panel header="Filters" key="1">
-              <Form
-                form={filtersForm}
-                layout="vertical"
-                onFinish={onFilter}
-                initialValues={{
-                  name: '',
-                  state: '',
-                }}
-                style={{ width: '100%' }}
-              >
-                <Row>
-                  <Col span={6}>
-                    <Form.Item name="name" label="Name">
-                      <Input />
-                    </Form.Item>
-                  </Col>
-                  <Col span={6}>
-                    <Form.Item label="State" name="state">
-                      <Radio.Group>
-                        <Radio.Button value="DRAFT">DRAFT</Radio.Button>
-                        <Radio.Button value="SUBMITTED">SUBMITTED</Radio.Button>
-                        <Radio.Button value="GRADED">GRADED</Radio.Button>
-                      </Radio.Group>
-                    </Form.Item>
-                  </Col>
-                </Row>
-                <Row>
-                  <Col span={3}>
-                    <Form.Item>
-                      <Button type="primary" htmlType="submit">
-                        Filter
-                      </Button>
-                      <Button style={{ margin: '0 8px' }} onClick={onClearFilter}>
-                        Clear
-                      </Button>
-                    </Form.Item>
-                  </Col>
-                </Row>
-              </Form>
+              <Row>
+                <Col span={6}>
+                  <Form.Item name="name" label="Name">
+                    <Input />
+                  </Form.Item>
+                </Col>
+                <Col span={6}>
+                  <Form.Item label="State" name="state">
+                    <Radio.Group>
+                      <Radio.Button value="DRAFT">DRAFT</Radio.Button>
+                      <Radio.Button value="SUBMITTED">SUBMITTED</Radio.Button>
+                      <Radio.Button value="GRADED">GRADED</Radio.Button>
+                    </Radio.Group>
+                  </Form.Item>
+                </Col>
+              </Row>
+              <Row>
+                <Col span={24}>
+                  <Form.Item className="mb-0">
+                    <Button type="primary" htmlType="submit">
+                      Filter
+                    </Button>
+                    <Button style={{ margin: '0 8px' }} onClick={onClearFilter}>
+                      Clear
+                    </Button>
+                  </Form.Item>
+                </Col>
+              </Row>
             </Panel>
           </Collapse>
-          <ButtonLink
-            type="primary"
-            linkTo={studentRoutes.requests.create}
-            style={{ position: 'absolute', right: 0, bottom: 0, height: 46 }}
-          >
-            Sent request
-          </ButtonLink>
-        </Col>
-      </Row>
+        </Form>
+      </div>
 
-      <Table dataSource={requests} rowKey="id" loading={isLoading}>
+      <Table dataSource={requests} rowKey="id" loading={isLoading} bordered>
         <Column title="Task" dataIndex="name" key="name" sorter={sorter.name} />
         <Column title="Created at" dataIndex="created_at" key="created_at" sorter={sorter.data} />
         <Column title="Updated at" dataIndex="updated_at" key="updated_at" sorter={sorter.data} />
@@ -210,7 +202,7 @@ const RequestList = ({ user }) => {
           )}
         />
       </Table>
-    </>
+    </div>
   )
 }
 

@@ -33,13 +33,16 @@ const MarkInfo = () => {
   const { name, student, author, state, created_at: createdAt } = mark
 
   return (
-    <>
+    <div className="mark-info-page">
+      <Title level={2} className="page-title">
+        Mark Info
+      </Title>
       {loading ? (
         <div className="content-loading">
           <Spin tip="Loading..." />
         </div>
       ) : (
-        <Descriptions title="Mark Info" bordered="true" column={5} size="middle">
+        <Descriptions bordered="true" column={5} size="middle">
           <Descriptions.Item label="Task" span={4}>
             {name}
           </Descriptions.Item>
@@ -76,7 +79,7 @@ const MarkInfo = () => {
               }}
             />
           </Descriptions.Item>
-          <Descriptions.Item span={5} label="Details">
+          <Descriptions.Item span={5} label="Details" style={{ verticalAlign: 'top' }}>
             <Form form={form} layout="vertical" initialValues={request}>
               {categories.map((category) => (
                 <List
@@ -109,7 +112,7 @@ const MarkInfo = () => {
           </Descriptions.Item>
         </Descriptions>
       )}
-    </>
+    </div>
   )
 }
 

@@ -1,10 +1,10 @@
 import React, { useState } from 'react'
-import { Input, Row, Col, Radio, Collapse } from 'antd'
+import { Input, Row, Col, Radio } from 'antd'
 import PropTypes from 'prop-types'
-import { CaretRightOutlined } from '@ant-design/icons'
+// import { CaretRightOutlined } from '@ant-design/icons'
 import NumericInput from '../../NumericInput'
 
-const { Panel } = Collapse
+// const { Panel } = Collapse
 
 const RequestFormItem = ({ value, onChange, maxScore, criteriaId }) => {
   const [number, setNumber] = useState(value ? value.number : null)
@@ -95,27 +95,25 @@ const RequestFormItem = ({ value, onChange, maxScore, criteriaId }) => {
             value={number !== null ? String(number) : number}
             onChange={onNumberChange}
             max={+maxScore}
-            placeholder={maxScore > 0 && `0-${maxScore}`}
+            placeholder={maxScore > 0 && `0 - ${maxScore}`}
           />
         </Col>
       </Row>
       <Row>
         <Col span={24}>
-          <Collapse
+          {/* <Collapse
             bordered={false}
             activeKey={isNeedComment ? 'input' : null}
             expandIcon={({ isActive }) => <CaretRightOutlined rotate={isActive ? 90 : 0} />}
-          >
-            <Panel header="Leave comment here" key="input" disabled={!isNeedComment}>
-              <Input.TextArea
-                value={discription}
-                style={{
-                  margin: '0 8px',
-                }}
-                onChange={onDiscriptionChange}
-              />
-            </Panel>
-          </Collapse>
+          > */}
+          {/* <Panel header="Leave comment here" key="input" disabled={!isNeedComment}> */}
+          <Input.TextArea
+            value={discription}
+            onChange={onDiscriptionChange}
+            disabled={!isNeedComment}
+          />
+          {/* </Panel> */}
+          {/* </Collapse> */}
         </Col>
       </Row>
     </>

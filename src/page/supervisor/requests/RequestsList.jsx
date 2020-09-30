@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { useAsync } from 'react-use'
-import { Table, Tag } from 'antd'
+import { Table, Tag, Typography } from 'antd'
 import { EditOutlined } from '@ant-design/icons'
 import Column from 'antd/lib/table/Column'
 import { formatRoute } from 'react-router-named-routes'
@@ -8,6 +8,8 @@ import ButtonLink from '../../../component/ButtonLink'
 import { supervisorRoutes } from '../../../router/routes'
 import requestService from '../../../services/requests.service'
 import reviewService from '../../../services/review.service'
+
+const { Title } = Typography
 
 const RequestsList = () => {
   const [requests, setRequests] = useState([])
@@ -23,8 +25,11 @@ const RequestsList = () => {
   }, [])
 
   return (
-    <Table dataSource={requests} pagination={{ pageSize: 10 }} rowKey="id" loading={loading}>
-      <>
+    <div className="requests-list-page">
+      <Title level={2} className="page-title">
+        Requests
+      </Title>
+      <Table dataSource={requests} pagination={{ pageSize: 10 }} rowKey="id" loading={loading}>
         <Column
           title="Student"
           dataIndex="author"
@@ -59,6 +64,7 @@ const RequestsList = () => {
           title="Action"
           key="action"
           dataIndex="id"
+          width={100}
           render={(id) => (
             <ButtonLink
               type="primary"
@@ -69,8 +75,8 @@ const RequestsList = () => {
             </ButtonLink>
           )}
         />
-      </>
-    </Table>
+      </Table>
+    </div>
   )
 }
 

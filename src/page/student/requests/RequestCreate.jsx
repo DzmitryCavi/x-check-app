@@ -51,23 +51,24 @@ const Reqest = ({ user }) => {
   }
 
   return (
-    <>
+    <div className="sent-request-page">
+      <h1 className="page-title">Sent Request</h1>
       <Select
         size="large"
         defaultValue="Select a task"
         onChange={handleChange}
-        style={{ width: '50%' }}
+        style={{ width: '100%' }}
       >
         {!isLoading ? (
           children
         ) : (
           <Option>
-            <Spin />
+            <Spin style={{ display: 'block', margin: '0 auto' }} />
           </Option>
         )}
       </Select>
       {task ? <RequestForm task={task} setIsNewRequest={setIsNewRequest} /> : <></>}
-    </>
+    </div>
   )
 }
 
