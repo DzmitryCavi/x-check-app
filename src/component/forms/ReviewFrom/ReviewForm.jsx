@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { useAsync } from 'react-use'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
-import { Form, Spin, Button, Typography, Result, Row, Col, Space } from 'antd'
+import { Form, Spin, Button, Typography, Result, Space } from 'antd'
 import { useParams } from 'react-router-dom'
 import parse from 'react-html-parser'
 import ReviewFormItem from './ReviewFormItem'
@@ -10,7 +10,7 @@ import requestsService from '../../../services/requests.service'
 import tasksService from '../../../services/tasks.service'
 import reviewService from '../../../services/review.service'
 
-const { Title, Link, Text } = Typography
+const { Title, Link } = Typography
 
 const ReviewForm = ({ user }) => {
   const [isSuccess, setIsSuccess] = useState(false)
@@ -83,12 +83,22 @@ const ReviewForm = ({ user }) => {
     <>
       {!isSuccess ? (
         <>
-          <Title level={2}>Request to review the task - {task.title}</Title>
-          <Title level={3}>Solution URL</Title>
+          <Title level={3} className="page-subtitle page-subtitle--border mb-3">
+            Task: {task.title}
+          </Title>
+          <Title level={3} className="page-subtitle page-subtitle--border mb-3">
+            Solution URL:&nbsp;
+            <Link href={request.url} target="_blank">
+              {request.url}
+            </Link>
+          </Title>
 
-          <Link href={request.url} target="_blank">
-            {request.url}
-          </Link>
+          <hr style={{ marginTop: 50, marginBottom: 30 }} />
+
+          <Title level={3} className="page-subtitle page-subtitle--border mb-3">
+            Review:
+          </Title>
+
           <Form
             form={form}
             layout="vertical"
@@ -96,15 +106,17 @@ const ReviewForm = ({ user }) => {
             onFieldsChange={calculateScore}
             initialValues={reviewToEdit || {}}
           >
-            <Title level={3}>Review</Title>
-            {task.categories.map((category) => (
+            {task.categories.map((category, catIdx) => (
               <Space style={{ width: '100%' }} direction="vertical" key={category.id}>
-                <Title level={4}>{category.title}</Title>
-                {category.criteria.map((item, index) => (
-                  <div key={`criteria-${index + 1}`} style={{ height: '' }}>
-                    <Text>{parse(`${item.text}`)}</Text>
+                <Title level={4}>{`${catIdx + 1}. ${category.title}`}</Title>
+                {category.criteria.map((item, crIdx) => (
+                  <div key={`criteria-${crIdx + 1}`} className="ml-2">
+                    <div className="d-flex">
+                      <span>{`${catIdx + 1}.${crIdx + 1}.`}</span>&nbsp;
+                      {parse(`${item.text}`)}
+                    </div>
                     <Form.Item
-                      name={['grade', category.title, index]}
+                      name={['grade', category.title, crIdx]}
                       rules={[{ required: true, message: 'Please grade all' }]}
                     >
                       <ReviewFormItem
@@ -119,30 +131,22 @@ const ReviewForm = ({ user }) => {
                 ))}
               </Space>
             ))}
-            <Row gutter={[10, 48]}>
-              <Col span={24}>
-                <Form.Item name="score">
-                  <Title level={3}>{`Score: ${score}`}</Title>
-                </Form.Item>
-              </Col>
+            <Form.Item name="score">
+              <Title level={3}>{`Score: ${score}`}</Title>
+            </Form.Item>
 
-              <Col span={2}>
-                <Form.Item>
-                  <Button type="primary" htmlType="submit">
-                    SENT
-                  </Button>
-                </Form.Item>
-              </Col>
-              <Col span={1}>
+            <Form.Item>
+              <Space>
+                <Button type="primary" htmlType="submit">
+                  Sent
+                </Button>
                 {(!reviewToEdit || reviewToEdit.state === 'DRAFT') && (
-                  <Form.Item>
-                    <Button type="primary" onClick={onSave} danger>
-                      DRAFT
-                    </Button>
-                  </Form.Item>
+                  <Button type="primary" onClick={onSave} danger>
+                    Draft
+                  </Button>
                 )}
-              </Col>
-            </Row>
+              </Space>
+            </Form.Item>
           </Form>
         </>
       ) : (

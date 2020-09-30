@@ -1,10 +1,8 @@
 import React, { useState } from 'react'
-import { Input, Row, Col, Radio, Collapse, Typography } from 'antd'
+import { Input, Row, Col, Radio, Typography } from 'antd'
 import PropTypes from 'prop-types'
-import { CaretRightOutlined } from '@ant-design/icons'
 import NumericInput from '../../NumericInput'
 
-const { Panel } = Collapse
 const { Text } = Typography
 
 const ReviewFormItem = ({ value, onChange, maxScore, selfGrade, criteriaId }) => {
@@ -68,22 +66,31 @@ const ReviewFormItem = ({ value, onChange, maxScore, selfGrade, criteriaId }) =>
     <>
       <Row>
         <Col span={24}>
-          <Text strong type="secondary">
-            Self-review:
+          <Text strong type="secondary" className="d-block mb-0.5">
+            <b>Self-review</b>
           </Text>
         </Col>
         <Col span={24}>
-          <Text type="secondary">{`Score: ${selfGrade.number}`}</Text>
+          <Text type="secondary">
+            <b>Score:</b> {selfGrade.number}
+          </Text>
         </Col>
         <Col>
-          <Text type="secondary">{`Comment: ${selfGrade.discription}`}</Text>
+          <Text type="secondary">
+            <b>Comment:</b> {selfGrade.discription}
+          </Text>
         </Col>
       </Row>
       <Row
         style={{
-          margin: '10px 0px',
+          margin: '15px 0px',
         }}
       >
+        <Col span={24}>
+          <Text strong type="secondary" className="d-block mb-0.5">
+            <b>Your review</b>
+          </Text>
+        </Col>
         <Col span={3}>
           <Radio.Group
             value={value && typeof value.number === 'number' ? value.number : null}
@@ -105,21 +112,11 @@ const ReviewFormItem = ({ value, onChange, maxScore, selfGrade, criteriaId }) =>
       </Row>
       <Row>
         <Col span={24}>
-          <Collapse
-            bordered={false}
-            activeKey={isNeedComment ? 'input' : null}
-            expandIcon={({ isActive }) => <CaretRightOutlined rotate={isActive ? 90 : 0} />}
-          >
-            <Panel header="Leave comment here" key="input" disabled={!isNeedComment}>
-              <Input.TextArea
-                value={discription}
-                style={{
-                  margin: '0 8px',
-                }}
-                onChange={onDiscriptionChange}
-              />
-            </Panel>
-          </Collapse>
+          <Input.TextArea
+            value={discription}
+            onChange={onDiscriptionChange}
+            disabled={!isNeedComment}
+          />
         </Col>
       </Row>
     </>

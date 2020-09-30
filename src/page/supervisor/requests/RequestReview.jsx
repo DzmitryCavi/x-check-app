@@ -8,7 +8,7 @@ const RequestView = () => {
   return (
     <div className="request-review-page">
       <Title level={2} className="page-title">
-        Reviews
+        Review
       </Title>
       <ReviewForm />
     </div>

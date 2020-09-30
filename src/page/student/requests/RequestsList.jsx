@@ -186,17 +186,11 @@ const RequestList = ({ user }) => {
           render={(row) => (
             <Space size="middle">
               <ButtonLink
-                size="small"
                 icon={<EditOutlined />}
                 linkTo={formatRoute(studentRoutes.requests.edit, { requestId: row.id })}
               />
               <Popconfirm title="Sure to delete?" onConfirm={() => destroyRequest(row.id)}>
-                <Button
-                  size="small"
-                  type="danger"
-                  icon={<DeleteOutlined />}
-                  disabled={row.state !== 'DRAFT'}
-                />
+                <Button type="danger" icon={<DeleteOutlined />} disabled={row.state !== 'DRAFT'} />
               </Popconfirm>
             </Space>
           )}

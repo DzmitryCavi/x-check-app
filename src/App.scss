@@ -4,6 +4,10 @@
   color: red;
 }
 
+.d-block {
+  display: block !important;
+}
+
 .d-flex {
   display: flex !important;
 }
@@ -21,6 +25,10 @@
   margin-bottom: 0 !important;
 }
 
+.mb-0.5 {
+  margin-bottom: 5 !important;
+}
+
 .mb-1 {
   margin-bottom: 10px !important;
 }
@@ -35,6 +43,18 @@
 
 .mt-2 {
   margin-top: 20px !important;
+}
+
+.mt-3 {
+  margin-top: 30px !important;
+}
+
+.mt-4 {
+  margin-top: 40px !important;
+}
+
+.ml-2 {
+  margin-left: 20px !important;
 }
 
 /**/

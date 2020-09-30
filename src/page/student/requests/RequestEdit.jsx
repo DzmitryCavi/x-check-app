@@ -18,7 +18,12 @@ const Reqest = () => {
     setTask(taskResponse)
   }, [requestId])
 
-  return <>{task ? <RequestForm task={task} requestToEdit={request} /> : <Spin />}</>
+  return (
+    <div className="edit-request-page">
+      <h1 className="page-title">Edit Request</h1>
+      {task ? <RequestForm task={task} requestToEdit={request} /> : <Spin />}
+    </div>
+  )
 }
 
 export default Reqest
