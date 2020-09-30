@@ -84,22 +84,24 @@ const RequestForm = ({ task, user, requestToEdit, setIsNewRequest }) => {
           Self-review
         </Title>
         {categories ? (
-          categories.map((category) => (
+          categories.map((category, catIdx) => (
             <List
               itemLayout="vertical"
               header={
-                <Title level={4} className="mt-0">
-                  {category.title}
+                <Title level={4} style={{ marginBottom: -10 }}>
+                  {catIdx + 1}. {category.title}
                 </Title>
               }
               key={category.id}
-              // size="large"
               dataSource={category.criteria}
-              renderItem={(item, index) => (
-                <List.Item key={`criteria-${index + 1}`}>
-                  <Text>{parse(`${item.text}`)}</Text>
+              renderItem={(item, crIdx) => (
+                <List.Item key={`criteria-${crIdx + 1}`} className="ml-2">
+                  <div className="d-flex">
+                    <span>{`${catIdx + 1}.${crIdx + 1}.`}</span>&nbsp;
+                    <Text>{parse(`${item.text}`)}</Text>
+                  </div>
                   <Form.Item
-                    name={['selfGrade', category.title, index]}
+                    name={['selfGrade', category.title, crIdx]}
                     rules={[{ required: true, message: 'Please grade all' }]}
                   >
                     <RequestFormItem maxScore={item.score} criteriaId={item.id} />

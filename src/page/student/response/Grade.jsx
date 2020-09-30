@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { useAsync } from 'react-use'
 import { useParams } from 'react-router-dom'
 import { Typography, Form, Spin, List, Progress, Button, Result } from 'antd'
-import { CheckOutlined, CloseOutlined } from '@ant-design/icons'
+import { CheckCircleOutlined, CloseOutlined } from '@ant-design/icons'
 import parse from 'react-html-parser'
 import reviewsService from '../../../services/review.service'
 import requestsService from '../../../services/requests.service'
@@ -54,107 +54,94 @@ const Grade = () => {
     setIsSuccess(true)
   }
 
+  if (loading) {
+    return <Spin className="content-loading " size="large" />
+  }
+
   return (
-    <>
-      {loading ? (
-        <Spin className="content-loading " size="large" />
+    <div className="view-grade-page">
+      <Title level={1} className="page-title">
+        {`Evaluation of the task "${request.name}"`}
+      </Title>
+      {isSuccess ? (
+        <Result
+          status="success"
+          title="Successfully Opened Dispute !"
+          extra={[
+            <ButtonLink type="primary" linkTo={studentRoutes.requests.list} key="link_to_list">
+              Go to request list
+            </ButtonLink>,
+          ]}
+        />
       ) : (
-        <>
-          {isSuccess ? (
-            <Result
-              status="success"
-              title="Successfully Opened Dispute !"
-              extra={[
-                <ButtonLink type="primary" linkTo={studentRoutes.requests.list} key="link_to_list">
-                  Go to request list
-                </ButtonLink>,
-              ]}
+        <Form
+          form={form}
+          layout="vertical"
+          onFinish={onFinish}
+          initialValues={request}
+          onFieldsChange={() => {
+            const { criterias } = form.getFieldValue().dispute
+            setIsNeedToSubmit(
+              Object.keys(criterias).filter((el) => criterias[el] !== undefined).length !== 0,
+            )
+          }}
+        >
+          <Progress
+            percent={Math.floor((review.score / maxScore) * 100)}
+            strokeColor={{
+              0: 'red',
+              30: '#87d068',
+              100: '#87d068',
+            }}
+          />
+          <Title level={3}>
+            Score: {review.score} of {maxScore}
+          </Title>
+          {categories.map((category, catIdx) => (
+            <List
+              itemLayout="vertical"
+              header={<Title level={4}>{`${catIdx + 1}. ${category.title}`}</Title>}
+              key={category.id}
+              dataSource={category.criteria}
+              renderItem={(item, crIdx) => (
+                <List.Item key={`criteria-${crIdx + 1}`} className="ml-2">
+                  <div className="d-flex">
+                    <span>{`${catIdx + 1}.${crIdx + 1}.`}&nbsp;</span>
+                    {parse(`${item.text}`)}
+                  </div>
+                  <Form.Item
+                    name={['selfGrade', category.title, crIdx]}
+                    rules={[{ required: true, message: 'Please grade all' }]}
+                  >
+                    <GradeItem
+                      maxScore={+item.score}
+                      review={review.grade[category.title].find((el) => el.criteriaId === item.id)}
+                      criteria={item.id}
+                      isDispute={isAcceptedReview}
+                    />
+                  </Form.Item>
+                </List.Item>
+              )}
             />
-          ) : (
-            <Form
-              form={form}
-              layout="vertical"
-              onFinish={onFinish}
-              initialValues={request}
-              onFieldsChange={() => {
-                const { criterias } = form.getFieldValue().dispute
-                setIsNeedToSubmit(
-                  Object.keys(criterias).filter((el) => criterias[el] !== undefined).length !== 0,
-                )
-              }}
-            >
-              <Title level={1} className="task-categories__title">
-                {`Evaluation of the task "${request.name}"`}
-                <Progress
-                  percent={Math.floor((review.score / maxScore) * 100)}
-                  strokeColor={{
-                    0: 'red',
-                    30: '#87d068',
-                    100: '#87d068',
-                  }}
-                />
-                Score: {review.score} of {maxScore}
-              </Title>
-              {categories.map((category) => (
-                <List
-                  itemLayout="vertical"
-                  header={<Title level={4}>{category.title}</Title>}
-                  key={category.id}
-                  size="large"
-                  dataSource={category.criteria}
-                  renderItem={(item, index) => (
-                    <List.Item key={`criteria-${index + 1}`}>
-                      <Title level={5}>{parse(item.text)}</Title>
-                      <Form.Item
-                        name={['selfGrade', category.title, index]}
-                        rules={[{ required: true, message: 'Please grade all' }]}
-                      >
-                        <GradeItem
-                          maxScore={+item.score}
-                          review={review.grade[category.title].find(
-                            (el) => el.criteriaId === item.id,
-                          )}
-                          criteria={item.id}
-                          isDispute={isAcceptedReview}
-                        />
-                      </Form.Item>
-                    </List.Item>
-                  )}
-                />
-              ))}
-              <Form.Item>
-                {!isAcceptedReview && (
-                  <>
-                    {isNeedToSubmit ? (
-                      <Button
-                        icon={<CloseOutlined />}
-                        shape="round"
-                        type="primary"
-                        size="large"
-                        htmlType="submit"
-                        danger
-                      >
-                        OPEN DISPUTE
-                      </Button>
-                    ) : (
-                      <Button
-                        icon={<CheckOutlined />}
-                        shape="round"
-                        type="primary"
-                        size="large"
-                        onClick={acceptGrade}
-                      >
-                        ACCEPT
-                      </Button>
-                    )}
-                  </>
+          ))}
+          <Form.Item>
+            {!isAcceptedReview && (
+              <>
+                {isNeedToSubmit ? (
+                  <Button icon={<CloseOutlined />} type="primary" htmlType="submit" danger>
+                    Open Dispute
+                  </Button>
+                ) : (
+                  <Button icon={<CheckCircleOutlined />} type="primary" onClick={acceptGrade}>
+                    Accept
+                  </Button>
                 )}
-              </Form.Item>
-            </Form>
-          )}
-        </>
+              </>
+            )}
+          </Form.Item>
+        </Form>
       )}
-    </>
+    </div>
   )
 }
 

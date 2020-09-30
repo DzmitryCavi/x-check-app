@@ -112,7 +112,7 @@ const ReviewForm = ({ user }) => {
                 {category.criteria.map((item, crIdx) => (
                   <div key={`criteria-${crIdx + 1}`} className="ml-2">
                     <div className="d-flex">
-                      <span>{`${catIdx + 1}.${crIdx + 1}.`}</span>&nbsp;
+                      <span>{`${catIdx + 1}.${crIdx + 1}.`}&nbsp;</span>
                       {parse(`${item.text}`)}
                     </div>
                     <Form.Item

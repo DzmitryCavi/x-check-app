@@ -1,10 +1,7 @@
 import React, { useState } from 'react'
 import { Input, Row, Col, Radio } from 'antd'
 import PropTypes from 'prop-types'
-// import { CaretRightOutlined } from '@ant-design/icons'
 import NumericInput from '../../NumericInput'
-
-// const { Panel } = Collapse
 
 const RequestFormItem = ({ value, onChange, maxScore, criteriaId }) => {
   const [number, setNumber] = useState(value ? value.number : null)
@@ -101,19 +98,11 @@ const RequestFormItem = ({ value, onChange, maxScore, criteriaId }) => {
       </Row>
       <Row>
         <Col span={24}>
-          {/* <Collapse
-            bordered={false}
-            activeKey={isNeedComment ? 'input' : null}
-            expandIcon={({ isActive }) => <CaretRightOutlined rotate={isActive ? 90 : 0} />}
-          > */}
-          {/* <Panel header="Leave comment here" key="input" disabled={!isNeedComment}> */}
           <Input.TextArea
             value={discription}
             onChange={onDiscriptionChange}
             disabled={!isNeedComment}
           />
-          {/* </Panel> */}
-          {/* </Collapse> */}
         </Col>
       </Row>
     </>

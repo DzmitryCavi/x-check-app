@@ -19,7 +19,7 @@ import {
 import { connect } from 'react-redux'
 import { compareAsc } from 'date-fns'
 import { formatRoute } from 'react-router-named-routes'
-import { DeleteOutlined, EditOutlined, CarryOutTwoTone } from '@ant-design/icons'
+import { DeleteOutlined, EditOutlined, CarryOutFilled } from '@ant-design/icons'
 
 import ButtonLink from '../../../component/ButtonLink'
 import { studentRoutes } from '../../../router/routes'
@@ -104,7 +104,7 @@ const RequestList = ({ user }) => {
         >
           <Collapse className="requests-filters-collapse">
             <Panel header="Filters" key="1">
-              <Row>
+              <Row gutter={30}>
                 <Col span={6}>
                   <Form.Item name="name" label="Name">
                     <Input />
@@ -166,10 +166,9 @@ const RequestList = ({ user }) => {
                 </Tag>
                 {isGraduated && (
                   <ButtonLink
-                    type="ghost"
-                    size="small"
-                    style={{ fontSize: 12, color: '#52c41a' }}
-                    icon={<CarryOutTwoTone twoToneColor="#52c41a" />}
+                    type="primary"
+                    size="middle"
+                    icon={<CarryOutFilled />}
                     linkTo={formatRoute(studentRoutes.requests.grade, { requestId: id })}
                   >
                     View Grade
@@ -189,7 +188,11 @@ const RequestList = ({ user }) => {
                 icon={<EditOutlined />}
                 linkTo={formatRoute(studentRoutes.requests.edit, { requestId: row.id })}
               />
-              <Popconfirm title="Sure to delete?" onConfirm={() => destroyRequest(row.id)}>
+              <Popconfirm
+                title="Sure to delete?"
+                onConfirm={() => destroyRequest(row.id)}
+                disabled={row.state !== 'DRAFT'}
+              >
                 <Button type="danger" icon={<DeleteOutlined />} disabled={row.state !== 'DRAFT'} />
               </Popconfirm>
             </Space>

@@ -66,7 +66,7 @@ const ReviewFormItem = ({ value, onChange, maxScore, selfGrade, criteriaId }) =>
     <>
       <Row>
         <Col span={24}>
-          <Text strong type="secondary" className="d-block mb-0.5">
+          <Text strong type="secondary" className="d-block mt-1 mb-0.5">
             <b>Self-review</b>
           </Text>
         </Col>
@@ -83,7 +83,7 @@ const ReviewFormItem = ({ value, onChange, maxScore, selfGrade, criteriaId }) =>
       </Row>
       <Row
         style={{
-          margin: '15px 0px',
+          margin: '10px 0px',
         }}
       >
         <Col span={24}>
