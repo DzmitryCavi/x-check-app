@@ -59,19 +59,21 @@ const getById = async (id) => {
 }
 
 const create = async (task, authorId = -1) => {
-  const { data, status } = await axios.post(`${API_URL}/tasks`, {
+  const requestTask = {
     ...task,
     authorId,
     slug: slug(task.title),
+    description: task.description ?? '',
     state: 'DRAFT',
-    categories: [],
+    categories: task.categories ?? [],
 
     startDate: null,
     endDate: null,
 
     created_at: format(new Date(), 'yyyy-MM-dd HH:mm:ss'),
     updated_at: null,
-  })
+  }
+  const { data, status } = await axios.post(`${API_URL}/tasks`, requestTask)
   return status === 201 && data ? data : null
 }
 
@@ -92,11 +94,13 @@ const importTasks = async (file, authorId, type) => {
   const formData = new FormData()
   formData.append('authorId', authorId)
   formData.append('file', file)
-  await axios.post(`${SERVER_URL}/tasks/import?type=${type}`, formData, {
+  const { data, status } = await axios.post(`${SERVER_URL}/tasks/import?type=${type}`, formData, {
     headers: {
       'Content-Type': 'multipart/form-data',
     },
   })
+
+  return status === 200 ? data : null
 }
 
 const exportById = async (taskId, type = 'rss') => {

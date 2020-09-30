@@ -4,6 +4,7 @@ import TasksList from '../../page/author/tasks/TasksList'
 import TaskCreate from '../../page/author/tasks/TaskCreate'
 import TaskEdit from '../../page/author/tasks/TaskEdit'
 import TaskView from '../../page/author/tasks/TaskView'
+import TaskViewImport from '../../page/author/tasks/TaskViewImport'
 import CategoryCreate from '../../page/author/categories/CategoryCreate'
 import CategoryEdit from '../../page/author/categories/CategoryEdit'
 
@@ -22,7 +23,7 @@ export default [
   },
   {
     path: routes.tasks.viewImport,
-    component: TaskView,
+    component: TaskViewImport,
     breadcrumb: 'View Import Task',
   },
   {

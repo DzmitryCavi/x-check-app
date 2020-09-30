@@ -50,12 +50,7 @@ const TaskView = () => {
   const [task, setTask] = useState([])
 
   useAsync(async () => {
-    console.log(taskId)
-
-    let taskResponse
-    if (taskId) {
-      taskResponse = await tasksService.getById(taskId)
-    }
+    const taskResponse = await tasksService.getById(taskId)
 
     setTask(taskResponse || {})
     setLoading(false)

@@ -30,7 +30,7 @@ import tasksService from '../../../services/tasks.service'
 
 const { Column } = Table
 
-const TasksList = ({ user }) => {
+const TasksList = ({ user, history }) => {
   const [tasks, setTasks] = useState([])
   const [paginator, setPaginator] = useState(null)
   const [loading, setLoading] = useState(true)
@@ -121,6 +121,16 @@ const TasksList = ({ user }) => {
                       label="Import (RSS *.json)"
                       type="rss"
                       onImportSuccess={() => fetchTasks(user.id)}
+                    />
+                  </Menu.Item>
+                  <Menu.Item>
+                    <ImportTasks
+                      authorId={user.id}
+                      label="Import (one-task.md)"
+                      type="md"
+                      onImportSuccess={(data) =>
+                        history.push(authorRoutes.tasks.viewImport, { task: data })
+                      }
                     />
                   </Menu.Item>
                 </Menu.ItemGroup>
@@ -273,6 +283,7 @@ const TasksList = ({ user }) => {
 
 TasksList.propTypes = {
   user: PropTypes.instanceOf(Object).isRequired,
+  history: PropTypes.instanceOf(Object).isRequired,
 }
 
 const mapStateToProps = (state) => {
