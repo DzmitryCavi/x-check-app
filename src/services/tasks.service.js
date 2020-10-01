@@ -1,7 +1,12 @@
 import axios from 'axios'
+import { v4 as uuid } from 'uuid'
 import slug from 'slug'
 import { format } from 'date-fns'
 import { API_URL, SERVER_URL } from '../config'
+
+const getMaxScore = (category) => {
+  return category.criteria.reduce((acc, curr) => acc + Number(curr.score), 0)
+}
 
 const getTasksQueryParams = (params) => {
   const { pagination, filters, ...other } = params
@@ -59,13 +64,28 @@ const getById = async (id) => {
 }
 
 const create = async (task, authorId = -1) => {
+  let categories = []
+  if (task.categories) {
+    categories = task.categories.map((category) => {
+      return {
+        ...category,
+        slug: slug(category.title),
+        description: category.description ?? '',
+        criteria: category.criteria.map((criterion) => ({ ...criterion, id: uuid() })),
+        maxScore: getMaxScore(category),
+        created_at: format(new Date(), 'yyyy-MM-dd HH:mm:ss'),
+        updated_at: null,
+      }
+    })
+  }
+
   const requestTask = {
     ...task,
     authorId,
     slug: slug(task.title),
     description: task.description ?? '',
     state: 'DRAFT',
-    categories: task.categories ?? [],
+    categories,
 
     startDate: null,
     endDate: null,
@@ -73,6 +93,7 @@ const create = async (task, authorId = -1) => {
     created_at: format(new Date(), 'yyyy-MM-dd HH:mm:ss'),
     updated_at: null,
   }
+
   const { data, status } = await axios.post(`${API_URL}/tasks`, requestTask)
   return status === 201 && data ? data : null
 }
