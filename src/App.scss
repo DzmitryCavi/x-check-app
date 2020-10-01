@@ -24,6 +24,14 @@
   align-items: center !important;
 }
 
+/* Padding */
+
+.p-0 {
+  padding: 0 !important;
+}
+
+/**/
+
 /* Margin */
 .mb-0 {
   margin-bottom: 0 !important;
@@ -72,6 +80,12 @@
   justify-content: center;
   align-items: center;
   padding: 30px;
+}
+
+.tinymce-loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 /* Header */

@@ -1,5 +1,6 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import PropTypes from 'prop-types'
+import { Spin } from 'antd'
 import { Editor } from '@tinymce/tinymce-react'
 import { TINYMCE_KEY } from '../config'
 
@@ -24,8 +25,15 @@ let defaultOptions = {
 let apiKey = TINYMCE_KEY
 
 const AntdTinymce = (props) => {
+  const [loading, setLoading] = useState(true)
+
   const { value, onChange, isQuickBars, plugins, menubar, toolbar, options = {} } = props
   const initOptions = { ...defaultOptions, ...options }
+
+  useEffect(() => {
+    const timer = setTimeout(() => setLoading(false), 500)
+    return () => clearTimeout(timer)
+  }, [])
 
   const onEditorChange = (newContent) => {
     if (onChange) {
@@ -34,17 +42,26 @@ const AntdTinymce = (props) => {
   }
 
   return (
-    <Editor
-      apiKey={apiKey}
-      init={{
-        plugins: isQuickBars ? plugins.concat(['quickbars']) : plugins,
-        menubar: menubar || defaultMenubar,
-        toolbar: toolbar || defaultToolbar,
-        ...initOptions,
-      }}
-      initialValue={value}
-      onEditorChange={onEditorChange}
-    />
+    <>
+      {loading ? (
+        <div className="tinymce-loading" style={{ height: !isQuickBars ? options.height : 36 }}>
+          <Spin style={{ lineHeight: 1 }} />
+        </div>
+      ) : null}
+      <div style={{ display: loading ? 'none' : 'block' }}>
+        <Editor
+          apiKey={apiKey}
+          init={{
+            plugins: isQuickBars ? plugins.concat(['quickbars']) : plugins,
+            menubar: menubar || defaultMenubar,
+            toolbar: toolbar || defaultToolbar,
+            ...initOptions,
+          }}
+          initialValue={value}
+          onEditorChange={onEditorChange}
+        />
+      </div>
+    </>
   )
 }
 
