@@ -9,7 +9,7 @@ const getMaxScore = (category) => {
 }
 
 const getTasksQueryParams = (params) => {
-  const { pagination, filters, ...other } = params
+  const { pagination, filters, sorter, ...other } = params
 
   const queryOtherParams = []
   Object.keys(other).forEach((key) => {
@@ -28,9 +28,22 @@ const getTasksQueryParams = (params) => {
     queryPaginationParams.push(`_page=${current}`, `_limit=${pageSize}`)
   }
 
-  const queryParams = [...queryPaginationParams, ...queryFiltersParams, ...queryOtherParams].join(
-    '&',
-  )
+  const querySorterParams = []
+  if (sorter) {
+    const { column, order } = sorter
+    const orders = {
+      ascend: 'asc',
+      descend: 'desc',
+    }
+    queryFiltersParams.push(`_sort=${column}`, `_order=${orders[order]}`)
+  }
+
+  const queryParams = [
+    ...queryPaginationParams,
+    ...queryFiltersParams,
+    ...queryOtherParams,
+    ...querySorterParams,
+  ].join('&')
 
   return queryParams ? `?${queryParams}` : ''
 }
@@ -41,8 +54,8 @@ const getTasksQueryParams = (params) => {
  * @param {Object} filters
  * @param  {...any} other
  */
-const getAll = async ({ pagination, filters, ...other } = {}) => {
-  const queryParams = getTasksQueryParams({ pagination, filters, ...other })
+const getAll = async ({ pagination, filters, sorter, ...other } = {}) => {
+  const queryParams = getTasksQueryParams({ pagination, filters, sorter, ...other })
 
   const { data, status, headers } = await axios.get(`${API_URL}/tasks${queryParams}`)
   const isSuccess = status === 200 && data

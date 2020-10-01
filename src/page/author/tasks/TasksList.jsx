@@ -47,9 +47,10 @@ const TasksList = ({ user, history }) => {
     authorId,
     pagination = { current: 1, pageSize: 10 },
     filters = { title: '', state: '' },
+    sorter = { column: 'created_at', order: 'descend' },
   ) => {
     setLoading(true)
-    const response = await tasksService.getAll({ pagination, filters, authorId })
+    const response = await tasksService.getAll({ pagination, filters, sorter, authorId })
 
     setPaginator(response.pagination)
     setTasks(response.data)
@@ -85,9 +86,10 @@ const TasksList = ({ user, history }) => {
     await tasksService.exportAll(user.id, type)
   }
 
-  const handleTableChange = async (pagination) => {
+  const handleTableChange = async (pagination, _, sorter) => {
     const filterData = filtersForm.getFieldsValue(['title', 'state'])
-    await fetchTasks(user.id, pagination, filterData)
+    const sorterData = { column: sorter.columnKey, order: sorter.order }
+    await fetchTasks(user.id, pagination, filterData, sorterData)
   }
 
   return (
