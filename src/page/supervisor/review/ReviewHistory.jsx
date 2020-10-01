@@ -135,6 +135,7 @@ const ReviewHistory = ({ user }) => {
 
       <Table dataSource={reviews} rowKey="id" loading={loading}>
         <Column title="Task" dataIndex="name" key="name" sorter={sorter.name} />
+        <Column title="Student" dataIndex="student" key="student" sorter={sorter.name} />
         <Column title="Created at" dataIndex="created_at" key="created_at" sorter={sorter.data} />
         <Column title="Updated at" dataIndex="updated_at" key="updated_at" sorter={sorter.data} />
         <Column
