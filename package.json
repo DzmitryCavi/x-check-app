@@ -69,6 +69,7 @@
     "eslint-plugin-prettier": "^3.1.4",
     "husky": "^4.2.5",
     "lint-staged": "^10.2.13",
-    "prettier": "^2.1.1"
+    "prettier": "^2.1.1",
+    "react-test-renderer": "^16.13.1"
   }
 }

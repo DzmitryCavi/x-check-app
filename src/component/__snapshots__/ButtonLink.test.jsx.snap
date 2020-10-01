@@ -1,0 +1,17 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ButtonLink component Matches the snapshot 1`] = `
+<button
+  className="ant-btn"
+  onClick={[Function]}
+  type="button"
+/>
+`;
+
+exports[`ButtonLink component atches the snapshot 1`] = `
+<button
+  className="ant-btn"
+  onClick={[Function]}
+  type="button"
+/>
+`;
