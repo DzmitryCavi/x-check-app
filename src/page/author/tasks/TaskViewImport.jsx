@@ -62,7 +62,7 @@ const TaskViewImport = ({ history, location, user }) => {
 
   return (
     <div className="task-view-page">
-      <h1 className="page-title">Preview Import Task: {task.title}</h1>
+      <h1 className="page-title">Preview Imported Task: {task.title}</h1>
       {!saveTask ? (
         <div className="task">
           <div className="task__body">
