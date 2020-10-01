@@ -58,7 +58,8 @@ const RequestList = ({ user }) => {
 
   const sorter = {
     name: (a, b) => a.name.localeCompare(b.name),
-    data: (a, b) => compareAsc(new Date(a.created_at), new Date(b.created_at)),
+    date: (a, b) => compareAsc(new Date(a.created_at), new Date(b.created_at)),
+    number: (a, b) => a - b,
   }
 
   const filters = {
@@ -88,7 +89,7 @@ const RequestList = ({ user }) => {
       </Title>
       <div className="d-flex justify-content-end align-items-center mb-3">
         <ButtonLink type="primary" linkTo={studentRoutes.requests.create}>
-          Sent request
+          Create
         </ButtonLink>
       </div>
       <div className="requests-filters mb-3">
@@ -139,8 +140,7 @@ const RequestList = ({ user }) => {
 
       <Table dataSource={requests} rowKey="id" loading={isLoading} bordered>
         <Column title="Task" dataIndex="name" key="name" sorter={sorter.name} />
-        <Column title="Created at" dataIndex="created_at" key="created_at" sorter={sorter.data} />
-        <Column title="Updated at" dataIndex="updated_at" key="updated_at" sorter={sorter.data} />
+        <Column title="Score" dataIndex="score" key="score" sorter={sorter.number} />
         <Column
           onFilter={(value, record) => record.name.includes(value)}
           title="State"
@@ -178,6 +178,7 @@ const RequestList = ({ user }) => {
             )
           }}
         />
+        <Column title="Created" dataIndex="created_at" key="created_at" sorter={sorter.date} />
         <Column
           title="Action"
           key="action"
