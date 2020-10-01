@@ -116,6 +116,9 @@ const RequestForm = ({ task, user, requestToEdit, setIsNewRequest }) => {
         <Form.Item name="score">
           <Title level={3}>{`Score: ${score}`}</Title>
         </Form.Item>
+        <Form.Item name="feedback" label="Feedback">
+          <Input.TextArea />
+        </Form.Item>
         <Form.Item>
           <Space>
             <Button type="primary" htmlType="submit">

@@ -143,8 +143,9 @@ const Dispute = () => {
 
     const newScore = review.score + scoreDifference
 
-    disputeService.close(dispute.id)
     reviewsService.edit({ state: 'ACCEPTED', grade: newGrade, score: newScore }, review.id)
+    disputeService.close(dispute.id)
+
     setIsSuccess(true)
   }
 
