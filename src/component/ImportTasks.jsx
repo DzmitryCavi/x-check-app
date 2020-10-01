@@ -19,23 +19,28 @@ const Uploader = ({ authorId, label, type, onImportSuccess }) => {
     showUploadList: false,
     customRequest: importFile,
     beforeUpload: (file) => {
+      message.loading({ content: 'Loading...', key: 'imported' })
+
       if (['custom', 'rss'].includes(type) && file.type !== 'application/json') {
-        message.error(`${file.name} is not a json file`)
+        message.error({ content: `${file.name} is not a json file`, key: 'imported' })
         return false
       }
       if (type === 'md' && file.name.split('.').pop() !== 'md') {
-        message.error(`${file.name} is not a markdown file`)
+        message.error({ content: `${file.name} is not a markdown file`, key: 'imported' })
         return false
       }
       return true
     },
     onChange(info) {
       if (info.file.status === 'done') {
-        message.success(`${info.file.name} file uploaded successfully`)
+        message.success({
+          content: `${info.file.name} file uploaded successfully`,
+          key: 'imported',
+        })
 
         onImportSuccess(info.file.response)
       } else if (info.file.status === 'error') {
-        message.error(`${info.file.name} file upload failed.`)
+        message.error({ content: `${info.file.name} file upload failed.`, key: 'imported' })
       }
     },
   }
