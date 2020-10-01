@@ -29,6 +29,33 @@ const TaskViewImport = ({ history, location }) => {
   const [form] = Form.useForm()
   const { task } = location.state
 
+  const saveImportTask = (name, info) => {
+    const { task: taskForm, ...forms } = info.forms
+    const resultTask = {
+      ...taskForm.getFieldsValue(['title', 'description']),
+      categories: [],
+    }
+    Object.keys(forms).forEach((formName) => {
+      const { title, description, criteria } = forms[formName].getFieldsValue([
+        'title',
+        'description',
+        'criteria',
+      ])
+      resultTask.categories.push({
+        id: uuid(),
+        title,
+        description: description ?? '',
+        criteria: criteria.map((criterion) => ({
+          ...criterion,
+          id: uuid(),
+        })),
+      })
+    })
+
+    console.log(resultTask)
+    alert('В разработке...')
+  }
+
   if (!task)
     return (
       <Empty description="Task not found :(">
@@ -54,24 +81,7 @@ const TaskViewImport = ({ history, location }) => {
             </Space>
           </div>
 
-          <Form.Provider
-            onFormFinish={(name, info) => {
-              const { task: taskForm, ...forms } = info.forms
-              const resultTask = {
-                ...taskForm.getFieldsValue(['title', 'description']),
-                categories: [],
-              }
-              Object.keys(forms).forEach((formName) => {
-                resultTask.categories.push({
-                  ...forms[formName].getFieldsValue(['title', 'description', 'criteria']),
-                  id: uuid(),
-                })
-              })
-
-              console.log(resultTask)
-              alert('В разработке...')
-            }}
-          >
+          <Form.Provider onFormFinish={saveImportTask}>
             <Form
               form={form}
               name="task"
