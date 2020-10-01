@@ -52,6 +52,7 @@ const DefaultLayout = ({ breadcrumbs, isLoggedIn, user, children, dispatch }) =>
           <>
             <Dropdown overlay={ProfileMenu}>
               <Button
+                target="_blank"
                 href="https://app.rs.school/profile"
                 type="dashed"
                 size="large"
