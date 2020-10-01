@@ -24,7 +24,7 @@ export default [
   {
     path: routes.tasks.viewImport,
     component: TaskViewImport,
-    breadcrumb: 'View Import Task',
+    breadcrumb: 'View Imported Task',
   },
   {
     path: routes.tasks.view,
