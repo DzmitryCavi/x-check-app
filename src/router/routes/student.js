@@ -3,6 +3,7 @@ import { UnorderedListOutlined, CodeOutlined } from '@ant-design/icons'
 import RequestCreate from '../../page/student/requests/RequestCreate'
 import RequestsList from '../../page/student/requests/RequestsList'
 import RequestEdit from '../../page/student/requests/RequestEdit'
+import RequestService from '../../services/requests.service'
 
 import { studentRoutes as routes } from '.'
 import Grade from '../../page/student/response/Grade'
@@ -37,6 +38,15 @@ export default [
       label: 'Requests List',
       icon: UnorderedListOutlined,
       color: '#850bff',
+      withBadge: true,
+      badgeCount: () => {
+        const user = JSON.parse(localStorage.getItem('user')).login
+        const count = RequestService.getByAuthor(user).then((data) => {
+          return data.filter((el) => el.state === 'GRADED').length
+        })
+
+        return count
+      },
     },
   },
 ]
