@@ -46,7 +46,7 @@ const DefaultLayout = ({ breadcrumbs, isLoggedIn, user, children, dispatch }) =>
     <Layout className="default-layout">
       <Header className="app-header">
         <div className="app-header__logo">
-          <Link to="/">X Check App</Link>
+          <Link to="/">X Check App</Link> <small>v1.0.0-beta.0</small>
         </div>
         <div className="app-header__controls">
           <>
