@@ -8,9 +8,7 @@ const { Text } = Typography
 const ReviewFormItem = ({ value, onChange, maxScore, selfGrade, criteriaId }) => {
   const [number, setNumber] = useState(value ? value.number : null)
   const [discription, setDiscription] = useState(value ? value.discription : null)
-  const [isNeedComment, setIsNeedComment] = useState(
-    !!(value && value.number !== +maxScore && value.number !== null),
-  )
+  const [isNeedComment, setIsNeedComment] = useState(!!(value && value.number !== null))
 
   const triggerChange = (changedValue) => {
     if (onChange) {
@@ -33,7 +31,7 @@ const ReviewFormItem = ({ value, onChange, maxScore, selfGrade, criteriaId }) =>
       return
     }
 
-    setIsNeedComment(!isMax)
+    setIsNeedComment(true)
 
     switch (true) {
       case isMax:
@@ -91,7 +89,7 @@ const ReviewFormItem = ({ value, onChange, maxScore, selfGrade, criteriaId }) =>
             <b>Your review</b>
           </Text>
         </Col>
-        <Col span={3}>
+        <Col flex="175px">
           <Radio.Group
             value={value && typeof value.number === 'number' ? value.number : null}
             onChange={onNumberChange}
@@ -101,7 +99,7 @@ const ReviewFormItem = ({ value, onChange, maxScore, selfGrade, criteriaId }) =>
             <Radio.Button value={+maxScore}>Max</Radio.Button>
           </Radio.Group>
         </Col>
-        <Col span={2}>
+        <Col flex="auto">
           <NumericInput
             value={number !== null ? String(number) : number}
             onChange={onNumberChange}
@@ -126,10 +124,10 @@ const ReviewFormItem = ({ value, onChange, maxScore, selfGrade, criteriaId }) =>
     <>
       <Row
         style={{
-          margin: '10px 8px',
+          margin: '10px 0',
         }}
       >
-        <Col span={2}>
+        <Col flex="107px">
           <Radio.Group
             value={value && typeof value.number === 'number' ? value.number : null}
             onChange={onNumberChange}
@@ -140,7 +138,7 @@ const ReviewFormItem = ({ value, onChange, maxScore, selfGrade, criteriaId }) =>
             </Radio.Button>
           </Radio.Group>
         </Col>
-        <Col span={2}>
+        <Col flex="auto">
           <NumericInput
             value={number !== null ? String(number) : number}
             disabled

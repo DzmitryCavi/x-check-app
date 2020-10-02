@@ -1,8 +1,8 @@
-import React, { useState } from 'react'
+import React, { useRef, useState } from 'react'
 import { useAsync } from 'react-use'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
-import { Form, Spin, Button, Typography, Result, Space, Card, Input } from 'antd'
+import { Form, Spin, Button, Typography, Result, Space, Card, Input, Statistic, Alert } from 'antd'
 import { useParams } from 'react-router-dom'
 import parse from 'react-html-parser'
 import ReviewFormItem from './ReviewFormItem'
@@ -23,10 +23,18 @@ const ReviewForm = ({ user }) => {
   const [form] = Form.useForm()
   const { requestId } = useParams()
 
+  const totalScore = useRef(0)
+
   useAsync(async () => {
     const requestResponse = await requestsService.getById(requestId)
     const taskResponse = await tasksService.getById(requestResponse.taskId)
     const [reviewsResponse] = await reviewService.getByRequestId(requestResponse.id)
+
+    totalScore.current = taskResponse.categories.reduce(
+      (acc, curr) => (Number(curr.maxScore) > 0 ? acc + Number(curr.maxScore) : acc),
+      0,
+    )
+
     if (reviewsResponse) {
       setReviewToEdit(reviewsResponse)
       setScore(reviewsResponse.score)
@@ -151,7 +159,17 @@ const ReviewForm = ({ user }) => {
             </Form.Item>
 
             <Form.Item name="score">
-              <Title level={3}>{`Score: ${score}`}</Title>
+              <Alert
+                message={
+                  <Statistic
+                    title={<b>Score</b>}
+                    value={score}
+                    suffix={`/ ${totalScore.current}`}
+                  />
+                }
+                type="info"
+                showIcon
+              />
             </Form.Item>
 
             <Form.Item>
