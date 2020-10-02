@@ -1,4 +1,5 @@
 import React, { useState, useRef } from 'react'
+import { Link } from 'react-router-dom'
 import { useAsync } from 'react-use'
 import PropTypes from 'prop-types'
 import {
@@ -139,7 +140,17 @@ const RequestList = ({ user }) => {
       </div>
 
       <Table dataSource={requests} rowKey="id" loading={isLoading} bordered>
-        <Column title="Task" dataIndex="name" key="name" sorter={sorter.name} />
+        <Column
+          title="Task"
+          dataIndex="name"
+          key="name"
+          sorter={sorter.name}
+          render={(row, record) => (
+            <Link to={formatRoute(studentRoutes.requests.edit, { requestId: record.id })}>
+              {row}
+            </Link>
+          )}
+        />
         <Column title="Score" dataIndex="score" key="score" sorter={sorter.number} />
         <Column
           onFilter={(value, record) => record.name.includes(value)}

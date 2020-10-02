@@ -96,7 +96,7 @@ const DefaultLayout = ({ breadcrumbs, isLoggedIn, user, children, dispatch }) =>
         </Breadcrumb>
         <Layout className="default-layout__layout">
           <Row gutter={30}>
-            <Col xs={24} lg={6}>
+            <Col xs={24} lg={5}>
               <List className="default-layout__navigation navigation" bordered size="small">
                 <List.Item className="navigation__item" key="/">
                   <Link to="/" className="navigation__link">
@@ -145,7 +145,7 @@ const DefaultLayout = ({ breadcrumbs, isLoggedIn, user, children, dispatch }) =>
                 />
               </List>
             </Col>
-            <Col xs={24} lg={18}>
+            <Col xs={24} lg={19}>
               <Content className="default-layout__content">{children}</Content>
             </Col>
           </Row>
