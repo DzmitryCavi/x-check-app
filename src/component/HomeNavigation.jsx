@@ -17,7 +17,7 @@ const CustomCard = ({ ...item }) => {
   }, [item.navigation])
 
   return (
-    <Col span={8} key={item.path}>
+    <Col xs={24} lg={12} xl={8} key={item.path}>
       <Badge count={count} className="badge_display_block">
         <Link to={item.path}>
           <Card>

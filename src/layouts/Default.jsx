@@ -2,10 +2,12 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { Link, Redirect } from 'react-router-dom'
 import withBreadcrumbs from 'react-router-breadcrumbs-hoc'
-import { Layout, Menu, Breadcrumb, Button, Avatar, Dropdown } from 'antd'
+import { Layout, Menu, Breadcrumb, Button, Avatar, Dropdown, Row, Col } from 'antd'
 import { LogoutOutlined, ProfileOutlined, PoweroffOutlined } from '@ant-design/icons'
 import { connect } from 'react-redux'
 import { compose } from 'redux'
+
+import Can from '../rbac/Can'
 
 import publicRoutes from '../router/routes/public'
 import authorRoutes from '../router/routes/author'
@@ -13,12 +15,11 @@ import studentRoutes from '../router/routes/student'
 import courseManagerRoutes from '../router/routes/courseManager'
 import supervisorRoutes from '../router/routes/supervisor'
 
-import Can from '../rbac/Can'
 import { logout } from '../store/actions'
 
 import Navigation from '../component/Navigation'
 
-const { Header, Content, Sider, Footer } = Layout
+const { Header, Content, Footer } = Layout
 
 const DefaultLayout = ({ breadcrumbs, isLoggedIn, user, children, dispatch }) => {
   const exit = () => {
@@ -75,6 +76,7 @@ const DefaultLayout = ({ breadcrumbs, isLoggedIn, user, children, dispatch }) =>
               </Button>
             </Dropdown>
             <Button
+              className="app-header__logout"
               style={{ marginLeft: 10 }}
               type="danger"
               size="large"
@@ -85,7 +87,7 @@ const DefaultLayout = ({ breadcrumbs, isLoggedIn, user, children, dispatch }) =>
         </div>
       </Header>
 
-      <Content style={{ padding: '0 50px' }}>
+      <div className="default-layout__container">
         <Breadcrumb className="default-layout__breadcrumbs">
           {breadcrumbs.map(({ match, breadcrumb }) => (
             <Breadcrumb.Item key={match.url}>
@@ -93,32 +95,36 @@ const DefaultLayout = ({ breadcrumbs, isLoggedIn, user, children, dispatch }) =>
             </Breadcrumb.Item>
           ))}
         </Breadcrumb>
-        <Layout style={{ padding: '24px 0', backgroundColor: '#fff' }}>
-          <Sider width={320}>
-            <Can
-              role={user.role}
-              perform="menu:student"
-              yes={() => <Navigation items={studentRoutes} />}
-            />
-            <Can
-              role={user.role}
-              perform="menu:author"
-              yes={() => <Navigation items={authorRoutes} />}
-            />
-            <Can
-              role={user.role}
-              perform="menu:supervisor"
-              yes={() => <Navigation items={supervisorRoutes} />}
-            />
-            <Can
-              role={user.role}
-              perform="menu:course_manager"
-              yes={() => <Navigation items={courseManagerRoutes} />}
-            />
-          </Sider>
-          <Content className="default-layout__content">{children}</Content>
+        <Layout style={{ padding: '30px', backgroundColor: '#fff' }}>
+          <Row gutter={30}>
+            <Col xs={24} lg={6}>
+              <Can
+                role={user.role}
+                perform="menu:student"
+                yes={() => <Navigation items={studentRoutes} />}
+              />
+              <Can
+                role={user.role}
+                perform="menu:author"
+                yes={() => <Navigation items={authorRoutes} />}
+              />
+              <Can
+                role={user.role}
+                perform="menu:supervisor"
+                yes={() => <Navigation items={supervisorRoutes} />}
+              />
+              <Can
+                role={user.role}
+                perform="menu:course_manager"
+                yes={() => <Navigation items={courseManagerRoutes} />}
+              />
+            </Col>
+            <Col xs={24} lg={18}>
+              <Content className="default-layout__content">{children}</Content>
+            </Col>
+          </Row>
         </Layout>
-      </Content>
+      </div>
       <Footer style={{ textAlign: 'center' }}>
         ©{new Date().getFullYear()} Created by{' '}
         <a href="https://discord.gg/MVuXZQj" target="_blank" rel="noopener noreferrer">

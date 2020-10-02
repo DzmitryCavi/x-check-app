@@ -194,10 +194,12 @@ const TasksList = ({ user, history }) => {
         loading={loading}
         pagination={paginator}
         onChange={handleTableChange}
+        scroll={{ x: true }}
         bordered
       >
         <Column width={60} title="#" dataIndex="id" key="id" sorter={sortRules.id} />
         <Column
+          width={300}
           title="Title"
           key="title"
           sorter={sortRules.title}
@@ -236,6 +238,7 @@ const TasksList = ({ user, history }) => {
           )}
         />
         <Column
+          width={200}
           title="Created"
           dataIndex="created_at"
           key="created_at"
@@ -246,6 +249,7 @@ const TasksList = ({ user, history }) => {
           title="Action"
           key="action"
           width={200}
+          fixed="right"
           render={(row, record) => (
             <Space size="middle">
               <Dropdown

@@ -108,11 +108,18 @@
 /* Default Layout */
 .default-layout {
   min-height: 100vh;
+  &__container {
+    flex-grow: 1;
+    padding: 0 50px;
+  }
   &__breadcrumbs {
     margin: 16px 0;
   }
   &__content {
-    padding: 30px;
+    margin-left: 0;
+    background-color: #fff;
+  }
+  &__navigation {
     background-color: #fff;
   }
 
@@ -142,12 +149,49 @@
   }
 }
 
-/* Fix Ant Design Bug */
-.ant-layout-sider-children {
-  margin-top: 0 !important;
-  margin-bottom: 0 !important;
+/* Navigation */
+
+.navigation {
+  &__link {
+    display: flex;
+    align-items: center;
+  }
+  &__icon {
+    margin-right: 10px;
+  }
 }
+
+/**/
 
 .badge_display_block {
   display: block !important;
 }
+
+/* Media */
+
+@media screen and (max-width: 991px) {
+  .default-layout {
+    &__container {
+      padding: 0 25px;
+    }
+    &__navigation {
+      margin-bottom: 30px;
+    }
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .app-header {
+    padding: 0 25px;
+    &__logo {
+      small {
+        display: none;
+      }
+    }
+    &__logout {
+      display: none;
+    }
+  }
+}
+
+/**/

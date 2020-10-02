@@ -1,41 +1,38 @@
 import React from 'react'
-import { Link, useLocation } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import PropTypes from 'prop-types'
 
-import { Menu } from 'antd'
-import { HomeOutlined, DashOutlined } from '@ant-design/icons'
-import { publicRoutes } from '../router/routes'
+import { List } from 'antd'
+import { DashOutlined } from '@ant-design/icons'
+import publicRoutes from '../router/routes/public'
 
 const Navigation = ({ items }) => {
-  const location = useLocation()
+  const transformItems = [...publicRoutes, ...items]
+    .filter((item) => item.navigation)
+    .map((item) =>
+      !item.navigation.icon
+        ? { ...item, navigation: { ...items.navigation, icon: DashOutlined } }
+        : item,
+    )
+
   return (
-    <Menu mode="inline" defaultSelectedKeys={[location.pathname]} style={{ height: '100%' }}>
-      <Menu.Item
-        icon={<HomeOutlined style={{ color: 'rgb(24, 144, 255)' }} />}
-        key={publicRoutes.home}
-      >
-        <Link to={publicRoutes.home}>Home</Link>
-      </Menu.Item>
-      {items
-        .filter((item) => item.navigation)
-        .map((item) =>
-          !item.navigation.icon
-            ? { ...item, navigation: { ...items.navigation, icon: DashOutlined } }
-            : item,
-        )
-        .map((item) => (
-          <Menu.Item
-            icon={
-              <item.navigation.icon
-                style={{ color: item.navigation.color || 'rgba(0, 0, 0, .85)' }}
-              />
-            }
-            key={item.path}
-          >
-            <Link to={item.path}>{item.navigation.label || item.breadcrumb}</Link>
-          </Menu.Item>
-        ))}
-    </Menu>
+    <List
+      className="default-layout__navigation navigation"
+      bordered
+      size="small"
+      dataSource={transformItems}
+      renderItem={(item) => (
+        <List.Item className="navigation__item">
+          <Link to={item.path} className="navigation__link">
+            <item.navigation.icon
+              className="navigation__icon"
+              style={{ color: item.navigation.color || 'rgba(0, 0, 0, .85)' }}
+            />
+            {item.navigation.label || item.breadcrumb}
+          </Link>
+        </List.Item>
+      )}
+    />
   )
 }
 
