@@ -98,8 +98,8 @@ const DefaultLayout = ({ breadcrumbs, isLoggedIn, user, children, dispatch }) =>
           <Row gutter={30}>
             <Col xs={24} lg={6}>
               <List className="default-layout__navigation navigation" bordered size="small">
-                <List.Item className="navigation__item" key="/home">
-                  <Link to="/home" className="navigation__link">
+                <List.Item className="navigation__item" key="/">
+                  <Link to="/" className="navigation__link">
                     <HomeOutlined
                       className="navigation__icon"
                       style={{ color: 'rgb(24, 144, 255)' }}
