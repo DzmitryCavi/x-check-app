@@ -71,7 +71,6 @@ const RequestFormItem = ({ value, onChange, maxScore, criteriaId }) => {
   const Criteria = (
     <>
       <Row
-        gutter={5}
         style={{
           margin: '10px 0px',
         }}
@@ -111,10 +110,10 @@ const RequestFormItem = ({ value, onChange, maxScore, criteriaId }) => {
     <>
       <Row
         style={{
-          margin: '10px 8px',
+          margin: '10px 0',
         }}
       >
-        <Col span={2}>
+        <Col flex="107px">
           <Radio.Group
             value={value && typeof value.number === 'number' ? value.number : null}
             onChange={onNumberChange}
@@ -125,7 +124,7 @@ const RequestFormItem = ({ value, onChange, maxScore, criteriaId }) => {
             </Radio.Button>
           </Radio.Group>
         </Col>
-        <Col span={2}>
+        <Col flex="auto">
           <NumericInput
             value={number !== null ? String(number) : number}
             disabled
