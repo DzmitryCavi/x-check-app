@@ -25,6 +25,7 @@ import disputeService from '../services/dispute.service'
 import GradeItem from '../component/GradeInfoItem'
 import ButtonLink from '../component/ButtonLink'
 import NumericInput from '../component/NumericInput'
+import Feedback from '../component/Feedback'
 
 const { Title, Link, Text } = Typography
 
@@ -211,6 +212,7 @@ const Dispute = () => {
               </Form.Item>
             </Form>
           )}
+          <Feedback feedback={request.feedback} requestId={request.id} />
         </>
       )}
     </>

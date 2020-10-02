@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { useAsync } from 'react-use'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
-import { Form, Spin, Button, Typography, Result, Space, Card, Input } from 'antd'
+import { Form, Spin, Button, Typography, Result, Space, Input } from 'antd'
 import { useParams } from 'react-router-dom'
 import parse from 'react-html-parser'
 import ReviewFormItem from './ReviewFormItem'
@@ -10,8 +10,9 @@ import requestsService from '../../../services/requests.service'
 import tasksService from '../../../services/tasks.service'
 import reviewService from '../../../services/review.service'
 import NumericInput from '../../NumericInput'
+import Feedback from '../../Feedback'
 
-const { Title, Link, Text } = Typography
+const { Title, Link } = Typography
 
 const ReviewForm = ({ user }) => {
   const [isSuccess, setIsSuccess] = useState(false)
@@ -97,12 +98,6 @@ const ReviewForm = ({ user }) => {
             </Link>
           </Title>
 
-          {request.feedback && (
-            <Card title="Feedback from student" bordered={false}>
-              <Text style={{ fontStyle: 'italic' }}>{request.feedback}</Text>
-            </Card>
-          )}
-
           <hr style={{ marginTop: 50, marginBottom: 30 }} />
 
           <Title level={3} className="page-subtitle page-subtitle--border mb-3">
@@ -175,6 +170,7 @@ const ReviewForm = ({ user }) => {
           subTitle="You can see the request status in the list!"
         />
       )}
+      <Feedback feedback={request.feedback} requestId={requestId} />
     </>
   )
 }

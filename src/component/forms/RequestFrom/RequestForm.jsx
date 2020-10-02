@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
+import { v4 as uuid } from 'uuid'
+import { format } from 'date-fns'
 import { Form, Spin, Button, Input, Typography, Result, List, Space } from 'antd'
 import parse from 'react-html-parser'
 import RequestFormItem from './RequestFormItem'
@@ -29,24 +31,45 @@ const RequestForm = ({ task, user, requestToEdit, setIsNewRequest }) => {
       name: task.title,
       taskId: task.id,
       ...data,
+      feedback: [
+        {
+          author: user.login,
+          avatar: user.avatar_url,
+          content: data.feedback,
+          datetime: format(new Date(), 'yyyy-MM-dd HH:mm:ss'),
+          id: uuid(),
+        },
+      ],
       score,
       state: 'SUBMITTED',
     }
     if (requestToEdit) requestsService.edit(requestData, requestToEdit.id)
-    else requestsService.create(requestData, user)
+    else requestsService.create(requestData, user.login)
     setIsSuccess(true)
     if (setIsNewRequest) setIsNewRequest(true)
   }
   const onSave = async () => {
+    const formValues = form.getFieldsValue()
     const requestData = {
       name: task.title,
       taskId: task.id,
-      ...form.getFieldsValue(),
+      ...formValues,
       score,
+      feedback: formValues.feedback
+        ? [
+            {
+              author: user.login,
+              avatar: user.avatar_url,
+              content: formValues.feedback,
+              datetime: format(new Date(), 'yyyy-MM-dd HH:mm:ss'),
+              id: uuid(),
+            },
+          ]
+        : [],
       state: 'DRAFT',
     }
     if (requestToEdit) requestsService.edit(requestData, requestToEdit.id)
-    else requestsService.create(requestData, user)
+    else requestsService.create(requestData, user.login)
     setIsSuccess(true)
     if (setIsNewRequest) setIsNewRequest(true)
   }
@@ -69,7 +92,9 @@ const RequestForm = ({ task, user, requestToEdit, setIsNewRequest }) => {
         layout="vertical"
         onFinish={onFinish}
         onFieldsChange={calculateScore}
-        initialValues={requestToEdit || {}}
+        initialValues={
+          requestToEdit ? { ...requestToEdit, feedback: requestToEdit.feedback[0].content } : {}
+        }
       >
         <Form.Item
           name="url"
@@ -144,7 +169,7 @@ const RequestForm = ({ task, user, requestToEdit, setIsNewRequest }) => {
 
 RequestForm.propTypes = {
   task: PropTypes.instanceOf(Object).isRequired,
-  user: PropTypes.string.isRequired,
+  user: PropTypes.instanceOf(Object).isRequired,
   requestToEdit: PropTypes.instanceOf(Object),
   setIsNewRequest: PropTypes.instanceOf(Function),
 }
@@ -156,7 +181,7 @@ RequestForm.defaultProps = {
 
 const mapStateToProps = (state) => {
   return {
-    user: state.auth.user.login,
+    user: state.auth.user,
   }
 }
 

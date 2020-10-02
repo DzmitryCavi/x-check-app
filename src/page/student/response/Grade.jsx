@@ -21,6 +21,7 @@ import requestsService from '../../../services/requests.service'
 import tasksService from '../../../services/tasks.service'
 import { studentRoutes } from '../../../router/routes'
 import disputeService from '../../../services/dispute.service'
+import Feedback from '../../../component/Feedback'
 import GradeItem from '../../../component/GradeInfoItem'
 import ButtonLink from '../../../component/ButtonLink'
 
@@ -171,6 +172,7 @@ const Grade = () => {
           </Form.Item>
         </Form>
       )}
+      <Feedback feedback={request.feedback} requestId={requestId} />
     </div>
   )
 }
