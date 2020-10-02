@@ -112,6 +112,10 @@
     flex-grow: 1;
     padding: 0 50px;
   }
+  &__layout {
+    padding: 30px;
+    background-color: #fff;
+  }
   &__breadcrumbs {
     margin: 16px 0;
   }
@@ -178,11 +182,24 @@
       margin-bottom: 30px;
     }
   }
+
+  .app-header {
+    padding: 0 25px;
+  }
 }
 
 @media screen and (max-width: 767px) {
+  .default-layout {
+    &__container {
+      padding: 0 15px;
+    }
+    &__layout {
+      padding: 20px 15px;
+      background-color: #fff;
+    }
+  }
   .app-header {
-    padding: 0 25px;
+    padding: 0 15px;
     &__logo {
       small {
         display: none;

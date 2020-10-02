@@ -95,7 +95,7 @@ const DefaultLayout = ({ breadcrumbs, isLoggedIn, user, children, dispatch }) =>
             </Breadcrumb.Item>
           ))}
         </Breadcrumb>
-        <Layout style={{ padding: '30px', backgroundColor: '#fff' }}>
+        <Layout className="default-layout__layout">
           <Row gutter={30}>
             <Col xs={24} lg={6}>
               <Can
