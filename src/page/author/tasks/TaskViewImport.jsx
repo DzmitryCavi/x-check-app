@@ -35,6 +35,15 @@ const TaskViewImport = ({ history, location, user }) => {
   const { task } = location.state
 
   if (!task.categories) task.categories = []
+  else
+    task.categories = task.categories.map((category) =>
+      category.criteria
+        ? category
+        : {
+            ...category,
+            criteria: [],
+          },
+    )
 
   const saveImportTask = async (name, info) => {
     const { task: taskForm, ...forms } = info.forms
