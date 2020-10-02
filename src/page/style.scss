@@ -1,0 +1,17 @@
+/* Home Page */
+
+.home-page {
+  &__delimeter {
+    &--role {
+      font-weight: 500;
+      font-size: 18px;
+      margin-top: 20px;
+      margin-bottom: 10px;
+      &:first-of-type {
+        margin-top: 0;
+      }
+    }
+  }
+}
+
+/**/

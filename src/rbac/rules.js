@@ -12,6 +12,9 @@ const rules = {
   course_manager: {
     static: ['menu:course_manager'],
   },
+  superadmin: {
+    static: ['menu:author', 'menu:student', 'menu:supervisor', 'menu:course_manager'],
+  },
 }
 
 export default rules

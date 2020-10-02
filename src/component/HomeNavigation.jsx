@@ -18,7 +18,7 @@ const CustomCard = ({ ...item }) => {
 
   return (
     <Col xs={24} lg={12} xl={8} key={item.path}>
-      <Badge count={count} className="badge_display_block">
+      <Badge count={count} className="d-block">
         <Link to={item.path}>
           <Card>
             <Meta

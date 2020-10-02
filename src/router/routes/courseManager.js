@@ -17,10 +17,10 @@ export default [
   {
     path: routes.tasks.list,
     component: TasksList,
-    breadcrumb: 'Tasks List',
+    breadcrumb: 'Tasks Managment',
     description: 'Tasks management',
     navigation: {
-      label: 'Tasks List',
+      label: 'Tasks Managment',
       icon: ApartmentOutlined,
       color: '#52c41a',
     },

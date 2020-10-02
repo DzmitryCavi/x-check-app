@@ -11,27 +11,47 @@ import studentRoutes from '../router/routes/student'
 import courseManagerRoutes from '../router/routes/courseManager'
 import supervisorRoutes from '../router/routes/supervisor'
 
+import './style.scss'
+
 const Home = (props) => {
   const { user } = props
 
   return (
     <div className="home-page">
+      {user.role === 'superadmin' ? (
+        <div className="home-page__delimeter home-page__delimeter--role">Author</div>
+      ) : null}
+      <Row gutter={16}>
+        <Can
+          role={user.role}
+          perform="menu:author"
+          yes={() => <HomeNavigation items={authorRoutes} />}
+        />
+      </Row>
+      {user.role === 'superadmin' ? (
+        <div className="home-page__delimeter home-page__delimeter--role">Student</div>
+      ) : null}
       <Row gutter={16}>
         <Can
           role={user.role}
           perform="menu:student"
           yes={() => <HomeNavigation items={studentRoutes} />}
         />
-        <Can
-          role={user.role}
-          perform="menu:author"
-          yes={() => <HomeNavigation items={authorRoutes} />}
-        />
+      </Row>
+      {user.role === 'superadmin' ? (
+        <div className="home-page__delimeter home-page__delimeter--role">Supervisor</div>
+      ) : null}
+      <Row gutter={16}>
         <Can
           role={user.role}
           perform="menu:supervisor"
           yes={() => <HomeNavigation items={supervisorRoutes} />}
         />
+      </Row>
+      {user.role === 'superadmin' ? (
+        <div className="home-page__delimeter home-page__delimeter--role">Course Manager</div>
+      ) : null}
+      <Row gutter={16}>
         <Can
           role={user.role}
           perform="menu:course_manager"

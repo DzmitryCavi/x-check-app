@@ -32,10 +32,10 @@ export default [
   {
     path: routes.requests.list,
     component: RequestsList,
-    breadcrumb: 'Requests List',
+    breadcrumb: 'Requests History',
     description: 'Requests management',
     navigation: {
-      label: 'Requests List',
+      label: 'Requests History',
       icon: UnorderedListOutlined,
       color: '#850bff',
       withBadge: true,

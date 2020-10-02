@@ -156,6 +156,12 @@
 /* Navigation */
 
 .navigation {
+  &__item {
+    &--role {
+      font-weight: bold;
+      background-color: #fafafa;
+    }
+  }
   &__link {
     display: flex;
     align-items: center;
@@ -166,10 +172,6 @@
 }
 
 /**/
-
-.badge_display_block {
-  display: block !important;
-}
 
 /* Media */
 

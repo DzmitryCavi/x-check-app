@@ -2,8 +2,9 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { Link, Redirect } from 'react-router-dom'
 import withBreadcrumbs from 'react-router-breadcrumbs-hoc'
-import { Layout, Menu, Breadcrumb, Button, Avatar, Dropdown, Row, Col } from 'antd'
-import { LogoutOutlined, ProfileOutlined, PoweroffOutlined } from '@ant-design/icons'
+import {} from 'antd/lib/form/Form'
+import { Layout, Menu, Breadcrumb, Button, Avatar, Dropdown, Row, Col, List } from 'antd'
+import { LogoutOutlined, ProfileOutlined, PoweroffOutlined, HomeOutlined } from '@ant-design/icons'
 import { connect } from 'react-redux'
 import { compose } from 'redux'
 
@@ -51,10 +52,8 @@ const DefaultLayout = ({ breadcrumbs, isLoggedIn, user, children, dispatch }) =>
         </div>
         <div className="app-header__controls">
           <>
-            <Dropdown overlay={ProfileMenu}>
+            <Dropdown overlay={ProfileMenu} trigger="click">
               <Button
-                target="_blank"
-                href="https://app.rs.school/profile"
                 type="dashed"
                 size="large"
                 icon={
@@ -98,26 +97,53 @@ const DefaultLayout = ({ breadcrumbs, isLoggedIn, user, children, dispatch }) =>
         <Layout className="default-layout__layout">
           <Row gutter={30}>
             <Col xs={24} lg={6}>
-              <Can
-                role={user.role}
-                perform="menu:student"
-                yes={() => <Navigation items={studentRoutes} />}
-              />
-              <Can
-                role={user.role}
-                perform="menu:author"
-                yes={() => <Navigation items={authorRoutes} />}
-              />
-              <Can
-                role={user.role}
-                perform="menu:supervisor"
-                yes={() => <Navigation items={supervisorRoutes} />}
-              />
-              <Can
-                role={user.role}
-                perform="menu:course_manager"
-                yes={() => <Navigation items={courseManagerRoutes} />}
-              />
+              <List className="default-layout__navigation navigation" bordered size="small">
+                <List.Item className="navigation__item" key="/home">
+                  <Link to="/home" className="navigation__link">
+                    <HomeOutlined
+                      className="navigation__icon"
+                      style={{ color: 'rgb(24, 144, 255)' }}
+                    />
+                    Home
+                  </Link>
+                </List.Item>
+                {user.role === 'superadmin' ? (
+                  <List.Item className="navigation__item navigation__item--role">Author</List.Item>
+                ) : null}
+                <Can
+                  role={user.role}
+                  perform="menu:author"
+                  yes={() => <Navigation items={authorRoutes} />}
+                />
+                {user.role === 'superadmin' ? (
+                  <List.Item className="navigation__item navigation__item--role">Student</List.Item>
+                ) : null}
+                <Can
+                  role={user.role}
+                  perform="menu:student"
+                  yes={() => <Navigation items={studentRoutes} />}
+                />
+                {user.role === 'superadmin' ? (
+                  <List.Item className="navigation__item navigation__item--role">
+                    Supervisor
+                  </List.Item>
+                ) : null}
+                <Can
+                  role={user.role}
+                  perform="menu:supervisor"
+                  yes={() => <Navigation items={supervisorRoutes} />}
+                />
+                {user.role === 'superadmin' ? (
+                  <List.Item className="navigation__item navigation__item--role">
+                    Course Manager
+                  </List.Item>
+                ) : null}
+                <Can
+                  role={user.role}
+                  perform="menu:course_manager"
+                  yes={() => <Navigation items={courseManagerRoutes} />}
+                />
+              </List>
             </Col>
             <Col xs={24} lg={18}>
               <Content className="default-layout__content">{children}</Content>

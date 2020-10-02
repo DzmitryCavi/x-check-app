@@ -19,6 +19,7 @@ class LoginForm extends React.Component {
       { slug: 'student', label: 'Student' },
       { slug: 'supervisor', label: 'Supervisor' },
       { slug: 'course_manager', label: 'Course Manager' },
+      { slug: 'superadmin', label: 'Super Admin' },
     ]
 
     this.state = {
