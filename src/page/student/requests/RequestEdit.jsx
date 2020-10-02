@@ -21,7 +21,13 @@ const Reqest = () => {
   return (
     <div className="edit-request-page">
       <h1 className="page-title">Edit Request</h1>
-      {task ? <RequestForm task={task} requestToEdit={request} /> : <Spin />}
+      {task ? (
+        <RequestForm task={task} requestToEdit={request} />
+      ) : (
+        <div className="content-loading">
+          <Spin tip="Loading..." />
+        </div>
+      )}
     </div>
   )
 }

@@ -6,9 +6,7 @@ import NumericInput from '../../NumericInput'
 const RequestFormItem = ({ value, onChange, maxScore, criteriaId }) => {
   const [number, setNumber] = useState(value ? value.number : null)
   const [discription, setDiscription] = useState(value ? value.discription : null)
-  const [isNeedComment, setIsNeedComment] = useState(
-    !!(value && value.number !== +maxScore && value.number !== null),
-  )
+  const [isNeedComment, setIsNeedComment] = useState(!!(value && value.number !== null))
 
   const triggerChange = (changedValue) => {
     if (onChange) {
@@ -41,7 +39,7 @@ const RequestFormItem = ({ value, onChange, maxScore, criteriaId }) => {
       return
     }
 
-    setIsNeedComment(!isMax)
+    setIsNeedComment(true)
 
     switch (true) {
       case isMax:
@@ -73,11 +71,12 @@ const RequestFormItem = ({ value, onChange, maxScore, criteriaId }) => {
   const Criteria = (
     <>
       <Row
+        gutter={5}
         style={{
           margin: '10px 0px',
         }}
       >
-        <Col span={3}>
+        <Col flex="175px">
           <Radio.Group
             value={value && typeof value.number === 'number' ? value.number : null}
             onChange={onNumberChange}
@@ -87,7 +86,7 @@ const RequestFormItem = ({ value, onChange, maxScore, criteriaId }) => {
             <Radio.Button value={+maxScore}>Max</Radio.Button>
           </Radio.Group>
         </Col>
-        <Col span={2}>
+        <Col flex="auto">
           <NumericInput
             value={number !== null ? String(number) : number}
             onChange={onNumberChange}

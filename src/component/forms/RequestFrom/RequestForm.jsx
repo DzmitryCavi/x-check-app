@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
-import { Form, Spin, Button, Input, Typography, Result, List, Space } from 'antd'
+import { Form, Spin, Button, Input, Typography, Result, List, Space, Statistic, Alert } from 'antd'
 import parse from 'react-html-parser'
 import RequestFormItem from './RequestFormItem'
 import requestsService from '../../../services/requests.service'
@@ -14,6 +14,11 @@ const RequestForm = ({ task, user, requestToEdit, setIsNewRequest }) => {
   const [isSuccess, setIsSuccess] = useState(false)
   const [score, setScore] = useState((requestToEdit && requestToEdit.score) || 0)
   const [form] = Form.useForm()
+
+  const totalScore = categories.reduce(
+    (acc, curr) => (Number(curr.maxScore) > 0 ? acc + Number(curr.maxScore) : acc),
+    0,
+  )
 
   useEffect(() => {
     return task
@@ -37,6 +42,7 @@ const RequestForm = ({ task, user, requestToEdit, setIsNewRequest }) => {
     setIsSuccess(true)
     if (setIsNewRequest) setIsNewRequest(true)
   }
+
   const onSave = async () => {
     const requestData = {
       name: task.title,
@@ -50,6 +56,7 @@ const RequestForm = ({ task, user, requestToEdit, setIsNewRequest }) => {
     setIsSuccess(true)
     if (setIsNewRequest) setIsNewRequest(true)
   }
+
   const calculateScore = (_, allFields) => {
     setScore(
       allFields.reduce(
@@ -62,7 +69,7 @@ const RequestForm = ({ task, user, requestToEdit, setIsNewRequest }) => {
   return !isSuccess ? (
     <>
       <Title level={2} className="page-subtitle page-subtitle--border mt-2 mb-3">
-        Request to review the task
+        Request to review the task - {task.title}
       </Title>
       <Form
         form={form}
@@ -88,7 +95,7 @@ const RequestForm = ({ task, user, requestToEdit, setIsNewRequest }) => {
             <List
               itemLayout="vertical"
               header={
-                <Title level={4} style={{ marginBottom: -10 }}>
+                <Title level={4} style={{ marginBottom: 0 }}>
                   {catIdx + 1}. {category.title}
                 </Title>
               }
@@ -101,6 +108,7 @@ const RequestForm = ({ task, user, requestToEdit, setIsNewRequest }) => {
                     <Text>{parse(`${item.text}`)}</Text>
                   </div>
                   <Form.Item
+                    className="mb-1"
                     name={['selfGrade', category.title, crIdx]}
                     rules={[{ required: true, message: 'Please grade all' }]}
                   >
@@ -114,7 +122,11 @@ const RequestForm = ({ task, user, requestToEdit, setIsNewRequest }) => {
           <Spin size="large" />
         )}
         <Form.Item name="score">
-          <Title level={3}>{`Score: ${score}`}</Title>
+          <Alert
+            message={<Statistic title={<b>Score</b>} value={score} suffix={`/ ${totalScore}`} />}
+            type="info"
+            showIcon
+          />
         </Form.Item>
         <Form.Item name="feedback" label="Feedback">
           <Input.TextArea />
