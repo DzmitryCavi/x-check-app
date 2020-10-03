@@ -2,7 +2,18 @@ import React, { useRef, useState } from 'react'
 import { useAsync } from 'react-use'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
-import { Form, Spin, Button, Typography, Result, Space, Input, Statistic, Alert } from 'antd'
+import {
+  Form,
+  Spin,
+  Button,
+  Typography,
+  Result,
+  Space,
+  Input,
+  Statistic,
+  Alert,
+  Collapse,
+} from 'antd'
 import { useParams } from 'react-router-dom'
 import parse from 'react-html-parser'
 import ReviewFormItem from './ReviewFormItem'
@@ -145,13 +156,20 @@ const ReviewForm = ({ user }) => {
               </Space>
             ))}
 
-            <Form.Item name={['extra', 'score']} label="Extra point or penalty (Not obligatory)">
-              <NumericInput placeholder="any point" />
-            </Form.Item>
+            <Collapse className="mb-2">
+              <Collapse.Panel header="Extra" key="extra">
+                <Form.Item
+                  name={['extra', 'score']}
+                  label="Extra point or penalty (Not obligatory)"
+                >
+                  <NumericInput placeholder="Any point" />
+                </Form.Item>
 
-            <Form.Item name={['extra', 'comment']} label="Comment">
-              <Input.TextArea />
-            </Form.Item>
+                <Form.Item className="mb-0" name={['extra', 'comment']} label="Comment">
+                  <Input.TextArea />
+                </Form.Item>
+              </Collapse.Panel>
+            </Collapse>
 
             <Form.Item name="score">
               <Alert
@@ -188,6 +206,12 @@ const ReviewForm = ({ user }) => {
           subTitle="You can see the request status in the list!"
         />
       )}
+
+      <hr style={{ marginTop: 50, marginBottom: 30 }} />
+
+      <Title level={3} className="page-subtitle page-subtitle--border mb-3">
+        Feedback:
+      </Title>
       <Feedback feedback={request.feedback} requestId={requestId} />
     </>
   )

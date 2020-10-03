@@ -23,10 +23,10 @@ CommentList.propTypes = {
   comments: PropTypes.instanceOf(Array).isRequired,
 }
 
-const Editor = ({ onChange, onSubmit, submitting, value }) => (
+const Editor = ({ onChange, onSubmit, submitting, value, placeholder }) => (
   <>
     <Form.Item>
-      <TextArea rows={4} onChange={onChange} value={value} />
+      <TextArea rows={4} onChange={onChange} value={value} placeholder={placeholder} />
     </Form.Item>
     <Form.Item>
       <Button htmlType="submit" loading={submitting} onClick={onSubmit} type="primary">
@@ -36,11 +36,16 @@ const Editor = ({ onChange, onSubmit, submitting, value }) => (
   </>
 )
 
+Editor.defaultProps = {
+  placeholder: '',
+}
+
 Editor.propTypes = {
   onChange: PropTypes.instanceOf(Function).isRequired,
   onSubmit: PropTypes.instanceOf(Function).isRequired,
   submitting: PropTypes.bool.isRequired,
   value: PropTypes.string.isRequired,
+  placeholder: PropTypes.string,
 }
 
 const FeedBack = ({ feedback, user, requestId }) => {
@@ -91,6 +96,7 @@ const FeedBack = ({ feedback, user, requestId }) => {
             onSubmit={handleSubmit}
             submitting={submitting}
             value={value}
+            placeholder="Your message..."
           />
         }
       />

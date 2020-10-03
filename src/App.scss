@@ -4,6 +4,13 @@
   color: red;
 }
 
+.p-sticky {
+  position: sticky;
+  &--t0 {
+    top: 0;
+  }
+}
+
 .d-block {
   display: block !important;
 }
