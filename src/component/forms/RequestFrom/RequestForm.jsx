@@ -8,6 +8,7 @@ import parse from 'react-html-parser'
 import RequestFormItem from './RequestFormItem'
 import requestsService from '../../../services/requests.service'
 import { urlWithIpPattern } from '../../../services/validators'
+import feedbackService from '../../../services/feedback.service'
 
 const { Title, Text } = Typography
 
@@ -36,21 +37,29 @@ const RequestForm = ({ task, user, requestToEdit, setIsNewRequest }) => {
       name: task.title,
       taskId: task.id,
       ...data,
-      feedback: [
-        {
-          author: user.login,
-          avatar: user.avatar_url,
-          content: data.feedback,
-          datetime: format(new Date(), 'yyyy-MM-dd HH:mm:ss'),
-          id: uuid(),
-        },
-      ],
       score,
       state: 'SUBMITTED',
     }
     if (requestToEdit) requestsService.edit(requestData, requestToEdit.id)
-    else requestsService.create(requestData, user.login)
+    else {
+      const requestResponse = await requestsService.create(requestData, user.login)
+
+      feedbackService.create({
+        requestId: requestResponse.id,
+        massages: [
+          {
+            author: user.login,
+            avatar: user.avatar_url,
+            content: data.feedback,
+            datetime: format(new Date(), 'yyyy-MM-dd HH:mm:ss'),
+            id: uuid(),
+          },
+        ],
+      })
+    }
+
     setIsSuccess(true)
+
     if (setIsNewRequest) setIsNewRequest(true)
   }
 
@@ -99,9 +108,7 @@ const RequestForm = ({ task, user, requestToEdit, setIsNewRequest }) => {
         layout="vertical"
         onFinish={onFinish}
         onFieldsChange={calculateScore}
-        initialValues={
-          requestToEdit ? { ...requestToEdit, feedback: requestToEdit.feedback[0].content } : {}
-        }
+        initialValues={requestToEdit || {}}
       >
         <Form.Item
           name="url"

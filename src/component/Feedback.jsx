@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react'
+import { useAsync } from 'react-use'
 import PropTypes from 'prop-types'
 import { v4 as uuid } from 'uuid'
 import { format } from 'date-fns'
 import { Comment, Avatar, Form, Button, List, Input } from 'antd'
 import { connect } from 'react-redux'
-import requestService from '../services/requests.service'
+import feedbackService from '../services/feedback.service'
 
 const { TextArea } = Input
 
@@ -43,14 +44,23 @@ Editor.propTypes = {
   value: PropTypes.string.isRequired,
 }
 
-const FeedBack = ({ feedback, user, requestId }) => {
-  const [comments, setComments] = useState(feedback)
+const FeedBack = ({ user, requestId }) => {
+  const [comments, setComments] = useState([])
+  const [feedbackId, setFeedbackId] = useState([])
+  const [loading, setLoading] = useState(true)
   const [submitting, setSubmitting] = useState(false)
   const [value, setValue] = useState('')
 
+  useAsync(async () => {
+    const [fetchedFeedback] = await feedbackService.getByRequestId(requestId)
+    setComments(fetchedFeedback.massages)
+    setFeedbackId(fetchedFeedback.id)
+    setLoading(false)
+  }, [requestId])
+
   useEffect(() => {
-    requestService.edit({ feedback: comments }, requestId)
-  }, [comments, requestId])
+    if (submitting) feedbackService.edit({ massages: comments }, feedbackId)
+  }, [comments, feedbackId, submitting])
 
   const handleSubmit = () => {
     if (!value) {
@@ -80,7 +90,9 @@ const FeedBack = ({ feedback, user, requestId }) => {
     setValue(e.target.value)
   }
 
-  return (
+  return loading ? (
+    <>Loading ...</>
+  ) : (
     <>
       {comments.length > 0 && <CommentList comments={comments} />}
       <Comment
@@ -99,13 +111,8 @@ const FeedBack = ({ feedback, user, requestId }) => {
 }
 
 FeedBack.propTypes = {
-  feedback: PropTypes.instanceOf(Array),
   user: PropTypes.instanceOf(Object).isRequired,
   requestId: PropTypes.string.isRequired,
-}
-
-FeedBack.defaultProps = {
-  feedback: [],
 }
 
 const mapStateToProps = (state) => ({
