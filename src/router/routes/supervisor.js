@@ -13,7 +13,7 @@ export default [
   {
     path: routes.requests.review,
     component: RequestReview,
-    breadcrumb: 'Request review',
+    breadcrumb: 'Request Review',
   },
   {
     path: routes.reviews.dispute,
@@ -23,10 +23,10 @@ export default [
   {
     path: routes.requests.list,
     component: RequestsList,
-    breadcrumb: 'Requests list',
+    breadcrumb: 'Requests List',
     description: 'Requests management',
     navigation: {
-      label: 'Requests list',
+      label: 'Requests List',
       icon: UnorderedListOutlined,
       color: '#52c41a',
       withBadge: true,

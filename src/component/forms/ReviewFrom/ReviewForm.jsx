@@ -14,6 +14,7 @@ import {
   Alert,
   Collapse,
 } from 'antd'
+import { HistoryOutlined, UnorderedListOutlined } from '@ant-design/icons'
 import { useParams } from 'react-router-dom'
 import parse from 'react-html-parser'
 import ReviewFormItem from './ReviewFormItem'
@@ -22,6 +23,8 @@ import tasksService from '../../../services/tasks.service'
 import reviewService from '../../../services/review.service'
 import NumericInput from '../../NumericInput'
 import Feedback from '../../Feedback'
+import ButtonLink from '../../ButtonLink'
+import { supervisorRoutes } from '../../../router/routes'
 
 const { Title, Link } = Typography
 
@@ -204,6 +207,24 @@ const ReviewForm = ({ user }) => {
           status="success"
           title="Request Has Been Sent Successfully !"
           subTitle="You can see the request status in the list!"
+          extra={[
+            <ButtonLink
+              key="tasks-list"
+              type="primary"
+              icon={<UnorderedListOutlined />}
+              linkTo={supervisorRoutes.requests.list}
+            >
+              Go Requests List
+            </ButtonLink>,
+            <ButtonLink
+              key="tasks-list"
+              type="default"
+              icon={<HistoryOutlined />}
+              linkTo={supervisorRoutes.reviews.list}
+            >
+              Go Review History
+            </ButtonLink>,
+          ]}
         />
       )}
 
