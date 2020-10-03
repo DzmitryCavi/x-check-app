@@ -43,7 +43,6 @@ const RequestForm = ({ task, user, requestToEdit, setIsNewRequest }) => {
     if (requestToEdit) requestsService.edit(requestData, requestToEdit.id)
     else {
       const requestResponse = await requestsService.create(requestData, user.login)
-
       feedbackService.create({
         requestId: requestResponse.id,
         massages: [
@@ -84,7 +83,21 @@ const RequestForm = ({ task, user, requestToEdit, setIsNewRequest }) => {
       state: 'DRAFT',
     }
     if (requestToEdit) requestsService.edit(requestData, requestToEdit.id)
-    else requestsService.create(requestData, user.login)
+    else {
+      const requestResponse = await requestsService.create(requestData, user.login)
+      feedbackService.create({
+        requestId: requestResponse.id,
+        massages: [
+          {
+            author: user.login,
+            avatar: user.avatar_url,
+            content: formValues.feedback,
+            datetime: format(new Date(), 'yyyy-MM-dd HH:mm:ss'),
+            id: uuid(),
+          },
+        ],
+      })
+    }
     setIsSuccess(true)
     if (setIsNewRequest) setIsNewRequest(true)
   }
