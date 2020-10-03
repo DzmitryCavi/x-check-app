@@ -110,7 +110,7 @@ const RequestFormItem = ({ value, onChange, maxScore, criteriaId }) => {
     <>
       <Row
         style={{
-          margin: '10px 0',
+          marginTop: '10px',
         }}
       >
         <Col flex="107px">
