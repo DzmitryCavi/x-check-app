@@ -157,7 +157,7 @@ const ReviewForm = ({ user }) => {
             ))}
 
             <Collapse className="mb-2">
-              <Collapse.Panel header="Extra" key="extra">
+              <Collapse.Panel header="Extra" key="extra" forceRender>
                 <Form.Item
                   name={['extra', 'score']}
                   label="Extra point or penalty (Not obligatory)"
