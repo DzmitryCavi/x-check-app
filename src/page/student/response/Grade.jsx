@@ -116,25 +116,29 @@ const Grade = () => {
               header={<Title level={4}>{`${catIdx + 1}. ${category.title}`}</Title>}
               key={category.id}
               dataSource={category.criteria}
-              renderItem={(item, crIdx) => (
-                <List.Item key={`criteria-${crIdx + 1}`} className="ml-2">
-                  <div className="d-flex">
-                    <span>{`${catIdx + 1}.${crIdx + 1}.`}&nbsp;</span>
-                    {parse(`${item.text}`)}
-                  </div>
-                  <Form.Item
-                    name={['selfGrade', category.title, crIdx]}
-                    rules={[{ required: true, message: 'Please grade all' }]}
-                  >
-                    <GradeItem
-                      maxScore={+item.score}
-                      review={review.grade[category.title].find((el) => el.criteriaId === item.id)}
-                      criteria={item.id}
-                      isDispute={isAcceptedReview}
-                    />
-                  </Form.Item>
-                </List.Item>
-              )}
+              renderItem={(item, crIdx) =>
+                review.grade[category.title] ? (
+                  <List.Item key={`criteria-${crIdx + 1}`} className="ml-2">
+                    <div className="d-flex">
+                      <span>{`${catIdx + 1}.${crIdx + 1}.`}&nbsp;</span>
+                      {parse(`${item.text}`)}
+                    </div>
+                    <Form.Item
+                      name={['selfGrade', category.title, crIdx]}
+                      rules={[{ required: true, message: 'Please grade all' }]}
+                    >
+                      <GradeItem
+                        maxScore={+item.score}
+                        review={review.grade[category.title].find(
+                          (el) => el.criteriaId === item.id,
+                        )}
+                        criteria={item.id}
+                        isDispute={isAcceptedReview}
+                      />
+                    </Form.Item>
+                  </List.Item>
+                ) : null
+              }
             />
           ))}
           {review.extra && (

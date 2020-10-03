@@ -43,10 +43,11 @@ const create = async (request, author = -1) => {
 }
 
 const edit = async (request, requestId) => {
-  await axios.patch(`${API_URL}/reviewRequest/${requestId}`, {
+  const { data, status } = await axios.patch(`${API_URL}/reviewRequest/${requestId}`, {
     ...request,
     updated_at: format(new Date(), 'yyyy-MM-dd HH:mm:ss'),
   })
+  return status === 200 ? data : null
 }
 
 const destroyById = async (id) => {

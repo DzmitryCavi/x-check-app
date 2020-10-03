@@ -3,7 +3,7 @@
     {
       "id": 4,
       "title": "X Check App / RS Assessment Too",
-      "description": "<h2>Цели задания</h2>\n<ul>\n<li>Разработать инструмент, который может использоваться тысячами реальных пользователей.</li>\n<li>Помочь будущим поколениям студентов и менторов школы Rolling Scopes.</li>\n<li>Получить опыт командной работы близкий к условиям реальных проектов.</li>\n<li>Украсить CV ссылкой на качественное приложение.</li>\n</ul>\n<p>После оценки работ мы (организаторы и студенты) выберем решение, которое будет интегрировано в RS App. Решения будут оцениваться по следующим критериям:</p>\n<ul>\n<li>Согласие команды на использование их кода.</li>\n<li>Качество кода и реализации.</li>\n<li>Схожесть дизайна и набора технологий с RS App.</li>\n<li>Готовность команды работать над интеграцией решения в RS App</li>\n</ul>\n<h2>Особенности задания</h2>\n<ul>\n<li>Работа ведётся в группах. <a href=\"https://docs.rs.school/#/final-task\" rel=\"nofollow\">Описание процесса командной работы</a></li>\n<li>Для проверки и оценки решений проводится <a href=\"https://docs.rs.school/#/cross-check-flow\" rel=\"nofollow\">кросс-чек</a>.</li>\n<li>Информацию, которую команда хочет донести до проверяющих необходимо поместить в README репозитория.</li>\n</ul>\n<h2>Технические требования</h2>\n<h3>Нужно использовать</h3>\n<ul>\n<li>React</li>\n</ul>\n<h3><a id=\"user-content-можно-использовать\" class=\"anchor\" href=\"https://github.com/rolling-scopes-school/tasks/blob/master/tasks/xcheck/xcheck.md#можно-использовать\" aria-hidden=\"true\"></a></h3>\n<h3>Можно использовать</h3>\n<ul>\n<li>Redux.</li>\n<li>Create React App</li>\n<li>TypeScript, Next.js, Ant Design - для более простой интеграции решения в RS App</li>\n<li>Всё остальное</li>\n</ul>\n<h3><a id=\"user-content-можно-не-использовать\" class=\"anchor\" href=\"https://github.com/rolling-scopes-school/tasks/blob/master/tasks/xcheck/xcheck.md#можно-не-использовать\" aria-hidden=\"true\"></a></h3>\n<h3>Можно не использовать</h3>\n<ul>\n<li>Хуки. Правда, можно и без них.</li>\n</ul>\n<h3><a id=\"user-content-сервер\" class=\"anchor\" href=\"https://github.com/rolling-scopes-school/tasks/blob/master/tasks/xcheck/xcheck.md#сервер\" aria-hidden=\"true\"></a></h3>\n<h3>Сервер</h3>\n<p>В качестве сервера рекомендуется использовать <a href=\"https://github.com/typicode/json-server\">json-server</a>. Это будет достаточным приближением к реальному Rest API.</p>\n<p>Для удобства командной работы можно коммитить исходный файл (db.json). Но будьте внимательны и не добавляйте в коммиты нежелательные изменения (не делайте <code>git add .</code>).</p>\n<p>В продакшн сборке не будет локального json-server, поэтому каждая команда должна задеплоить свой json-server на какой-нибудь хостинг, <a href=\"https://github.com/jesperorb/json-server-heroku\">например - heroku</a>.</p>\n<p>Можно использовать не json-server, а любую другой способ реализации Rest API. Если не используется сервер, а например локальная эмуляция с localStorage, то оценка будет ниже (см. критерии оценки).</p>\n<h2>Функциональные требования</h2>\n<p>Приложению нужна аутентификация, но форму логина можно сделать упрощённой - с обязательным вводом только логина (githubId). Наличие поля для ввода пароля - на ваше усмотрение, но тогда нужна и упрощённая регистрация. У пользователя также должна быть одна или несколько ролей. Роли выбираются при логине или регистрации (если она есть).</p>\n<p>Задание создаётся пользователем (автором) в виде списка оцениваемых требований. Каждое требование обязательно содержит название и максимальную оценку. Для удобства можно сделать отдельное текстовое описание.</p>\n<p>Чтобы создать запрос на оценку, студент выбирает задачу и указывает ссылку на решение и на pull request.</p>\n<p>Перед тем как запрос становится доступен для проверяющих, студент должен выполнить самопроверку.</p>\n<p>При самопроверке студент ставит оценку по каждому пункту от 0 до максимума. Для каждого пункта можно оставить комментарий, например, пояснить каким образом было реализовано требование.</p>\n<p>При проверке чужой работы процедура та же, но проверяющий видит оценки и комментарии из самопроверки. Для удобства можно заполнять форму оценками из самопроверки, чтобы проверяющий менял только те оценки, с которыми не согласен.</p>\n<p>После того как проверяющий опубликовал свою проверку, она становится доступна для просмотра студенту. Если студент не согласен с оценкой по каким-то пунктам, он может оспорить каждый пункт в отдельности. Проверяющий может изменить оценку или оставить как есть.</p>\n<p>Можно организовывать сессии кросс-чека как в последних наборах RS School. При этом сохраняется возможность создания запроса на проверку вне сессии.</p>\n<p>Кросс-чек сессия проходит несколько стадий:</p>\n<ul>\n<li>Сбор запросов на оценку.</li>\n<li>Проверка работ случайно выбранными участниками сессии.</li>\n<li>Выставление итоговой оценки по результатам проверок.</li>\n</ul>\n<p>Если для стадий кросс-чек сессии можно указать дедлайны, то они носят информативный характер и переключение между стадиями производятся пользователем.</p>\n<h2><a id=\"user-content-сущности-и-состояния\" class=\"anchor\" href=\"https://github.com/rolling-scopes-school/tasks/blob/master/tasks/xcheck/xcheck.md#сущности-и-состояния\" aria-hidden=\"true\"></a></h2>\n<h2>Сущности и состояния</h2>\n<p>Ниже следует пример того, как могли бы выглядеть сущности в приложении. Ваше приложение может использовать как точно такие же структуры, так и совершенно другие. Скорее всего, список неполный и понадобятся ещё вспомогательные сущности. Набор полей точно не исчерпывающий, например не описана структура для финальных оценок после кросс-чека.</p>\n<pre><code>const user = {\n  githubId: \"torvalds\",\n  roles: [\"author\", \"student\", \"supervisor\", \"course_manager\"]\n};\n\nconst task = {\n  id: \"simple-task-v1\",\n  author: \"cardamo\",\n  state: \"DRAFT\", // enum [DRAFT, PUBLISHED, ARCHIVED]\n  categoriesOrder: [\"Basic Scope\", \"Extra Scope\", \"Fines\"],\n  items: [\n    {\n      id: \"basic_p1\",\n      minScore: 0,\n      maxScore: 20,\n      category: \"Basic Scope\",\n      title: \"Basic things\",\n      description: \"You need to make things right, not wrong\"\n    },\n    {\n      id: \"extra_p1\",\n      minScore: 0,\n      maxScore: 30,\n      category: \"Extra Scope\",\n      title: \"More awesome things\",\n      description: \"Be creative and make up some more awesome things\"\n    },\n    {\n      id: \"fines_p1\",\n      minScore: -10,\n      maxScore: 0,\n      category: \"Fines\",\n      title: \"App crashes\",\n      description: \"App causes BSoD!\"\n    }\n  ]\n};\n\nconst taskScore = {\n  task: \"simple-task-v1\",\n  items: {\n    basic_p1: {score: 20, comment: \"Well done!\"},\n    extra_p1: {score: 15, comment: \"Some things are done, some are not\"},\n    fines_p1: {score: 0, comment: \"No ticket today\"},\n  }\n};\n\nconst crossCheckSession = {\n  id: \"rss2020Q3react-xcheck\",\n  state: \"DRAFT\", // enum [DRAFT, REQUESTS_GATHERING, CROSS_CHECK, COMPLETED]\n  taskId: \"simple-task-v1\",\n  coefficient: 0.7,\n  startDate: \"2020-07-07\", \n  endDate: \"2020-07-14\",\n  discardMinScore: true,  # ignore the review with minimal score when calculating average\n  discardMaxScore: false, # similar to discardMinScore\n  minReiewsAmount: 1, // how many peer reviews are required to set a score\n  desiredReviewersAmount: 2, // how many peers are assigned to evaluate each solution\n  attendees: [ // shuffled randomly when state is cahnged from REQUESTS_GATHERING to CROSS_CHECL\n    {githubId: \"ButterBrot777\", reviewerOf: [\"torvalds\", \"cardamo\"]},\n    {githubId: \"torvalds\", reviewerOf: [\"cardamo\"]},\n    {githubId: \"cardamo\", reviewerOf: [\"ButterBrot777\"]}\n  ]\n}\n\nconst reviewRequest = {\n  id: \"rev-req-1\",\n  crossCheckSessionId: \"rss2020Q3react-xcheck\", // may be null if this review is not a part of any session \n  author: \"cardamo\",\n  task: \"simple-task-v1\",\n  state: \"PUBLISHED\", // enum [DRAFT, PUBLISHED, COMPLETED]\n  selfGrade: { /* embedded `taskScore` object */ }\n};\n\nconst review = {\n  id: \"rev-id-1\",\n  requestId: \"rev-req-1\",\n  author: \"ButterBrot777\",\n  state: \"DISPUTED\", // enum [DRAFT, PUBLISHED, DISPUTED, ACCEPTED, REJECTED],\n  grade: { /* embedded `taskScore` object */ }\n};\n\nconst dispute = {\n  reviewId: \"rev-id-1\",\n  state: \"ONGOING\", // enum [ONGOING, ACCEPTED, REJECTED]\n  idem: \"extra_p1\",\n  comment: \"Check out the 'All things' page to see all things that were implemented\",\n  suggestedScore: 30\n};\n</code></pre>\n<h2>Демо</h2>\n<p>Его нет! Вы создаёте уникальное приложение, общеизвестных аналогов которому не существует. Если подобное приложение вам попадалось - просьба отправить ссылку @cardamo.</p>\n<pre><br /><br /></pre>\n<pre><code></code></pre>",
+      "description": "<h2>Цели задания</h2>\n<ul>\n<li>Разработать инструмент, который может использоваться тысячами реальных пользователей.</li>\n<li>Помочь будущим поколениям студентов и менторов школы Rolling Scopes.</li>\n<li>Получить опыт командной работы близкий к условиям реальных проектов.</li>\n<li>Украсить CV ссылкой на качественное приложение.</li>\n</ul>\n<p>После оценки работ мы (организаторы и студенты) выберем решение, которое будет интегрировано в RS App. Решения будут оцениваться по следующим критериям:</p>\n<ul>\n<li>Согласие команды на использование их кода.</li>\n<li>Качество кода и реализации.</li>\n<li>Схожесть дизайна и набора технологий с RS App.</li>\n<li>Готовность команды работать над интеграцией решения в RS App</li>\n</ul>\n<h2>Особенности задания</h2>\n<ul>\n<li>Работа ведётся в группах. <a href=\"https://docs.rs.school/#/final-task\" rel=\"nofollow\">Описание процесса командной работы</a></li>\n<li>Для проверки и оценки решений проводится <a href=\"https://docs.rs.school/#/cross-check-flow\" rel=\"nofollow\">кросс-чек</a>.</li>\n<li>Информацию, которую команда хочет донести до проверяющих необходимо поместить в README репозитория.</li>\n</ul>\n<h2>Технические требования</h2>\n<h3>Нужно использовать</h3>\n<ul>\n<li>React</li>\n</ul>\n<h3><a id=\"user-content-можно-использовать\" class=\"anchor\" href=\"https://github.com/rolling-scopes-school/tasks/blob/master/tasks/xcheck/xcheck.md#можно-использовать\" aria-hidden=\"true\"></a></h3>\n<h3>Можно использовать</h3>\n<ul>\n<li>Redux.</li>\n<li>Create React App</li>\n<li>TypeScript, Next.js, Ant Design - для более простой интеграции решения в RS App</li>\n<li>Всё остальное</li>\n</ul>\n<h3><a id=\"user-content-можно-не-использовать\" class=\"anchor\" href=\"https://github.com/rolling-scopes-school/tasks/blob/master/tasks/xcheck/xcheck.md#можно-не-использовать\" aria-hidden=\"true\"></a></h3>\n<h3>Можно не использовать</h3>\n<ul>\n<li>Хуки. Правда, можно и без них.</li>\n</ul>\n<h3><a id=\"user-content-сервер\" class=\"anchor\" href=\"https://github.com/rolling-scopes-school/tasks/blob/master/tasks/xcheck/xcheck.md#сервер\" aria-hidden=\"true\"></a></h3>\n<h3>Сервер</h3>\n<p>В качестве сервера рекомендуется использовать <a href=\"https://github.com/typicode/json-server\">json-server</a>. Это будет достаточным приближением к реальному Rest API.</p>\n<p>Для удобства командной работы можно коммитить исходный файл (db.json). Но будьте внимательны и не добавляйте в коммиты нежелательные изменения (не делайте <code>git add .</code>).</p>\n<p>В продакшн сборке не будет локального json-server, поэтому каждая команда должна задеплоить свой json-server на какой-нибудь хостинг, <a href=\"https://github.com/jesperorb/json-server-heroku\">например - heroku</a>.</p>\n<p>Можно использовать не json-server, а любую другой способ реализации Rest API. Если не используется сервер, а например локальная эмуляция с localStorage, то оценка будет ниже (см. критерии оценки).</p>\n<h2>Функциональные требования</h2>\n<p>Приложению нужна аутентификация, но форму логина можно сделать упрощённой - с обязательным вводом только логина (githubId). Наличие поля для ввода пароля - на ваше усмотрение, но тогда нужна и упрощённая регистрация. У пользователя также должна быть одна или несколько ролей. Роли выбираются при логине или регистрации (если она есть).</p>\n<p>Задание создаётся пользователем (автором) в виде списка оцениваемых требований. Каждое требование обязательно содержит название и максимальную оценку. Для удобства можно сделать отдельное текстовое описание.</p>\n<p>Чтобы создать запрос на оценку, студент выбирает задачу и указывает ссылку на решение и на pull request.</p>\n<p>Перед тем как запрос становится доступен для проверяющих, студент должен выполнить самопроверку.</p>\n<p>При самопроверке студент ставит оценку по каждому пункту от 0 до максимума. Для каждого пункта можно оставить комментарий, например, пояснить каким образом было реализовано требование.</p>\n<p>При проверке чужой работы процедура та же, но проверяющий видит оценки и комментарии из самопроверки. Для удобства можно заполнять форму оценками из самопроверки, чтобы проверяющий менял только те оценки, с которыми не согласен.</p>\n<p>После того как проверяющий опубликовал свою проверку, она становится доступна для просмотра студенту. Если студент не согласен с оценкой по каким-то пунктам, он может оспорить каждый пункт в отдельности. Проверяющий может изменить оценку или оставить как есть.</p>\n<p>Можно организовывать сессии кросс-чека как в последних наборах RS School. При этом сохраняется возможность создания запроса на проверку вне сессии.</p>\n<p>Кросс-чек сессия проходит несколько стадий:</p>\n<ul>\n<li>Сбор запросов на оценку.</li>\n<li>Проверка работ случайно выбранными участниками сессии.</li>\n<li>Выставление итоговой оценки по результатам проверок.</li>\n</ul>\n<p>Если для стадий кросс-чек сессии можно указать дедлайны, то они носят информативный характер и переключение между стадиями производятся пользователем.</p>\n<h2><a id=\"user-content-сущности-и-состояния\" class=\"anchor\" href=\"https://github.com/rolling-scopes-school/tasks/blob/master/tasks/xcheck/xcheck.md#сущности-и-состояния\" aria-hidden=\"true\"></a></h2>\n<h2>Сущности и состояния</h2>\n<p>Ниже следует пример того, как могли бы выглядеть сущности в приложении. Ваше приложение может использовать как точно такие же структуры, так и совершенно другие. Скорее всего, список неполный и понадобятся ещё вспомогательные сущности. Набор полей точно не исчерпывающий, например не описана структура для финальных оценок после кросс-чека.</p>\n<pre><code>const user = {\n  githubId: \"torvalds\",\n  roles: [\"author\", \"student\", \"supervisor\", \"course_manager\"]\n};\n\nconst task = {\n  id: \"simple-task-v1\",\n  author: \"cardamo\",\n  state: \"DRAFT\", // enum [DRAFT, PUBLISHED, ARCHIVED]\n  categoriesOrder: [\"Basic Scope\", \"Extra Scope\", \"Fines\"],\n  items: [\n    {\n      id: \"basic_p1\",\n      minScore: 0,\n      maxScore: 20,\n      category: \"Basic Scope\",\n      title: \"Basic things\",\n      description: \"You need to make things right, not wrong\"\n    },\n    {\n      id: \"extra_p1\",\n      minScore: 0,\n      maxScore: 30,\n      category: \"Extra Scope\",\n      title: \"More awesome things\",\n      description: \"Be creative and make up some more awesome things\"\n    },\n    {\n      id: \"fines_p1\",\n      minScore: -10,\n      maxScore: 0,\n      category: \"Fines\",\n      title: \"App crashes\",\n      description: \"App causes BSoD!\"\n    }\n  ]\n};\n\nconst taskScore = {\n  task: \"simple-task-v1\",\n  items: {\n    basic_p1: {score: 20, comment: \"Well done!\"},\n    extra_p1: {score: 15, comment: \"Some things are done, some are not\"},\n    fines_p1: {score: 0, comment: \"No ticket today\"},\n  }\n};\n\nconst crossCheckSession = {\n  id: \"rss2020Q3react-xcheck\",\n  state: \"DRAFT\", // enum [DRAFT, REQUESTS_GATHERING, CROSS_CHECK, COMPLETED]\n  taskId: \"simple-task-v1\",\n  coefficient: 0.7,\n  startDate: \"2020-07-07\", \n  endDate: \"2020-07-14\",\n  discardMinScore: true,  # ignore the review with minimal score when calculating average\n  discardMaxScore: false, # similar to discardMinScore\n  minReiewsAmount: 1, // how many peer reviews are required to set a score\n  desiredReviewersAmount: 2, // how many peers are assigned to evaluate each solution\n  attendees: [ // shuffled randomly when state is cahnged from REQUESTS_GATHERING to CROSS_CHECL\n    {githubId: \"ButterBrot777\", reviewerOf: [\"torvalds\", \"cardamo\"]},\n    {githubId: \"torvalds\", reviewerOf: [\"cardamo\"]},\n    {githubId: \"cardamo\", reviewerOf: [\"ButterBrot777\"]}\n  ]\n}\n\nconst reviewRequest = {\n  id: \"rev-req-1\",\n  crossCheckSessionId: \"rss2020Q3react-xcheck\", // may be null if this review is not a part of any session \n  author: \"cardamo\",\n  task: \"simple-task-v1\",\n  state: \"PUBLISHED\", // enum [DRAFT, PUBLISHED, COMPLETED]\n  selfGrade: { /* embedded `taskScore` object */ }\n};\n\nconst review = {\n  id: \"rev-id-1\",\n  requestId: \"rev-req-1\",\n  author: \"ButterBrot777\",\n  state: \"DISPUTED\", // enum [DRAFT, PUBLISHED, DISPUTED, ACCEPTED, REJECTED],\n  grade: { /* embedded `taskScore` object */ }\n};\n\nconst dispute = {\n  reviewId: \"rev-id-1\",\n  state: \"ONGOING\", // enum [ONGOING, ACCEPTED, REJECTED]\n  idem: \"extra_p1\",\n  comment: \"Check out the 'All things' page to see all things that were implemented\",\n  suggestedScore: 30\n};\n</code></pre>\n<h2>Демо</h2>\n<p>Его нет! Вы создаёте уникальное приложение, общеизвестных аналогов которому не существует. Если подобное приложение вам попадалось - просьба отправить ссылку @cardamo.</p>",
       "authorId": 11542402,
       "slug": "x-check-app-rs-assessment-too",
       "state": "PUBLISHED",
@@ -443,6 +443,52 @@
           "updated_at": "2020-09-27 19:32:33"
         }
       ]
+    },
+    {
+      "title": "Task 1",
+      "description": "",
+      "authorId": 37982476,
+      "slug": "task-1",
+      "state": "PUBLISHED",
+      "categories": [
+        {
+          "title": "category 1",
+          "criteria": [
+            {
+              "availability": [],
+              "text": "<p>criteria with plus</p>",
+              "score": "30",
+              "id": "1afc5739-a6ae-4c44-b8c1-18f5ee99a53f"
+            }
+          ],
+          "id": "6da2e506-f930-45ae-8894-3e51bb688cd1",
+          "slug": "category-1",
+          "maxScore": 30,
+          "created_at": "2020-10-03 12:31:26",
+          "updated_at": null
+        },
+        {
+          "title": "Category 2",
+          "criteria": [
+            {
+              "availability": [],
+              "text": "<p>Criteria with minus</p>",
+              "score": "-10",
+              "id": "7dfcc042-4498-4503-97f8-7cbc76e61244"
+            }
+          ],
+          "id": "af0f861b-6d42-49ad-91e5-51a2443b414b",
+          "slug": "category-2",
+          "maxScore": -10,
+          "created_at": "2020-10-03 12:31:50",
+          "updated_at": null
+        }
+      ],
+      "startDate": null,
+      "endDate": "2020-10-30 12:31:56",
+      "created_at": "2020-10-03 12:31:02",
+      "updated_at": null,
+      "id": 5
     }
   ],
   "crossCheckSession": [],
@@ -663,6 +709,7 @@
         ]
       },
       "score": 445,
+      "feedback": "",
       "state": "SUBMITTED",
       "author": "DzmitryCavi",
       "id": "request-51cf673a-9d1a-4685-b8bd-bb64eaefa4b2",
@@ -737,7 +784,37 @@
       "id": "request-0396240e-8e7c-45c9-beec-25c52e23c23d",
       "created_at": "2020-09-27 13:24:39",
       "updated_at": null,
-      "closed_at": "2020-09-27 13:25:18"
+      "closed_at": "2020-09-27 13:25:18",
+      "feedback": ""
+    },
+    {
+      "name": "Task 1",
+      "taskId": 5,
+      "url": "https://app.slack.com/client/T4R0TFEMQ/C017AGNKTV3?cdn_fallback=2",
+      "selfGrade": {
+        "category 1": [
+          {
+            "number": 30,
+            "discription": "Well done!",
+            "criteriaId": "1afc5739-a6ae-4c44-b8c1-18f5ee99a53f"
+          }
+        ],
+        "Category 2": [
+          {
+            "number": -10,
+            "discription": "Well done!",
+            "criteriaId": "7dfcc042-4498-4503-97f8-7cbc76e61244"
+          }
+        ]
+      },
+      "score": 20,
+      "feedback": "Good task ! thx !",
+      "state": "GRADED",
+      "author": "VeronikaFilipenko",
+      "id": "request-344228dd-8acb-4b6f-ba6d-149c1ed88c93",
+      "created_at": "2020-10-03 12:32:29",
+      "updated_at": null,
+      "closed_at": "2020-10-03 12:33:06"
     }
   ],
   "reviews": [
@@ -804,30 +881,110 @@
         ]
       },
       "score": 55,
-      "state": "ACCEPTED",
+      "state": "GRADED",
       "author": "DzmitryCavi",
       "id": "review-b3e23c22-4e9c-4148-8b65-346a65eaaf63",
       "created_at": "2020-09-27 13:25:18",
-      "updated_at": "2020-09-30 00:42:34",
+      "updated_at": null,
       "closed_at": null
+    },
+    {
+      "name": "Task 1",
+      "taskId": 5,
+      "requestId": "request-344228dd-8acb-4b6f-ba6d-149c1ed88c93",
+      "student": "VeronikaFilipenko",
+      "grade": {
+        "category 1": [
+          {
+            "criteriaId": "1afc5739-a6ae-4c44-b8c1-18f5ee99a53f",
+            "number": 15,
+            "discription": "Some things are done, some are not"
+          }
+        ],
+        "Category 2": [
+          {
+            "criteriaId": "7dfcc042-4498-4503-97f8-7cbc76e61244",
+            "number": -10,
+            "discription": "Well done!"
+          }
+        ]
+      },
+      "extra": {
+        "score": "5",
+        "comment": "You are beautiful !"
+      },
+      "score": 10,
+      "state": "DISPUTE",
+      "author": "VeronikaFilipenko",
+      "id": "review-7def7b60-b541-484c-b8ab-baa6d877e503",
+      "created_at": "2020-10-03 12:33:06",
+      "updated_at": "2020-10-03 12:33:59",
+      "closed_at": null
+    }
+  ],
+  "feedbacks": [
+    {
+      "requestId": "request-344228dd-8acb-4b6f-ba6d-149c1ed88c93",
+      "massages": [
+        {
+          "author": "VeronikaFilipenko",
+          "avatar": "https://avatars3.githubusercontent.com/u/37982476?v=4",
+          "content": "Good task ! thx !",
+          "datetime": "2020-10-03 12:32:29",
+          "id": "5084e256-d098-4cfa-992e-825ff670df1d"
+        },
+        {
+          "author": "VeronikaFilipenko",
+          "avatar": "https://avatars3.githubusercontent.com/u/37982476?v=4",
+          "content": "Ok !",
+          "datetime": "2020-10-03 12:33:08",
+          "id": "2fafe11a-6e24-4bf6-8c63-fae5b17926e8"
+        }
+      ],
+      "id": "38ee0c92-b497-469e-8964-4bc245a34b88",
+      "created_at": "2020-10-03 13:32:29"
+    },
+    {
+      "requestId": "request-0396240e-8e7c-45c9-beec-25c52e23c23d",
+      "massages": [
+        {
+          "author": "VeronikaFilipenko",
+          "avatar": "https://avatars3.githubusercontent.com/u/37982476?v=4",
+          "content": "Good task ! thx !",
+          "datetime": "2020-10-03 12:32:29",
+          "id": "5084e256-d098-4cfa-992e-825ff670df1d"
+        },
+        {
+          "author": "VeronikaFilipenko",
+          "avatar": "https://avatars3.githubusercontent.com/u/37982476?v=4",
+          "content": "Ok !",
+          "datetime": "2020-10-03 12:33:08",
+          "id": "2fafe11a-6e24-4bf6-8c63-fae5b17926e8"
+        }
+      ],
+      "id": "37ee0c92-b497-469e-8964-4bc245a34b88",
+      "created_at": "2020-10-03 12:32:29"
+    },
+    {
+      "requestId": "request-51cf673a-9d1a-4685-b8bd-bb64eaefa4b2",
+      "massages": [],
+      "id": "40ee0c92-b497-469e-8964-4bc245a34b88",
+      "created_at": "2020-10-02 13:32:29"
     }
   ],
   "dispute": [
     {
       "criterias": {
-        "4dbaadb6-1f54-40e7-bfbd-f6dc67419b4f": {
-          "comment": "asdsad"
-        },
-        "72ec6975-d208-4678-9764-9bcc1651a86b": {
-          "comment": "No"
+        "1afc5739-a6ae-4c44-b8c1-18f5ee99a53f": {
+          "comment": "it is work good!  i am fix it."
         }
       },
-      "reviewId": "review-b3e23c22-4e9c-4148-8b65-346a65eaaf63",
-      "id": "dispute-80d8a403-6c4e-4c0f-b722-bf2202a8ff5b",
-      "created_at": "2020-09-30 00:07:00",
-      "state": "CLOSED",
+      "reviewId": "review-7def7b60-b541-484c-b8ab-baa6d877e503",
+      "id": "dispute-5b1001ba-370d-4c67-b274-553fe15a3106",
+      "created_at": "2020-10-03 12:33:59",
+      "state": "ONGOING",
       "updated_at": null,
-      "closed_at": "2020-09-30 00:42:34"
+      "closed_at": null
     }
   ]
 }
