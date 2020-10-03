@@ -90,24 +90,30 @@ const MarkInfo = () => {
                   key={category.id}
                   size="large"
                   dataSource={category.criteria}
-                  renderItem={(item, index) => (
-                    <List.Item key={`criteria-${index + 1}`}>
-                      <Title level={5}>{parse(item.text)}</Title>
-                      <Form.Item
-                        name={['selfGrade', category.title, index]}
-                        rules={[{ required: true, message: 'Please grade all' }]}
-                      >
-                        <GradeItem
-                          isDispute
-                          maxScore={+item.score}
-                          review={mark.grade[category.title].find(
-                            (el) => el.criteriaId === item.id,
-                          )}
-                          criteria={item.id}
-                        />
-                      </Form.Item>
-                    </List.Item>
-                  )}
+                  renderItem={(item, index) =>
+                    mark.grade[category.title] ? (
+                      <List.Item key={`criteria-${index + 1}`}>
+                        <Title level={5}>{parse(item.text)}</Title>
+                        <Form.Item
+                          name={['selfGrade', category.title, index]}
+                          rules={[{ required: true, message: 'Please grade all' }]}
+                        >
+                          <GradeItem
+                            isDispute
+                            maxScore={+item.score}
+                            review={mark.grade[category.title].find(
+                              (el) => el.criteriaId === item.id,
+                            )}
+                            criteria={item.id}
+                          />
+                        </Form.Item>
+                      </List.Item>
+                    ) : (
+                      <List.Item key={`criteria-${index + 1}`}>
+                        <Title level={5}>Category added after review</Title>
+                      </List.Item>
+                    )
+                  }
                 />
               ))}
             </Form>
