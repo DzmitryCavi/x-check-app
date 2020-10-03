@@ -124,7 +124,7 @@ const ReviewFormItem = ({ value, onChange, maxScore, selfGrade, criteriaId }) =>
     <>
       <Row
         style={{
-          margin: '10px 0',
+          marginTop: '10px',
         }}
       >
         <Col flex="107px">

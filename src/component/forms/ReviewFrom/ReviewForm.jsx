@@ -156,7 +156,7 @@ const ReviewForm = ({ user }) => {
               </Space>
             ))}
 
-            <Collapse className="mb-2">
+            <Collapse className="mt-2 mb-2">
               <Collapse.Panel header="Extra" key="extra" forceRender>
                 <Form.Item
                   name={['extra', 'score']}
