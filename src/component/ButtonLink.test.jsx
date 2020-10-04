@@ -7,12 +7,11 @@ import ButtonLink from './ButtonLink'
 import { authorRoutes } from '../router/routes'
 
 describe('ButtonLink component', () => {
-  const ButtonLinkWithLink = <ButtonLink linkTo={authorRoutes.tasks.create} />
-  const ButtonLinkWithoutLink = <ButtonLink />
+  const ButtonLinkComponent = <ButtonLink linkTo={authorRoutes.tasks.create} />
 
   const TaskCreatePage = () => <p>Create Task</p>
 
-  const Component = ({ children }) => (
+  const RouterWrapper = ({ children }) => (
     <MemoryRouter
       initialEntries={[authorRoutes.tasks.list, authorRoutes.tasks.create]}
       initialIndex={0}
@@ -22,23 +21,22 @@ describe('ButtonLink component', () => {
     </MemoryRouter>
   )
 
-  Component.propTypes = {
+  RouterWrapper.propTypes = {
     children: PropTypes.element.isRequired,
   }
 
-  const componentWithLink = mount(<Component>{ButtonLinkWithLink}</Component>)
-  const componentWithoutLink = mount(<Component>{ButtonLinkWithoutLink}</Component>)
+  const component = mount(<RouterWrapper>{ButtonLinkComponent}</RouterWrapper>)
 
   it('Matches the snapshot', () => {
-    expect(componentWithLink.html()).toMatchSnapshot()
+    expect(component.html()).toMatchSnapshot()
   })
 
   it('should have an button', () => {
-    expect(componentWithLink.find('button').length).toEqual(1)
+    expect(component.find('button').length).toEqual(1)
   })
 
   it('should have proper props for button (with linkTo)', () => {
-    expect(componentWithLink.find('button').props()).toEqual({
+    expect(component.find('button').props()).toEqual({
       className: 'ant-btn',
       children: expect.any(Array),
       onClick: expect.any(Function),
@@ -47,16 +45,7 @@ describe('ButtonLink component', () => {
   })
 
   it('should go to create task page', () => {
-    componentWithLink.find('button').simulate('click')
-    expect(componentWithLink.find('p').text()).toEqual('Create Task')
-  })
-
-  it('should have proper props for button (without linkTo)', () => {
-    expect(componentWithoutLink.find('button').props()).toEqual({
-      className: 'ant-btn',
-      children: expect.any(Array),
-      onClick: expect.any(Function),
-      type: 'button',
-    })
+    component.find('button').simulate('click')
+    expect(component.find('p').text()).toEqual('Create Task')
   })
 })
