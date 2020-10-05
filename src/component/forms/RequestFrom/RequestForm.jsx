@@ -15,6 +15,7 @@ const { Title, Text } = Typography
 const RequestForm = ({ task, user, requestToEdit, setIsNewRequest }) => {
   const { categories } = task
   const [isSuccess, setIsSuccess] = useState(false)
+  const [isDraft, setIsDraft] = useState(false)
   const [score, setScore] = useState((requestToEdit && requestToEdit.score) || 0)
   const [form] = Form.useForm()
 
@@ -98,7 +99,7 @@ const RequestForm = ({ task, user, requestToEdit, setIsNewRequest }) => {
         ],
       })
     }
-    setIsSuccess(true)
+    setIsDraft(true)
     if (setIsNewRequest) setIsNewRequest(true)
   }
 
@@ -111,7 +112,26 @@ const RequestForm = ({ task, user, requestToEdit, setIsNewRequest }) => {
     )
   }
 
-  return !isSuccess ? (
+  if (isSuccess) {
+    return (
+      <Result
+        status="success"
+        title="Request Has Been Sent Successfully!"
+        subTitle="You can see the request status in the list!"
+      />
+    )
+  }
+
+  if (isDraft) {
+    return (
+      <Result
+        title="Draft Request Successfully Created!"
+        subTitle="You can see the request status in the list!"
+      />
+    )
+  }
+
+  return (
     <>
       <Title level={2} className="page-subtitle page-subtitle--border mt-2 mb-3">
         Request to review the task - {task.title}
@@ -190,12 +210,6 @@ const RequestForm = ({ task, user, requestToEdit, setIsNewRequest }) => {
         </Form.Item>
       </Form>
     </>
-  ) : (
-    <Result
-      status="success"
-      title="Request Has Been Sent Successfully !"
-      subTitle="You can see the request status in the list!"
-    />
   )
 }
 
