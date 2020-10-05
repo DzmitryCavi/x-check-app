@@ -151,7 +151,7 @@ const RequestList = ({ user }) => {
             </Link>
           )}
         />
-        <Column title="Score" dataIndex="score" key="score" sorter={sorter.number} />
+        <Column title="Self-review" dataIndex="score" key="score" sorter={sorter.number} />
         <Column
           onFilter={(value, record) => record.name.includes(value)}
           title="State"

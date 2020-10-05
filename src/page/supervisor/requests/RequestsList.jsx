@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { useAsync } from 'react-use'
 import { Table, Tag, Typography } from 'antd'
-import { EditOutlined } from '@ant-design/icons'
+import { EyeOutlined } from '@ant-design/icons'
 import Column from 'antd/lib/table/Column'
 import { formatRoute } from 'react-router-named-routes'
 import ButtonLink from '../../../component/ButtonLink'
@@ -29,7 +29,13 @@ const RequestsList = () => {
       <Title level={2} className="page-title">
         Requests
       </Title>
-      <Table dataSource={requests} pagination={{ pageSize: 10 }} rowKey="id" loading={loading}>
+      <Table
+        dataSource={requests}
+        pagination={{ pageSize: 10 }}
+        rowKey="id"
+        loading={loading}
+        bordered
+      >
         <Column
           title="Student"
           dataIndex="author"
@@ -42,6 +48,7 @@ const RequestsList = () => {
           key="name"
           sorter={(a, b) => String(a.task).localeCompare(String(b.task))}
         />
+        <Column title="Self-review" dataIndex="score" key="score" />
         <Column
           title="Status"
           key="status"
@@ -68,7 +75,7 @@ const RequestsList = () => {
           render={(id) => (
             <ButtonLink
               type="primary"
-              icon={<EditOutlined />}
+              icon={<EyeOutlined />}
               linkTo={formatRoute(supervisorRoutes.requests.review, { requestId: id })}
             >
               Review

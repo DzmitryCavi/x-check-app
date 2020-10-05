@@ -133,11 +133,9 @@ const ReviewHistory = ({ user }) => {
         </Form>
       </div>
 
-      <Table dataSource={reviews} rowKey="id" loading={loading}>
+      <Table dataSource={reviews} rowKey="id" loading={loading} bordered>
         <Column title="Task" dataIndex="name" key="name" sorter={sorter.name} />
         <Column title="Student" dataIndex="student" key="student" sorter={sorter.name} />
-        <Column title="Created at" dataIndex="created_at" key="created_at" sorter={sorter.data} />
-        <Column title="Updated at" dataIndex="updated_at" key="updated_at" sorter={sorter.data} />
         <Column
           onFilter={(value, record) => record.name.includes(value)}
           title="State"
@@ -183,6 +181,9 @@ const ReviewHistory = ({ user }) => {
             return <Space size="middle">{children}</Space>
           }}
         />
+        <Column title="Score" dataIndex="score" key="score" />
+        <Column title="Created at" dataIndex="created_at" key="created_at" sorter={sorter.data} />
+        <Column title="Updated at" dataIndex="updated_at" key="updated_at" sorter={sorter.data} />
         <Column
           title="Action"
           key="action"
