@@ -120,7 +120,7 @@ const ReviewForm = ({ user }) => {
             </Link>
           </Title>
 
-          <hr style={{ marginTop: 50, marginBottom: 30 }} />
+          <hr className="delimeter" />
 
           <Title level={3} className="page-subtitle page-subtitle--border mb-3">
             Grade:

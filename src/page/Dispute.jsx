@@ -33,7 +33,7 @@ const FormItemForRespond = ({ item }) => {
   const [disabled, setDisabled] = useState(true)
   return (
     <Row>
-      <Col>
+      <Col flex="160px">
         <Form.Item
           name={['dispute', item.id, 'state']}
           rules={[{ required: true, message: 'Please answer all' }]}
@@ -51,7 +51,7 @@ const FormItemForRespond = ({ item }) => {
           </Radio.Group>
         </Form.Item>
       </Col>
-      <Col>
+      <Col flex="auto">
         {+item.score > 0 ? (
           <Form.Item
             name={['dispute', item.id, 'number']}
@@ -60,8 +60,8 @@ const FormItemForRespond = ({ item }) => {
             <NumericInput
               max={+item.score}
               disabled={disabled}
-              placeholder="new score"
-              style={{ marginTop: 16, marginLeft: 10, width: 100 }}
+              placeholder="New score"
+              style={{ marginTop: 16 }}
             />
           </Form.Item>
         ) : (
@@ -151,11 +151,16 @@ const Dispute = () => {
   }
 
   return (
-    <>
+    <div className="dispute-page">
       {loading ? (
-        <Spin tip="Loading..." />
+        <div className="content-loading">
+          <Spin tip="Loading..." />
+        </div>
       ) : (
         <>
+          <Title level={2} className="page-title">
+            {`Dispute of the task "${request.name}"`}
+          </Title>
           {isSuccess ? (
             <Result
               status="success"
@@ -168,21 +173,31 @@ const Dispute = () => {
             />
           ) : (
             <Form form={form} layout="vertical" onFinish={onFinish} initialValues={request}>
-              <Title level={1} className="task-categories__title">
-                {`Dispute of the task "${request.name}"`}
+              <Title level={3} className="page-subtitle page-subtitle--border mb-3">
+                Solution URL:&nbsp;
+                <Link href={request.url} target="_blank">
+                  {request.url}
+                </Link>
               </Title>
-              <Title level={3}>Solution url:</Title>
-              <Link href={request.url}>{request.url}</Link>
-              <Title level={4}>Disputed tasks</Title>
+
+              <hr className="delimeter" />
+
+              <Title level={3} className="page-subtitle page-subtitle--border mb-3">
+                Disputed criteria:
+              </Title>
+
               {categories.map((category, index) => (
                 <List
                   itemLayout="vertical"
                   key={category.id}
                   size="large"
                   dataSource={category.criteria}
-                  renderItem={(item) => (
+                  renderItem={(item, crIdx) => (
                     <List.Item key={item.id}>
-                      <Title level={5}>{parse(item.text)}</Title>
+                      <div className="d-flex mb-1">
+                        <span>{`${crIdx + 1}.`}&nbsp;</span>
+                        {parse(`${item.text}`)}
+                      </div>
                       <Form.Item name={['selfGrade', category.title, index]}>
                         <GradeItem
                           isDispute
@@ -207,7 +222,7 @@ const Dispute = () => {
               ))}
               <Form.Item>
                 <Button type="primary" htmlType="submit">
-                  ClOSE DISPUT
+                  Close Dispute
                 </Button>
               </Form.Item>
             </Form>
@@ -215,7 +230,7 @@ const Dispute = () => {
           <Feedback feedback={request.feedback} requestId={request.id} />
         </>
       )}
-    </>
+    </div>
   )
 }
 

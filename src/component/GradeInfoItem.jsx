@@ -88,9 +88,9 @@ const GradeItem = ({ value, maxScore, review, criteria, isDispute }) => {
       >
         {contentListNoTitle[tabKey]}
       </Card>
-      <Collapse ghost activeKey={isExpanded ? '1' : null}>
+      <Collapse ghost activeKey={isExpanded ? '1' : null} className="grade-collapse">
         <Panel showArrow={false} key="1">
-          <Form.Item name={['dispute', 'criterias', criteria]}>
+          <Form.Item name={['dispute', 'criterias', criteria]} className="mb-0">
             <CustomTextArea placeholder="Leave comment here" />
           </Form.Item>
         </Panel>

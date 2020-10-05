@@ -14,7 +14,7 @@ import {
   Row,
   Col,
 } from 'antd'
-import { CheckCircleOutlined, CloseOutlined } from '@ant-design/icons'
+import { CheckCircleOutlined } from '@ant-design/icons'
 import parse from 'react-html-parser'
 import reviewsService from '../../../services/review.service'
 import requestsService from '../../../services/requests.service'
@@ -24,6 +24,8 @@ import disputeService from '../../../services/dispute.service'
 import Feedback from '../../../component/Feedback'
 import GradeItem from '../../../component/GradeInfoItem'
 import ButtonLink from '../../../component/ButtonLink'
+
+import './style.scss'
 
 const { Title } = Typography
 
@@ -68,7 +70,11 @@ const Grade = () => {
   }
 
   if (loading) {
-    return <Spin className="content-loading " size="large" />
+    return (
+      <div className="content-loading">
+        <Spin tip="Loading..." />
+      </div>
+    )
   }
 
   return (
@@ -79,10 +85,10 @@ const Grade = () => {
       {isSuccess ? (
         <Result
           status="success"
-          title="Successfully Opened Dispute !"
+          title="Successfully Opened Dispute!"
           extra={[
             <ButtonLink type="primary" linkTo={studentRoutes.requests.list} key="link_to_list">
-              Go to request list
+              Go to request history
             </ButtonLink>,
           ]}
         />
@@ -163,7 +169,7 @@ const Grade = () => {
             {!isAcceptedReview && (
               <>
                 {isNeedToSubmit ? (
-                  <Button icon={<CloseOutlined />} type="primary" htmlType="submit" danger>
+                  <Button type="primary" htmlType="submit" danger>
                     Open Dispute
                   </Button>
                 ) : (

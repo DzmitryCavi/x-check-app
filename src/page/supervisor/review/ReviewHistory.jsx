@@ -19,7 +19,7 @@ import { useAsync } from 'react-use'
 import { connect } from 'react-redux'
 import { compareAsc } from 'date-fns'
 import { formatRoute } from 'react-router-named-routes'
-import { DeleteOutlined, EditOutlined, CarryOutTwoTone } from '@ant-design/icons'
+import { DeleteOutlined, EditOutlined, EyeOutlined } from '@ant-design/icons'
 
 import ButtonLink from '../../../component/ButtonLink'
 import { supervisorRoutes } from '../../../router/routes'
@@ -152,10 +152,10 @@ const ReviewHistory = ({ user }) => {
                       {state}
                     </Tag>
                     <ButtonLink
-                      type="ghost"
+                      type="danger"
                       size="small"
-                      style={{ fontSize: 12, color: 'red' }}
-                      icon={<CarryOutTwoTone twoToneColor="red" />}
+                      style={{ fontSize: 12 }}
+                      icon={<EyeOutlined />}
                       linkTo={formatRoute(supervisorRoutes.reviews.dispute, { reviewId: id })}
                     >
                       View
