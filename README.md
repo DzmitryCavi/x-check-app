@@ -1,5 +1,5 @@
 <p align="center">
-  <img width="200" height="200" src="./documentation/logo.png" alt="WebApp">
+  <img width="200" height="200" src="./public/logo.png" alt="WebApp">
 </p>
 
 # X Check App
@@ -287,7 +287,7 @@
 
 ![image](https://user-images.githubusercontent.com/48457759/94600215-41f92c00-029a-11eb-9990-47c463d2d739.png)
 
-## Инструкциz для начала разработки и для деплоя продакшн версии
+## Инструкция для начала разработки и для деплоя production версии
 
 - Скопируйте репозиторий : git clone https://github.com/DzmitryCavi/x-check-app.git
 
