@@ -10,8 +10,8 @@ const CrossCheckDropdown = ({ task, crossCheckTask, onOpen, onClose, onDestroy }
     // eslint-disable-next-line no-alert
     const isconfirm = window.confirm('Sure to close?')
     if (!isconfirm) return
-
     const { id, closedAt } = await crossCheckService.closeById(crossCheckId)
+    crossCheckService.startReviewsById(crossCheckId)
     if (id) onClose(id, closedAt)
   }
 

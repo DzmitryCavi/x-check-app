@@ -17,7 +17,7 @@ const RequestsList = () => {
   const [loading, setLoading] = useState(true)
 
   useAsync(async () => {
-    const requestResponse = await requestService.getAllSubmitted()
+    const requestResponse = await requestService.getAllSubmittedForMentor()
     const reviewsResponse = await reviewService.getAll()
     setRequests(requestResponse)
     setReviews(reviewsResponse)

@@ -40,6 +40,7 @@ const RequestForm = ({ task, user, requestToEdit, setIsNewRequest }) => {
       taskId: task.id,
       ...data,
       score,
+      assessmentType: task.assessmentType,
       state: 'SUBMITTED',
     }
     if (requestToEdit) requestsService.edit(requestData, requestToEdit.id)

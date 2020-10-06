@@ -31,7 +31,7 @@ export default [
       color: '#52c41a',
       withBadge: true,
       badgeCount: () => {
-        const count = RequestService.getAllSubmitted().then((data) => data.length)
+        const count = RequestService.getAllSubmittedForMentor().then((data) => data.length)
         return count
       },
     },

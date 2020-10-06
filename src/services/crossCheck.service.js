@@ -18,6 +18,11 @@ const getByTaskId = async (taskId) => {
   return status === 200 && data ? data.pop() : null
 }
 
+const getByStudentName = async (name) => {
+  const { data, status } = await axios.get(`${API_URL}/crossCheckSession?q=${name}`)
+  return status === 200 && data ? data : null
+}
+
 const create = async (taskId) => {
   const { data, status } = await axios.post(`${API_URL}/crossCheckSession`, {
     id: uuid(),
@@ -84,7 +89,7 @@ const startReviewsById = async (id) => {
   }
 
   const result = [...session.students]
-  const students = shuffle(session.students).reduce(
+  const students = shuffle(result).reduce(
     (ac, el) => ac.concat([el.name, el.name, el.name, el.name]),
     [],
   )
@@ -92,7 +97,7 @@ const startReviewsById = async (id) => {
   let counter = 0
 
   while (students.length) {
-    result[counter].group = result[counter].group.concat([students.pop()])
+    result[counter].reviewGroup = result[counter].reviewGroup.concat([students.pop()])
     counter += counter === result.length - 1 ? -counter : 1
   }
 
@@ -107,5 +112,7 @@ export default {
   getById,
   closeById,
   destroyById,
+  getByTaskId,
   addStudent,
+  getByStudentName,
 }

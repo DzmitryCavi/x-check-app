@@ -1,23 +1,32 @@
 import React, { useState } from 'react'
 import { useAsync } from 'react-use'
+import { connect } from 'react-redux'
+import PropTypes from 'prop-types'
 import { Table, Tag, Typography } from 'antd'
 import { EyeOutlined } from '@ant-design/icons'
 import Column from 'antd/lib/table/Column'
 import { formatRoute } from 'react-router-named-routes'
 import ButtonLink from '../../../component/ButtonLink'
-import { supervisorRoutes } from '../../../router/routes'
+import { studentRoutes } from '../../../router/routes'
 import requestService from '../../../services/requests.service'
 import reviewService from '../../../services/review.service'
+import crossCheckService from '../../../services/crossCheck.service'
 
 const { Title } = Typography
 
-const CrossCheckRequestList = () => {
+const CrossCheckRequestList = ({ user }) => {
   const [requests, setRequests] = useState([])
   const [reviews, setReviews] = useState([])
   const [loading, setLoading] = useState(true)
 
   useAsync(async () => {
-    const requestResponse = await requestService.getAllSubmitted()
+    const crossCheckResponse = await crossCheckService.getByStudentName(user.login)
+
+    const studentsToReview = crossCheckResponse
+      .reduce((ac, el) => ac.concat(el.students), [])
+      .reduce((ac, el) => (el.name === user.login ? ac.concat(el.reviewGroup) : ac), [])
+
+    const requestResponse = await requestService.getByStudentForCrossCheck(studentsToReview)
     const reviewsResponse = await reviewService.getAll()
     setRequests(requestResponse)
     setReviews(reviewsResponse)
@@ -76,7 +85,7 @@ const CrossCheckRequestList = () => {
             <ButtonLink
               type="primary"
               icon={<EyeOutlined />}
-              linkTo={formatRoute(supervisorRoutes.requests.review, { requestId: id })}
+              linkTo={formatRoute(studentRoutes.crossCheck.review, { requestId: id })}
             >
               Review
             </ButtonLink>
@@ -87,4 +96,14 @@ const CrossCheckRequestList = () => {
   )
 }
 
-export default CrossCheckRequestList
+CrossCheckRequestList.propTypes = {
+  user: PropTypes.instanceOf(Object).isRequired,
+}
+
+const mapStateToProps = (state) => {
+  return {
+    user: state.auth.user,
+  }
+}
+
+export default connect(mapStateToProps, null)(CrossCheckRequestList)
