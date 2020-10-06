@@ -169,7 +169,6 @@ const TasksList = ({ user }) => {
 
     if (assessmentType !== 'CROSS_CHECK' && crossCheckTask && !crossCheckTask.closedAt) {
       const isConfirm = await handleClearDateConstraints(null, crossCheckTask.id)
-      console.log(isConfirm)
       if (isConfirm === false) return
     }
 
