@@ -32,7 +32,7 @@ const { Column } = Table
 const { Panel } = Collapse
 const { Title } = Typography
 
-const RequestList = ({ user }) => {
+const RequestsHistory = ({ user }) => {
   const [requests, setRequsets] = useState([])
   const [isLoading, setIsLoading] = useState(true)
   const initRequests = useRef([])
@@ -215,7 +215,7 @@ const RequestList = ({ user }) => {
   )
 }
 
-RequestList.propTypes = {
+RequestsHistory.propTypes = {
   user: PropTypes.string.isRequired,
 }
 
@@ -225,4 +225,4 @@ const mapStateToProps = (state) => {
   }
 }
 
-export default connect(mapStateToProps, null)(RequestList)
+export default connect(mapStateToProps, null)(RequestsHistory)

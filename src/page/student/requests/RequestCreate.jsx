@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { useAsync } from 'react-use'
 import PropTypes from 'prop-types'
-import { Select, Spin } from 'antd'
+import { Select, Spin, Tag } from 'antd'
 import moment from 'moment'
 import { connect } from 'react-redux'
 import RequestForm from '../../../component/forms/RequestFrom/RequestForm'
@@ -9,7 +9,6 @@ import tasksService from '../../../services/tasks.service'
 import requestService from '../../../services/requests.service'
 
 const { Option } = Select
-
 const Reqest = ({ user }) => {
   const [tasks, setTasks] = useState([])
   const [isLoading, setIsLoading] = useState(true)
@@ -41,7 +40,17 @@ const Reqest = ({ user }) => {
     setIsNewRequest(false)
   }, [isNewRequest, user])
 
-  const children = tasks.map(({ id, title }) => <Option key={id}>{title}</Option>)
+  const children = tasks.map(({ id, title, assessmentType }) => (
+    <Option key={id}>
+      <Tag
+        style={{ width: 100, textAlign: 'center' }}
+        color={assessmentType === 'MENTOR' ? 'green' : 'pink'}
+      >
+        {assessmentType}
+      </Tag>{' '}
+      {title}
+    </Option>
+  ))
 
   const [task, changeTask] = useState()
 

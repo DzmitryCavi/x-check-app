@@ -1,6 +1,6 @@
 import React from 'react'
 import { Typography } from 'antd'
-import ReviewForm from '../../../component/forms/ReviewFrom/ReviewForm'
+import ReviewForm from '../component/forms/ReviewFrom/ReviewForm'
 
 const { Title } = Typography
 

@@ -9,6 +9,7 @@ import RequestFormItem from './RequestFormItem'
 import requestsService from '../../../services/requests.service'
 import { urlWithIpPattern } from '../../../services/validators'
 import feedbackService from '../../../services/feedback.service'
+import crossCheckService from '../../../services/crossCheck.service'
 
 const { Title, Text } = Typography
 
@@ -44,6 +45,10 @@ const RequestForm = ({ task, user, requestToEdit, setIsNewRequest }) => {
     if (requestToEdit) requestsService.edit(requestData, requestToEdit.id)
     else {
       const requestResponse = await requestsService.create(requestData, user.login)
+
+      if (task.assessmentType === 'CROSS_CHECK')
+        crossCheckService.addStudent(user.login, task.id, requestResponse.id)
+
       feedbackService.create({
         requestId: requestResponse.id,
         massages: [
