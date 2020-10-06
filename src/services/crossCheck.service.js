@@ -19,7 +19,9 @@ const getByTaskId = async (taskId) => {
 }
 
 const getByStudentName = async (name) => {
-  const { data, status } = await axios.get(`${API_URL}/crossCheckSession?q=${name}`)
+  const { data, status } = await axios.get(
+    `${API_URL}/crossCheckSession?q=${name}&closedAt_ne=null`,
+  )
   return status === 200 && data ? data : null
 }
 

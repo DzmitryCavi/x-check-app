@@ -25,8 +25,12 @@ const CrossCheckRequestList = ({ user }) => {
     const studentsToReview = crossCheckResponse
       .reduce((ac, el) => ac.concat(el.students), [])
       .reduce((ac, el) => (el.name === user.login ? ac.concat(el.reviewGroup) : ac), [])
+    const tasksToReview = crossCheckResponse.reduce((ac, el) => ac.concat(el.taskId), [])
 
-    const requestResponse = await requestService.getByStudentForCrossCheck(studentsToReview)
+    const requestResponse = await requestService.getByStudentForCrossCheck(
+      studentsToReview,
+      tasksToReview,
+    )
     const reviewsResponse = await reviewService.getAll()
     setRequests(requestResponse)
     setReviews(reviewsResponse)

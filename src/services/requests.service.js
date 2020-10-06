@@ -15,10 +15,11 @@ const getAllSubmittedForMentor = async () => {
   return status === 200 && tasks ? tasks : []
 }
 
-const getByStudentForCrossCheck = async (studenstOnReview) => {
-  const RegExpr = studenstOnReview.reduce((ac, el) => `${ac}|${el}`, '').substr(1)
+const getByStudentForCrossCheck = async (studenstOnReview, tasksOnReview) => {
+  const StudentsRegExpr = studenstOnReview.reduce((ac, el) => `${ac}|${el}`, '').substr(1)
+  const TasksRegExpr = tasksOnReview.reduce((ac, el) => `${ac}|${el}`, '').substr(1)
   const { data: tasks, status } = await axios.get(
-    `${API_URL}/reviewRequest?state=SUBMITTED&assessmentType=CROSS_CHECK&author_like=${RegExpr}`,
+    `${API_URL}/reviewRequest?state=SUBMITTED&assessmentType=CROSS_CHECK&author_like=${StudentsRegExpr}&taskId_like=${TasksRegExpr}`,
   )
   return status === 200 && tasks ? tasks : []
 }
