@@ -6,20 +6,7 @@ import { compareAsc } from 'date-fns'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { formatRoute } from 'react-router-named-routes'
-import {
-  Form,
-  Radio,
-  Input,
-  Row,
-  Col,
-  Table,
-  Space,
-  Button,
-  Tag,
-  Dropdown,
-  Menu,
-  Collapse,
-} from 'antd'
+import { Form, Input, Row, Col, Table, Space, Button, Tag, Dropdown, Menu, Collapse } from 'antd'
 import { DownOutlined } from '@ant-design/icons'
 import TaskDateConstraints from '../../../component/TaskDateConstraints'
 import CrossCheckDropdown from '../../../component/CrossCheckDropdown'
@@ -102,7 +89,7 @@ const TasksList = ({ user }) => {
       return 'PLANNED'
     }
 
-    return 'NOT_ACTIVE'
+    return 'NOT_TOUCHED'
   }
 
   const handleTableChange = async (pagination) => {
@@ -186,7 +173,6 @@ const TasksList = ({ user }) => {
           onFinish={onFilter}
           initialValues={{
             title: '',
-            state: '',
           }}
         >
           <Collapse className="tasks-filters-collapse">
@@ -195,15 +181,6 @@ const TasksList = ({ user }) => {
                 <Col span={6}>
                   <Form.Item name="title" label="Title">
                     <Input />
-                  </Form.Item>
-                </Col>
-                <Col span={6}>
-                  <Form.Item label="State" name="state">
-                    <Radio.Group>
-                      <Radio.Button value="DRAFT">DRAFT</Radio.Button>
-                      <Radio.Button value="PUBLISHED">PUBLISHED</Radio.Button>
-                      <Radio.Button value="ARCHIVED">ARCHIVED</Radio.Button>
-                    </Radio.Group>
                   </Form.Item>
                 </Col>
                 <Col span={24}>
@@ -251,10 +228,24 @@ const TasksList = ({ user }) => {
             return (
               <>
                 <Tag
-                  color={{ PLANNED: 'blue', ACTIVE: 'green', NOT_ACTIVE: 'orange' }[status]}
+                  color={
+                    {
+                      PLANNED: 'blue',
+                      ACTIVE: 'green',
+                      NOT_ACTIVE: 'orange',
+                      NOT_TOUCHED: 'orange',
+                    }[status]
+                  }
                   key={idx}
                 >
-                  {{ PLANNED: 'PLANNED', ACTIVE: 'ACTIVE', NOT_ACTIVE: 'NOT ACTIVE' }[status]}
+                  {
+                    {
+                      PLANNED: 'PLANNED',
+                      ACTIVE: 'ACTIVE',
+                      NOT_ACTIVE: 'NOT ACTIVE',
+                      NOT_TOUCHED: 'NOT TOUCHED',
+                    }[status]
+                  }
                 </Tag>
                 {crossCheckTask ? (
                   <Tag color="red">
