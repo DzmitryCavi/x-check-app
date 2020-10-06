@@ -49,7 +49,7 @@ export default [
     navigation: {
       label: 'Tasks',
       icon: ApartmentOutlined,
-      color: '#52c41a',
+      color: '#389e0d',
     },
   },
 ]

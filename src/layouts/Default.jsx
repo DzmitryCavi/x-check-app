@@ -40,7 +40,7 @@ const { Title } = Typography
 const roles = {
   author: { color: 'green', label: 'Author' },
   student: { color: 'purple', label: 'Student' },
-  supervisor: { color: 'blue', label: 'Supervisor' },
+  supervisor: { color: 'cyan', label: 'Supervisor' },
   course_manager: { color: 'gold', label: 'Course Manager' },
   superadmin: { color: 'red', label: 'Super Admin' },
 }

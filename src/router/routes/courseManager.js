@@ -22,7 +22,7 @@ export default [
     navigation: {
       label: 'Tasks Managment',
       icon: ApartmentOutlined,
-      color: '#52c41a',
+      color: '#389e0d',
     },
   },
   {
@@ -39,12 +39,12 @@ export default [
   {
     path: routes.reviews.list,
     component: MarksList,
-    breadcrumb: 'Marks List',
-    description: 'Marks management',
+    breadcrumb: 'Grade List',
+    description: 'Grade management',
     navigation: {
-      label: 'Marks List',
+      label: 'Grade List',
       icon: UnorderedListOutlined,
-      color: '#ffaf1c',
+      color: '#08979c',
     },
   },
 ]

@@ -35,7 +35,7 @@ const MarkInfo = () => {
   return (
     <div className="mark-info-page">
       <Title level={2} className="page-title">
-        Mark Info
+        Grade Info
       </Title>
       {loading ? (
         <div className="content-loading">

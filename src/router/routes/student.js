@@ -1,4 +1,4 @@
-import { UnorderedListOutlined, CodeOutlined } from '@ant-design/icons'
+import { HistoryOutlined, CodeOutlined } from '@ant-design/icons'
 
 import RequestCreate from '../../page/student/requests/RequestCreate'
 import RequestsList from '../../page/student/requests/RequestsList'
@@ -16,7 +16,7 @@ export default [
     navigation: {
       label: 'Sent Requests',
       icon: CodeOutlined,
-      color: '#52c41a',
+      color: '#d46b08',
     },
   },
   {
@@ -36,8 +36,8 @@ export default [
     description: 'Requests management',
     navigation: {
       label: 'Requests History',
-      icon: UnorderedListOutlined,
-      color: '#850bff',
+      icon: HistoryOutlined,
+      color: '#531dab',
       withBadge: true,
       badgeCount: () => {
         const user = JSON.parse(localStorage.getItem('user')).login

@@ -152,7 +152,7 @@ const ReviewHistory = ({ user }) => {
                       {state}
                     </Tag>
                     <ButtonLink
-                      type="danger"
+                      type="primary"
                       size="small"
                       style={{ fontSize: 12 }}
                       icon={<EyeOutlined />}

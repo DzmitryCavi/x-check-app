@@ -3,7 +3,7 @@ import { useAsync } from 'react-use'
 import { Link } from 'react-router-dom'
 import { Table, Button, Space, Tag } from 'antd'
 import { formatRoute } from 'react-router-named-routes'
-import { CarryOutTwoTone, EyeOutlined } from '@ant-design/icons'
+import { EyeOutlined } from '@ant-design/icons'
 import ButtonLink from '../../../component/ButtonLink'
 import { courseManagerRoutes } from '../../../router/routes'
 
@@ -51,7 +51,7 @@ const MarksList = () => {
 
   return (
     <>
-      <h1 className="page-title">Marks</h1>
+      <h1 className="page-title">Grade</h1>
       <Space style={{ marginBottom: 16 }}>
         <Button onClick={clearFilters}>Clear filters</Button>
       </Space>
@@ -95,10 +95,10 @@ const MarksList = () => {
                 </Tag>
                 {status === 'DISPUTE' && (
                   <ButtonLink
-                    type="ghost"
+                    type="primary"
                     size="small"
-                    style={{ fontSize: 12, color: 'red' }}
-                    icon={<CarryOutTwoTone twoToneColor="red" />}
+                    style={{ fontSize: 12 }}
+                    icon={<EyeOutlined />}
                     linkTo={formatRoute(courseManagerRoutes.reviews.dispute, { reviewId: id })}
                   >
                     View
