@@ -2172,36 +2172,6 @@
       "created_at": "2020-10-03 12:33:06",
       "updated_at": "2020-10-03 12:33:59",
       "closed_at": null
-    },
-    {
-      "name": "Task 1",
-      "taskId": 5,
-      "requestId": "9",
-      "student": "student-9",
-      "grade": {
-        "category 1": [
-          {
-            "criteriaId": "1afc5739-a6ae-4c44-b8c1-18f5ee99a53f",
-            "number": 15,
-            "discription": "Some things are done, some are not"
-          }
-        ],
-        "Category 2": [
-          {
-            "criteriaId": "7dfcc042-4498-4503-97f8-7cbc76e61244",
-            "number": -10,
-            "discription": "Well done!"
-          }
-        ]
-      },
-      "extra": {},
-      "score": 5,
-      "state": "GRADED",
-      "author": "DzmitryCavi",
-      "id": "review-0fc5d687-4807-4076-9e77-871e9e32be89",
-      "created_at": "2020-10-07 00:10:19",
-      "updated_at": null,
-      "closed_at": null
     }
   ],
   "feedbacks": [

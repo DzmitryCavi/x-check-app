@@ -22,15 +22,16 @@ const CrossCheckRequestList = ({ user }) => {
   useAsync(async () => {
     const crossCheckResponse = await crossCheckService.getByStudentName(user.login)
 
-    const studentsToReview = crossCheckResponse
-      .reduce((ac, el) => ac.concat(el.students), [])
-      .reduce((ac, el) => (el.name === user.login ? ac.concat(el.reviewGroup) : ac), [])
-    const tasksToReview = crossCheckResponse.reduce((ac, el) => ac.concat(el.taskId), [])
-
-    const requestResponse = await requestService.getByStudentForCrossCheck(
-      studentsToReview,
-      tasksToReview,
+    const studentsToReview = crossCheckResponse.reduce(
+      (ac, el) =>
+        ac.concat({
+          students: el.students.filter((student) => student.name === user.login)[0].reviewGroup,
+          taskId: el.taskId,
+        }),
+      [],
     )
+
+    const requestResponse = await requestService.getByStudentForCrossCheck(studentsToReview)
     const reviewsResponse = await reviewService.getAll()
     setRequests(requestResponse)
     setReviews(reviewsResponse)
