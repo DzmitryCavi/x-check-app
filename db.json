@@ -492,6 +492,53 @@
       "created_at": "2020-10-03 12:31:02",
       "updated_at": "2020-10-06 22:31:52",
       "id": 5
+    },
+    {
+      "title": "Task 2",
+      "description": "<p>Best <strong>task </strong><span style=\"text-decoration: underline;\">Ever </span>!!!!</p>",
+      "authorId": 48457759,
+      "slug": "task-2",
+      "state": "PUBLISHED",
+      "categories": [
+        {
+          "title": "Category 1",
+          "criteria": [
+            {
+              "availability": [],
+              "text": "<p>Criteria Plus</p>",
+              "score": "20",
+              "id": "f7bc84db-085e-408b-aab7-10030f4e5fd7"
+            }
+          ],
+          "id": "ba07160b-48d6-4a15-a585-503eb1d786f4",
+          "slug": "category-1",
+          "maxScore": 20,
+          "created_at": "2020-10-07 00:41:13",
+          "updated_at": null
+        },
+        {
+          "title": "Category 2",
+          "criteria": [
+            {
+              "availability": [],
+              "text": "<p>Criteria Minus</p>",
+              "score": "-10",
+              "id": "b7933fce-e8d5-4191-84c7-892c26e5f7d7"
+            }
+          ],
+          "id": "7cdab91d-36d2-4eea-a090-53a49acc8048",
+          "slug": "category-2",
+          "maxScore": -10,
+          "created_at": "2020-10-07 00:41:32",
+          "updated_at": null
+        }
+      ],
+      "startDate": null,
+      "endDate": "2020-10-29 00:41:44",
+      "created_at": "2020-10-07 00:40:53",
+      "updated_at": "2020-10-07 00:41:41",
+      "id": 6,
+      "assessmentType": "CROSS_CHECK"
     }
   ],
   "reviewRequest": [
@@ -1420,6 +1467,606 @@
       "created_at": "2020-10-06 22:32:22",
       "updated_at": null,
       "closed_at": null
+    },
+    {
+      "name": "Task 2",
+      "taskId": 6,
+      "url": "https://mail.yandex.by/?addMultiUserFromDropdownButton=true#inbox",
+      "selfGrade": {
+        "Category 1": [
+          {
+            "number": 20,
+            "discription": "Well done!",
+            "criteriaId": "f7bc84db-085e-408b-aab7-10030f4e5fd7"
+          }
+        ],
+        "Category 2": [
+          {
+            "number": -10,
+            "discription": "Well done!",
+            "criteriaId": "b7933fce-e8d5-4191-84c7-892c26e5f7d7"
+          }
+        ]
+      },
+      "score": 10,
+      "feedback": "Good task!",
+      "assessmentType": "CROSS_CHECK",
+      "state": "SUBMITTED",
+      "author": "DzmitryCavi",
+      "id": "request-378ad731-67a9-4622-8185-3ac1e26228190",
+      "created_at": "2020-10-07 00:42:22",
+      "updated_at": null,
+      "closed_at": null
+    },
+    {
+      "name": "Task 2",
+      "taskId": 6,
+      "url": "https://mail.yandex.by/?addMultiUserFromDropdownButton=true#inbox",
+      "selfGrade": {
+        "Category 1": [
+          {
+            "number": 20,
+            "discription": "Well done!",
+            "criteriaId": "f7bc84db-085e-408b-aab7-10030f4e5fd7"
+          }
+        ],
+        "Category 2": [
+          {
+            "number": -10,
+            "discription": "Well done!",
+            "criteriaId": "b7933fce-e8d5-4191-84c7-892c26e5f7d7"
+          }
+        ]
+      },
+      "score": 10,
+      "feedback": "Good task!",
+      "assessmentType": "CROSS_CHECK",
+      "state": "SUBMITTED",
+      "author": "student-1",
+      "id": "request-378ad731-67a9-4622-8185-3ac1e26228191",
+      "created_at": "2020-10-07 00:42:22",
+      "updated_at": null,
+      "closed_at": null
+    },
+    {
+      "name": "Task 2",
+      "taskId": 6,
+      "url": "https://mail.yandex.by/?addMultiUserFromDropdownButton=true#inbox",
+      "selfGrade": {
+        "Category 1": [
+          {
+            "number": 20,
+            "discription": "Well done!",
+            "criteriaId": "f7bc84db-085e-408b-aab7-10030f4e5fd7"
+          }
+        ],
+        "Category 2": [
+          {
+            "number": -10,
+            "discription": "Well done!",
+            "criteriaId": "b7933fce-e8d5-4191-84c7-892c26e5f7d7"
+          }
+        ]
+      },
+      "score": 10,
+      "feedback": "Good task!",
+      "assessmentType": "CROSS_CHECK",
+      "state": "SUBMITTED",
+      "author": "student-2",
+      "id": "request-378ad731-67a9-4622-8185-3ac1e26228192",
+      "created_at": "2020-10-07 00:42:22",
+      "updated_at": null,
+      "closed_at": null
+    },
+    {
+      "name": "Task 2",
+      "taskId": 6,
+      "url": "https://mail.yandex.by/?addMultiUserFromDropdownButton=true#inbox",
+      "selfGrade": {
+        "Category 1": [
+          {
+            "number": 20,
+            "discription": "Well done!",
+            "criteriaId": "f7bc84db-085e-408b-aab7-10030f4e5fd7"
+          }
+        ],
+        "Category 2": [
+          {
+            "number": -10,
+            "discription": "Well done!",
+            "criteriaId": "b7933fce-e8d5-4191-84c7-892c26e5f7d7"
+          }
+        ]
+      },
+      "score": 10,
+      "feedback": "Good task!",
+      "assessmentType": "CROSS_CHECK",
+      "state": "SUBMITTED",
+      "author": "student-3",
+      "id": "request-378ad731-67a9-4622-8185-3ac1e26228193",
+      "created_at": "2020-10-07 00:42:22",
+      "updated_at": null,
+      "closed_at": null
+    },
+    {
+      "name": "Task 2",
+      "taskId": 6,
+      "url": "https://mail.yandex.by/?addMultiUserFromDropdownButton=true#inbox",
+      "selfGrade": {
+        "Category 1": [
+          {
+            "number": 20,
+            "discription": "Well done!",
+            "criteriaId": "f7bc84db-085e-408b-aab7-10030f4e5fd7"
+          }
+        ],
+        "Category 2": [
+          {
+            "number": -10,
+            "discription": "Well done!",
+            "criteriaId": "b7933fce-e8d5-4191-84c7-892c26e5f7d7"
+          }
+        ]
+      },
+      "score": 10,
+      "feedback": "Good task!",
+      "assessmentType": "CROSS_CHECK",
+      "state": "SUBMITTED",
+      "author": "student-4",
+      "id": "request-378ad731-67a9-4622-8185-3ac1e26228194",
+      "created_at": "2020-10-07 00:42:22",
+      "updated_at": null,
+      "closed_at": null
+    },
+    {
+      "name": "Task 2",
+      "taskId": 6,
+      "url": "https://mail.yandex.by/?addMultiUserFromDropdownButton=true#inbox",
+      "selfGrade": {
+        "Category 1": [
+          {
+            "number": 20,
+            "discription": "Well done!",
+            "criteriaId": "f7bc84db-085e-408b-aab7-10030f4e5fd7"
+          }
+        ],
+        "Category 2": [
+          {
+            "number": -10,
+            "discription": "Well done!",
+            "criteriaId": "b7933fce-e8d5-4191-84c7-892c26e5f7d7"
+          }
+        ]
+      },
+      "score": 10,
+      "feedback": "Good task!",
+      "assessmentType": "CROSS_CHECK",
+      "state": "SUBMITTED",
+      "author": "student-5",
+      "id": "request-378ad731-67a9-4622-8185-3ac1e26228195",
+      "created_at": "2020-10-07 00:42:22",
+      "updated_at": null,
+      "closed_at": null
+    },
+    {
+      "name": "Task 2",
+      "taskId": 6,
+      "url": "https://mail.yandex.by/?addMultiUserFromDropdownButton=true#inbox",
+      "selfGrade": {
+        "Category 1": [
+          {
+            "number": 20,
+            "discription": "Well done!",
+            "criteriaId": "f7bc84db-085e-408b-aab7-10030f4e5fd7"
+          }
+        ],
+        "Category 2": [
+          {
+            "number": -10,
+            "discription": "Well done!",
+            "criteriaId": "b7933fce-e8d5-4191-84c7-892c26e5f7d7"
+          }
+        ]
+      },
+      "score": 10,
+      "feedback": "Good task!",
+      "assessmentType": "CROSS_CHECK",
+      "state": "SUBMITTED",
+      "author": "student-6",
+      "id": "request-378ad731-67a9-4622-8185-3ac1e26228196",
+      "created_at": "2020-10-07 00:42:22",
+      "updated_at": null,
+      "closed_at": null
+    },
+    {
+      "name": "Task 2",
+      "taskId": 6,
+      "url": "https://mail.yandex.by/?addMultiUserFromDropdownButton=true#inbox",
+      "selfGrade": {
+        "Category 1": [
+          {
+            "number": 20,
+            "discription": "Well done!",
+            "criteriaId": "f7bc84db-085e-408b-aab7-10030f4e5fd7"
+          }
+        ],
+        "Category 2": [
+          {
+            "number": -10,
+            "discription": "Well done!",
+            "criteriaId": "b7933fce-e8d5-4191-84c7-892c26e5f7d7"
+          }
+        ]
+      },
+      "score": 10,
+      "feedback": "Good task!",
+      "assessmentType": "CROSS_CHECK",
+      "state": "SUBMITTED",
+      "author": "student-7",
+      "id": "request-378ad731-67a9-4622-8185-3ac1e26228197",
+      "created_at": "2020-10-07 00:42:22",
+      "updated_at": null,
+      "closed_at": null
+    },
+    {
+      "name": "Task 2",
+      "taskId": 6,
+      "url": "https://mail.yandex.by/?addMultiUserFromDropdownButton=true#inbox",
+      "selfGrade": {
+        "Category 1": [
+          {
+            "number": 20,
+            "discription": "Well done!",
+            "criteriaId": "f7bc84db-085e-408b-aab7-10030f4e5fd7"
+          }
+        ],
+        "Category 2": [
+          {
+            "number": -10,
+            "discription": "Well done!",
+            "criteriaId": "b7933fce-e8d5-4191-84c7-892c26e5f7d7"
+          }
+        ]
+      },
+      "score": 10,
+      "feedback": "Good task!",
+      "assessmentType": "CROSS_CHECK",
+      "state": "SUBMITTED",
+      "author": "student-8",
+      "id": "request-378ad731-67a9-4622-8185-3ac1e26228198",
+      "created_at": "2020-10-07 00:42:22",
+      "updated_at": null,
+      "closed_at": null
+    },
+    {
+      "name": "Task 2",
+      "taskId": 6,
+      "url": "https://mail.yandex.by/?addMultiUserFromDropdownButton=true#inbox",
+      "selfGrade": {
+        "Category 1": [
+          {
+            "number": 20,
+            "discription": "Well done!",
+            "criteriaId": "f7bc84db-085e-408b-aab7-10030f4e5fd7"
+          }
+        ],
+        "Category 2": [
+          {
+            "number": -10,
+            "discription": "Well done!",
+            "criteriaId": "b7933fce-e8d5-4191-84c7-892c26e5f7d7"
+          }
+        ]
+      },
+      "score": 10,
+      "feedback": "Good task!",
+      "assessmentType": "CROSS_CHECK",
+      "state": "SUBMITTED",
+      "author": "student-9",
+      "id": "request-378ad731-67a9-4622-8185-3ac1e26228199",
+      "created_at": "2020-10-07 00:42:22",
+      "updated_at": null,
+      "closed_at": null
+    },
+    {
+      "name": "Task 2",
+      "taskId": 6,
+      "url": "https://mail.yandex.by/?addMultiUserFromDropdownButton=true#inbox",
+      "selfGrade": {
+        "Category 1": [
+          {
+            "number": 20,
+            "discription": "Well done!",
+            "criteriaId": "f7bc84db-085e-408b-aab7-10030f4e5fd7"
+          }
+        ],
+        "Category 2": [
+          {
+            "number": -10,
+            "discription": "Well done!",
+            "criteriaId": "b7933fce-e8d5-4191-84c7-892c26e5f7d7"
+          }
+        ]
+      },
+      "score": 10,
+      "feedback": "Good task!",
+      "assessmentType": "CROSS_CHECK",
+      "state": "SUBMITTED",
+      "author": "student-10",
+      "id": "request-378ad731-67a9-4622-8185-3ac1e262281910",
+      "created_at": "2020-10-07 00:42:22",
+      "updated_at": null,
+      "closed_at": null
+    },
+    {
+      "name": "Task 2",
+      "taskId": 6,
+      "url": "https://mail.yandex.by/?addMultiUserFromDropdownButton=true#inbox",
+      "selfGrade": {
+        "Category 1": [
+          {
+            "number": 20,
+            "discription": "Well done!",
+            "criteriaId": "f7bc84db-085e-408b-aab7-10030f4e5fd7"
+          }
+        ],
+        "Category 2": [
+          {
+            "number": -10,
+            "discription": "Well done!",
+            "criteriaId": "b7933fce-e8d5-4191-84c7-892c26e5f7d7"
+          }
+        ]
+      },
+      "score": 10,
+      "feedback": "Good task!",
+      "assessmentType": "CROSS_CHECK",
+      "state": "SUBMITTED",
+      "author": "student-11",
+      "id": "request-378ad731-67a9-4622-8185-3ac1e262281911",
+      "created_at": "2020-10-07 00:42:22",
+      "updated_at": null,
+      "closed_at": null
+    },
+    {
+      "name": "Task 2",
+      "taskId": 6,
+      "url": "https://mail.yandex.by/?addMultiUserFromDropdownButton=true#inbox",
+      "selfGrade": {
+        "Category 1": [
+          {
+            "number": 20,
+            "discription": "Well done!",
+            "criteriaId": "f7bc84db-085e-408b-aab7-10030f4e5fd7"
+          }
+        ],
+        "Category 2": [
+          {
+            "number": -10,
+            "discription": "Well done!",
+            "criteriaId": "b7933fce-e8d5-4191-84c7-892c26e5f7d7"
+          }
+        ]
+      },
+      "score": 10,
+      "feedback": "Good task!",
+      "assessmentType": "CROSS_CHECK",
+      "state": "SUBMITTED",
+      "author": "student-12",
+      "id": "request-378ad731-67a9-4622-8185-3ac1e262281912",
+      "created_at": "2020-10-07 00:42:22",
+      "updated_at": null,
+      "closed_at": null
+    },
+    {
+      "name": "Task 2",
+      "taskId": 6,
+      "url": "https://mail.yandex.by/?addMultiUserFromDropdownButton=true#inbox",
+      "selfGrade": {
+        "Category 1": [
+          {
+            "number": 20,
+            "discription": "Well done!",
+            "criteriaId": "f7bc84db-085e-408b-aab7-10030f4e5fd7"
+          }
+        ],
+        "Category 2": [
+          {
+            "number": -10,
+            "discription": "Well done!",
+            "criteriaId": "b7933fce-e8d5-4191-84c7-892c26e5f7d7"
+          }
+        ]
+      },
+      "score": 10,
+      "feedback": "Good task!",
+      "assessmentType": "CROSS_CHECK",
+      "state": "SUBMITTED",
+      "author": "student-13",
+      "id": "request-378ad731-67a9-4622-8185-3ac1e262281913",
+      "created_at": "2020-10-07 00:42:22",
+      "updated_at": null,
+      "closed_at": null
+    },
+    {
+      "name": "Task 2",
+      "taskId": 6,
+      "url": "https://mail.yandex.by/?addMultiUserFromDropdownButton=true#inbox",
+      "selfGrade": {
+        "Category 1": [
+          {
+            "number": 20,
+            "discription": "Well done!",
+            "criteriaId": "f7bc84db-085e-408b-aab7-10030f4e5fd7"
+          }
+        ],
+        "Category 2": [
+          {
+            "number": -10,
+            "discription": "Well done!",
+            "criteriaId": "b7933fce-e8d5-4191-84c7-892c26e5f7d7"
+          }
+        ]
+      },
+      "score": 10,
+      "feedback": "Good task!",
+      "assessmentType": "CROSS_CHECK",
+      "state": "SUBMITTED",
+      "author": "student-14",
+      "id": "request-378ad731-67a9-4622-8185-3ac1e262281914",
+      "created_at": "2020-10-07 00:42:22",
+      "updated_at": null,
+      "closed_at": null
+    },
+    {
+      "name": "Task 2",
+      "taskId": 6,
+      "url": "https://mail.yandex.by/?addMultiUserFromDropdownButton=true#inbox",
+      "selfGrade": {
+        "Category 1": [
+          {
+            "number": 20,
+            "discription": "Well done!",
+            "criteriaId": "f7bc84db-085e-408b-aab7-10030f4e5fd7"
+          }
+        ],
+        "Category 2": [
+          {
+            "number": -10,
+            "discription": "Well done!",
+            "criteriaId": "b7933fce-e8d5-4191-84c7-892c26e5f7d7"
+          }
+        ]
+      },
+      "score": 10,
+      "feedback": "Good task!",
+      "assessmentType": "CROSS_CHECK",
+      "state": "SUBMITTED",
+      "author": "student-15",
+      "id": "request-378ad731-67a9-4622-8185-3ac1e262281915",
+      "created_at": "2020-10-07 00:42:22",
+      "updated_at": null,
+      "closed_at": null
+    },
+    {
+      "name": "Task 2",
+      "taskId": 6,
+      "url": "https://mail.yandex.by/?addMultiUserFromDropdownButton=true#inbox",
+      "selfGrade": {
+        "Category 1": [
+          {
+            "number": 20,
+            "discription": "Well done!",
+            "criteriaId": "f7bc84db-085e-408b-aab7-10030f4e5fd7"
+          }
+        ],
+        "Category 2": [
+          {
+            "number": -10,
+            "discription": "Well done!",
+            "criteriaId": "b7933fce-e8d5-4191-84c7-892c26e5f7d7"
+          }
+        ]
+      },
+      "score": 10,
+      "feedback": "Good task!",
+      "assessmentType": "CROSS_CHECK",
+      "state": "SUBMITTED",
+      "author": "student-16",
+      "id": "request-378ad731-67a9-4622-8185-3ac1e262281916",
+      "created_at": "2020-10-07 00:42:22",
+      "updated_at": null,
+      "closed_at": null
+    },
+    {
+      "name": "Task 2",
+      "taskId": 6,
+      "url": "https://mail.yandex.by/?addMultiUserFromDropdownButton=true#inbox",
+      "selfGrade": {
+        "Category 1": [
+          {
+            "number": 20,
+            "discription": "Well done!",
+            "criteriaId": "f7bc84db-085e-408b-aab7-10030f4e5fd7"
+          }
+        ],
+        "Category 2": [
+          {
+            "number": -10,
+            "discription": "Well done!",
+            "criteriaId": "b7933fce-e8d5-4191-84c7-892c26e5f7d7"
+          }
+        ]
+      },
+      "score": 10,
+      "feedback": "Good task!",
+      "assessmentType": "CROSS_CHECK",
+      "state": "SUBMITTED",
+      "author": "student-17",
+      "id": "request-378ad731-67a9-4622-8185-3ac1e262281917",
+      "created_at": "2020-10-07 00:42:22",
+      "updated_at": null,
+      "closed_at": null
+    },
+    {
+      "name": "Task 2",
+      "taskId": 6,
+      "url": "https://mail.yandex.by/?addMultiUserFromDropdownButton=true#inbox",
+      "selfGrade": {
+        "Category 1": [
+          {
+            "number": 20,
+            "discription": "Well done!",
+            "criteriaId": "f7bc84db-085e-408b-aab7-10030f4e5fd7"
+          }
+        ],
+        "Category 2": [
+          {
+            "number": -10,
+            "discription": "Well done!",
+            "criteriaId": "b7933fce-e8d5-4191-84c7-892c26e5f7d7"
+          }
+        ]
+      },
+      "score": 10,
+      "feedback": "Good task!",
+      "assessmentType": "CROSS_CHECK",
+      "state": "SUBMITTED",
+      "author": "student-18",
+      "id": "request-378ad731-67a9-4622-8185-3ac1e262281918",
+      "created_at": "2020-10-07 00:42:22",
+      "updated_at": null,
+      "closed_at": null
+    },
+    {
+      "name": "Task 2",
+      "taskId": 6,
+      "url": "https://mail.yandex.by/?addMultiUserFromDropdownButton=true#inbox",
+      "selfGrade": {
+        "Category 1": [
+          {
+            "number": 20,
+            "discription": "Well done!",
+            "criteriaId": "f7bc84db-085e-408b-aab7-10030f4e5fd7"
+          }
+        ],
+        "Category 2": [
+          {
+            "number": -10,
+            "discription": "Well done!",
+            "criteriaId": "b7933fce-e8d5-4191-84c7-892c26e5f7d7"
+          }
+        ]
+      },
+      "score": 10,
+      "feedback": "Good task!",
+      "assessmentType": "CROSS_CHECK",
+      "state": "SUBMITTED",
+      "author": "student-19",
+      "id": "request-378ad731-67a9-4622-8185-3ac1e262281919",
+      "created_at": "2020-10-07 00:42:22",
+      "updated_at": null,
+      "closed_at": null
     }
   ],
   "reviews": [
@@ -1739,6 +2386,286 @@
       ],
       "id": "b4d2f7fe-7624-4a2f-b32f-7a4453e1dfd8",
       "created_at": "2020-10-06 22:32:22"
+    },
+    {
+      "requestId": "request-378ad731-67a9-4622-8185-3ac1e26228190",
+      "massages": [
+        {
+          "author": "DzmitryCavi",
+          "avatar": "https://avatars2.githubusercontent.com/u/48457759?v=4",
+          "content": "Good task!",
+          "datetime": "2020-10-07 00:42:22",
+          "id": "29edc2da-da9a-4e01-8819-54d51d5170ff"
+        }
+      ],
+      "id": "5ced06f5-2fbb-47fb-bfcf-8ef84e8fab061",
+      "created_at": "2020-10-07 00:42:22"
+    },
+    {
+      "requestId": "request-378ad731-67a9-4622-8185-3ac1e26228191",
+      "massages": [
+        {
+          "author": "DzmitryCavi",
+          "avatar": "https://avatars2.githubusercontent.com/u/48457759?v=4",
+          "content": "Good task!",
+          "datetime": "2020-10-07 00:42:22",
+          "id": "29edc2da-da9a-4e01-8819-54d51d5170ff"
+        }
+      ],
+      "id": "5ced06f5-2fbb-47fb-bfcf-8ef84e8fab061",
+      "created_at": "2020-10-07 00:42:22"
+    },
+    {
+      "requestId": "request-378ad731-67a9-4622-8185-3ac1e26228192",
+      "massages": [
+        {
+          "author": "DzmitryCavi",
+          "avatar": "https://avatars2.githubusercontent.com/u/48457759?v=4",
+          "content": "Good task!",
+          "datetime": "2020-10-07 00:42:22",
+          "id": "29edc2da-da9a-4e01-8819-54d51d5170ff"
+        }
+      ],
+      "id": "5ced06f5-2fbb-47fb-bfcf-8ef84e8fab061",
+      "created_at": "2020-10-07 00:42:22"
+    },
+    {
+      "requestId": "request-378ad731-67a9-4622-8185-3ac1e26228193",
+      "massages": [
+        {
+          "author": "DzmitryCavi",
+          "avatar": "https://avatars2.githubusercontent.com/u/48457759?v=4",
+          "content": "Good task!",
+          "datetime": "2020-10-07 00:42:22",
+          "id": "29edc2da-da9a-4e01-8819-54d51d5170ff"
+        }
+      ],
+      "id": "5ced06f5-2fbb-47fb-bfcf-8ef84e8fab061",
+      "created_at": "2020-10-07 00:42:22"
+    },
+    {
+      "requestId": "request-378ad731-67a9-4622-8185-3ac1e26228194",
+      "massages": [
+        {
+          "author": "DzmitryCavi",
+          "avatar": "https://avatars2.githubusercontent.com/u/48457759?v=4",
+          "content": "Good task!",
+          "datetime": "2020-10-07 00:42:22",
+          "id": "29edc2da-da9a-4e01-8819-54d51d5170ff"
+        }
+      ],
+      "id": "5ced06f5-2fbb-47fb-bfcf-8ef84e8fab061",
+      "created_at": "2020-10-07 00:42:22"
+    },
+    {
+      "requestId": "request-378ad731-67a9-4622-8185-3ac1e26228195",
+      "massages": [
+        {
+          "author": "DzmitryCavi",
+          "avatar": "https://avatars2.githubusercontent.com/u/48457759?v=4",
+          "content": "Good task!",
+          "datetime": "2020-10-07 00:42:22",
+          "id": "29edc2da-da9a-4e01-8819-54d51d5170ff"
+        }
+      ],
+      "id": "5ced06f5-2fbb-47fb-bfcf-8ef84e8fab061",
+      "created_at": "2020-10-07 00:42:22"
+    },
+    {
+      "requestId": "request-378ad731-67a9-4622-8185-3ac1e26228196",
+      "massages": [
+        {
+          "author": "DzmitryCavi",
+          "avatar": "https://avatars2.githubusercontent.com/u/48457759?v=4",
+          "content": "Good task!",
+          "datetime": "2020-10-07 00:42:22",
+          "id": "29edc2da-da9a-4e01-8819-54d51d5170ff"
+        }
+      ],
+      "id": "5ced06f5-2fbb-47fb-bfcf-8ef84e8fab061",
+      "created_at": "2020-10-07 00:42:22"
+    },
+    {
+      "requestId": "request-378ad731-67a9-4622-8185-3ac1e26228197",
+      "massages": [
+        {
+          "author": "DzmitryCavi",
+          "avatar": "https://avatars2.githubusercontent.com/u/48457759?v=4",
+          "content": "Good task!",
+          "datetime": "2020-10-07 00:42:22",
+          "id": "29edc2da-da9a-4e01-8819-54d51d5170ff"
+        }
+      ],
+      "id": "5ced06f5-2fbb-47fb-bfcf-8ef84e8fab061",
+      "created_at": "2020-10-07 00:42:22"
+    },
+    {
+      "requestId": "request-378ad731-67a9-4622-8185-3ac1e26228198",
+      "massages": [
+        {
+          "author": "DzmitryCavi",
+          "avatar": "https://avatars2.githubusercontent.com/u/48457759?v=4",
+          "content": "Good task!",
+          "datetime": "2020-10-07 00:42:22",
+          "id": "29edc2da-da9a-4e01-8819-54d51d5170ff"
+        }
+      ],
+      "id": "5ced06f5-2fbb-47fb-bfcf-8ef84e8fab061",
+      "created_at": "2020-10-07 00:42:22"
+    },
+    {
+      "requestId": "request-378ad731-67a9-4622-8185-3ac1e26228199",
+      "massages": [
+        {
+          "author": "DzmitryCavi",
+          "avatar": "https://avatars2.githubusercontent.com/u/48457759?v=4",
+          "content": "Good task!",
+          "datetime": "2020-10-07 00:42:22",
+          "id": "29edc2da-da9a-4e01-8819-54d51d5170ff"
+        }
+      ],
+      "id": "5ced06f5-2fbb-47fb-bfcf-8ef84e8fab061",
+      "created_at": "2020-10-07 00:42:22"
+    },
+    {
+      "requestId": "request-378ad731-67a9-4622-8185-3ac1e262281910",
+      "massages": [
+        {
+          "author": "DzmitryCavi",
+          "avatar": "https://avatars2.githubusercontent.com/u/48457759?v=4",
+          "content": "Good task!",
+          "datetime": "2020-10-07 00:42:22",
+          "id": "29edc2da-da9a-4e01-8819-54d51d5170ff"
+        }
+      ],
+      "id": "5ced06f5-2fbb-47fb-bfcf-8ef84e8fab061",
+      "created_at": "2020-10-07 00:42:22"
+    },
+    {
+      "requestId": "request-378ad731-67a9-4622-8185-3ac1e262281911",
+      "massages": [
+        {
+          "author": "DzmitryCavi",
+          "avatar": "https://avatars2.githubusercontent.com/u/48457759?v=4",
+          "content": "Good task!",
+          "datetime": "2020-10-07 00:42:22",
+          "id": "29edc2da-da9a-4e01-8819-54d51d5170ff"
+        }
+      ],
+      "id": "5ced06f5-2fbb-47fb-bfcf-8ef84e8fab061",
+      "created_at": "2020-10-07 00:42:22"
+    },
+    {
+      "requestId": "request-378ad731-67a9-4622-8185-3ac1e262281912",
+      "massages": [
+        {
+          "author": "DzmitryCavi",
+          "avatar": "https://avatars2.githubusercontent.com/u/48457759?v=4",
+          "content": "Good task!",
+          "datetime": "2020-10-07 00:42:22",
+          "id": "29edc2da-da9a-4e01-8819-54d51d5170ff"
+        }
+      ],
+      "id": "5ced06f5-2fbb-47fb-bfcf-8ef84e8fab061",
+      "created_at": "2020-10-07 00:42:22"
+    },
+    {
+      "requestId": "request-378ad731-67a9-4622-8185-3ac1e262281913",
+      "massages": [
+        {
+          "author": "DzmitryCavi",
+          "avatar": "https://avatars2.githubusercontent.com/u/48457759?v=4",
+          "content": "Good task!",
+          "datetime": "2020-10-07 00:42:22",
+          "id": "29edc2da-da9a-4e01-8819-54d51d5170ff"
+        }
+      ],
+      "id": "5ced06f5-2fbb-47fb-bfcf-8ef84e8fab061",
+      "created_at": "2020-10-07 00:42:22"
+    },
+    {
+      "requestId": "request-378ad731-67a9-4622-8185-3ac1e262281914",
+      "massages": [
+        {
+          "author": "DzmitryCavi",
+          "avatar": "https://avatars2.githubusercontent.com/u/48457759?v=4",
+          "content": "Good task!",
+          "datetime": "2020-10-07 00:42:22",
+          "id": "29edc2da-da9a-4e01-8819-54d51d5170ff"
+        }
+      ],
+      "id": "5ced06f5-2fbb-47fb-bfcf-8ef84e8fab061",
+      "created_at": "2020-10-07 00:42:22"
+    },
+    {
+      "requestId": "request-378ad731-67a9-4622-8185-3ac1e262281915",
+      "massages": [
+        {
+          "author": "DzmitryCavi",
+          "avatar": "https://avatars2.githubusercontent.com/u/48457759?v=4",
+          "content": "Good task!",
+          "datetime": "2020-10-07 00:42:22",
+          "id": "29edc2da-da9a-4e01-8819-54d51d5170ff"
+        }
+      ],
+      "id": "5ced06f5-2fbb-47fb-bfcf-8ef84e8fab061",
+      "created_at": "2020-10-07 00:42:22"
+    },
+    {
+      "requestId": "request-378ad731-67a9-4622-8185-3ac1e262281916",
+      "massages": [
+        {
+          "author": "DzmitryCavi",
+          "avatar": "https://avatars2.githubusercontent.com/u/48457759?v=4",
+          "content": "Good task!",
+          "datetime": "2020-10-07 00:42:22",
+          "id": "29edc2da-da9a-4e01-8819-54d51d5170ff"
+        }
+      ],
+      "id": "5ced06f5-2fbb-47fb-bfcf-8ef84e8fab061",
+      "created_at": "2020-10-07 00:42:22"
+    },
+    {
+      "requestId": "request-378ad731-67a9-4622-8185-3ac1e262281917",
+      "massages": [
+        {
+          "author": "DzmitryCavi",
+          "avatar": "https://avatars2.githubusercontent.com/u/48457759?v=4",
+          "content": "Good task!",
+          "datetime": "2020-10-07 00:42:22",
+          "id": "29edc2da-da9a-4e01-8819-54d51d5170ff"
+        }
+      ],
+      "id": "5ced06f5-2fbb-47fb-bfcf-8ef84e8fab061",
+      "created_at": "2020-10-07 00:42:22"
+    },
+    {
+      "requestId": "request-378ad731-67a9-4622-8185-3ac1e262281918",
+      "massages": [
+        {
+          "author": "DzmitryCavi",
+          "avatar": "https://avatars2.githubusercontent.com/u/48457759?v=4",
+          "content": "Good task!",
+          "datetime": "2020-10-07 00:42:22",
+          "id": "29edc2da-da9a-4e01-8819-54d51d5170ff"
+        }
+      ],
+      "id": "5ced06f5-2fbb-47fb-bfcf-8ef84e8fab061",
+      "created_at": "2020-10-07 00:42:22"
+    },
+    {
+      "requestId": "request-378ad731-67a9-4622-8185-3ac1e262281919",
+      "massages": [
+        {
+          "author": "DzmitryCavi",
+          "avatar": "https://avatars2.githubusercontent.com/u/48457759?v=4",
+          "content": "Good task!",
+          "datetime": "2020-10-07 00:42:22",
+          "id": "29edc2da-da9a-4e01-8819-54d51d5170ff"
+        }
+      ],
+      "id": "5ced06f5-2fbb-47fb-bfcf-8ef84e8fab061",
+      "created_at": "2020-10-07 00:42:22"
     }
   ],
   "dispute": [
@@ -1778,226 +2705,255 @@
           "id": 15,
           "requestId": "request-a1c1b163-e090-4064-b097-7e61a2fb877c15",
           "name": "student-15",
-          "reviewGroup": [
-            "student-16",
-            "student-13",
-            "student-17",
-            "student-9"
-          ]
+          "reviewGroup": ["student-16", "student-13", "student-17", "student-9"]
         },
         {
           "id": 7,
           "requestId": "request-a1c1b163-e090-4064-b097-7e61a2fb877c7",
           "name": "student-7",
-          "reviewGroup": [
-            "student-16",
-            "student-13",
-            "student-17",
-            "student-9"
-          ]
+          "reviewGroup": ["student-16", "student-13", "student-17", "student-9"]
         },
         {
           "id": 3,
           "requestId": "request-a1c1b163-e090-4064-b097-7e61a2fb877c3",
           "name": "student-3",
-          "reviewGroup": [
-            "student-16",
-            "student-13",
-            "student-17",
-            "student-9"
-          ]
+          "reviewGroup": ["student-16", "student-13", "student-17", "student-9"]
         },
         {
           "id": 0,
           "requestId": "request-a1c1b163-e090-4064-b097-7e61a2fb877c0",
           "name": "DzmitryCavi",
-          "reviewGroup": [
-            "student-16",
-            "student-13",
-            "student-17",
-            "student-9"
-          ]
+          "reviewGroup": ["student-16", "student-13", "student-17", "student-9"]
         },
         {
           "id": 9,
           "requestId": "request-a1c1b163-e090-4064-b097-7e61a2fb877c9",
           "name": "student-9",
-          "reviewGroup": [
-            "student-11",
-            "student-18",
-            "student-10",
-            "DzmitryCavi"
-          ]
+          "reviewGroup": ["student-11", "student-18", "student-10", "DzmitryCavi"]
         },
         {
           "id": 12,
           "requestId": "request-a1c1b163-e090-4064-b097-7e61a2fb877c12",
           "name": "student-12",
-          "reviewGroup": [
-            "student-11",
-            "student-18",
-            "student-10",
-            "DzmitryCavi"
-          ]
+          "reviewGroup": ["student-11", "student-18", "student-10", "DzmitryCavi"]
         },
         {
           "id": 4,
           "requestId": "request-a1c1b163-e090-4064-b097-7e61a2fb877c4",
           "name": "student-4",
-          "reviewGroup": [
-            "student-11",
-            "student-18",
-            "student-10",
-            "DzmitryCavi"
-          ]
+          "reviewGroup": ["student-11", "student-18", "student-10", "DzmitryCavi"]
         },
         {
           "id": 14,
           "requestId": "request-a1c1b163-e090-4064-b097-7e61a2fb877c14",
           "name": "student-14",
-          "reviewGroup": [
-            "student-11",
-            "student-18",
-            "student-10",
-            "DzmitryCavi"
-          ]
+          "reviewGroup": ["student-11", "student-18", "student-10", "DzmitryCavi"]
         },
         {
           "id": 10,
           "requestId": "request-a1c1b163-e090-4064-b097-7e61a2fb877c10",
           "name": "student-10",
-          "reviewGroup": [
-            "student-6",
-            "student-2",
-            "student-14",
-            "student-3"
-          ]
+          "reviewGroup": ["student-6", "student-2", "student-14", "student-3"]
         },
         {
           "id": 17,
           "requestId": "request-a1c1b163-e090-4064-b097-7e61a2fb877c17",
           "name": "student-17",
-          "reviewGroup": [
-            "student-6",
-            "student-2",
-            "student-14",
-            "student-3"
-          ]
+          "reviewGroup": ["student-6", "student-2", "student-14", "student-3"]
         },
         {
           "id": 1,
           "requestId": "request-a1c1b163-e090-4064-b097-7e61a2fb877c1",
           "name": "student-1",
-          "reviewGroup": [
-            "student-6",
-            "student-2",
-            "student-14",
-            "student-3"
-          ]
+          "reviewGroup": ["student-6", "student-2", "student-14", "student-3"]
         },
         {
           "id": 5,
           "requestId": "request-a1c1b163-e090-4064-b097-7e61a2fb877c5",
           "name": "student-5",
-          "reviewGroup": [
-            "student-6",
-            "student-2",
-            "student-14",
-            "student-3"
-          ]
+          "reviewGroup": ["student-6", "student-2", "student-14", "student-3"]
         },
         {
           "id": 2,
           "requestId": "request-a1c1b163-e090-4064-b097-7e61a2fb877c2",
           "name": "student-2",
-          "reviewGroup": [
-            "student-8",
-            "student-5",
-            "student-4",
-            "student-7"
-          ]
+          "reviewGroup": ["student-8", "student-5", "student-4", "student-7"]
         },
         {
           "id": 18,
           "requestId": "request-a1c1b163-e090-4064-b097-7e61a2fb877c18",
           "name": "student-18",
-          "reviewGroup": [
-            "student-8",
-            "student-5",
-            "student-4",
-            "student-7"
-          ]
+          "reviewGroup": ["student-8", "student-5", "student-4", "student-7"]
         },
         {
           "id": 13,
           "requestId": "request-a1c1b163-e090-4064-b097-7e61a2fb877c13",
           "name": "student-13",
-          "reviewGroup": [
-            "student-8",
-            "student-5",
-            "student-4",
-            "student-7"
-          ]
+          "reviewGroup": ["student-8", "student-5", "student-4", "student-7"]
         },
         {
           "id": 19,
           "requestId": "request-a1c1b163-e090-4064-b097-7e61a2fb877c19",
           "name": "student-19",
-          "reviewGroup": [
-            "student-8",
-            "student-5",
-            "student-4",
-            "student-7"
-          ]
+          "reviewGroup": ["student-8", "student-5", "student-4", "student-7"]
         },
         {
           "id": 8,
           "requestId": "request-a1c1b163-e090-4064-b097-7e61a2fb877c8",
           "name": "student-8",
-          "reviewGroup": [
-            "student-19",
-            "student-1",
-            "student-12",
-            "student-15"
-          ]
+          "reviewGroup": ["student-19", "student-1", "student-12", "student-15"]
         },
         {
           "id": 6,
           "requestId": "request-a1c1b163-e090-4064-b097-7e61a2fb877c6",
           "name": "student-6",
-          "reviewGroup": [
-            "student-19",
-            "student-1",
-            "student-12",
-            "student-15"
-          ]
+          "reviewGroup": ["student-19", "student-1", "student-12", "student-15"]
         },
         {
           "id": 11,
           "requestId": "request-a1c1b163-e090-4064-b097-7e61a2fb877c11",
           "name": "student-11",
-          "reviewGroup": [
-            "student-19",
-            "student-1",
-            "student-12",
-            "student-15"
-          ]
+          "reviewGroup": ["student-19", "student-1", "student-12", "student-15"]
         },
         {
           "id": 16,
           "requestId": "request-a1c1b163-e090-4064-b097-7e61a2fb877c16",
           "name": "student-16",
-          "reviewGroup": [
-            "student-19",
-            "student-1",
-            "student-12",
-            "student-15"
-          ]
+          "reviewGroup": ["student-19", "student-1", "student-12", "student-15"]
         }
       ],
       "createdAt": "2020-10-06 22:31:52",
       "closedAt": "2020-10-06 22:56:40",
       "updated_at": "2020-10-06 22:56:40"
+    },
+    {
+      "id": "0030aff2-0f29-4485-bd43-de27b98708cc",
+      "taskId": 6,
+      "students": [
+        {
+          "id": 0,
+          "requestId": "request-378ad731-67a9-4622-8185-3ac1e26228190",
+          "name": "DzmitryCavi",
+          "reviewGroup": []
+        },
+        {
+          "id": 1,
+          "requestId": "request-378ad731-67a9-4622-8185-3ac1e26228191",
+          "name": "student-1",
+          "reviewGroup": []
+        },
+        {
+          "id": 2,
+          "requestId": "request-378ad731-67a9-4622-8185-3ac1e26228192",
+          "name": "student-2",
+          "reviewGroup": []
+        },
+        {
+          "id": 3,
+          "requestId": "request-378ad731-67a9-4622-8185-3ac1e26228193",
+          "name": "student-3",
+          "reviewGroup": []
+        },
+        {
+          "id": 4,
+          "requestId": "request-378ad731-67a9-4622-8185-3ac1e26228194",
+          "name": "student-4",
+          "reviewGroup": []
+        },
+        {
+          "id": 5,
+          "requestId": "request-378ad731-67a9-4622-8185-3ac1e26228195",
+          "name": "student-5",
+          "reviewGroup": []
+        },
+        {
+          "id": 6,
+          "requestId": "request-378ad731-67a9-4622-8185-3ac1e26228196",
+          "name": "student-6",
+          "reviewGroup": []
+        },
+        {
+          "id": 7,
+          "requestId": "request-378ad731-67a9-4622-8185-3ac1e26228197",
+          "name": "student-7",
+          "reviewGroup": []
+        },
+        {
+          "id": 8,
+          "requestId": "request-378ad731-67a9-4622-8185-3ac1e26228198",
+          "name": "student-8",
+          "reviewGroup": []
+        },
+        {
+          "id": 9,
+          "requestId": "request-378ad731-67a9-4622-8185-3ac1e26228199",
+          "name": "student-9",
+          "reviewGroup": []
+        },
+        {
+          "id": 10,
+          "requestId": "request-378ad731-67a9-4622-8185-3ac1e262281910",
+          "name": "student-10",
+          "reviewGroup": []
+        },
+        {
+          "id": 11,
+          "requestId": "request-378ad731-67a9-4622-8185-3ac1e262281911",
+          "name": "student-11",
+          "reviewGroup": []
+        },
+        {
+          "id": 12,
+          "requestId": "request-378ad731-67a9-4622-8185-3ac1e262281912",
+          "name": "student-12",
+          "reviewGroup": []
+        },
+        {
+          "id": 13,
+          "requestId": "request-378ad731-67a9-4622-8185-3ac1e262281913",
+          "name": "student-13",
+          "reviewGroup": []
+        },
+        {
+          "id": 14,
+          "requestId": "request-378ad731-67a9-4622-8185-3ac1e262281914",
+          "name": "student-14",
+          "reviewGroup": []
+        },
+        {
+          "id": 15,
+          "requestId": "request-378ad731-67a9-4622-8185-3ac1e262281915",
+          "name": "student-15",
+          "reviewGroup": []
+        },
+        {
+          "id": 16,
+          "requestId": "request-378ad731-67a9-4622-8185-3ac1e262281916",
+          "name": "student-16",
+          "reviewGroup": []
+        },
+        {
+          "id": 17,
+          "requestId": "request-378ad731-67a9-4622-8185-3ac1e262281917",
+          "name": "student-17",
+          "reviewGroup": []
+        },
+        {
+          "id": 18,
+          "requestId": "request-378ad731-67a9-4622-8185-3ac1e262281918",
+          "name": "student-18",
+          "reviewGroup": []
+        },
+        {
+          "id": 19,
+          "requestId": "request-378ad731-67a9-4622-8185-3ac1e262281919",
+          "name": "student-19",
+          "reviewGroup": []
+        }
+      ],
+      "createdAt": "2020-10-07 00:41:41",
+      "closedAt": null,
+      "updated_at": "2020-10-07 00:42:22"
     }
   ]
 }
