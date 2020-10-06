@@ -13,6 +13,7 @@ import {
   Statistic,
   Alert,
   Collapse,
+  List,
 } from 'antd'
 import { HistoryOutlined, UnorderedListOutlined } from '@ant-design/icons'
 import { useParams } from 'react-router-dom'
@@ -28,7 +29,7 @@ import { supervisorRoutes } from '../../../router/routes'
 
 import { setAnchors, clearAnchors } from '../../../store/actions'
 
-const { Title, Link } = Typography
+const { Title, Link, Text } = Typography
 
 const ReviewForm = ({ user, dispatch }) => {
   const [isSuccess, setIsSuccess] = useState(false)
@@ -147,15 +148,23 @@ const ReviewForm = ({ user, dispatch }) => {
             initialValues={reviewToEdit || {}}
           >
             {task.categories.map((category, catIdx) => (
-              <Space style={{ width: '100%' }} direction="vertical" key={category.id}>
-                <Title id={category.slug} level={4}>{`${catIdx + 1}. ${category.title}`}</Title>
-                {category.criteria.map((item, crIdx) => (
-                  <div key={`criteria-${crIdx + 1}`} className="ml-2">
+              <List
+                itemLayout="vertical"
+                header={
+                  <Title id={category.slug} level={4} style={{ marginBottom: 0 }}>
+                    {catIdx + 1}. {category.title}
+                  </Title>
+                }
+                key={category.id}
+                dataSource={category.criteria}
+                renderItem={(item, crIdx) => (
+                  <List.Item key={`criteria-${crIdx + 1}`} className="ml-2">
                     <div className="d-flex">
-                      <span>{`${catIdx + 1}.${crIdx + 1}.`}&nbsp;</span>
-                      {parse(`${item.text}`)}
+                      <span>{`${catIdx + 1}.${crIdx + 1}.`}</span>&nbsp;
+                      <Text>{parse(`${item.text}`)}</Text>
                     </div>
                     <Form.Item
+                      className="mb-1"
                       name={['grade', category.title, crIdx]}
                       rules={[{ required: true, message: 'Please grade all' }]}
                     >
@@ -167,9 +176,9 @@ const ReviewForm = ({ user, dispatch }) => {
                         criteriaId={item.id}
                       />
                     </Form.Item>
-                  </div>
-                ))}
-              </Space>
+                  </List.Item>
+                )}
+              />
             ))}
 
             <Collapse className="mt-2 mb-2">
