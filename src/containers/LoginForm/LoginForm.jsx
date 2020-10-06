@@ -81,7 +81,7 @@ class LoginForm extends React.Component {
         >
           <Card.Meta
             title="Please login via GitHub"
-            description="In order to access the RS School App, you need to login with your GitHub account"
+            description="In order to access the X Check App, you need to login with your GitHub account"
           />
           <div className="select-role">
             <span className="select-role__label">
