@@ -21,7 +21,7 @@ const CrossCheckDropdown = ({
 
   const crossCheckClose = async (crossCheckId) => {
     // eslint-disable-next-line no-alert
-    const isconfirm = window.confirm('Sure to delete?')
+    const isconfirm = window.confirm('Sure to close?')
     if (!isconfirm) return
 
     const { id, closedAt } = await crossCheckService.closeById(crossCheckId)
