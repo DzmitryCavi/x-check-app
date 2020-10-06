@@ -6,7 +6,20 @@ import { compareAsc } from 'date-fns'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { formatRoute } from 'react-router-named-routes'
-import { Form, Input, Row, Col, Table, Space, Button, Tag, Dropdown, Menu, Collapse } from 'antd'
+import {
+  Form,
+  Input,
+  Row,
+  Col,
+  Table,
+  Space,
+  Button,
+  Tag,
+  Dropdown,
+  Menu,
+  Collapse,
+  Select,
+} from 'antd'
 import { DownOutlined } from '@ant-design/icons'
 import TaskDateConstraints from '../../../component/TaskDateConstraints'
 import CrossCheckDropdown from '../../../component/CrossCheckDropdown'
@@ -103,10 +116,6 @@ const TasksList = ({ user }) => {
     )
   }
 
-  const handleCreateCrossCheck = async (data) => {
-    setCrossCheckSession(crossCheckSession.concat(data))
-  }
-
   const handleCloseCrossCheck = async (crossCheckId, closedAt) => {
     setCrossCheckSession(
       crossCheckSession.map((item) =>
@@ -138,12 +147,40 @@ const TasksList = ({ user }) => {
   }
 
   const handleClearDateConstraints = async (_, crossCheckId) => {
+    if (!crossCheckId) return false
+
     // eslint-disable-next-line no-alert
-    const isconfirm = window.confirm('Cross-check session will be stopped! Are you sure?')
-    if (!isconfirm) return
+    const isConfirm = window.confirm('Cross-check session will be stopped! Are you sure?')
+    if (!isConfirm) return false
 
     const { id, closedAt } = await crossCheckService.closeById(crossCheckId)
     if (id) handleCloseCrossCheck(id, closedAt)
+    return true
+  }
+
+  const handleAssessmentTypeChange = async (task, assessmentType = null, crossCheckTask) => {
+    if (
+      assessmentType === 'CROSS_CHECK' &&
+      !crossCheckSession.find((item) => item.taskId === task.id)
+    ) {
+      const data = await crossCheckService.create(task.id)
+      if (data) setCrossCheckSession(crossCheckSession.concat(data))
+    }
+
+    if (assessmentType !== 'CROSS_CHECK' && crossCheckTask && !crossCheckTask.closedAt) {
+      const isConfirm = await handleClearDateConstraints(null, crossCheckTask.id)
+      console.log(isConfirm)
+      if (isConfirm === false) return
+    }
+
+    const newTask = {
+      ...task,
+      assessmentType,
+      startDate: assessmentType ? task.startDate : null,
+      endDate: assessmentType ? task.endDate : null,
+    }
+    await tasksService.edit(newTask, task.id)
+    setTasks((prev) => prev.map((item) => (item.id === task.id ? newTask : item)))
   }
 
   return (
@@ -260,6 +297,29 @@ const TasksList = ({ user }) => {
           }}
         />
         <Column
+          title="Assessment Type"
+          dataIndex="assessmentType"
+          key="assessmentType"
+          render={(_, task) => {
+            const crossCheckTask = crossCheckSession.find((item) => item.taskId === task.id)
+
+            return (
+              <Select
+                style={{ width: 120 }}
+                placeholder="Select"
+                onChange={(assessmentType) =>
+                  handleAssessmentTypeChange(task, assessmentType, crossCheckTask)
+                }
+                value={task.assessmentType}
+                allowClear
+              >
+                <Select.Option value="MENTOR">MENTOR</Select.Option>
+                <Select.Option value="CROSS_CHECK">CROSS CHECK</Select.Option>
+              </Select>
+            )
+          }}
+        />
+        <Column
           width={460}
           title="Start & End Date"
           dataIndex="date"
@@ -271,7 +331,8 @@ const TasksList = ({ user }) => {
               <TaskDateConstraints
                 task={task}
                 onChange={onDateConstraintsChange}
-                onClear={(taskId) => handleClearDateConstraints(taskId, crossCheckTask.id)}
+                onClear={(taskId) => handleClearDateConstraints(taskId, crossCheckTask?.id)}
+                disabled={!task.assessmentType}
               />
             )
           }}
@@ -281,7 +342,6 @@ const TasksList = ({ user }) => {
           key="action"
           width={200}
           render={(_, task) => {
-            const status = getStatusTask({ startDate: task.startDate, endDate: task.endDate })
             const crossCheckTask = crossCheckSession.find((item) => item.taskId === task.id)
 
             return (
@@ -306,9 +366,7 @@ const TasksList = ({ user }) => {
                 </Dropdown>
                 <CrossCheckDropdown
                   task={task}
-                  status={status}
                   crossCheckTask={crossCheckTask}
-                  onCreate={handleCreateCrossCheck}
                   onOpen={handleOpenCrossCheck}
                   onClose={handleCloseCrossCheck}
                   onDestroy={handleDestroyCrossCheck}

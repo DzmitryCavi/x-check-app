@@ -5,20 +5,7 @@ import { DeleteOutlined, SettingOutlined } from '@ant-design/icons'
 
 import crossCheckService from '../services/crossCheck.service'
 
-const CrossCheckDropdown = ({
-  task,
-  status,
-  crossCheckTask,
-  onCreate,
-  onOpen,
-  onClose,
-  onDestroy,
-}) => {
-  const crossCheckStart = async (taskId) => {
-    const data = await crossCheckService.create(taskId)
-    if (data) onCreate(data)
-  }
-
+const CrossCheckDropdown = ({ task, crossCheckTask, onOpen, onClose, onDestroy }) => {
   const crossCheckClose = async (crossCheckId) => {
     // eslint-disable-next-line no-alert
     const isconfirm = window.confirm('Sure to close?')
@@ -47,14 +34,7 @@ const CrossCheckDropdown = ({
   }
 
   const crossCheckOverlay = () => {
-    if (status === 'ACTIVE' && !crossCheckTask) {
-      return (
-        <Menu>
-          <Menu.Item onClick={() => crossCheckStart(task.id)}>Start</Menu.Item>
-        </Menu>
-      )
-    }
-    if (status === 'ACTIVE' && crossCheckTask) {
+    if (task.assessmentType === 'CROSS_CHECK' && crossCheckTask) {
       return (
         <Menu>
           {crossCheckTask && !crossCheckTask.closedAt ? (
@@ -87,7 +67,7 @@ const CrossCheckDropdown = ({
 
   const overlay = crossCheckOverlay()
 
-  if (status !== 'ACTIVE' && crossCheckTask) {
+  if (crossCheckTask && crossCheckTask.closedAt && task.assessmentType !== 'CROSS_CHECK') {
     return (
       <Button
         icon={<DeleteOutlined />}
@@ -122,9 +102,7 @@ CrossCheckDropdown.defaultProps = {
 
 CrossCheckDropdown.propTypes = {
   task: PropTypes.instanceOf(Object).isRequired,
-  status: PropTypes.string.isRequired,
   crossCheckTask: PropTypes.instanceOf(Object),
-  onCreate: PropTypes.func.isRequired,
   onOpen: PropTypes.func.isRequired,
   onClose: PropTypes.func.isRequired,
   onDestroy: PropTypes.func.isRequired,

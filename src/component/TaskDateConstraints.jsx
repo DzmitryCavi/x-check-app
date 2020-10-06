@@ -5,7 +5,7 @@ import { DatePicker, Space, Spin } from 'antd'
 
 import tasksService from '../services/tasks.service'
 
-const TaskDateConstraints = ({ task, onChange, onClear }) => {
+const TaskDateConstraints = ({ task, onChange, onClear, ...props }) => {
   const [isBusy, setIsBusy] = useState(false)
   const сhangeDateConstraints = async (taskId, dateRange) => {
     if (!dateRange) onClear(taskId)
@@ -19,13 +19,14 @@ const TaskDateConstraints = ({ task, onChange, onClear }) => {
   return (
     <Space size="middle" className="start-end-date-task">
       <DatePicker.RangePicker
-        defaultValue={[
+        value={[
           task.startDate ? moment(task.startDate) : null,
           task.endDate ? moment(task.endDate) : null,
         ]}
         allowEmpty={[true, true]}
         onChange={(dateRange) => сhangeDateConstraints(task.id, dateRange)}
         showTime
+        {...props}
       />
       {isBusy ? <Spin style={{ marginTop: 5 }} /> : null}
     </Space>
