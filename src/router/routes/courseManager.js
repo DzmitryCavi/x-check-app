@@ -22,7 +22,7 @@ export default [
     navigation: {
       label: 'Tasks Managment',
       icon: ApartmentOutlined,
-      color: '#389e0d',
+      color: '#73d13d',
     },
   },
   {
@@ -44,7 +44,7 @@ export default [
     navigation: {
       label: 'Grade List',
       icon: UnorderedListOutlined,
-      color: '#08979c',
+      color: '#36cfc9',
     },
   },
 ]

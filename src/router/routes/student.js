@@ -13,10 +13,11 @@ export default [
     path: routes.requests.create,
     component: RequestCreate,
     breadcrumb: 'Create Request',
+    description: 'Submit a task for review (+ self-review)',
     navigation: {
       label: 'Sent Requests',
       icon: CodeOutlined,
-      color: '#d46b08',
+      color: '#ffc53d',
     },
   },
   {
@@ -33,11 +34,11 @@ export default [
     path: routes.requests.list,
     component: RequestsList,
     breadcrumb: 'Requests History',
-    description: 'Requests management',
+    description: 'Request history (+ self-checks)',
     navigation: {
       label: 'Requests History',
       icon: HistoryOutlined,
-      color: '#531dab',
+      color: '#9254de',
       withBadge: true,
       badgeCount: () => {
         const user = JSON.parse(localStorage.getItem('user')).login

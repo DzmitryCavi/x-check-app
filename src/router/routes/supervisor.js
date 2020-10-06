@@ -28,7 +28,7 @@ export default [
     navigation: {
       label: 'Requests List',
       icon: UnorderedListOutlined,
-      color: '#08979c',
+      color: '#36cfc9',
       withBadge: true,
       badgeCount: () => {
         const count = RequestService.getAllSubmitted().then((data) => data.length)
@@ -45,7 +45,7 @@ export default [
       label: 'Review History',
       icon: HistoryOutlined,
       withBadge: true,
-      color: '#531dab',
+      color: '#9254de',
       badgeCount: () => {
         const count = DisputeService.getCountOfDisputeByReviewAuthor()
         return count
