@@ -102,7 +102,7 @@ const TasksList = ({ user }) => {
       return 'PLANNED'
     }
 
-    return ''
+    return 'NOT_ACTIVE'
   }
 
   const handleTableChange = async (pagination) => {
@@ -148,6 +148,15 @@ const TasksList = ({ user }) => {
 
   const handleDestroyCrossCheck = async (crossCheckId) => {
     setCrossCheckSession(crossCheckSession.filter((item) => item.id !== crossCheckId))
+  }
+
+  const handleClearDateConstraints = async (_, crossCheckId) => {
+    // eslint-disable-next-line no-alert
+    const isconfirm = window.confirm('Cross-check session will be stopped! Are you sure?')
+    if (!isconfirm) return
+
+    const { id, closedAt } = await crossCheckService.closeById(crossCheckId)
+    if (id) handleCloseCrossCheck(id, closedAt)
   }
 
   return (
@@ -232,6 +241,7 @@ const TasksList = ({ user }) => {
           )}
         />
         <Column
+          width={300}
           title="Status"
           key="status"
           render={(_, task, idx) => {
@@ -246,7 +256,14 @@ const TasksList = ({ user }) => {
                 >
                   {{ PLANNED: 'PLANNED', ACTIVE: 'ACTIVE', NOT_ACTIVE: 'NOT ACTIVE' }[status]}
                 </Tag>
-                {crossCheckTask ? <Tag color="red">CROSS-CHECK</Tag> : null}
+                {crossCheckTask ? (
+                  <Tag color="red">
+                    CROSS-CHECK{' '}
+                    <small>
+                      <b>{crossCheckTask.closedAt ? '(closed)' : '(opened)'}</b>
+                    </small>
+                  </Tag>
+                ) : null}
               </>
             )
           }}
@@ -256,9 +273,17 @@ const TasksList = ({ user }) => {
           title="Start & End Date"
           dataIndex="date"
           key="date"
-          render={(row, task) => (
-            <TaskDateConstraints task={task} onChange={onDateConstraintsChange} />
-          )}
+          render={(_, task) => {
+            const crossCheckTask = crossCheckSession.find((item) => item.taskId === task.id)
+
+            return (
+              <TaskDateConstraints
+                task={task}
+                onChange={onDateConstraintsChange}
+                onClear={(taskId) => handleClearDateConstraints(taskId, crossCheckTask.id)}
+              />
+            )
+          }}
         />
         <Column
           title="Action"

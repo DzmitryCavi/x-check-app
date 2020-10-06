@@ -5,9 +5,11 @@ import { DatePicker, Space, Spin } from 'antd'
 
 import tasksService from '../services/tasks.service'
 
-const TaskDateConstraints = ({ task, onChange }) => {
+const TaskDateConstraints = ({ task, onChange, onClear }) => {
   const [isBusy, setIsBusy] = useState(false)
   const сhangeDateConstraints = async (taskId, dateRange) => {
+    if (!dateRange) onClear(taskId)
+
     setIsBusy(true)
     const { startDate, endDate } = await tasksService.сhangeDateConstraints(taskId, dateRange)
 
@@ -32,11 +34,13 @@ const TaskDateConstraints = ({ task, onChange }) => {
 
 TaskDateConstraints.defaultProps = {
   onChange: () => {},
+  onClear: () => {},
 }
 
 TaskDateConstraints.propTypes = {
   task: PropTypes.instanceOf(Object).isRequired,
   onChange: PropTypes.func,
+  onClear: PropTypes.func,
 }
 
 export default TaskDateConstraints

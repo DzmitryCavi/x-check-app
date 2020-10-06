@@ -122,7 +122,7 @@ CrossCheckDropdown.defaultProps = {
 
 CrossCheckDropdown.propTypes = {
   task: PropTypes.instanceOf(Object).isRequired,
-  status: PropTypes.instanceOf(String).isRequired,
+  status: PropTypes.string.isRequired,
   crossCheckTask: PropTypes.instanceOf(Object),
   onCreate: PropTypes.func.isRequired,
   onOpen: PropTypes.func.isRequired,
