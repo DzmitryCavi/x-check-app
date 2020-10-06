@@ -8,13 +8,18 @@ import tasksService from '../services/tasks.service'
 const TaskDateConstraints = ({ task, onChange, onClear, ...props }) => {
   const [isBusy, setIsBusy] = useState(false)
   const сhangeDateConstraints = async (taskId, dateRange) => {
-    if (!dateRange) onClear(taskId)
+    if (!dateRange) {
+      const isConfirm = await onClear(taskId)
+      if (!isConfirm) return false
+    }
 
     setIsBusy(true)
     const { startDate, endDate } = await tasksService.сhangeDateConstraints(taskId, dateRange)
 
     onChange(taskId, { startDate, endDate })
     setIsBusy(false)
+
+    return true
   }
   return (
     <Space size="middle" className="start-end-date-task">

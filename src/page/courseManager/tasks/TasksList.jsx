@@ -102,7 +102,7 @@ const TasksList = ({ user }) => {
       return 'PLANNED'
     }
 
-    return 'NOT_TOUCHED'
+    return 'NOT_ACTIVE'
   }
 
   const handleTableChange = async (pagination) => {
@@ -169,7 +169,6 @@ const TasksList = ({ user }) => {
 
     if (assessmentType !== 'CROSS_CHECK' && crossCheckTask && !crossCheckTask.closedAt) {
       const isConfirm = await handleClearDateConstraints(null, crossCheckTask.id)
-      console.log(isConfirm)
       if (isConfirm === false) return
     }
 
@@ -243,7 +242,6 @@ const TasksList = ({ user }) => {
         onChange={handleTableChange}
         bordered
       >
-        <Column width={60} title="#" dataIndex="id" key="id" sortRules={sortRules.id} />
         <Column
           title="Title"
           key="title"
@@ -255,7 +253,7 @@ const TasksList = ({ user }) => {
           )}
         />
         <Column
-          width={300}
+          width={270}
           title="Status"
           key="status"
           render={(_, task, idx) => {
@@ -270,7 +268,6 @@ const TasksList = ({ user }) => {
                       PLANNED: 'blue',
                       ACTIVE: 'green',
                       NOT_ACTIVE: 'orange',
-                      NOT_TOUCHED: 'orange',
                     }[status]
                   }
                   key={idx}
@@ -280,7 +277,6 @@ const TasksList = ({ user }) => {
                       PLANNED: 'PLANNED',
                       ACTIVE: 'ACTIVE',
                       NOT_ACTIVE: 'NOT ACTIVE',
-                      NOT_TOUCHED: 'NOT TOUCHED',
                     }[status]
                   }
                 </Tag>
