@@ -16,6 +16,7 @@ import {
   Anchor,
   Typography,
   Affix,
+  Tag,
 } from 'antd'
 import { LogoutOutlined, ProfileOutlined, PoweroffOutlined, HomeOutlined } from '@ant-design/icons'
 import { connect } from 'react-redux'
@@ -36,23 +37,36 @@ import Navigation from '../component/Navigation'
 const { Header, Content, Footer } = Layout
 const { Title } = Typography
 
+const roles = {
+  author: { color: 'green', label: 'Author' },
+  student: { color: 'purple', label: 'Student' },
+  supervisor: { color: 'blue', label: 'Supervisor' },
+  course_manager: { color: 'gold', label: 'Course Manager' },
+  superadmin: { color: 'red', label: 'Super Admin' },
+}
+
+const getProfileMenu = (user, exit) => (
+  <Menu className="profile-menu">
+    <Menu.Item className="profile-menu__item profile-menu__item--role" key="role" disabled>
+      <Tag className="m-0" color={roles[user.role].color}>
+        {roles[user.role].label}
+      </Tag>
+    </Menu.Item>
+    <Menu.Item className="profile-menu__item" key="1" icon={<ProfileOutlined />}>
+      <a href="https://app.rs.school/profile" target="_blank" rel="noopener noreferrer">
+        Profile
+      </a>
+    </Menu.Item>
+    <Menu.Item className="profile-menu__item" key="2" icon={<LogoutOutlined />} onClick={exit}>
+      Logout
+    </Menu.Item>
+  </Menu>
+)
+
 const DefaultLayout = ({ breadcrumbs, isLoggedIn, user, children, dispatch, anchors }) => {
   const exit = () => {
     dispatch(logout())
   }
-
-  const ProfileMenu = (
-    <Menu>
-      <Menu.Item key="1" icon={<ProfileOutlined />}>
-        <a href="https://app.rs.school/profile" target="_blank" rel="noopener noreferrer">
-          Profile
-        </a>
-      </Menu.Item>
-      <Menu.Item key="2" icon={<LogoutOutlined />} onClick={exit}>
-        Logout
-      </Menu.Item>
-    </Menu>
-  )
 
   if (!isLoggedIn) {
     return <Redirect to="/login" />
@@ -66,7 +80,7 @@ const DefaultLayout = ({ breadcrumbs, isLoggedIn, user, children, dispatch, anch
         </div>
         <div className="app-header__controls">
           <>
-            <Dropdown overlay={ProfileMenu} trigger="click">
+            <Dropdown overlay={getProfileMenu(user, exit)} trigger="click">
               <Button
                 type="dashed"
                 size="large"
