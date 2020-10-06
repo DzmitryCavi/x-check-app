@@ -10,9 +10,11 @@ import requestsService from '../../../services/requests.service'
 import { urlWithIpPattern } from '../../../services/validators'
 import feedbackService from '../../../services/feedback.service'
 
+import { setAnchors, clearAnchors } from '../../../store/actions'
+
 const { Title, Text } = Typography
 
-const RequestForm = ({ task, user, requestToEdit, setIsNewRequest }) => {
+const RequestForm = ({ task, user, requestToEdit, setIsNewRequest, dispatch }) => {
   const { categories } = task
   const [isSuccess, setIsSuccess] = useState(false)
   const [isDraft, setIsDraft] = useState(false)
@@ -25,13 +27,19 @@ const RequestForm = ({ task, user, requestToEdit, setIsNewRequest }) => {
   )
 
   useEffect(() => {
+    const anchors = task.categories.map((category) => ({
+      id: `#${category.slug}`,
+      title: category.title,
+    }))
+    dispatch(setAnchors(anchors))
     return task
       ? () => {
+          dispatch(clearAnchors())
           form.resetFields()
           setIsSuccess(false)
         }
       : null
-  }, [task, form])
+  }, [task, form, dispatch])
 
   const onFinish = async (data) => {
     const requestData = {
@@ -160,7 +168,7 @@ const RequestForm = ({ task, user, requestToEdit, setIsNewRequest }) => {
             <List
               itemLayout="vertical"
               header={
-                <Title level={4} style={{ marginBottom: 0 }}>
+                <Title id={category.slug} level={4} style={{ marginBottom: 0 }}>
                   {catIdx + 1}. {category.title}
                 </Title>
               }
@@ -218,6 +226,7 @@ RequestForm.propTypes = {
   user: PropTypes.instanceOf(Object).isRequired,
   requestToEdit: PropTypes.instanceOf(Object),
   setIsNewRequest: PropTypes.instanceOf(Function),
+  dispatch: PropTypes.func.isRequired,
 }
 
 RequestForm.defaultProps = {

@@ -3,7 +3,20 @@ import PropTypes from 'prop-types'
 import { Link, Redirect } from 'react-router-dom'
 import withBreadcrumbs from 'react-router-breadcrumbs-hoc'
 import {} from 'antd/lib/form/Form'
-import { Layout, Menu, Breadcrumb, Button, Avatar, Dropdown, Row, Col, List } from 'antd'
+import {
+  Layout,
+  Menu,
+  Breadcrumb,
+  Button,
+  Avatar,
+  Dropdown,
+  Row,
+  Col,
+  List,
+  Anchor,
+  Typography,
+  Affix,
+} from 'antd'
 import { LogoutOutlined, ProfileOutlined, PoweroffOutlined, HomeOutlined } from '@ant-design/icons'
 import { connect } from 'react-redux'
 import { compose } from 'redux'
@@ -21,8 +34,9 @@ import { logout } from '../store/actions'
 import Navigation from '../component/Navigation'
 
 const { Header, Content, Footer } = Layout
+const { Title } = Typography
 
-const DefaultLayout = ({ breadcrumbs, isLoggedIn, user, children, dispatch }) => {
+const DefaultLayout = ({ breadcrumbs, isLoggedIn, user, children, dispatch, anchors }) => {
   const exit = () => {
     dispatch(logout())
   }
@@ -144,6 +158,16 @@ const DefaultLayout = ({ breadcrumbs, isLoggedIn, user, children, dispatch }) =>
                   yes={() => <Navigation items={courseManagerRoutes} />}
                 />
               </List>
+              {anchors.length ? (
+                <Affix className="navigation-anchors" offsetTop={30}>
+                  <Title level={5}>Quick navigation by categories:</Title>
+                  <Anchor onClick={(event) => event.preventDefault()} affix={false} showInkInFixed>
+                    {anchors.map((anchor) => (
+                      <Anchor.Link key={anchor.id} href={anchor.id} title={anchor.title} />
+                    ))}
+                  </Anchor>
+                </Affix>
+              ) : null}
             </Col>
             <Col xs={24} lg={19}>
               <Content className="default-layout__content">{children}</Content>
@@ -163,6 +187,7 @@ const DefaultLayout = ({ breadcrumbs, isLoggedIn, user, children, dispatch }) =>
 
 DefaultLayout.defaultProps = {
   user: null,
+  anchors: [],
 }
 
 DefaultLayout.propTypes = {
@@ -171,12 +196,16 @@ DefaultLayout.propTypes = {
   children: PropTypes.instanceOf(Object).isRequired,
   dispatch: PropTypes.func.isRequired,
   breadcrumbs: PropTypes.instanceOf(Object).isRequired,
+
+  anchors: PropTypes.instanceOf(Array),
 }
 
 const mapStateToProps = (state) => {
   return {
     isLoggedIn: state.auth.isLoggedIn,
     user: state.auth.user,
+
+    anchors: state.anchors.list,
   }
 }
 

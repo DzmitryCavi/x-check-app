@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { useAsync } from 'react-use'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
@@ -26,9 +26,11 @@ import Feedback from '../../Feedback'
 import ButtonLink from '../../ButtonLink'
 import { supervisorRoutes } from '../../../router/routes'
 
+import { setAnchors, clearAnchors } from '../../../store/actions'
+
 const { Title, Link } = Typography
 
-const ReviewForm = ({ user }) => {
+const ReviewForm = ({ user, dispatch }) => {
   const [isSuccess, setIsSuccess] = useState(false)
   const [score, setScore] = useState(0)
   const [task, setTask] = useState(null)
@@ -58,6 +60,17 @@ const ReviewForm = ({ user }) => {
     setTask(taskResponse)
     setLoading(false)
   }, [requestId])
+
+  useEffect(() => {
+    const anchors = task?.categories.map((category) => ({
+      id: `#${category.slug}`,
+      title: category.title,
+    }))
+    dispatch(setAnchors(anchors))
+    return () => {
+      dispatch(clearAnchors())
+    }
+  }, [dispatch, task])
 
   const onFinish = async (data) => {
     const reviewData = {
@@ -135,7 +148,7 @@ const ReviewForm = ({ user }) => {
           >
             {task.categories.map((category, catIdx) => (
               <Space style={{ width: '100%' }} direction="vertical" key={category.id}>
-                <Title level={4}>{`${catIdx + 1}. ${category.title}`}</Title>
+                <Title id={category.slug} level={4}>{`${catIdx + 1}. ${category.title}`}</Title>
                 {category.criteria.map((item, crIdx) => (
                   <div key={`criteria-${crIdx + 1}`} className="ml-2">
                     <div className="d-flex">
@@ -240,6 +253,7 @@ const ReviewForm = ({ user }) => {
 
 ReviewForm.propTypes = {
   user: PropTypes.string.isRequired,
+  dispatch: PropTypes.func.isRequired,
 }
 
 const mapStateToProps = (state) => {
