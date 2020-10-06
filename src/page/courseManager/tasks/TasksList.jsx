@@ -242,7 +242,6 @@ const TasksList = ({ user }) => {
         onChange={handleTableChange}
         bordered
       >
-        <Column width={60} title="#" dataIndex="id" key="id" sortRules={sortRules.id} />
         <Column
           title="Title"
           key="title"
@@ -254,7 +253,7 @@ const TasksList = ({ user }) => {
           )}
         />
         <Column
-          width={300}
+          width={270}
           title="Status"
           key="status"
           render={(_, task, idx) => {
