@@ -22,14 +22,17 @@ import {
 } from 'antd'
 import { DownOutlined } from '@ant-design/icons'
 import TaskDateConstraints from '../../../component/TaskDateConstraints'
+import CrossCheckDropdown from '../../../component/CrossCheckDropdown'
 import { courseManagerRoutes } from '../../../router/routes'
 
 import tasksService from '../../../services/tasks.service'
+import crossCheckService from '../../../services/crossCheck.service'
 
 const { Column } = Table
 
 const TasksList = ({ user }) => {
   const [tasks, setTasks] = useState([])
+  const [crossCheckSession, setCrossCheckSession] = useState([])
   const [paginator, setPaginator] = useState(null)
   const [loading, setLoading] = useState(true)
 
@@ -46,10 +49,13 @@ const TasksList = ({ user }) => {
     filters = { title: '', state: '' },
   ) => {
     setLoading(true)
-    const response = await tasksService.getAll({ pagination, filters, state: 'PUBLISHED' })
+    const responseCrossCheckSessions = await crossCheckService.getAll()
+    setCrossCheckSession(responseCrossCheckSessions)
 
-    setPaginator(response.pagination)
-    setTasks(response.data)
+    const responseTasks = await tasksService.getAll({ pagination, filters, state: 'PUBLISHED' })
+
+    setPaginator(responseTasks.pagination)
+    setTasks(responseTasks.data)
     setLoading(false)
   }
 
@@ -108,6 +114,40 @@ const TasksList = ({ user }) => {
     setTasks((prev) =>
       prev.map((task) => (taskId === task.id ? { ...task, startDate, endDate } : task)),
     )
+  }
+
+  const handleCreateCrossCheck = async (data) => {
+    setCrossCheckSession(crossCheckSession.concat(data))
+  }
+
+  const handleCloseCrossCheck = async (crossCheckId, closedAt) => {
+    setCrossCheckSession(
+      crossCheckSession.map((item) =>
+        item.id === crossCheckId
+          ? {
+              ...item,
+              closedAt,
+            }
+          : item,
+      ),
+    )
+  }
+
+  const handleOpenCrossCheck = async (crossCheckId) => {
+    setCrossCheckSession(
+      crossCheckSession.map((item) =>
+        item.id === crossCheckId
+          ? {
+              ...item,
+              closedAt: null,
+            }
+          : item,
+      ),
+    )
+  }
+
+  const handleDestroyCrossCheck = async (crossCheckId) => {
+    setCrossCheckSession(crossCheckSession.filter((item) => item.id !== crossCheckId))
   }
 
   return (
@@ -194,15 +234,20 @@ const TasksList = ({ user }) => {
         <Column
           title="Status"
           key="status"
-          render={(row, { startDate, endDate }, idx) => {
-            const status = getStatusTask({ startDate, endDate })
+          render={(_, task, idx) => {
+            const status = getStatusTask({ startDate: task.startDate, endDate: task.endDate })
+            const crossCheckTask = crossCheckSession.find((item) => item.taskId === task.id)
+
             return (
-              <Tag
-                color={{ PLANNED: 'blue', ACTIVE: 'green', NOT_ACTIVE: 'orange' }[status]}
-                key={idx}
-              >
-                {{ PLANNED: 'PLANNED', ACTIVE: 'ACTIVE', NOT_ACTIVE: 'NOT ACTIVE' }[status]}
-              </Tag>
+              <>
+                <Tag
+                  color={{ PLANNED: 'blue', ACTIVE: 'green', NOT_ACTIVE: 'orange' }[status]}
+                  key={idx}
+                >
+                  {{ PLANNED: 'PLANNED', ACTIVE: 'ACTIVE', NOT_ACTIVE: 'NOT ACTIVE' }[status]}
+                </Tag>
+                {crossCheckTask ? <Tag color="red">CROSS-CHECK</Tag> : null}
+              </>
             )
           }}
         />
@@ -216,38 +261,45 @@ const TasksList = ({ user }) => {
           )}
         />
         <Column
-          title="Created"
-          dataIndex="created_at"
-          key="created_at"
-          sortRules={sortRules.created_at}
-          defaultSortOrder="descend"
-        />
-        <Column
           title="Action"
           key="action"
-          width={100}
-          render={(row, record) => (
-            <Space size="middle">
-              <Dropdown
-                placement="topRight"
-                overlay={
-                  <Menu>
-                    <Menu.Item onClick={() => exportById(record, 'custom')}>
-                      Export (*.json)
-                    </Menu.Item>
-                    <Menu.Item onClick={() => exportById(record, 'rss')}>
-                      Export (RSS *.json)
-                    </Menu.Item>
-                    <Menu.Item onClick={() => exportById(record, 'md')}>
-                      Export (MarkDown *.md)
-                    </Menu.Item>
-                  </Menu>
-                }
-              >
-                <Button>Export</Button>
-              </Dropdown>
-            </Space>
-          )}
+          width={200}
+          render={(_, task) => {
+            const status = getStatusTask({ startDate: task.startDate, endDate: task.endDate })
+            const crossCheckTask = crossCheckSession.find((item) => item.taskId === task.id)
+
+            return (
+              <Space size="middle">
+                <Dropdown
+                  placement="topRight"
+                  overlay={
+                    <Menu>
+                      <Menu.Item onClick={() => exportById(task, 'custom')}>
+                        Export (*.json)
+                      </Menu.Item>
+                      <Menu.Item onClick={() => exportById(task, 'rss')}>
+                        Export (RSS *.json)
+                      </Menu.Item>
+                      <Menu.Item onClick={() => exportById(task, 'md')}>
+                        Export (MarkDown *.md)
+                      </Menu.Item>
+                    </Menu>
+                  }
+                >
+                  <Button>Export</Button>
+                </Dropdown>
+                <CrossCheckDropdown
+                  task={task}
+                  status={status}
+                  crossCheckTask={crossCheckTask}
+                  onCreate={handleCreateCrossCheck}
+                  onOpen={handleOpenCrossCheck}
+                  onClose={handleCloseCrossCheck}
+                  onDestroy={handleDestroyCrossCheck}
+                />
+              </Space>
+            )
+          }}
         />
       </Table>
     </div>
