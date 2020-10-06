@@ -54,15 +54,17 @@ const RequestForm = ({ task, user, requestToEdit, setIsNewRequest, dispatch }) =
       const requestResponse = await requestsService.create(requestData, user.login)
       feedbackService.create({
         requestId: requestResponse.id,
-        massages: [
-          {
-            author: user.login,
-            avatar: user.avatar_url,
-            content: data.feedback,
-            datetime: format(new Date(), 'yyyy-MM-dd HH:mm:ss'),
-            id: uuid(),
-          },
-        ],
+        massages: data.feedback
+          ? [
+              {
+                author: user.login,
+                avatar: user.avatar_url,
+                content: data.feedback,
+                datetime: format(new Date(), 'yyyy-MM-dd HH:mm:ss'),
+                id: uuid(),
+              },
+            ]
+          : [],
       })
     }
 
@@ -78,17 +80,6 @@ const RequestForm = ({ task, user, requestToEdit, setIsNewRequest, dispatch }) =
       taskId: task.id,
       ...formValues,
       score,
-      feedback: formValues.feedback
-        ? [
-            {
-              author: user.login,
-              avatar: user.avatar_url,
-              content: formValues.feedback,
-              datetime: format(new Date(), 'yyyy-MM-dd HH:mm:ss'),
-              id: uuid(),
-            },
-          ]
-        : [],
       state: 'DRAFT',
     }
     if (requestToEdit) requestsService.edit(requestData, requestToEdit.id)
@@ -96,15 +87,17 @@ const RequestForm = ({ task, user, requestToEdit, setIsNewRequest, dispatch }) =
       const requestResponse = await requestsService.create(requestData, user.login)
       feedbackService.create({
         requestId: requestResponse.id,
-        massages: [
-          {
-            author: user.login,
-            avatar: user.avatar_url,
-            content: formValues.feedback,
-            datetime: format(new Date(), 'yyyy-MM-dd HH:mm:ss'),
-            id: uuid(),
-          },
-        ],
+        massages: formValues.feedback
+          ? [
+              {
+                author: user.login,
+                avatar: user.avatar_url,
+                content: formValues.feedback,
+                datetime: format(new Date(), 'yyyy-MM-dd HH:mm:ss'),
+                id: uuid(),
+              },
+            ]
+          : [],
       })
     }
     setIsDraft(true)
