@@ -18,7 +18,6 @@ const create = async (feedback) => {
 }
 
 const edit = async (feedback, id) => {
-  console.log('yes')
   await axios.patch(`${API_URL}/feedbacks/${id}`, {
     ...feedback,
   })

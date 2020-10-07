@@ -5,6 +5,7 @@ import RequestsHistory from '../../page/student/requests/RequestsHistory'
 import RequestEdit from '../../page/student/requests/RequestEdit'
 import RequestReview from '../../page/RequestReview'
 import RequestService from '../../services/requests.service'
+import crossCheckService from '../../services/crossCheck.service'
 import CrossCheckRequestList from '../../page/student/crossCheck/CrossCheckRequestList'
 
 import { studentRoutes as routes } from '.'
@@ -19,11 +20,32 @@ export default [
   {
     path: routes.crossCheck.requestList,
     component: CrossCheckRequestList,
+    description: 'List of requests to cross-check review',
     breadcrumb: 'List',
     navigation: {
       label: 'Cross-check',
       icon: CheckSquareOutlined,
       color: '#ffaf1c',
+      withBadge: true,
+      badgeCount: () => {
+        const user = JSON.parse(localStorage.getItem('user'))
+        const count = crossCheckService
+          .getByStudentName(user.login)
+          .then((data) =>
+            data.reduce(
+              (ac, el) =>
+                ac.concat({
+                  students: el.students.filter((student) => student.name === user.login)[0]
+                    .reviewGroup,
+                  taskId: el.taskId,
+                }),
+              [],
+            ),
+          )
+          .then((data) => RequestService.getByStudentForCrossCheck(data))
+          .then((data) => data.length)
+        return count
+      },
     },
   },
   {
@@ -51,7 +73,7 @@ export default [
     path: routes.requests.list,
     component: RequestsHistory,
     breadcrumb: 'Requests History',
-    description: 'Request history (+ self-checks)',
+    description: 'Request history (+ self-reviews)',
     navigation: {
       label: 'Requests History',
       icon: HistoryOutlined,
