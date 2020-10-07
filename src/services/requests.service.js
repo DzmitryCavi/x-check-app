@@ -8,9 +8,23 @@ const getAll = async () => {
   return status === 200 && tasks ? tasks : []
 }
 
-const getAllSubmitted = async () => {
-  const { data: tasks, status } = await axios.get(`${API_URL}/reviewRequest?state=SUBMITTED`)
+const getAllSubmittedForMentor = async () => {
+  const { data: tasks, status } = await axios.get(
+    `${API_URL}/reviewRequest?state=SUBMITTED&assessmentType=MENTOR`,
+  )
   return status === 200 && tasks ? tasks : []
+}
+
+const getByStudentForCrossCheck = async (studenstOnReview) => {
+  const requests = studenstOnReview.reduce((result, session) => {
+    const StudentsRegExpr = session.students.reduce((ac, el) => `${ac}|${el}`, '').substr(1)
+    const data = axios.get(
+      `${API_URL}/reviewRequest?state=SUBMITTED&assessmentType=CROSS_CHECK&author_like=${StudentsRegExpr}&taskId=${session.taskId}`,
+    )
+    return result.concat(data)
+  }, [])
+  const result = await Promise.all(requests)
+  return result.map((el) => el.data).flat()
 }
 
 const getByAuthor = async (author) => {
@@ -61,7 +75,8 @@ export default {
   create,
   edit,
   destroyById,
-  getAllSubmitted,
+  getAllSubmittedForMentor,
+  getByStudentForCrossCheck,
   getById,
   closeByID,
 }

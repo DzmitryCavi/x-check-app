@@ -3,7 +3,7 @@ import DisputeService from '../../services/dispute.service'
 import RequestService from '../../services/requests.service'
 
 import RequestsList from '../../page/supervisor/requests/RequestsList'
-import RequestReview from '../../page/supervisor/requests/RequestReview'
+import RequestReview from '../../page/RequestReview'
 import ReviewHistory from '../../page/supervisor/review/ReviewHistory'
 import Dispute from '../../page/Dispute'
 
@@ -31,7 +31,7 @@ export default [
       color: '#36cfc9',
       withBadge: true,
       badgeCount: () => {
-        const count = RequestService.getAllSubmitted().then((data) => data.length)
+        const count = RequestService.getAllSubmittedForMentor().then((data) => data.length)
         return count
       },
     },

@@ -39,6 +39,10 @@ export const courseManagerRoutes = {
 }
 
 export const studentRoutes = {
+  crossCheck: {
+    review: '/student/cross-check/:requestId/review',
+    requestList: '/student/cross-check/',
+  },
   requests: {
     list: '/student/requests',
     create: '/student/requests/create',

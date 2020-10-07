@@ -8,7 +8,6 @@ import { Link } from 'react-router-dom'
 import { formatRoute } from 'react-router-named-routes'
 import {
   Form,
-  Radio,
   Input,
   Row,
   Col,
@@ -19,17 +18,21 @@ import {
   Dropdown,
   Menu,
   Collapse,
+  Select,
 } from 'antd'
 import { DownOutlined } from '@ant-design/icons'
 import TaskDateConstraints from '../../../component/TaskDateConstraints'
+import CrossCheckDropdown from '../../../component/CrossCheckDropdown'
 import { courseManagerRoutes } from '../../../router/routes'
 
 import tasksService from '../../../services/tasks.service'
+import crossCheckService from '../../../services/crossCheck.service'
 
 const { Column } = Table
 
 const TasksList = ({ user }) => {
   const [tasks, setTasks] = useState([])
+  const [crossCheckSession, setCrossCheckSession] = useState([])
   const [paginator, setPaginator] = useState(null)
   const [loading, setLoading] = useState(true)
 
@@ -46,10 +49,13 @@ const TasksList = ({ user }) => {
     filters = { title: '', state: '' },
   ) => {
     setLoading(true)
-    const response = await tasksService.getAll({ pagination, filters, state: 'PUBLISHED' })
+    const responseCrossCheckSessions = await crossCheckService.getAll()
+    setCrossCheckSession(responseCrossCheckSessions)
 
-    setPaginator(response.pagination)
-    setTasks(response.data)
+    const responseTasks = await tasksService.getAll({ pagination, filters, state: 'PUBLISHED' })
+
+    setPaginator(responseTasks.pagination)
+    setTasks(responseTasks.data)
     setLoading(false)
   }
 
@@ -96,7 +102,7 @@ const TasksList = ({ user }) => {
       return 'PLANNED'
     }
 
-    return ''
+    return 'NOT_ACTIVE'
   }
 
   const handleTableChange = async (pagination) => {
@@ -108,6 +114,72 @@ const TasksList = ({ user }) => {
     setTasks((prev) =>
       prev.map((task) => (taskId === task.id ? { ...task, startDate, endDate } : task)),
     )
+  }
+
+  const handleCloseCrossCheck = async (crossCheckId, closedAt) => {
+    setCrossCheckSession(
+      crossCheckSession.map((item) =>
+        item.id === crossCheckId
+          ? {
+              ...item,
+              closedAt,
+            }
+          : item,
+      ),
+    )
+  }
+
+  const handleOpenCrossCheck = async (crossCheckId) => {
+    setCrossCheckSession(
+      crossCheckSession.map((item) =>
+        item.id === crossCheckId
+          ? {
+              ...item,
+              closedAt: null,
+            }
+          : item,
+      ),
+    )
+  }
+
+  const handleDestroyCrossCheck = async (crossCheckId) => {
+    setCrossCheckSession(crossCheckSession.filter((item) => item.id !== crossCheckId))
+  }
+
+  const handleClearDateConstraints = async (_, crossCheckId) => {
+    if (!crossCheckId) return false
+
+    // eslint-disable-next-line no-alert
+    const isConfirm = window.confirm('Cross-check session will be stopped! Are you sure?')
+    if (!isConfirm) return false
+
+    const { id, closedAt } = await crossCheckService.closeById(crossCheckId)
+    if (id) handleCloseCrossCheck(id, closedAt)
+    return true
+  }
+
+  const handleAssessmentTypeChange = async (task, assessmentType = null, crossCheckTask) => {
+    if (
+      assessmentType === 'CROSS_CHECK' &&
+      !crossCheckSession.find((item) => item.taskId === task.id)
+    ) {
+      const data = await crossCheckService.create(task.id)
+      if (data) setCrossCheckSession(crossCheckSession.concat(data))
+    }
+
+    if (assessmentType !== 'CROSS_CHECK' && crossCheckTask && !crossCheckTask.closedAt) {
+      const isConfirm = await handleClearDateConstraints(null, crossCheckTask.id)
+      if (isConfirm === false) return
+    }
+
+    const newTask = {
+      ...task,
+      assessmentType,
+      startDate: assessmentType ? task.startDate : null,
+      endDate: assessmentType ? task.endDate : null,
+    }
+    await tasksService.edit(newTask, task.id)
+    setTasks((prev) => prev.map((item) => (item.id === task.id ? newTask : item)))
   }
 
   return (
@@ -137,7 +209,6 @@ const TasksList = ({ user }) => {
           onFinish={onFilter}
           initialValues={{
             title: '',
-            state: '',
           }}
         >
           <Collapse className="tasks-filters-collapse">
@@ -146,15 +217,6 @@ const TasksList = ({ user }) => {
                 <Col span={6}>
                   <Form.Item name="title" label="Title">
                     <Input />
-                  </Form.Item>
-                </Col>
-                <Col span={6}>
-                  <Form.Item label="State" name="state">
-                    <Radio.Group>
-                      <Radio.Button value="DRAFT">DRAFT</Radio.Button>
-                      <Radio.Button value="PUBLISHED">PUBLISHED</Radio.Button>
-                      <Radio.Button value="ARCHIVED">ARCHIVED</Radio.Button>
-                    </Radio.Group>
                   </Form.Item>
                 </Col>
                 <Col span={24}>
@@ -180,7 +242,6 @@ const TasksList = ({ user }) => {
         onChange={handleTableChange}
         bordered
       >
-        <Column width={60} title="#" dataIndex="id" key="id" sortRules={sortRules.id} />
         <Column
           title="Title"
           key="title"
@@ -192,17 +253,65 @@ const TasksList = ({ user }) => {
           )}
         />
         <Column
+          width={270}
           title="Status"
           key="status"
-          render={(row, { startDate, endDate }, idx) => {
-            const status = getStatusTask({ startDate, endDate })
+          render={(_, task, idx) => {
+            const status = getStatusTask({ startDate: task.startDate, endDate: task.endDate })
+            const crossCheckTask = crossCheckSession.find((item) => item.taskId === task.id)
+
             return (
-              <Tag
-                color={{ PLANNED: 'blue', ACTIVE: 'green', NOT_ACTIVE: 'orange' }[status]}
-                key={idx}
+              <>
+                <Tag
+                  color={
+                    {
+                      PLANNED: 'blue',
+                      ACTIVE: 'green',
+                      NOT_ACTIVE: 'orange',
+                    }[status]
+                  }
+                  key={idx}
+                >
+                  {
+                    {
+                      PLANNED: 'PLANNED',
+                      ACTIVE: 'ACTIVE',
+                      NOT_ACTIVE: 'NOT ACTIVE',
+                    }[status]
+                  }
+                </Tag>
+                {crossCheckTask ? (
+                  <Tag color="red">
+                    CROSS-CHECK{' '}
+                    <small>
+                      <b>{crossCheckTask.closedAt ? '(closed)' : '(opened)'}</b>
+                    </small>
+                  </Tag>
+                ) : null}
+              </>
+            )
+          }}
+        />
+        <Column
+          title="Assessment Type"
+          dataIndex="assessmentType"
+          key="assessmentType"
+          render={(_, task) => {
+            const crossCheckTask = crossCheckSession.find((item) => item.taskId === task.id)
+
+            return (
+              <Select
+                style={{ width: 120 }}
+                placeholder="Select"
+                onChange={(assessmentType) =>
+                  handleAssessmentTypeChange(task, assessmentType, crossCheckTask)
+                }
+                value={task.assessmentType}
+                allowClear
               >
-                {{ PLANNED: 'PLANNED', ACTIVE: 'ACTIVE', NOT_ACTIVE: 'NOT ACTIVE' }[status]}
-              </Tag>
+                <Select.Option value="MENTOR">MENTOR</Select.Option>
+                <Select.Option value="CROSS_CHECK">CROSS CHECK</Select.Option>
+              </Select>
             )
           }}
         />
@@ -211,43 +320,56 @@ const TasksList = ({ user }) => {
           title="Start & End Date"
           dataIndex="date"
           key="date"
-          render={(row, task) => (
-            <TaskDateConstraints task={task} onChange={onDateConstraintsChange} />
-          )}
-        />
-        <Column
-          title="Created"
-          dataIndex="created_at"
-          key="created_at"
-          sortRules={sortRules.created_at}
-          defaultSortOrder="descend"
+          render={(_, task) => {
+            const crossCheckTask = crossCheckSession.find((item) => item.taskId === task.id)
+
+            return (
+              <TaskDateConstraints
+                task={task}
+                onChange={onDateConstraintsChange}
+                onClear={(taskId) => handleClearDateConstraints(taskId, crossCheckTask?.id)}
+                disabled={!task.assessmentType}
+              />
+            )
+          }}
         />
         <Column
           title="Action"
           key="action"
-          width={100}
-          render={(row, record) => (
-            <Space size="middle">
-              <Dropdown
-                placement="topRight"
-                overlay={
-                  <Menu>
-                    <Menu.Item onClick={() => exportById(record, 'custom')}>
-                      Export (*.json)
-                    </Menu.Item>
-                    <Menu.Item onClick={() => exportById(record, 'rss')}>
-                      Export (RSS *.json)
-                    </Menu.Item>
-                    <Menu.Item onClick={() => exportById(record, 'md')}>
-                      Export (MarkDown *.md)
-                    </Menu.Item>
-                  </Menu>
-                }
-              >
-                <Button>Export</Button>
-              </Dropdown>
-            </Space>
-          )}
+          width={200}
+          render={(_, task) => {
+            const crossCheckTask = crossCheckSession.find((item) => item.taskId === task.id)
+
+            return (
+              <Space size="middle">
+                <Dropdown
+                  placement="topRight"
+                  overlay={
+                    <Menu>
+                      <Menu.Item onClick={() => exportById(task, 'custom')}>
+                        Export (*.json)
+                      </Menu.Item>
+                      <Menu.Item onClick={() => exportById(task, 'rss')}>
+                        Export (RSS *.json)
+                      </Menu.Item>
+                      <Menu.Item onClick={() => exportById(task, 'md')}>
+                        Export (MarkDown *.md)
+                      </Menu.Item>
+                    </Menu>
+                  }
+                >
+                  <Button>Export</Button>
+                </Dropdown>
+                <CrossCheckDropdown
+                  task={task}
+                  crossCheckTask={crossCheckTask}
+                  onOpen={handleOpenCrossCheck}
+                  onClose={handleCloseCrossCheck}
+                  onDestroy={handleDestroyCrossCheck}
+                />
+              </Space>
+            )
+          }}
         />
       </Table>
     </div>

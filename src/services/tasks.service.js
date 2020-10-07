@@ -86,6 +86,7 @@ const create = async (task, authorId = -1) => {
         description: category.description ?? '',
         criteria: category.criteria.map((criterion) => ({ ...criterion, id: uuid() })),
         maxScore: getMaxScore(category),
+        assessmentType: null,
         created_at: format(new Date(), 'yyyy-MM-dd HH:mm:ss'),
         updated_at: null,
       }
