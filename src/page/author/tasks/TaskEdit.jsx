@@ -1,6 +1,6 @@
 import React, { useState, useRef } from 'react'
 import { useAsync } from 'react-use'
-import { useParams } from 'react-router-dom'
+import { useParams, useHistory } from 'react-router-dom'
 import { Form, Input, Button, Table, Space, Radio, Spin, Alert, message, Popconfirm } from 'antd'
 import { EditOutlined, DeleteOutlined, PlusOutlined } from '@ant-design/icons'
 import { formatRoute } from 'react-router-named-routes'
@@ -19,6 +19,7 @@ const validateMessages = {
 }
 
 const TaskEdit = () => {
+  const history = useHistory()
   const task = useRef(null)
   const [categories, setCategories] = useState([])
   const [loading, setLoading] = useState(true)
@@ -141,13 +142,19 @@ const TaskEdit = () => {
                 width={100}
                 render={(row) => (
                   <Space size="middle">
-                    <ButtonLink
-                      icon={<EditOutlined />}
-                      linkTo={formatRoute(authorRoutes.categories.edit, {
-                        taskId,
-                        categoryId: row.id,
-                      })}
-                    />
+                    <Popconfirm
+                      title="You have unsaved changes! Continue?"
+                      onConfirm={() =>
+                        history.push(
+                          formatRoute(authorRoutes.categories.edit, {
+                            taskId,
+                            categoryId: row.id,
+                          }),
+                        )
+                      }
+                    >
+                      <Button icon={<EditOutlined />} />
+                    </Popconfirm>
 
                     <Popconfirm title="Sure to delete?" onConfirm={() => destroyCategory(row.id)}>
                       <Button type="danger" icon={<DeleteOutlined />} />
