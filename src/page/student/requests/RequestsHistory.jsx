@@ -1,0 +1,227 @@
+import React, { useRef, useState } from 'react'
+import { Link } from 'react-router-dom'
+import { useAsync } from 'react-use'
+import PropTypes from 'prop-types'
+import {
+  Button,
+  Col,
+  Collapse,
+  Form,
+  Input,
+  notification,
+  Popconfirm,
+  Radio,
+  Row,
+  Space,
+  Table,
+  Tag,
+  Typography,
+} from 'antd'
+import { connect } from 'react-redux'
+import { compareAsc } from 'date-fns'
+import { formatRoute } from 'react-router-named-routes'
+import { CarryOutFilled, DeleteOutlined, EditOutlined } from '@ant-design/icons'
+
+import ButtonLink from '../../../component/ButtonLink'
+import { studentRoutes } from '../../../router/routes'
+import requestService from '../../../services/requests.service'
+
+import './style.scss'
+
+const { Column } = Table
+const { Panel } = Collapse
+const { Title } = Typography
+
+const RequestsHistory = ({ user }) => {
+  const [requests, setRequests] = useState([])
+  const [isLoading, setIsLoading] = useState(true)
+  const initRequests = useRef([])
+
+  useAsync(async () => {
+    initRequests.current = await requestService.getByAuthor(user)
+    setRequests(initRequests.current)
+    setIsLoading(false)
+  }, [user])
+
+  const destroyRequest = async (requestId) => {
+    await requestService.destroyById(requestId)
+    setRequests((prev) => prev.filter((request) => request.id !== requestId))
+
+    notification.success({
+      className: 'app-notification app-notification--info',
+      message: 'Success',
+      description: 'Request deleted successfully...',
+    })
+  }
+
+  const [filtersForm] = Form.useForm()
+
+  const sorter = {
+    name: (a, b) => a.name.localeCompare(b.name),
+    date: (a, b) => compareAsc(new Date(a.created_at), new Date(b.created_at)),
+    number: (a, b) => a - b,
+  }
+
+  const filters = {
+    name: (name, value) => name.toLowerCase().indexOf(value.toLowerCase()) !== -1,
+    state: (state, value) => state === value || value.length === 0,
+  }
+
+  const onFilter = (filterData) => {
+    setRequests(
+      initRequests.current.filter((row) =>
+        Object.keys(filterData).every((key) =>
+          typeof filters[key] !== 'function' ? true : filters[key](row[key], filterData[key]),
+        ),
+      ),
+    )
+  }
+
+  const onClearFilter = () => {
+    setRequests(initRequests.current)
+    filtersForm.resetFields()
+  }
+
+  return (
+    <div className="request-list-page">
+      <Title level={2} className="page-title">
+        Requests
+      </Title>
+      <div className="d-flex justify-content-end align-items-center mb-3">
+        <ButtonLink type="primary" linkTo={studentRoutes.requests.create}>
+          Create
+        </ButtonLink>
+      </div>
+      <div className="requests-filters mb-3">
+        <Form
+          form={filtersForm}
+          layout="vertical"
+          onFinish={onFilter}
+          initialValues={{
+            name: '',
+            state: '',
+          }}
+          style={{ width: '100%' }}
+        >
+          <Collapse className="requests-filters-collapse">
+            <Panel header="Filters" key="1">
+              <Row gutter={30}>
+                <Col span={6}>
+                  <Form.Item name="name" label="Name">
+                    <Input />
+                  </Form.Item>
+                </Col>
+                <Col span={6}>
+                  <Form.Item label="State" name="state">
+                    <Radio.Group>
+                      <Radio.Button value="DRAFT">DRAFT</Radio.Button>
+                      <Radio.Button value="SUBMITTED">SUBMITTED</Radio.Button>
+                      <Radio.Button value="GRADED">GRADED</Radio.Button>
+                    </Radio.Group>
+                  </Form.Item>
+                </Col>
+              </Row>
+              <Row>
+                <Col span={24}>
+                  <Form.Item className="mb-0">
+                    <Button type="primary" htmlType="submit">
+                      Filter
+                    </Button>
+                    <Button style={{ margin: '0 8px' }} onClick={onClearFilter}>
+                      Clear
+                    </Button>
+                  </Form.Item>
+                </Col>
+              </Row>
+            </Panel>
+          </Collapse>
+        </Form>
+      </div>
+
+      <Table dataSource={requests} rowKey="id" loading={isLoading} bordered>
+        <Column
+          title="Task"
+          dataIndex="name"
+          key="name"
+          sorter={sorter.name}
+          render={(row, record) => (
+            <Link to={formatRoute(studentRoutes.requests.edit, { requestId: record.id })}>
+              {row}
+            </Link>
+          )}
+        />
+        <Column title="Self-review" dataIndex="score" key="score" sorter={sorter.number} />
+        <Column
+          onFilter={(value, record) => record.name.includes(value)}
+          title="State"
+          key="state"
+          render={({ state, id }) => {
+            let color
+            let isGraduated = false
+            switch (state) {
+              case 'SUBMITTED':
+                color = 'geekblue'
+                break
+              case 'GRADED':
+                color = 'green'
+                isGraduated = true
+                break
+              default:
+                color = 'volcano'
+            }
+            return (
+              <Space size="middle">
+                <Tag color={color} key={state}>
+                  {state}
+                </Tag>
+                {isGraduated && (
+                  <ButtonLink
+                    type="primary"
+                    size="middle"
+                    icon={<CarryOutFilled />}
+                    linkTo={formatRoute(studentRoutes.requests.grade, { requestId: id })}
+                  >
+                    View Grade
+                  </ButtonLink>
+                )}
+              </Space>
+            )
+          }}
+        />
+        <Column title="Created" dataIndex="created_at" key="created_at" sorter={sorter.date} />
+        <Column
+          title="Action"
+          key="action"
+          width={100}
+          render={(row) => (
+            <Space size="middle">
+              <ButtonLink
+                icon={<EditOutlined />}
+                linkTo={formatRoute(studentRoutes.requests.edit, { requestId: row.id })}
+              />
+              <Popconfirm
+                title="Sure to delete?"
+                onConfirm={() => destroyRequest(row.id)}
+                disabled={row.state !== 'DRAFT'}
+              >
+                <Button type="danger" icon={<DeleteOutlined />} disabled={row.state !== 'DRAFT'} />
+              </Popconfirm>
+            </Space>
+          )}
+        />
+      </Table>
+    </div>
+  )
+}
+
+RequestsHistory.propTypes = {
+  user: PropTypes.string.isRequired,
+}
+
+const mapStateToProps = (state) => {
+  return {
+    user: state.auth.user.login,
+  }
+}
+
+export default connect(mapStateToProps, null)(RequestsHistory)

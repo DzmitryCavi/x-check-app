@@ -1,0 +1,51 @@
+/* Task View Page */
+
+.task {
+  &__description {
+    pre {
+      padding: 16px;
+      overflow: auto;
+      font-size: 85%;
+      line-height: 1.45;
+      background-color: #f6f8fa;
+      border-radius: 6px;
+      code {
+        font-size: 1em;
+        font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, Courier, monospace;
+      }
+    }
+  }
+}
+
+.task-categories {
+  margin-top: 30px;
+
+  .item {
+    display: flex;
+    align-items: center;
+    & > p {
+      margin: 0;
+    }
+    code {
+      padding: 2px 5px;
+      margin: 0;
+      font-size: 14px;
+      background-color: rgba(27, 31, 35, 0.05);
+      border-radius: 6px;
+      line-height: 1;
+      font-family: SFMono-Regular, Consolas, Liberation Mono, Menlo, monospace;
+    }
+  }
+}
+
+.tasks-filters-collapse {
+  &.ant-collapse {
+    border-color: #f0f0f0;
+  }
+  &.ant-collapse > .ant-collapse-item {
+    border-bottom-color: #f0f0f0;
+  }
+  &.ant-collapse .ant-collapse-content {
+    border-top-color: #f0f0f0;
+  }
+}

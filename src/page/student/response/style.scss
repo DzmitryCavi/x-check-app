@@ -1,0 +1,11 @@
+/* Grade */
+.grade-collapse {
+  &.ant-collapse {
+    .ant-collapse-item > .ant-collapse-header {
+      padding: 0;
+    }
+    .ant-collapse-content > .ant-collapse-content-box {
+      padding: 0;
+    }
+  }
+}

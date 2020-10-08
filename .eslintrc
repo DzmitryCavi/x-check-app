@@ -12,8 +12,17 @@
     "prettier/prettier": [
       "error",
       {
-        "semi": false
+        "semi": false,
+        "endOfLine": "auto"
       }
-    ]
+    ],
+    "react/jsx-props-no-spreading": [
+      0,
+      {
+        "html": "ignore",
+        "custom": "ignore"
+      }
+    ],
+    "import/no-extraneous-dependencies": ["error", {"devDependencies": true}]
   }
 }

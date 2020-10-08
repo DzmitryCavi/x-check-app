@@ -1,0 +1,25 @@
+.login-form {
+    text-align: center;
+    &__name {
+        margin-bottom: 0;
+    }
+    &__logo {
+        display: block;
+        width: 100px !important;
+        margin: 30px auto 20px;
+    }
+    &__error {
+        text-align: left;
+        margin: 0 24px !important;
+    }
+}
+
+.select-role {
+    margin: 20px auto 0;
+    text-align: left;
+    &__label {
+        display: block;
+        font-weight: bold;
+        font-size: 14px;
+    }
+}

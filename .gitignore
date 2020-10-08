@@ -1,5 +1,8 @@
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
+#editor
+.idea
+
 # dependencies
 /node_modules
 /.pnp
@@ -18,6 +21,7 @@
 .env.test.local
 .env.production.local
 
+debug.log*
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
