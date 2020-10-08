@@ -32,6 +32,7 @@ const create = async (taskId) => {
     students: [],
     createdAt: format(new Date(), 'yyyy-MM-dd HH:mm:ss'),
     closedAt: null,
+    updatedAt: null,
   })
 
   return status === 201 && data ? data : null
@@ -40,7 +41,7 @@ const create = async (taskId) => {
 const edit = async (session, id) => {
   const { data, status } = await axios.patch(`${API_URL}/crossCheckSession/${id}`, {
     ...session,
-    updated_at: format(new Date(), 'yyyy-MM-dd HH:mm:ss'),
+    updatedAt: format(new Date(), 'yyyy-MM-dd HH:mm:ss'),
   })
   return status === 200 ? data : null
 }
