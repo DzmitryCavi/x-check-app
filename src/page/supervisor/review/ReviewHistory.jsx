@@ -1,19 +1,19 @@
-import React, { useState, useRef } from 'react'
+import React, { useRef, useState } from 'react'
 import PropTypes from 'prop-types'
 import {
-  Table,
-  Space,
   Button,
-  notification,
-  Tag,
+  Col,
+  Collapse,
   Form,
+  Input,
+  notification,
+  Popconfirm,
   Radio,
   Row,
-  Col,
-  Input,
-  Collapse,
+  Space,
+  Table,
+  Tag,
   Typography,
-  Popconfirm,
 } from 'antd'
 import { useAsync } from 'react-use'
 import { connect } from 'react-redux'
@@ -38,8 +38,7 @@ const ReviewHistory = ({ user }) => {
 
   useAsync(async () => {
     setLoading(true)
-    const reviewsResponse = await reviewsService.getAllGradedByAuthor(user)
-    initRequests.current = reviewsResponse
+    initRequests.current = await reviewsService.getAllGradedByAuthor(user)
     setReviews(initRequests.current)
     setLoading(false)
   }, [user])
@@ -141,7 +140,7 @@ const ReviewHistory = ({ user }) => {
           title="State"
           key="state"
           render={({ state, id }) => {
-            let children = <></>
+            let children
 
             switch (state) {
               case 'DISPUTE':

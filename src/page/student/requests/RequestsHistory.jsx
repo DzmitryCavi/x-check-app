@@ -1,26 +1,26 @@
-import React, { useState, useRef } from 'react'
+import React, { useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useAsync } from 'react-use'
 import PropTypes from 'prop-types'
 import {
-  Table,
-  Space,
   Button,
-  notification,
-  Tag,
+  Col,
+  Collapse,
   Form,
+  Input,
+  notification,
+  Popconfirm,
   Radio,
   Row,
-  Col,
-  Input,
-  Collapse,
+  Space,
+  Table,
+  Tag,
   Typography,
-  Popconfirm,
 } from 'antd'
 import { connect } from 'react-redux'
 import { compareAsc } from 'date-fns'
 import { formatRoute } from 'react-router-named-routes'
-import { DeleteOutlined, EditOutlined, CarryOutFilled } from '@ant-design/icons'
+import { CarryOutFilled, DeleteOutlined, EditOutlined } from '@ant-design/icons'
 
 import ButtonLink from '../../../component/ButtonLink'
 import { studentRoutes } from '../../../router/routes'
@@ -33,20 +33,19 @@ const { Panel } = Collapse
 const { Title } = Typography
 
 const RequestsHistory = ({ user }) => {
-  const [requests, setRequsets] = useState([])
+  const [requests, setRequests] = useState([])
   const [isLoading, setIsLoading] = useState(true)
   const initRequests = useRef([])
 
   useAsync(async () => {
-    const data = await requestService.getByAuthor(user)
-    initRequests.current = data
-    setRequsets(initRequests.current)
+    initRequests.current = await requestService.getByAuthor(user)
+    setRequests(initRequests.current)
     setIsLoading(false)
   }, [user])
 
   const destroyRequest = async (requestId) => {
     await requestService.destroyById(requestId)
-    setRequsets((prev) => prev.filter((request) => request.id !== requestId))
+    setRequests((prev) => prev.filter((request) => request.id !== requestId))
 
     notification.success({
       className: 'app-notification app-notification--info',
@@ -69,7 +68,7 @@ const RequestsHistory = ({ user }) => {
   }
 
   const onFilter = (filterData) => {
-    setRequsets(
+    setRequests(
       initRequests.current.filter((row) =>
         Object.keys(filterData).every((key) =>
           typeof filters[key] !== 'function' ? true : filters[key](row[key], filterData[key]),
@@ -79,7 +78,7 @@ const RequestsHistory = ({ user }) => {
   }
 
   const onClearFilter = () => {
-    setRequsets(initRequests.current)
+    setRequests(initRequests.current)
     filtersForm.resetFields()
   }
 
@@ -157,7 +156,7 @@ const RequestsHistory = ({ user }) => {
           title="State"
           key="state"
           render={({ state, id }) => {
-            let color = ''
+            let color
             let isGraduated = false
             switch (state) {
               case 'SUBMITTED':

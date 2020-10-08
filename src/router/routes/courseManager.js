@@ -17,10 +17,10 @@ export default [
   {
     path: routes.tasks.list,
     component: TasksList,
-    breadcrumb: 'Tasks Managment',
+    breadcrumb: 'Tasks management',
     description: 'Tasks management',
     navigation: {
-      label: 'Tasks Managment',
+      label: 'Tasks Management',
       icon: ApartmentOutlined,
       color: '#73d13d',
     },
@@ -34,7 +34,7 @@ export default [
     path: routes.reviews.dispute,
     component: Dispute,
     breadcrumb: 'Dispute',
-    description: 'Dispute managment',
+    description: 'Dispute management',
   },
   {
     path: routes.reviews.list,

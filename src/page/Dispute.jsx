@@ -88,14 +88,14 @@ const Dispute = () => {
   const [form] = Form.useForm()
 
   const filterCategoriesByDisput = (categoriesToFilter, { criterias }) => {
-    const categoryReduser = (ac, criteria) => {
+    const categoryReducer = (ac, criteria) => {
       return Object.keys(criterias).find((el) => el === criteria.id) ? ac.concat([criteria]) : ac
     }
-    const categoriesReduser = (ac, category) => {
-      const data = category.criteria.reduce(categoryReduser, [])
+    const categoriesReducer = (ac, category) => {
+      const data = category.criteria.reduce(categoryReducer, [])
       return data.length ? ac.concat([{ ...category, criteria: data }]) : ac
     }
-    return categoriesToFilter.reduce(categoriesReduser, [])
+    return categoriesToFilter.reduce(categoriesReducer, [])
   }
   useAsync(async () => {
     const reviewResponse = await reviewsService.getById(reviewId)

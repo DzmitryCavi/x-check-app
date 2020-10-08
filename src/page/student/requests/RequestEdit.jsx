@@ -6,7 +6,7 @@ import RequestForm from '../../../component/forms/RequestFrom/RequestForm'
 import requestService from '../../../services/requests.service'
 import tasksService from '../../../services/tasks.service'
 
-const Reqest = () => {
+const RequestEdit = () => {
   const [request, setRequest] = useState(null)
   const [task, setTask] = useState(null)
   const { requestId } = useParams()
@@ -32,4 +32,4 @@ const Reqest = () => {
   )
 }
 
-export default Reqest
+export default RequestEdit

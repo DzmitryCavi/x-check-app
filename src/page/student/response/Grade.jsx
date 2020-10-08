@@ -37,10 +37,15 @@ const Grade = () => {
   const [categories, setCategories] = useState(null)
   const [isSuccess, setIsSuccess] = useState(false)
   const [isNeedToSubmit, setIsNeedToSubmit] = useState(false)
-  const [isAcceptedReview, setisAcceptedReview] = useState(false)
+  const [isAcceptedReview, setIsAcceptedReview] = useState(false)
   const [form] = Form.useForm()
 
-  const maxScore = categories && categories.reduce((ac, catergory) => ac + +catergory.maxScore, 0)
+  const maxScore =
+    categories &&
+    categories.reduce((ac, category) => {
+      const positiveValue = category.maxScore > 0 ? category.maxScore : 0
+      return ac + positiveValue
+    }, 0)
 
   useAsync(async () => {
     const requestResponse = await requestsService.getById(requestId)
@@ -49,7 +54,7 @@ const Grade = () => {
     setReview(...reviewResponse)
     setRequest(requestResponse)
     setCategories(tasksResponse.categories)
-    if (reviewResponse[0].state === 'ACCEPTED') setisAcceptedReview(true)
+    if (reviewResponse[0].state === 'ACCEPTED') setIsAcceptedReview(true)
     setLoading(false)
   }, [requestId])
 

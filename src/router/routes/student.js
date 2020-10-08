@@ -1,4 +1,4 @@
-import { CodeOutlined, CheckSquareOutlined, HistoryOutlined } from '@ant-design/icons'
+import { CheckSquareOutlined, CodeOutlined, HistoryOutlined } from '@ant-design/icons'
 
 import RequestCreate from '../../page/student/requests/RequestCreate'
 import RequestsHistory from '../../page/student/requests/RequestsHistory'
@@ -25,11 +25,11 @@ export default [
     navigation: {
       label: 'Cross-check',
       icon: CheckSquareOutlined,
-      color: '#ffaf1c',
+      color: '#ec3c9c',
       withBadge: true,
       badgeCount: () => {
         const user = JSON.parse(localStorage.getItem('user'))
-        const count = crossCheckService
+        return crossCheckService
           .getByStudentName(user.login)
           .then((data) =>
             data.reduce(
@@ -44,7 +44,6 @@ export default [
           )
           .then((data) => RequestService.getByStudentForCrossCheck(data))
           .then((data) => data.length)
-        return count
       },
     },
   },
@@ -81,11 +80,9 @@ export default [
       withBadge: true,
       badgeCount: () => {
         const user = JSON.parse(localStorage.getItem('user')).login
-        const count = RequestService.getByAuthor(user).then((data) => {
+        return RequestService.getByAuthor(user).then((data) => {
           return data.filter((el) => el.state === 'GRADED').length
         })
-
-        return count
       },
     },
   },

@@ -5,14 +5,14 @@ import NumericInput from '../../NumericInput'
 
 const RequestFormItem = ({ value, onChange, maxScore, criteriaId }) => {
   const [number, setNumber] = useState(value ? value.number : null)
-  const [discription, setDiscription] = useState(value ? value.discription : null)
+  const [description, setDescription] = useState(value ? value.discription : null)
   const [isNeedComment, setIsNeedComment] = useState(!!(value && value.number !== null))
 
   const triggerChange = (changedValue) => {
     if (onChange) {
       onChange({
         number,
-        discription,
+        description,
         criteriaId,
         ...value,
         ...changedValue,
@@ -32,7 +32,7 @@ const RequestFormItem = ({ value, onChange, maxScore, criteriaId }) => {
       default:
         newNumber = +e.target.value
     }
-    let newDiscription = ''
+    let newDescription = ''
     const isMax = newNumber === +maxScore
     const isMin = newNumber === 0
     if (Number.isNaN(newNumber)) {
@@ -43,28 +43,28 @@ const RequestFormItem = ({ value, onChange, maxScore, criteriaId }) => {
 
     switch (true) {
       case isMax:
-        newDiscription = 'Well done!'
+        newDescription = 'Well done!'
         break
       case isMin:
-        newDiscription = 'No ticket today'
+        newDescription = 'No ticket today'
         break
       default:
-        newDiscription = 'Some things are done, some are not'
+        newDescription = 'Some things are done, some are not'
     }
 
     setNumber(newNumber)
-    setDiscription(newDiscription)
+    setDescription(newDescription)
 
     triggerChange({
       number: newNumber,
-      discription: newDiscription,
+      description: newDescription,
     })
   }
 
-  const onDiscriptionChange = (e) => {
-    setDiscription(e.target.value)
+  const onDescriptionChange = (e) => {
+    setDescription(e.target.value)
     triggerChange({
-      discription: e.target.value,
+      description: e.target.value,
     })
   }
 
@@ -97,8 +97,8 @@ const RequestFormItem = ({ value, onChange, maxScore, criteriaId }) => {
       <Row>
         <Col span={24}>
           <Input.TextArea
-            value={discription}
-            onChange={onDiscriptionChange}
+            value={description}
+            onChange={onDescriptionChange}
             disabled={!isNeedComment}
           />
         </Col>
@@ -147,7 +147,7 @@ RequestFormItem.propTypes = {
 }
 
 RequestFormItem.defaultProps = {
-  value: { number: null, discription: null },
+  value: { number: null, description: null },
   onChange: () => {},
 }
 

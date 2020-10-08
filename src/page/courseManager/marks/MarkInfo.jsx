@@ -18,7 +18,12 @@ const MarkInfo = () => {
   const [categories, setCategories] = useState([])
   const [form] = Form.useForm()
 
-  const maxScore = categories && categories.reduce((ac, catergory) => ac + +catergory.maxScore, 0)
+  const maxScore =
+    categories &&
+    categories.reduce((ac, category) => {
+      const positiveValue = category.maxScore > 0 ? category.maxScore : 0
+      return ac + positiveValue
+    }, 0)
 
   useAsync(async () => {
     const markResponse = await reviewsService.getById(reviewId)
